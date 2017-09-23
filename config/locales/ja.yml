@@ -1,0 +1,186 @@
+ja:
+  activerecord:
+    models:
+      admin_user: 管理者
+    attributes:
+      admin_user:
+        id: ID
+        name: 名前
+        email: ユーザーID（メールアドレス）
+        encrypted_password: パスワード
+        password: パスワード
+        password_confirmation: パスワード確認
+  enums:
+    user:
+      state:
+        not_activated: 未アクティベート
+        activated: アクティベート
+  date:
+    abbr_day_names:
+    - 日
+    - 月
+    - 火
+    - 水
+    - 木
+    - 金
+    - 土
+    abbr_month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    day_names:
+    - 日曜日
+    - 月曜日
+    - 火曜日
+    - 水曜日
+    - 木曜日
+    - 金曜日
+    - 土曜日
+    formats:
+      default: ! '%Y/%m/%d'
+      long: ! '%Y年%m月%d日(%a)'
+      short: ! '%m/%d'
+      ymd: ! '%Y年%m月%d日'
+    month_names:
+    -
+    - 1月
+    - 2月
+    - 3月
+    - 4月
+    - 5月
+    - 6月
+    - 7月
+    - 8月
+    - 9月
+    - 10月
+    - 11月
+    - 12月
+    order:
+    - :year
+    - :month
+    - :day
+
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: 約1時間
+        other: 約%{count}時間
+      about_x_months:
+        one: 約1ヶ月
+        other: 約%{count}ヶ月
+      about_x_years:
+        one: 約1年
+        other: 約%{count}年
+      almost_x_years:
+        one: 1年弱
+        other: ! '%{count}年弱'
+      half_a_minute: 30秒前後
+      less_than_x_minutes:
+        one: 1分以内
+        other: ! '%{count}分以内'
+      less_than_x_seconds:
+        one: 1秒以内
+        other: ! '%{count}秒以内'
+      over_x_years:
+        one: 1年以上
+        other: ! '%{count}年以上'
+      x_days:
+        one: 1日
+        other: ! '%{count}日'
+      x_minutes:
+        one: 1分
+        other: ! '%{count}分'
+      x_months:
+        one: 1ヶ月
+        other: ! '%{count}ヶ月'
+      x_seconds:
+        one: 1秒
+        other: ! '%{count}秒'
+    prompts:
+      day: 日
+      hour: 時
+      minute: 分
+      month: 月
+      second: 秒
+      year: 年
+  time:
+    am: 午前
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
+      short: "%y/%m/%d %H:%M"
+      ymdhm: ! '%Y年%m月%d日 %H時%M分'
+      hm: "%H時%M分"
+    pm: 午後
+  errors:
+    format: "%{message}"
+    messages:
+      accepted: "%{attribute}を受諾してください。"
+      blank: "%{attribute}を入力してください。"
+      present: "%{attribute}は入力しないでください。"
+      confirmation: "%{attribute}と%{attribute}の入力が一致しません。"
+      empty: "%{attribute}を入力してください。"
+      equal_to: "%{attribute}は%{count}にしてください。"
+      even: "%{attribute}は偶数にしてください。"
+      exclusion: "%{attribute}は予約されています。"
+      greater_than: "%{attribute}は%{count}より大きい値にしてください。"
+      greater_than_or_equal_to: "%{attribute}は%{count}以上の値にしてください。"
+      inclusion: "%{attribute}は一覧にありません。"
+      invalid: "%{attribute}は不正な値です。"
+      less_than: "%{attribute}は%{count}より小さい値にしてください。"
+      less_than_or_equal_to: "%{attribute}は%{count}以下の値にしてください。"
+      not_a_number: "%{attribute}は数値で入力してください。"
+      not_an_integer: "%{attribute}は整数で入力してください。"
+      odd: "%{attribute}は奇数にしてください。"
+      record_invalid: "%{attribute}バリデーションに失敗しました。 %{errors}"
+      restrict_dependent_destroy: "%{attribute}は%{record}が存在しているので削除できません。"
+      taken: "%{attribute}はすでに存在します。"
+      too_long: "%{attribute}は%{count}文字以内で入力してください。"
+      too_short: "%{attribute}は%{count}文字以上で入力してください。"
+      wrong_length: "%{attribute}は%{count}文字で入力してください。"
+      other_than: "%{attribute}は%{count}以外の値にしてください。"
+      invalid_date: "%{attribute}は正しい形式で入力してください。"
+      invalid_time: "%{attribute}は正しい形式で入力してください。"
+      invalid_datetime: "%{attribute}は正しい形式で入力してください。"
+      is_at: "%{attribute}は %{restriction} である必要があります。"
+      before: "%{attribute}は %{restriction} より前を指定してください。"
+      on_or_before: "%{attribute}は %{restriction} 以前を指定してください。"
+      after: "%{attribute}は %{restriction} より後を指定してください。"
+      on_or_after: "%{attribute}は %{restriction} 以降を指定してください。"
+    template:
+      body: 次の項目を確認してください。
+      header:
+        one: "%{model}にエラーが発生しました。"
+        other: "%{model}に%{count}個のエラーが発生しました。"
+    validates_timeliness:
+      error_value_formats:
+        date: '%Y-%m-%d'
+        time: '%H:%M'
+        datetime: '%Y-%m-%d %H:%M'
+  usual:
+    index: 一覧
+    detail: 詳細
+    new: 新規
+    edit: 編集
+    delete: 削除
+    add: 追加
+    update: 更新
+    signin: ログイン
+    signout: ログアウト
+    create: 登録
+    back: 戻る
+  helpers:
+    submit:
+      create: 登録
+      update: 更新
+      submit: 保存
