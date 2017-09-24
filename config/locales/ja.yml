@@ -3,6 +3,7 @@ ja:
     models:
       admin_user: 管理者
       corporation: 法人
+      user: ユーザ
     attributes:
       admin_user:
         id: ID
@@ -19,11 +20,31 @@ ja:
         address: 住所
         note: 備考
         state: 状態
+      corporation_user:
+        corporation_id: 法人
+        user_id: ユーザ
+      user:
+        id: ID
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        name: 名前
+        tel: 電話番号
+        state: 状態
+        payway: 支払い方法
+        created_at: 登録日時
   enums:
+    corporation:
+      payway:
+        creditcard: クレジットカード
+        invoice: 請求書
     user:
       state:
-        not_activated: 未アクティベート
-        activated: アクティベート
+        registered: 登録済み
+        activated: カード登録済み
+      payway:
+        creditcard: クレジットカード
+        invoice: 請求書
   date:
     abbr_day_names:
     - 日

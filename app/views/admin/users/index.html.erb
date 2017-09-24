@@ -7,6 +7,7 @@
             <%= f.search_field :name_cont, placeholder: "名前", class: "form-control" %>
             <%= f.search_field :tel_cont, placeholder: "電話番号", class: "form-control" %>
             <%= f.search_field :email_cont, placeholder: "メールアドレス", class: "form-control" %>
+            <%= f.select :state_eq, User.states_i18n.invert.map{|k, v| [k, User.states[v]]}, { include_blank: '状態を指定' }, { class: "form-control" } %>
             <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
           </div>
         <% end %>
@@ -22,11 +23,10 @@
       <thead>
         <tr>
           <th><%= User.human_attribute_name(:id) %></th>
+          <th><%= User.human_attribute_name(:corporation_id) %></th>
           <th><%= User.human_attribute_name(:name) %></th>
-          <th><%= User.human_attribute_name(:email) %></th>
           <th><%= User.human_attribute_name(:tel) %></th>
           <th><%= User.human_attribute_name(:state) %></th>
-          <th><%= User.human_attribute_name(:created_at) %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
@@ -35,11 +35,10 @@
           <% @users.each do |user| %>
             <tr>
               <td><%= user.id %></td>
+              <td><%= user.corporation_name %></td>
               <td><%= user.name %></td>
-              <td><%= user.email %></td>
               <td><%= user.tel %></td>
               <td><%= user.state_i18n %></td>
-              <td><%= datetime_ja(user.created_at) %></td>
               <td>
                 <%= link_to '詳細', admin_user_path(user), class: 'btn btn-default' %>
                 <%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary' %>
@@ -50,7 +49,7 @@
         <% else %>
           <tr>
             <td colspan="20">
-              表示する<%= User.model_name.human %>はいません
+              <%=t('.show')%><%= User.model_name.human %><%=t('.not_exist')%>
             </td>
           </tr>
         <% end %>

@@ -7,7 +7,6 @@ class CreateCorporations < ActiveRecord::Migration[5.1]
       t.string :postal_code
       t.string :address
       t.text :note
-      t.integer :payway, null: false, default: 1
       t.timestamps
       t.datetime :deleted_at
     end

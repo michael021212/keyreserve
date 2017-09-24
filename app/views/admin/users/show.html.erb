@@ -1,11 +1,15 @@
-<% breadcrumb :admin_user, @user %>
+<% if corporation? %>
+  <% breadcrumb :admin_corporation_user, @corporation, @user %>
+<% else %>
+  <% breadcrumb :admin_user, @user %>
+<% end %>
 
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= User.model_name.human %>詳細</h4>
     <div class="box-tools">
-      <%= link_to "戻る", admin_users_path, class: 'btn btn-default' %>
-      <%= link_to "編集", edit_admin_user_path(@user), class: 'btn btn-primary' %>
+      <%= link_to "戻る", corporation? ? [:admin, @corporation] : admin_users_path, class: 'btn btn-default' %>
+      <%= link_to "編集", corporation? ? edit_admin_corporation_user_path(@corporation, @user) : edit_admin_user_path(@user), class: 'btn btn-primary' %>
     </div>
   </div>
   <div class="box-body">
@@ -13,6 +17,15 @@
       <tr>
         <th><%= User.human_attribute_name(:id) %></th>
         <td><%= @user.id %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:corporation_id) %></th>
+        <th><%= Corporation.model_name.human %></td>
+        <td>
+          <% @user.corporations do |corporation| %>
+            <%= link_to corporation.name, admin_corporation_path(corporation.id) %><br>
+          <% end %>
+        </td>
       </tr>
       <tr>
         <th><%= User.human_attribute_name(:state) %></th>
@@ -31,56 +44,9 @@
         <td><%= @user.name %></td>
       </tr>
       <tr>
-        <th><%= User.human_attribute_name(:nickname) %></th>
-        <td><%= @user.nickname %></td>
-      </tr>
-      <tr>
         <th><%= User.human_attribute_name(:tel) %></th>
         <td><%= @user.tel %></td>
       </tr>
-      <tr>
-        <th><%= User.human_attribute_name(:image) %></th>
-        <td><%= image_tag @user.image.url if @user.image.present? %></td>
-      </tr>
-      <tr>
-        <th><%= User.human_attribute_name(:created_at) %></th>
-        <td><%= datetime_ja(@user.created_at) %></td>
-      </tr>
-    </table>
-  </div>
-</div>
-<hr />
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title"><%= Room.model_name.human %>一覧</h4>
-    <div class="box-tools">
-      <%= link_to "新規追加", new_admin_user_room_path(@user), class: 'btn btn-primary' %>
-    </div>
-  </div>
-  <div class="box-body">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th><%= Room.human_attribute_name(:id) %></th>
-          <th><%= Room.human_attribute_name(:room_number) %></th>
-          <th><%= Room.human_attribute_name(:contact) %></th>
-          <th style="width: 200px;"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @user.rooms.each do |room| %>
-          <tr>
-            <td><%= room.id %></td>
-            <td><%= room.room_number %></td>
-            <td><%= room.contact %></td>
-            <td>
-              <%= link_to '詳細', admin_user_room_path(@user, room), class: 'btn btn-default' %>
-              <%= link_to '編集', edit_admin_user_room_path(@user, room), class: 'btn btn-primary' %>
-              <%= link_to '削除', admin_user_room_path(@user, room), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
     </table>
   </div>
 </div>

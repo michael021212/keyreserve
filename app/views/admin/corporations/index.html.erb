@@ -14,7 +14,6 @@
           <th><%= Corporation.human_attribute_name(:kana) %></th>
           <th><%= Corporation.human_attribute_name(:tel) %></th>
           <th><%= Corporation.human_attribute_name(:address) %></th>
-          <th><%= Corporation.human_attribute_name(:state) %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
@@ -27,7 +26,6 @@
               <td><%= corporation.kana %></td>
               <td><%= corporation.tel %></td>
               <td><%= corporation.address %></td>
-              <td><%= corporation.state_i18n %></td>
               <td>
                 <%= link_to '詳細', admin_corporation_path(corporation), class: 'btn btn-default' %>
                 <%= link_to '編集', edit_admin_corporation_path(corporation), class: 'btn btn-primary' %>

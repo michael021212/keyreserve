@@ -1,0 +1,26 @@
+<% req_url = corporation? ? [:admin, corporation, user] : [:admin, user] %>
+<%= bootstrap_form_for(req_url, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9") do |f| %>
+  <% if corporation? %>
+    <%= f.fields_for :corporation_users do |cu| %>
+      <%= cu.hidden_field :corporation_id %>
+      <%= cu.static_control :corporation_id, label: Corporation.model_name.human do  %><%= corporation.name %><% end %>
+    <% end %>
+  <% else %>
+    <%= f.collection_select :corporation_id, Corporation.all, :id, :name, include_blank: true %>
+  <% end %>
+  <%= f.text_field :name %>
+  <%= f.text_field :email %>
+  <%= f.text_field :tel %>
+  <% unless corporation? %>
+    <%= f.select :state, User.states_i18n.invert %>
+    <%= f.select :payway, User.payways_i18n.invert %>
+  <% end %>
+  <% if controller.action_name == 'edit'%>
+    <%= f.password_field :password, help: t('.password_message') %>
+    <%= f.password_field :password_confirmation, help: t('.password_message') %>
+  <% else %>
+    <%= f.password_field :password %>
+    <%= f.password_field :password_confirmation %>
+  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

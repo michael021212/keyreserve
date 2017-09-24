@@ -1,5 +1,6 @@
 class Admin::UsersController < AdminController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_corporation
 
   # GET /admin/users
   def index
@@ -10,6 +11,7 @@ class Admin::UsersController < AdminController
   # GET /admin/users/new
   def new
     @user = User.new
+    @user.corporation_users.new(corporation_id: params[:corporation_id]) if corporation?
   end
 
   # GET /admin/users/1/edit
@@ -19,9 +21,17 @@ class Admin::UsersController < AdminController
   # POST /admin/users
   def create
     @user = User.new(user_params)
-
-    if @user.save
-      redirect_to admin_users_path, notice: "#{User.model_name.human}を作成しました。"
+    if corporation?
+      @user.payway = :creditcard
+      @user.state = :registered
+    end
+    if @user.save!
+      flash[:notice] = "#{User.model_name.human}を作成しました。"
+      if corporation?
+        redirect_to [:admin, @corporation, @user]
+      else
+        redirect_to [:admin, @user]
+      end
     else
       render :new
     end
@@ -30,7 +40,12 @@ class Admin::UsersController < AdminController
   # PATCH/PUT /admin/users/1
   def update
     if @user.update(user_params)
-      redirect_to admin_users_path, notice: "#{User.model_name.human}を更新しました。"
+      flash[:notice] = "#{User.model_name.human}を更新しました。"
+      if corporation?
+        redirect_to [:admin, @corporation, @user]
+      else
+        redirect_to [:admin, @user]
+      end
     else
       render :edit
     end
@@ -39,7 +54,12 @@ class Admin::UsersController < AdminController
   # DELETE /admin/users/1
   def destroy
     @user.destroy
-    redirect_to admin_users_path, notice: "#{User.model_name.human}を削除しました。"
+    flash[:notice] = "#{User.model_name.human}を削除しました。"
+    if corporation?
+      redirect_to [:admin, @corporation]
+    else
+      redirect_to admin_users_path
+    end
   end
 
   private
@@ -52,7 +72,20 @@ class Admin::UsersController < AdminController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(
-      :email, :password, :password_confirmation, :name, :image, :image_cache, :tel, :state, :nickname, :payway
+      :corporation_id, :email, :password, :password_confirmation, :name, :tel, :state, :payway,
+      corporation_users_attributes: [:id, :corporation_id, :_destroy]
     )
   end
+
+  def corporation?
+    params[:corporation_id].present?
+  end
+
+  def set_corporation
+    if corporation?
+      @corporation = Corporation.find(params[:corporation_id])
+    end
+  end
+
+  helper_method :corporation?
 end

@@ -46,3 +46,19 @@ crumb :edit_admin_corporation do |corporation|
   link '法人編集', admin_corporation_path(corporation)
   parent :admin_corporation, corporation
 end
+
+# admin_corporation_users
+crumb :new_admin_corporation_user do |corporation|
+  link 'ユーザ新規登録', new_admin_corporation_user_path(corporation)
+  parent :admin_corporation, corporation
+end
+
+crumb :admin_corporation_user do |corporation, user|
+  link 'ユーザ詳細', admin_corporation_user_path(corporation, user)
+  parent :admin_corporation, corporation
+end
+
+crumb :edit_admin_corporation_user do |corporation, user|
+  link 'ユーザ編集', admin_corporation_user_path(corporation, user)
+  parent :admin_corporation, corporation
+end
