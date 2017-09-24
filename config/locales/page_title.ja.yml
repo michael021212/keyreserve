@@ -1,0 +1,79 @@
+ja:
+  admin:
+    dashboards:
+      index:
+        title: ダッシュボード
+    admin_users:
+      index:
+        title: 管理者一覧
+      new:
+        title: 管理者登録
+      edit:
+        title: 管理者編集
+      show:
+        title: 管理者詳細
+    corporations:
+      index:
+        title: 法人一覧
+      new:
+        title: 法人登録
+      edit:
+        title: 法人編集
+      show:
+        title: 法人詳細
+  corporation:
+    dashboards:
+      index:
+        title: ダッシュボード
+    property_managers:
+      index:
+        title: 物件管理者一覧
+      new:
+        title: 物件管理者登録
+      edit:
+        title: 物件管理者編集
+      show:
+        title: 物件管理者詳細
+    rooms:
+      index:
+        title: 部屋一覧
+      new:
+        title: 部屋登録
+      edit:
+        title: 部屋編集
+      show:
+        title: 部屋詳細
+    customers:
+      index:
+        title: 顧客一覧
+      new:
+        title: 顧客登録
+      edit:
+        title: 顧客編集
+      show:
+        title: 顧客詳細
+    room_schedules:
+      index:
+        title: スケジュール
+      new:
+        title: スケジュール登録
+      edit:
+        title: スケジュール編集
+      show:
+        title: スケジュール詳細
+    room_keys:
+      index:
+        title: 鍵一覧
+      new:
+        title: 鍵登録
+      edit:
+        title: 鍵編集
+      show:
+        title: 鍵詳細
+    credit_cards:
+      new:
+        title: クレジットカード登録
+      show:
+        title: クレジットカード詳細
+      edit:
+        title: クレジットカード編集

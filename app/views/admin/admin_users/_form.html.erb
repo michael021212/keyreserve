@@ -1,0 +1,12 @@
+<%= bootstrap_form_for([:admin, @admin_user]) do |f| %>
+  <%= f.text_field :name, class: 'form-control' %>
+  <%= f.text_field :email, class: 'form-control' %>
+  <% if controller.action_name == 'edit'%>
+    <%= f.password_field :password, class: 'form-control', help: t('.password_message') %>
+    <%= f.password_field :password_confirmation, class: 'form-control', help: t('.password_message') %>
+  <% else %>
+    <%= f.password_field :password, class: 'form-control' %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

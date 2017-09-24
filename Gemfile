@@ -27,6 +27,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jbuilder', '~> 2.5'
 gem 'bootstrap_form'
 gem 'adminlte2-rails'
+gem 'jquery-slimscroll-rails'
 
 # Authentication
 gem 'sorcery'
@@ -42,6 +43,17 @@ gem 'enum_help'
 gem 'kaminari'
 gem 'ransack'
 
+# validation
+gem 'email_validator'
+
+# Soft delete
+gem 'paranoia'
+
+# Breadcrumbs
+gem 'gretel'
+
+# Seeds
+gem 'seed-fu'
 
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -74,7 +86,7 @@ group :development, :test do
   gem 'pry-stack_explorer'
 
   # Print debug
-  # gem 'awesome_print'
+  gem 'awesome_print'
 
   # Deploy
   gem 'capistrano'

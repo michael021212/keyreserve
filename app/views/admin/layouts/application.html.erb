@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title><%= Settings.sitename %> admin</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <%= javascript_include_tag "https://maps.google.com/maps/api/js?&key=#{Settings.google_key}" %>
+    <%= stylesheet_link_tag 'admin/application', media: 'all' %>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+      <%= csrf_meta_tags %>
+  </head>
+
+  <body class="skin-blue sidebar-mini fixed">
+    <div class="wrapper">
+      <%= render 'admin/shared/header' %>
+      <%= render 'admin/shared/sidebar' %>
+
+      <div class="content-wrapper">
+        <%= render "shared/flash" %>
+        <section class="content-header">
+          <h1><%= page_title format: ':title' %></h1>
+          <%= breadcrumbs style: :ol, class: 'breadcrumb' %>
+        </section>
+        <section class="content">
+          <%= yield %>
+        </section>
+      </div><!-- /.content-wrapper -->
+      <div id="main-menu-bg"></div>
+    </div>
+    <%= javascript_include_tag 'admin/application' %>
+  </body>
+</html>

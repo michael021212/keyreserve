@@ -1,0 +1,44 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Payment.model_name.human %>一覧</h4>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= Payment.human_attribute_name(:id) %></th>
+          <th><%= Payment.human_attribute_name(:created_at) %></th>
+          <th><%= User.human_attribute_name(:name) %></th>
+          <th><%= Room.human_attribute_name(:room_number) %></th>
+          <th><%= Plan.human_attribute_name(:name) %></th>
+          <th><%= Payment.human_attribute_name(:price) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @payments.present? %>
+          <% @payments.each do |payment| %>
+            <tr>
+              <td><%= payment.id %></td>
+              <td><%= date_ja payment.created_at %></td>
+              <td><%= payment.target.try(:name) %></td>
+              <td><%= payment.room_key.room.room_number %></td>
+              <td><%= payment.plan.try(:name) %></td>
+              <td><%= number_with_delimiter payment.price %></td>
+              <td>
+                <%= link_to '詳細', admin_payment_path(payment), class: 'btn btn-default' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= Payment.model_name.human %>はいません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @payments %>
+  </div>
+</div>

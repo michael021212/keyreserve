@@ -1,0 +1,61 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="panel panel-inverse" data-sortable-id="table-basic-2">
+      <div class="panel-body">
+        <%= search_form_for @q, url: admin_users_path, :class => "form-inline" do |f| %>
+          <div class="mb20">
+            <%= f.search_field :name_cont, placeholder: "名前", class: "form-control" %>
+            <%= f.search_field :tel_cont, placeholder: "電話番号", class: "form-control" %>
+            <%= f.search_field :email_cont, placeholder: "メールアドレス", class: "form-control" %>
+            <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <h4 class="box-title"><%= User.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to '新規追加', new_admin_user_path, class: 'btn btn-info' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= User.human_attribute_name(:id) %></th>
+          <th><%= User.human_attribute_name(:name) %></th>
+          <th><%= User.human_attribute_name(:email) %></th>
+          <th><%= User.human_attribute_name(:tel) %></th>
+          <th><%= User.human_attribute_name(:state) %></th>
+          <th><%= User.human_attribute_name(:created_at) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @users.present? %>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.tel %></td>
+              <td><%= user.state_i18n %></td>
+              <td><%= datetime_ja(user.created_at) %></td>
+              <td>
+                <%= link_to '詳細', admin_user_path(user), class: 'btn btn-default' %>
+                <%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary' %>
+                <%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= User.model_name.human %>はいません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @users %>
+  </div>
+</div>

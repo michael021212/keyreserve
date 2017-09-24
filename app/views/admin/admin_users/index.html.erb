@@ -1,0 +1,42 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= AdminUser.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to '新規追加', new_admin_admin_user_path, class: 'btn btn-info' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= AdminUser.human_attribute_name(:id) %></th>
+          <th><%= AdminUser.human_attribute_name(:name) %></th>
+          <th><%= AdminUser.human_attribute_name(:email) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @admin_users.present? %>
+          <% @admin_users.each do |admin_user| %>
+            <tr>
+              <td><%= admin_user.id %></td>
+              <td><%= admin_user.name %></td>
+              <td><%= admin_user.email %></td>
+              <td>
+                <%= link_to '編集', edit_admin_admin_user_path(admin_user), class: 'btn btn-primary' %>
+                <%= link_to '削除', admin_admin_user_path(admin_user), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= AdminUser.model_name.human %>はいません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @admin_users %>
+  </div>
+</div>

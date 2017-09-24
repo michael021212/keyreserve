@@ -1,0 +1,39 @@
+<% breadcrumb :admin_payment, @payment %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Payment.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", admin_payments_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Payment.human_attribute_name(:id) %></th>
+        <td><%= @payment.id %></td>
+      </tr>
+      <tr>
+        <th><%= Payment.human_attribute_name(:created_at) %></th>
+        <td><%= date_ja @payment.created_at %></td>
+      </tr>
+      <tr>
+        <th><%= Room.human_attribute_name(:room_number) %></th>
+        <td><%= link_to @payment.room_key.room.room_number, admin_target_room_room_key_path(@payment) %></td>
+      </tr>
+      <tr>
+        <th><%= Plan.human_attribute_name(:name) %></th>
+        <td><%= @payment.plan.try(:name) %></td>
+      </tr>
+      <tr>
+        <th><%= Payment.human_attribute_name(:price) %></th>
+        <td><%= number_with_delimiter @payment.price %></td>
+      </tr>
+      <tr>
+        <th><%= Payment.human_attribute_name(:token) %></th>
+        <td><%= @payment.token %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+

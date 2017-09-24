@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       admin_user: 管理者
+      corporation: 法人
     attributes:
       admin_user:
         id: ID
@@ -10,6 +11,14 @@ ja:
         encrypted_password: パスワード
         password: パスワード
         password_confirmation: パスワード確認
+      corporation:
+        name: 法人名
+        kana: 法人名(カナ)
+        tel: 電話番号
+        postal_code: 郵便番号
+        address: 住所
+        note: 備考
+        state: 状態
   enums:
     user:
       state:

@@ -1,0 +1,127 @@
+<% breadcrumb :admin_corporation, @corporation %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Corporation.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", admin_corporations_path, class: 'btn btn-default' %>
+      <%= link_to "編集", edit_admin_corporation_path(@corporation), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Corporation.human_attribute_name(:id) %></th>
+        <td><%= @corporation.id %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:name) %></th>
+        <td><%= @corporation.name %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:kana) %></th>
+        <td><%= @corporation.kana %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:state) %></th>
+        <td><%= @corporation.state_i18n %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:tel) %></th>
+        <td><%= @corporation.tel %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:fax) %></th>
+        <td><%= @corporation.fax %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:postal_code) %></th>
+        <td><%= @corporation.postal_code %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:address) %></th>
+        <td><%= @corporation.address %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:note) %></th>
+        <td><%= @corporation.note  %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<hr />
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Room.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to "新規追加", new_admin_corporation_room_path(@corporation), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= Room.human_attribute_name(:id) %></th>
+          <th><%= Room.human_attribute_name(:room_number) %></th>
+          <th><%= Room.human_attribute_name(:contact) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @corporation.rooms.each do |room| %>
+          <tr>
+            <td><%= room.id %></td>
+            <td><%= room.room_number %></td>
+            <td><%= room.contact %></td>
+            <td>
+              <%= link_to '詳細', admin_corporation_room_path(@corporation, room), class: 'btn btn-default' %>
+              <%= link_to '編集', edit_admin_corporation_room_path(@corporation, room), class: 'btn btn-primary' %>
+              <%= link_to '削除', admin_corporation_room_path(@corporation, room), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr />
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= PropertyManager.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to "新規追加", new_admin_corporation_property_manager_path(@corporation), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= PropertyManager.human_attribute_name(:id) %></th>
+          <th><%= PropertyManager.human_attribute_name(:name) %></th>
+          <th><%= PropertyManager.human_attribute_name(:nickname) %></th>
+          <th><%= PropertyManager.human_attribute_name(:email) %></th>
+          <th><%= PropertyManager.human_attribute_name(:tel) %></th>
+          <th><%= PropertyManager.human_attribute_name(:state) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @corporation.property_managers.each do |property_manager| %>
+          <tr>
+            <td><%= property_manager.id %></td>
+            <td><%= property_manager.name %></td>
+            <td><%= property_manager.nickname %></td>
+            <td><%= property_manager.email %></td>
+            <td><%= property_manager.tel %></td>
+            <td><%= property_manager.state_i18n %></td>
+            <td>
+              <%= link_to '詳細', admin_corporation_property_manager_path(@corporation, property_manager), class: 'btn btn-default' %>
+              <%= link_to '編集', edit_admin_corporation_property_manager_path(@corporation, property_manager), class: 'btn btn-primary' %>
+              <%= link_to '削除', admin_corporation_property_manager_path(@corporation, property_manager), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
