@@ -49,6 +49,7 @@ gem 'email_validator'
 
 # Soft delete
 gem 'paranoia'
+gem 'paranoia_uniqueness_validator', '3.0.0'
 
 # Breadcrumbs
 gem 'gretel'
