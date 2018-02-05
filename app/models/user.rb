@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :email, email: true, length: { maximum: 255 }, allow_blank: true
   validates :name, presence: true, length: { maximum: 255 }
-  validates :tel, 
+  validates :tel,
             presence: true, length: { maximum: 13 },
             numericality: { only_integer: true, allow_blank: true }
   validates :password, confirmation: true, presence:true, length: { minimum: 4, maximum: 20, allow_blank: true }, if: -> { new_record? || changes[:crypted_password] }

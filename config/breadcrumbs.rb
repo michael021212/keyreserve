@@ -16,14 +16,9 @@ crumb :new_admin_admin_user do
   parent :admin_admin_users
 end
 
-crumb :admin_admin_user do |admin_user|
-  link '管理者詳細', admin_admin_user_path(admin_user)
-  parent :admin_admin_users
-end
-
 crumb :edit_admin_admin_user do |admin_user|
   link '管理者編集', admin_admin_user_path(admin_user)
-  parent :admin_admin_user, admin_user
+  parent :admin_admin_users
 end
 
 # admin_corporations
