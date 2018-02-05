@@ -1,0 +1,16 @@
+// admin/に共通なstylesheetはここに記述する
+@media screen and (max-width:480px) {
+  body {
+    font-size: 11px;
+  }
+}
+
+.help-block {
+  color: #ddd;
+  font-size: smaller;
+  margin-top: 2px;
+}
+
+.btn {
+  margin-bottom: 5px;
+}
