@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index]
     resources :admin_users
     # resources :plans
+    resources :users
     resources :corporations do
       resources :users
     end

@@ -1,14 +1,10 @@
-<% if corporation? %>
-  <% breadcrumb :edit_admin_corporation_user, @corporation, @user %>
-<% else %>
-  <% breadcrumb :edit_admin_user, @user %>
-<% end %>
+<% breadcrumb :edit_admin_user, @user %>
 
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= User.model_name.human %>編集</h4>
   </div>
   <div class="box-body">
-    <%= render 'form', user: @user, corporation: @corporation %>
+    <%= render 'form', user: @user %>
   </div>
 </div>

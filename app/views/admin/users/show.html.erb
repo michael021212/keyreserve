@@ -1,15 +1,11 @@
-<% if corporation? %>
-  <% breadcrumb :admin_corporation_user, @corporation, @user %>
-<% else %>
-  <% breadcrumb :admin_user, @user %>
-<% end %>
+<% breadcrumb :admin_user, @user %>
 
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= User.model_name.human %>詳細</h4>
     <div class="box-tools">
-      <%= link_to "戻る", corporation? ? [:admin, @corporation] : admin_users_path, class: 'btn btn-default' %>
-      <%= link_to "編集", corporation? ? edit_admin_corporation_user_path(@corporation, @user) : edit_admin_user_path(@user), class: 'btn btn-primary' %>
+      <%= link_to "戻る", admin_users_path, class: 'btn btn-default' %>
+      <%= link_to "編集", edit_admin_user_path(@user), class: 'btn btn-primary' %>
     </div>
   </div>
   <div class="box-body">
@@ -19,13 +15,16 @@
         <td><%= @user.id %></td>
       </tr>
       <tr>
-        <th><%= User.human_attribute_name(:corporation_id) %></th>
-        <th><%= Corporation.model_name.human %></td>
-        <td>
-          <% @user.corporations do |corporation| %>
-            <%= link_to corporation.name, admin_corporation_path(corporation.id) %><br>
-          <% end %>
-        </td>
+        <th><%= User.human_attribute_name(:name) %></th>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:email) %></th>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:tel) %></th>
+        <td><%= @user.tel %></td>
       </tr>
       <tr>
         <th><%= User.human_attribute_name(:state) %></th>
@@ -34,18 +33,6 @@
       <tr>
         <th><%= User.human_attribute_name(:payway) %></th>
         <td><%= @user.payway_i18n %></td>
-      </tr>
-      <tr>
-        <th><%= User.human_attribute_name(:email) %></th>
-        <td><%= @user.email %></td>
-      </tr>
-      <tr>
-        <th><%= User.human_attribute_name(:name) %></th>
-        <td><%= @user.name %></td>
-      </tr>
-      <tr>
-        <th><%= User.human_attribute_name(:tel) %></th>
-        <td><%= @user.tel %></td>
       </tr>
     </table>
   </div>
