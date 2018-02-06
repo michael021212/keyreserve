@@ -8,7 +8,7 @@ ja:
       admin_user:
         id: ID
         name: 名前
-        email: ユーザーID（メールアドレス）
+        email: ユーザID（メールアドレス）
         encrypted_password: パスワード
         password: パスワード
         password_confirmation: パスワード確認
@@ -41,7 +41,7 @@ ja:
     user:
       state:
         registered: 登録済み
-        activated: カード登録済み
+        activated: 課金登録済み
       payway:
         creditcard: クレジットカード
         invoice: 請求書
