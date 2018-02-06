@@ -11,7 +11,7 @@ class User < ApplicationRecord
   enum payway: { creditcard: 1, invoice: 2 }
 
   validates :name, :email, presence: true, length: { maximum: 255 }
-  validates :email, email: true, uniqueness_without_deleted: true
+  validates :email, email: true
   validates :tel,
             presence: true, length: { maximum: 13 }, numericality: { only_integer: true }
   validates :password, confirmation: true, presence:true, length: { minimum: 4, maximum: 20, allow_blank: true }, if: -> { new_record? || changes[:crypted_password] }

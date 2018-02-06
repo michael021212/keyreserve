@@ -29,12 +29,12 @@ end
 
 crumb :admin_corporation_user do |corporation, user|
   link 'ユーザ詳細', admin_corporation_user_path(corporation, user)
-  parent :admin_corporation, corporation
+  parent :edit_admin_corporation_user, corporation, user
 end
 
 crumb :edit_admin_corporation_user do |corporation, user|
   link 'ユーザ編集', edit_admin_corporation_user_path(corporation, user)
-  parent :admin_corporation_user, corporation, user
+  parent :admin_corporation, corporation
 end
 
 # admin_users
