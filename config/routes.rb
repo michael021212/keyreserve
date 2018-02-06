@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     post '/sign_in' => 'sessions#create'
     get '/sign_out' => 'sessions#destroy'
     resources :dashboards, only: [:index]
-    resources :admin_users
+    resources :admin_users, except: [:show]
     # resources :plans
     resources :users
     resources :corporations do
