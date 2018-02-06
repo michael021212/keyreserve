@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     # resources :plans
     resources :users
     resources :corporations do
-      resources :users
+      resources :users, controller: 'corporations/users', except: [:index]
     end
   end
 end

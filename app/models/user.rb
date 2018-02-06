@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :corporation_users, dependent: :destroy
   has_many :corporations, through: :corporation_users
 
+  accepts_nested_attributes_for :corporation_users
+
   enum state: { registered: 0, activated: 1 }
   enum payway: { creditcard: 1, invoice: 2 }
 
