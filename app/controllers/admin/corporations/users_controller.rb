@@ -22,7 +22,7 @@ class Admin::Corporations::UsersController < AdminController
   def update
     if @user.update(user_params)
       flash[:notice] = "#{User.model_name.human}を更新しました。"
-        redirect_to admin_corporation_user_path(@corporation, @user)
+      redirect_to admin_corporation_user_path(@corporation, @user)
     else
       render :edit
     end
@@ -47,7 +47,7 @@ class Admin::Corporations::UsersController < AdminController
   def user_params
     params.require(:user).permit(
       :email, :password, :password_confirmation, :name, :tel, :state, :payway,
-      corporation_users_attributes: [:corporation_id]
+      corporation_users_attributes: [:id, :corporation_id]
     )
   end
 end
