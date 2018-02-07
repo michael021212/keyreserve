@@ -1,4 +1,4 @@
-<%= bootstrap_form_for([:admin, @admin_user]) do |f| %>
+<%= bootstrap_form_for([:admin, :corporations, @admin_user]) do |f| %>
   <%= f.text_field :name, class: 'form-control' %>
   <%= f.text_field :email, class: 'form-control' %>
   <% if f.object.new_record? %>

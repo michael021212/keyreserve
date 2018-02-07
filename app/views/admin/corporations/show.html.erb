@@ -58,17 +58,19 @@
           <th><%= User.human_attribute_name(:email) %></th>
           <th><%= User.human_attribute_name(:tel) %></th>
           <th><%= User.human_attribute_name(:state) %></th>
+          <th><%= User.human_attribute_name(:payway) %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
       <tbody>
-        <% @corporation.users.each do |user| %>
+        <% @corporation.users.reverse_order.each do |user| %>
           <tr>
             <td><%= user.id %></td>
             <td><%= user.name %></td>
             <td><%= user.email %></td>
             <td><%= user.tel %></td>
             <td><%= user.state_i18n %></td>
+            <td><%= user.payway_i18n %></td>
             <td>
               <%= link_to '詳細', admin_corporation_user_path(@corporation, user), class: 'btn btn-default' %>
               <%= link_to '編集', edit_admin_corporation_user_path(@corporation, user), class: 'btn btn-primary' %>
