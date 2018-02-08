@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%= Settings.sitename %>ログイン画面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&amp;subset=latin" rel="stylesheet" type="text/css">
+
+
+    <!-- LanderApp's stylesheets -->
+    <%= stylesheet_link_tag 'users/application', media: 'all' %>
+    <%= javascript_include_tag 'users/application' %>
+    <%= csrf_meta_tags %>
+    <!--<#%= render 'application/favicon' %>-->
+  </head>
+  <body class="hold-transition login-page">
+    <div class="corporation-login-box">
+      <div class="login-logo">
+        <b><%= Settings.sitename %></b><br><small>ログイン画面</small>
+      </div>
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+        <%= render 'shared/flash' %>
+        <%= yield %>
+      </div>
+      <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
+  </body>
+</html>

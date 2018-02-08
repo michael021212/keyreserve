@@ -1,0 +1,10 @@
+<%= bootstrap_form_tag do |f| %>
+  <%= f.email_field :email, label: "メールアドレス", autofocus: true, icon: "envelope" %>
+  <%= f.password_field :password, label: "パスワード", autocomplete: "off", icon: "lock" %>
+  <div class="row">
+    <div class="col-md-12">
+      <%= link_to 'パスワードを忘れた方', reminder_users_sessions_path, class: 'pull-right' %>
+    </div>
+  </div>
+  <%= f.submit 'ログイン', class: 'btn btn-primary btn-login' %>
+<% end %>
