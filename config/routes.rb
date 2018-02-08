@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :user, only: [:new, :create]
   namespace :users do
     get '/' => 'dashboards#index'
     get '/sign_in' => 'sessions#new'

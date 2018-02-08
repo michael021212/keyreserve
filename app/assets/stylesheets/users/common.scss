@@ -1,6 +1,15 @@
-.user-login-box {
-  width: 30%;
-  margin: 7% auto;
+@media screen and (min-width:481px) {
+  .user-login-box {
+    width: 30%;
+    margin: 7% auto;
+  }
+}
+
+@media screen and (max-width:480px) {
+  .user-login-box {
+    width: 90%;
+    margin: 7% auto;
+  }
 }
 
 .btn-login {
@@ -10,4 +19,3 @@
   margin-right: auto;
   width: 30%;
 }
-
