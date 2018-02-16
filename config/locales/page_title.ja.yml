@@ -39,7 +39,7 @@ ja:
         title: ユーザ編集
       show:
         title: ユーザ詳細
-  corporation:
+  users:
     dashboards:
       index:
         title: ダッシュボード

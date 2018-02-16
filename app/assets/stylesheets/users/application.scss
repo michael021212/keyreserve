@@ -15,7 +15,14 @@
 @import "jquery-ui";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "AdminLTE/AdminLTE";
-@import "AdminLTE/skins/skin-black";
+@import 'font-awesome';
+@import 'owl.carousel';
+@import 'owl.theme';
+@import 'owl.transitions';
+@import 'cs-select';
+@import 'bootstrap-datepicker3.min';
+@import 'freepik.hotels';
+@import 'style';
+@import 'common';
 @import 'common.sass';
 @import 'users/common';
