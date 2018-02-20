@@ -1,4 +1,4 @@
-class Users::DashboardsController < Users::ApplicationController
+class Users::DashboardsController < ApplicationController
   layout 'users/layouts/dashboard'
   def index; end
 end

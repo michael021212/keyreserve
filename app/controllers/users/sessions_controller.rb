@@ -1,4 +1,4 @@
-class Users::SessionsController < Users::ApplicationController
+class Users::SessionsController < ApplicationController
   layout 'users/layouts/sign_in'
   skip_before_action :require_login
 
