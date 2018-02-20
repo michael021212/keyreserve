@@ -1,3 +1,7 @@
+.content {
+  color: #fff;
+}
+
 .container-fluid.detail {
     padding-right: 0 !important;
     padding-left: 0 !important;
@@ -9,8 +13,9 @@
     opacity: 0.9
 }
 
-.content {
-  color: #fff;
+.container-fluid.header {
+  background: dimgrey;
+  opacity: 0.9;
 }
 
 #wrapper {
@@ -193,11 +198,6 @@
 
 .register-btn {
   width: 300px;
-}
-
-.container-fluid.header {
-  background: dimgrey;
-  opacity: 0.9;
 }
 
 .box-title {
