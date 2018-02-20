@@ -18,6 +18,6 @@ class Admin::SessionsController < AdminController
 
   def destroy
     session[:admin_user_id] = nil
-    redirect_to admin_sign_in_path, notice: 'ログアウトしました。'
+    redirect_to admin_sign_in_path, notice: 'ログアウトしました'
   end
 end

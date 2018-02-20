@@ -1,5 +1,5 @@
 class Corporations::UsersController < Users::ApplicationController
-  before_action :set_janitor, only: [:show]
+  before_action :set_user, only: [:show]
 
   def index
     @users = current_corporation.users
