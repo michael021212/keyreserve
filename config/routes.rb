@@ -15,9 +15,9 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/dashboard' => 'users/dashboards#index'
   resource :user, only: [:new, :create]
   namespace :users do
+    get '/dashboard' => 'dashboards#index'
     get '/sign_in' => 'sessions#new'
     post '/sign_in' => 'sessions#create'
     get '/sign_out' => 'sessions#destroy'
@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   end
 
   namespace :corporations do
+    get '/dashboard' => 'dashboards#index'
     resources :users, only: [:index, :new, :create, :show]
   end
 end

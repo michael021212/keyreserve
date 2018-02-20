@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic|Playfair+Display:400,400italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
+    <title><%= Settings.sitename %> 使用者画面</title>
+    <%= stylesheet_link_tag 'corporations/application', media: 'all' %>
+    <%= javascript_include_tag 'corporations/application' %>
+    <%= csrf_meta_tags %>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+      <!--<#%= render 'application/favicon' %>-->
+  </head>
+  <body class="style">
+    <div class="mg-page-title parallax">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Fullwidth Page</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= render 'corporations/shared/header' %>
+    <%= render "shared/flash" %>
+    <section>
+      <%= yield %>
+    </section>
+    <!-- Footer -->
+    <footer class="mg-footer">
+      <div class="mg-footer-widget">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3 col-sm-6">
+              <div class="widget">
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="widget">
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="widget">
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="widget">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mg-copyright">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+              <p>&copy; 2015 <a href="http://www.cantothemes.com">CantoThemes</a>. All rights reserved.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

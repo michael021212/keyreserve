@@ -14,7 +14,7 @@ class UsersController < ApplicationController
         @user.corporation_users.create(corporation_id: corporation.id) if corporation.present?
         format.html do
           auto_login(@user)
-          redirect_to dashboard_path
+          redirect_to corporations_dashboard_path
         end
       else
         render :new
