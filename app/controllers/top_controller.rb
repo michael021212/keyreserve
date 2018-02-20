@@ -4,7 +4,7 @@ class TopController < ApplicationController
 
   def index
     if logged_in?
-      redirect_to users_path
+      redirect_to dashboard_path
     else
       flash[:alert] = '会員登録してください'
       redirect_to users_sign_in_path

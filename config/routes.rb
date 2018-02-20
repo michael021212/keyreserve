@@ -15,9 +15,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/dashboard' => 'users/dashboards#index'
   resource :user, only: [:new, :create]
   namespace :users do
-    get '/' => 'dashboards#index'
     get '/sign_in' => 'sessions#new'
     post '/sign_in' => 'sessions#create'
     get '/sign_out' => 'sessions#destroy'
@@ -29,5 +29,9 @@ Rails.application.routes.draw do
         patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
       end
     end
+  end
+
+  namespace :corporations do
+    resources :users, only: [:index, :new, :create, :show]
   end
 end
