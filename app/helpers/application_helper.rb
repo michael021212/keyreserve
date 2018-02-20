@@ -54,4 +54,9 @@ module ApplicationHelper
     return "" if d.blank?
     d.strftime("%m月%d日(#{%w(日 月 火 水 木 金 土)[d.wday]})")
   end
+
+  def time_fmt(t)
+    return '' if t.blank?            
+    t.try(:strftime, '%H:%M')
+  end
 end
