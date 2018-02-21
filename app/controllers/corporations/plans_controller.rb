@@ -15,7 +15,7 @@ class Corporations::PlansController < ApplicationController
       redirect_to corporations_plan_path(@plan), notice: "#{Plan.model_name.human}を作成しました。"
     else
       render :new
-    end 
+    end
   end
 
   def edit; end
