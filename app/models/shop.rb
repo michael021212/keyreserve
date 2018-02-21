@@ -1,4 +1,5 @@
 class Shop < ApplicationRecord
+  acts_as_paranoid
   belongs_to :corporation
 
   geocoded_by :address, latitude: :lat, longitude: :lon
