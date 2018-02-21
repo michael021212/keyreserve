@@ -2,7 +2,7 @@ class Corporations::UsersController < ApplicationController
   before_action :set_user, only: [:show]
 
   def index
-    @users = current_corporation.users
+    @users = current_corporation.users.order(id: :desc).page(params[:page])
   end
 
   def show; end
