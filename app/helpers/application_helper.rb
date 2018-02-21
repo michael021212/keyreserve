@@ -54,4 +54,9 @@ module ApplicationHelper
     return "" if d.blank?
     d.strftime("%m月%d日(#{%w(日 月 火 水 木 金 土)[d.wday]})")
   end
+
+  def delimiter_price(num)                                                                                                                          
+    num = num ? num : 0
+    "#{number_with_delimiter num} 円"
+  end
 end
