@@ -65,6 +65,9 @@ group :development, :test do
   # Email
   gem 'letter_opener'
 
+  # Geocoding
+  gem 'geocoder'
+
   # CLI
   gem 'spring'
   gem 'spring-commands-rspec'

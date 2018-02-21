@@ -3,6 +3,7 @@ class Corporation < ApplicationRecord
   has_many :corporation_users, dependent: :destroy
   has_many :users, through: :corporation_users
   has_many :plans, dependent: :destroy
+  has_many :shops, dependent: :destroy
   accepts_nested_attributes_for :users
 
   validates :name, :kana, presence: true, length: { maximum: 255 }
