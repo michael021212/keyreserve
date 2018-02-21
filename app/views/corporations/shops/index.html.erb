@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <th><%= Shop.human_attribute_name(:name) %></th>
-          <th><%= Shop.human_attribute_name(:postal_code) %></th>
+          <th><%= Shop.human_attribute_name(:tel) %></th>
           <th><%= Shop.human_attribute_name(:address) %></th>
           <th style="width: 200px;"></th>
         </tr>
@@ -20,7 +20,7 @@
           <% @shops.each do |shop| %>
             <tr>
               <td><%= shop.name %></td>
-              <td><%= shop.postal_code %></td>
+              <td><%= shop.tel %></td>
               <td><%= shop.address %></td>
               <td>
                 <%= link_to '詳細', corporations_shop_path(shop), class: 'btn btn-default' %>
