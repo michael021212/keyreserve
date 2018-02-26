@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       collection do
         get :reminder
         post :post_reminder
-        get 'reset_password/:token', to: 'sessions#reset_password', as: 'reset_password_token'
+        get 'reset_password/:token', to: 'sessions#reset_password', as: 'reset_password'
         patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
       end
     end
