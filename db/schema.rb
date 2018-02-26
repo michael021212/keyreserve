@@ -65,6 +65,16 @@ ActiveRecord::Schema.define(version: 20180221014456) do
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 
+  create_table "facility_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id", null: false
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_id"], name: "index_facility_plans_on_facility_id"
+    t.index ["plan_id"], name: "index_facility_plans_on_plan_id"
+  end
+
   create_table "payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id", null: false
     t.bigint "corporation_id", null: false
