@@ -16,7 +16,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "AdminLTE/AdminLTE";
-@import "AdminLTE/skins/skin-blue";
+@import "AdminLTE/skins/skin-black";
 @import 'font-awesome';
 @import 'owl.carousel';
 @import 'owl.theme';
@@ -26,5 +26,6 @@
 @import 'freepik.hotels';
 @import 'style';
 @import 'additional_style';
+@import 'common';
 @import 'common.sass';
 @import 'users/common';
