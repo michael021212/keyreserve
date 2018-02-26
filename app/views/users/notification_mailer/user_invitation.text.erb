@@ -1,0 +1,4 @@
+<%= @corporation.name %>様からの招待お知らせです。
+
+下記のリンクから新規登録またはログインをして下さい。
+<%= new_user_url(token: @corporation.token) %>

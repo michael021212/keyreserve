@@ -65,6 +65,12 @@ group :development, :test do
   # Email
   gem 'letter_opener'
 
+  # Geocoding
+  gem 'geocoder'
+
+  # manage multiple nested models
+  gem 'nested_form'
+
   # CLI
   gem 'spring'
   gem 'spring-commands-rspec'

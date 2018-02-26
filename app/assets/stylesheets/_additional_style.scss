@@ -1,0 +1,215 @@
+.content {
+  color: #fff;
+}
+
+.container-fluid.detail {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    background-color: #16262e;
+    overflow: hidden;
+    padding-bottom: 10%;
+    min-height: 100vh;
+    position:relative; /* needed for footer positioning*/
+    opacity: 0.9
+}
+
+.container-fluid.header {
+  background: dimgrey;
+  opacity: 0.9;
+}
+
+#wrapper {
+  position:relative; /* needed for footer positioning*/
+  margin:0 auto; /* center, not in IE5 */
+  width:100%;
+  height:auto !important; /* real browsers */
+  height:100%; /* IE6: treaded as min-height*/
+  min-height:100%; /* real browsers */
+  background-image: image-url("bg.jpg");
+    background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+}
+
+.navbar-default, .panel, .panel-default>.panel-heading {
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.detail>.row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* login page*/
+
+.panel-heading.login-page{
+    text-align: center;
+    margin-top: 135px;
+    margin-bottom: 40px;
+}
+
+.login-page-btn {
+    background: #d6d824;
+    color: #000;
+}
+
+.panel-heading .login-page-btn {
+    border-radius: 24px;
+    padding: 12px;
+    width: 220px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.login-form .btn-fb {
+    color: #ffffff;
+    background-color: rgba(68,96,162,0.7);;
+    border-color: transparent;
+}
+
+.login-form .btn-fb, .login-form .login-page-btn {
+    width: 230px
+}
+
+.login-form .btn-fb:hover {
+    color: #ffffff;
+    background-color: rgba(57,83,142,0.7);
+}
+
+.login-form .btn-fb img{
+    padding: 0 10px;
+    margin-left: -10px;
+}
+
+.strike {
+        display: block;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        margin: 30px auto;
+        width: 365px;
+    }
+
+.strike > span {
+        position: relative;
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.3);
+        padding: 5px;
+        color: #000000;
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+        line-height: 21px;
+}
+
+.strike > span:before,
+.strike > span:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 9999px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.3);
+}
+
+.strike > span:before {
+        right: 100%;
+}
+
+.strike > span:after {
+        left: 100%;
+}
+
+.login-form .input-group-addon{
+    width: 35px !important;
+    padding: 6px 8px !important;
+}
+.login-form .input-group{
+    width: 330px;
+    margin: 10px auto;
+    text-align: center;
+}
+.login-set .btn{
+    width: 330px;
+}
+
+.login-form .input-group input {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    background-color: #fff !important;
+    color: #000;
+    border: transparent;
+    position: relative;
+    z-index: 50;
+    border: 1px solid rgba(0,0, 0, 0.1) !important;
+}
+
+.login-form .input-group-addon {
+    background-color: rgba(0,0, 0, 0.3);
+    border: transparent;
+}
+
+.login-form .form-control {
+    padding: 6px 8px;
+    color: #000 !important;
+}
+
+
+#email:-webkit-autofill {
+    background-color: white !important;
+}
+
+.forgot-pwd a {
+    text-align: right;
+    font-size: 12px;
+    color: #d6d824;
+    float: right;
+}
+.forgot-pwd {
+    width: 330px;
+    text-align: center;
+    margin: auto;
+}
+
+.forgot-pwd a:hover{ color: #d6d824; text-decoration: none; }
+.login-form .login-set {
+    margin-top: 40px;
+}
+
+.btn-cancel {
+    background-color: rgba(0,0, 0, 0.5);
+    width: 100%;
+    min-width: 100px;
+}
+
+.btn-cancel:hover {
+    color: #ffffff !important;
+}
+
+#user_payway.form-control {
+  height: 38px;
+}
+
+.btn{
+  border-radius: 3px;
+}
+
+.register-btn {
+  width: 300px;
+}
+
+.box-title {
+  font-size: 2em !important;
+  padding: 30px 30px 0 30px !important;
+}
+
+.box-body {
+  padding: 40px;
+}
+
+.time-select {
+  width: auto;
+  display: inline;
+}

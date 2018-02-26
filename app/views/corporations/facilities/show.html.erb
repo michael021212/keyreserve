@@ -1,0 +1,23 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Facility.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", corporations_shop_path(@shop), class: 'btn btn-default' %>
+      <%= link_to "編集", edit_corporations_shop_facility_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th style="width: 200px;"><%= Facility.human_attribute_name(:name) %></th>
+        <td><%= @facility.name %></td>
+      </tr>
+      <% @facility.plans.each_with_index do |plan, i| %>
+        <tr>
+          <th><%= FacilityPlan.human_attribute_name(:plan_id) if i == 0 %></th>
+          <td><%= plan.name %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

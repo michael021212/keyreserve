@@ -1,4 +1,4 @@
-class UsersController < Users::ApplicationController
+class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
   layout 'users/layouts/register'
 
@@ -7,12 +7,14 @@ class UsersController < Users::ApplicationController
   end
 
   def create
+    corporation ||= Corporation.find_by(token: params[:user][:corporation_token])
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
+        @user.corporation_users.create(corporation_id: corporation.id) if corporation.present?
         format.html do
           auto_login(@user)
-          redirect_to users_path
+          redirect_to current_corporation? ? corporations_dashboard_path : users_dashboard_path
         end
       else
         render :new
