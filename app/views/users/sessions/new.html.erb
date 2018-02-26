@@ -1,10 +1,45 @@
-<%= bootstrap_form_tag do |f| %>
-  <%= f.email_field :email, label: "メールアドレス", autofocus: true, icon: "envelope" %>
-  <%= f.password_field :password, label: "パスワード", autocomplete: "off", icon: "lock" %>
-  <div class="row">
-    <div class="col-md-12">
-      <%= link_to 'パスワードを忘れた方', reminder_users_sessions_path, class: 'pull-right' %>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading login-page">
+    <%= image_tag 'login_logo.png' %>
   </div>
-  <%= f.submit 'ログイン', class: 'btn btn-primary btn-login' %>
-<% end %>
+  <div class="panel-body">
+    <%= form_tag(users_sessions_path, class: 'login-form text-center') do %>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="strike">
+            <span class="img-circle">Or</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group">
+            <label class="input-group-addon" id="sizing-addon2"><%= image_tag 'icon/ic_email.png' %></label>
+            <%= text_field_tag :email, params[:email], class: "form-control", placeholder: "メールアドレス" %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group">
+            <label class="input-group-addon" id="sizing-addon2"><%= image_tag 'icon/ic_lock.png' %></label>
+            <%= password_field_tag :password, '', id: 'password', class: "form-control login-page-textfield", placeholder: 'パスワード' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <p class="forgot-pwd"><%= link_to 'アカウント登録', new_user_path %></p>
+        </div>
+        <div class="col-md-12">
+          <p class="forgot-pwd"><%= link_to 'パスワードを忘れた方', reminder_users_sessions_path %></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 login-set">
+          <%= button_tag "ログイン", class: "btn login-page-btn" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

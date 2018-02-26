@@ -16,5 +16,16 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "AdminLTE/AdminLTE";
-@import "AdminLTE/skins/skin-black";
+@import "AdminLTE/skins/skin-blue";
+@import 'font-awesome';
+@import 'owl.carousel';
+@import 'owl.theme';
+@import 'owl.transitions';
+@import 'cs-select';
+@import 'bootstrap-datepicker3.min';
+@import 'freepik.hotels';
+@import 'style';
+@import 'additional_style';
+@import 'common';
+@import 'common.sass';
 @import 'users/common';
