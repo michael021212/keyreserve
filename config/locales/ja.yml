@@ -4,7 +4,9 @@ ja:
       admin_user: 管理者
       corporation: 法人
       user: ユーザ
+      plan: プラン
       shop: 店舗
+      facility: 施設
     attributes:
       admin_user:
         id: ID
@@ -34,6 +36,9 @@ ja:
         state: 状態
         payway: 支払い方法
         created_at: 登録日時
+      plan:
+        name: プラン名
+        price: 月額
       shop:
         name: 店舗名
         postal_code: 郵便番号
@@ -43,6 +48,10 @@ ja:
         tel: 電話番号
         opening_time: 開店時間
         closing_time: 閉店時間
+      facility:
+        name: 施設名
+      facility_plan:
+        plan_id: 施設利用可能プラン
   enums:
     corporation:
       payway:

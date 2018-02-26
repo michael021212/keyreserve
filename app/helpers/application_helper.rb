@@ -56,7 +56,12 @@ module ApplicationHelper
   end
 
   def time_fmt(t)
-    return '' if t.blank?            
+    return '' if t.blank?
     t.try(:strftime, '%H:%M')
+  end
+
+  def delimiter_price(num)
+    num = num ? num : 0
+    "#{number_with_delimiter num} 円"
   end
 end

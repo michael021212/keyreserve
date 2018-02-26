@@ -19,6 +19,12 @@
               ユーザ管理
             <% end %>
           </li>
+          <li class="<%= active_class('corporations/plans') %>">
+            <%= link_to corporations_plans_path do %>
+              プラン管理
+            <% end %>
+          </li>
+          <li>
           <li class="<%= active_class('corporations/shops') %>">
             <%= link_to corporations_shops_path do %>
               店舗管理
