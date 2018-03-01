@@ -1,42 +1,38 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title"><%= Shop.model_name.human %>一覧</h4>
-    <div class="box-tools">
-      <%= link_to "新規追加", new_corporations_shop_path, class: 'btn btn-info' %>
-    </div>
-  </div>
-  <div class="box-body">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th><%= Shop.human_attribute_name(:name) %></th>
-          <th><%= Shop.human_attribute_name(:tel) %></th>
-          <th><%= Shop.human_attribute_name(:address) %></th>
-          <th style="width: 200px;"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @shops.present? %>
-          <% @shops.each do |shop| %>
-            <tr>
-              <td><%= shop.name %></td>
-              <td><%= shop.tel %></td>
-              <td><%= shop.address %></td>
-              <td>
-                <%= link_to '詳細', corporations_shop_path(shop), class: 'btn btn-default' %>
-                <%= link_to '編集', edit_corporations_shop_path(shop), class: 'btn btn-primary' %>
-              </td>
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
 <div class="mg-page">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
+        <div class="mg-sec-title">
+          <h2><%= Shop.model_name.human %>一覧</h2>
+        </div>
+        <div class="mb50">
+          <%= link_to "新規追加", new_corporations_shop_path, class: 'btn btn-main' %>
+        </div>
+        <table class="table mb40">
+          <thead>
+            <tr>
+              <th><%= Shop.human_attribute_name(:name) %></th>
+              <th><%= Shop.human_attribute_name(:tel) %></th>
+              <th><%= Shop.human_attribute_name(:address) %></th>
+              <th style="width: 200px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @shops.present? %>
+              <% @shops.each do |shop| %>
+                <tr>
+                  <td><%= shop.name %></td>
+                  <td><%= shop.tel %></td>
+                  <td><%= shop.address %></td>
+                  <td>
+                    <%= link_to '詳細', corporations_shop_path(shop), class: 'btn btn-default' %>
+                    <%= link_to '編集', edit_corporations_shop_path(shop), class: 'btn btn-primary' %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

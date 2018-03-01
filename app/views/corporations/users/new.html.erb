@@ -1,11 +1,16 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title"><%= User.model_name.human %>新規招待</h4>
-  </div>
-  <div class="box-body">
-    <%= bootstrap_form_tag(url: corporations_users_path) do |f| %>
-      <%= f.email_field :email, label: "メールアドレス" %>
-      <%= f.submit '送信', :class => 'btn btn-primary' %>
-    <% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-sec-title"> <!-- panel-heading -->
+          <h2><%= User.model_name.human %>新規招待</h2>
+        </div>
+        <hr class="mb50 mt0">
+        <%= bootstrap_form_tag(url: corporations_users_path) do |f| %>
+          <%= f.email_field :email, label: "メールアドレス" %>
+          <%= f.submit '送信', class: 'btn btn-primary center-block' %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

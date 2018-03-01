@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   namespace :corporations do
     get '/dashboard' => 'dashboards#index'
     resources :users, only: [:index, :new, :create, :show]
-    resources :plans
+    resources :plans, except: [:show]
     resources :shops, except: [:destroy] do
       resources :facilities, except: [:index]
     end

@@ -1,5 +1,5 @@
 class Corporations::PlansController < ApplicationController
-  before_action :set_plan, only: [:show, :edit, :update, :destroy]
+  before_action :set_plan, only: [:edit, :update, :destroy]
 
   def index
     @plans = current_corporation.plans.order(created_at: :desc).page(params[:page])
@@ -12,7 +12,7 @@ class Corporations::PlansController < ApplicationController
   def create
     @plan = current_corporation.plans.new(plan_params)
     if @plan.save
-      redirect_to corporations_plan_path(@plan), notice: "#{Plan.model_name.human}を作成しました。"
+      redirect_to corporations_plans_path, notice: "#{Plan.model_name.human}を作成しました。"
     else
       render :new
     end
@@ -22,7 +22,7 @@ class Corporations::PlansController < ApplicationController
 
   def update
     if @plan.update(plan_params)
-      redirect_to corporations_plan_path(@plan), notice: "#{Plan.model_name.human}を更新しました。"
+      redirect_to corporations_plans_path, notice: "#{Plan.model_name.human}を更新しました。"
     else
       render :edit
     end

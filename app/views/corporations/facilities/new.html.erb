@@ -1,8 +1,12 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title"><%= Facility.model_name.human %>新規登録</h4>
-  </div>
-  <div class="box-body">
-    <%= render 'form', facility: @facility %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-sec-title">
+          <h2><%= Facility.model_name.human %>新規登録</h2>
+        </div>
+        <%= render 'form', facility: @facility %>
+      </div>
+    </div>
   </div>
 </div>

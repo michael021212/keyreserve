@@ -1,8 +1,12 @@
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title"><%= Plan.model_name.human %>編集</h4>
-  </div>
-  <div class="box-body">
-    <%= render 'form', plan: @plan %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-sec-title">
+          <h2><%= Plan.model_name.human %>編集</h2>
+        </div>
+        <%= render 'form', plan: @plan %>
+      </div>
+    </div>
   </div>
 </div>
