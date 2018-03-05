@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        法人情報情報編集
+      </div>
+      <div class="panel-body">
+        <%= bootstrap_form_for @corporation, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f| %>
+          <%= f.text_field :name, placeholder: "例)株式会社KEYSTATION" %>
+          <%= f.text_field :kana, placeholder: "例)カブシキガイシャキーステーション" %>
+          <%= f.text_field :tel, placeholder: "例)0312345678" %>
+          <%= f.text_field :postal_code, placeholder: "例)1500002" %>
+          <%= f.text_field :address, placeholder: "例)東京都渋谷区渋谷1-7-5" %>
+          <%= f.select(:ks_corporation_id, options_for_select(@ks_corporations, selected: f.object.ks_corporation_id), { include_blank: true }) if @ks_corporations.present? %>
+          <%= f.text_area :note, row: 3 %>
+          <%= f.submit class: 'btn btn-default center-block' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -57,6 +57,9 @@ gem 'gretel'
 # Seeds
 gem 'seed-fu'
 
+# HTTP client lib
+gem 'faraday'
+
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # gem 'capybara', '~> 2.13'

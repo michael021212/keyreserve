@@ -362,6 +362,7 @@ DEPENDENCIES
   email_validator
   enum_help
   factory_girl_rails
+  faraday
   font-awesome-rails
   geocoder
   gretel

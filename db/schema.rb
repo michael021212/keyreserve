@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180221014456) do
+ActiveRecord::Schema.define(version: 20180223045903) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20180221014456) do
     t.string "address"
     t.text "note"
     t.string "token"
+    t.integer "ks_corporation_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -63,6 +64,18 @@ ActiveRecord::Schema.define(version: 20180221014456) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
+  end
+
+  create_table "facility_keys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id", null: false
+    t.integer "key_id", null: false
+    t.integer "ks_room_key_id", null: false
+    t.string "name", null: false
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_id"], name: "index_facility_keys_on_facility_id"
   end
 
   create_table "facility_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

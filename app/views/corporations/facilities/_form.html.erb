@@ -1,5 +1,10 @@
-<%= bootstrap_nested_form_for([:corporations, @shop, facility]) do |f| %>
+<%= bootstrap_nested_form_for([:corporations, @shop, facility], layout: :horizontal) do |f| %>
   <%= f.text_field :name %>
+  <% if @ks_room_key_ids.present? %>
+    <%= f.fields_for :facility_keys do |fk| %>
+      <%= fk.select(:ks_room_key_id, options_for_select(@ks_room_key_ids, selected: fk.object.ks_room_key_id), include_blank: '鍵を選択してください') %>
+    <% end %>
+  <% end %>
   <%= f.fields_for :facility_plans do |fp| %>
     <div  class="form-inline">
       <%= fp.collection_select :plan_id, current_corporation.plans, :id, :name, { include_blank: 'プランを選択してください' , hide_label: true }, { class: 'add-link-column', inline: true } %>

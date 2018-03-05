@@ -14,6 +14,11 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
+         <li class="<%= active_class('corporations') %>">
+            <%= link_to corporation_path do %>
+              法人管理
+            <% end %>
+          </li>
           <li class="<%= active_class('corporations/users') %>">
             <%= link_to corporations_users_path do %>
               ユーザ管理

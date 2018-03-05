@@ -23,6 +23,7 @@ ja:
         address: 住所
         note: 備考
         state: 状態
+        ks_corporation_id: Keystation法人
       corporation_user:
         corporation_id: 法人
         user_id: ユーザ
@@ -50,6 +51,10 @@ ja:
         closing_time: 閉店時間
       facility:
         name: 施設名
+      facility_key:
+        ks_room_key_id: 鍵
+        name: 鍵名前
+        password: パスワード
       facility_plan:
         plan_id: 施設利用可能プラン
   enums:

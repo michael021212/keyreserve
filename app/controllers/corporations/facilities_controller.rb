@@ -1,9 +1,11 @@
 class Corporations::FacilitiesController < ApplicationController
   before_action :set_shop
   before_action :set_facility, only: [:show, :edit, :update, :destroy]
+  before_action :set_ks_room_key_ids, only: [:new, :edit]
 
   def new
     @facility = @shop.facilities.new
+    @facility.facility_keys.build
   end
 
   def create
@@ -15,7 +17,11 @@ class Corporations::FacilitiesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    if @ks_room_key_ids.present? && @facility.facility_keys.blank?
+       @facility.facility_keys.build
+    end
+  end
 
   def update
     if @facility.update(facility_params)
@@ -42,9 +48,14 @@ class Corporations::FacilitiesController < ApplicationController
     @facility = @shop.facilities.find(params[:id])
   end
 
+  def set_ks_room_key_ids
+    @ks_room_key_ids = Facility.sync_from_api(current_corporation.ks_corporation_id)
+  end
+
   def facility_params
     params.require(:facility).permit(
-      :name,
+      :shop_id, :name,
+      facility_keys_attributes: [:id, :facility_id, :key_id, :name, :ks_room_key_id],
       facility_plans_attributes: [:id, :plan_id, '_destroy']
     )
   end

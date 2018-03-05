@@ -31,6 +31,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :corporation, only: [:show, :edit, :update]
+  post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   namespace :corporations do
     get '/dashboard' => 'dashboards#index'
     resources :users, only: [:index, :new, :create, :show]

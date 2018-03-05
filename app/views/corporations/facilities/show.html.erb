@@ -14,6 +14,18 @@
             <th style="width: 200px;"><%= Facility.human_attribute_name(:name) %></th>
             <td><%= @facility.name %></td>
           </tr>
+          <% if @facility.facility_keys.present? %>
+            <tr>
+              <th style><%= FacilityKey.human_attribute_name(:name) %></th>
+              <!-- 今度施設の施設鍵が複数以上になったら、対応する-->
+              <td><%= @facility.facility_keys.first.name %></td>
+            </tr>
+            <tr>
+              <th style><%= FacilityKey.human_attribute_name(:password) %></th>
+              <!-- 今度施設の施設鍵が複数以上になったら、対応する-->
+              <td><%= @facility.facility_keys.first.password %></td>
+            </tr>
+          <% end %>
           <% @facility.plans.each_with_index do |plan, i| %>
             <tr>
               <th><%= FacilityPlan.human_attribute_name(:plan_id) if i == 0 %></th>
