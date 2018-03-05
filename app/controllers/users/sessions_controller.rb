@@ -43,7 +43,11 @@ class Users::SessionsController < ApplicationController
     if @user.change_password!(params[:user][:password])
       @user.generate_reset_password_token!
       auto_login(@user)
-      redirect_to users_path, notice: 'パスワードの再設定が完了しました。'
+      if current_corporation.present?
+        redirect_to corporations_dashboard_path, notice: 'パスワードの再設定が完了しました。'
+      else
+        redirect_to users_dashboard_path, notice: 'パスワードの再設定が完了しました。'
+      end
     else
       render :reset_password
     end
