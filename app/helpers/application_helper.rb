@@ -70,6 +70,6 @@ module ApplicationHelper
   end
 
   def ks_room_key_select(corporation)
-    Facility.sync_from_api(corporation.ks_corporation_id)
+    KeystationService.sync_rooms(corporation.ks_corporation_id)
   end
 end

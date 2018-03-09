@@ -22,3 +22,35 @@
   </div>
 </div>
 
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= FacilityKey.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to "新規追加", new_admin_corporation_shop_facility_facility_key_path(@corporation, @shop, @facility), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= FacilityKey.human_attribute_name(:name) %></th>
+          <th><%= FacilityKey.human_attribute_name(:password) %></th>
+          <th style="width: 300px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @facility.facility_keys.each do |key| %>
+          <tr>
+            <td><%= key.name %></td>
+            <td><%= key.password %></td>
+            <td>
+              <%= link_to '詳細', admin_corporation_shop_facility_facility_key_path(@corporation, @shop, @facility, key), class: 'btn btn-default' %>
+              <%= link_to '編集', edit_admin_corporation_shop_facility_facility_key_path(@corporation, @shop, @facility, key), class: 'btn btn-primary' %>
+              <%= link_to '削除', admin_corporation_shop_facility_facility_key_path(@corporation, @shop, @facility, key), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -7,6 +7,7 @@ ja:
       plan: プラン
       shop: 店舗
       facility: 施設
+      facility_key: 施設鍵
     attributes:
       admin_user:
         id: ID
@@ -53,7 +54,7 @@ ja:
         name: 施設名
       facility_key:
         ks_room_key_id: 鍵
-        name: 鍵名前
+        name: 鍵名称
         password: パスワード
       facility_plan:
         plan_id: 施設利用可能プラン

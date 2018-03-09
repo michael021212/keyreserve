@@ -1,0 +1,10 @@
+<% breadcrumb :new_admin_corporation_shop_facility_facility_key, @corporation, @shop, @facility %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= FacilityKey.model_name.human %>新規登録</h4>
+  </div>
+  <div class="box-body">
+    <%= render 'form', corporation: @corporation, shop: @shop, facility: @facility, facility_key: @facility_key %>
+  </div>
+</div>

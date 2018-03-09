@@ -29,12 +29,12 @@ end
 
 crumb :admin_corporation_user do |corporation, user|
   link 'ユーザ詳細', admin_corporation_user_path(corporation, user)
-  parent :edit_admin_corporation_user, corporation, user
+  parent :admin_corporation, corporation
 end
 
 crumb :edit_admin_corporation_user do |corporation, user|
   link 'ユーザ編集', edit_admin_corporation_user_path(corporation, user)
-  parent :admin_corporation, corporation
+  parent :admin_corporation_user, corporation, user
 end
 
 # admin_corporation_shops
@@ -45,12 +45,12 @@ end
 
 crumb :admin_corporation_shop do |corporation, shop|
   link '店舗詳細', admin_corporation_shop_path(corporation, shop)
-  parent :edit_admin_corporation_shop, corporation, shop
+  parent :admin_corporation, corporation
 end
 
 crumb :edit_admin_corporation_shop do |corporation, shop|
   link '店舗編集', edit_admin_corporation_shop_path(corporation, shop)
-  parent :admin_corporation, corporation
+  parent :admin_corporation_shop, corporation, shop
 end
 
 # admin_users
@@ -82,12 +82,28 @@ end
 
 crumb :admin_corporation_shop_facility do |corporation, shop, facility|
   link '施設詳細', admin_corporation_shop_facility_path(corporation, shop, facility)
-  parent :edit_admin_corporation_shop, corporation, shop, facility
+  parent :admin_corporation_shop, corporation, shop
 end
 
 crumb :edit_admin_corporation_shop_facility do |corporation, shop, facility|
   link '施設編集', edit_admin_corporation_shop_facility_path(corporation, shop, facility)
-  parent :admin_corporation, corporation, shop, facility
+  parent :admin_corporation_shop_facility, corporation, shop, facility
+end
+
+# admin_corporation_shop_facility_facility_keys
+crumb :new_admin_corporation_shop_facility_facility_key do |corporation, shop, facility|
+  link '施設鍵新規登録', new_admin_corporation_shop_facility_facility_key_path(corporation, shop, facility)
+  parent :admin_corporation_shop_facility, corporation, shop, facility
+end
+
+crumb :admin_corporation_shop_facility_facility_key do |corporation, shop, facility, facility_key|
+  link '施設鍵詳細', admin_corporation_shop_facility_facility_key_path(corporation, shop, facility, facility_key)
+  parent :admin_corporation_shop_facility, corporation, shop, facility
+end
+
+crumb :edit_admin_corporation_shop_facility_facility_key do |corporation, shop, facility, facility_key|
+  link '施設鍵編集', edit_admin_corporation_shop_facility_facility_key_path(corporation, shop, facility, facility_key)
+  parent :admin_corporation_shop_facility_facility_key, corporation, shop, facility, facility_key
 end
 
 # admin_admin_users

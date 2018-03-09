@@ -12,8 +12,10 @@ Rails.application.routes.draw do
     resources :users
     resources :corporations do
       resources :users, controller: 'corporations/users', except: [:index]
-      resources :shops do
-        resources :facilities, except: [:index]
+      resources :shops, except: [:index] do
+        resources :facilities, except: [:index] do
+          resources :facility_keys, except: [:index]
+        end
       end
     end
   end
