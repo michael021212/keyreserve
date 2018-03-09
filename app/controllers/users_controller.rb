@@ -1,7 +1,4 @@
 class UsersController < ApplicationController
-  skip_before_action :require_login, only: [:new, :create]
-  layout 'users/layouts/register'
-
   def new
     @user = User.new
   end
@@ -15,12 +12,12 @@ class UsersController < ApplicationController
           auto_login(@user)
           if corporation.present?
             if @user.corporation_users.create(corporation_id: corporation.id).valid?
-              redirect_to corporations_dashboard_path, notice: "#{Corporation.model_name.human}を作成しました。"
+              redirect_to root_path, notice: "#{Corporation.model_name.human}を作成しました。"
             else
-              redirect_to users_dashboard_path, notice: "#{User.model_name.human}を作成しました。"
+              redirect_to root_path, notice: "#{User.model_name.human}を作成しました。"
             end
           else
-            redirect_to users_dashboard_path, notice: "#{User.model_name.human}を作成しました。"
+            redirect_to root_path, notice: "#{User.model_name.human}を作成しました。"
           end
         end
       end

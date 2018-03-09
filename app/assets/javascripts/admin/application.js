@@ -17,3 +17,4 @@
 //= require bootstrap-sprockets
 //= require app
 //= require jquery.slimscroll.min
+//= require jquery_nested_form

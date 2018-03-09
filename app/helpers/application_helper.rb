@@ -64,4 +64,12 @@ module ApplicationHelper
     num = num ? num : 0
     "#{number_with_delimiter num} 円"
   end
+
+  def key_corporation_select
+    KeystationService.sync_corporations
+  end
+
+  def ks_room_key_select(corporation)
+    Facility.sync_from_api(corporation.ks_corporation_id)
+  end
 end

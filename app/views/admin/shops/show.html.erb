@@ -1,0 +1,78 @@
+<% breadcrumb :admin_corporation_shop, @corporation, @shop %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Shop.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", admin_corporation_path(@corporation), class: 'btn btn-default' %>
+      <%= link_to "編集", edit_admin_corporation_shop_path(@corporation, @shop), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th style="width: 200px;"><%= Shop.human_attribute_name(:name) %></th>
+        <td><%= @shop.name %></td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:postal_code) %></th>
+        <td><%= @shop.postal_code %></td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:address) %></th>
+        <td><%= @shop.address %></td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:lat) %>, <%= Shop.human_attribute_name(:lat) %></th>
+        <td>
+          <% if @shop.lat? && @shop.lon? %>
+            <%= @shop.lat %>, <%= @shop.lon %><br><br>
+            <div class="google-map" style="height: 300px;" data-lat="<%= @shop.lat %>" data-lon="<%= @shop.lon %>"></div>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:tel) %></th>
+        <td><%= @shop.tel %></td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:opening_time) %></th>
+        <td><%= time_fmt(@shop.opening_time) %></td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:closing_time) %></th>
+        <td><%= time_fmt(@shop.closing_time) %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Facility.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to "新規追加", new_admin_corporation_shop_facility_path(@corporation, @shop), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= Facility.human_attribute_name(:name) %></th>
+          <th style="width: 300px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @shop.facilities.each do |facility| %>
+          <tr>
+            <td><%= facility.name %></td>
+            <td>
+              <%= link_to '詳細', admin_corporation_shop_facility_path(@corporation, @shop, facility), class: 'btn btn-default' %>
+              <%= link_to '編集', edit_admin_corporation_shop_facility_path(@corporation, @shop, facility), class: 'btn btn-primary' %>
+              <%= link_to '削除', admin_corporation_shop_facility_path(@corporation, @shop, facility), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

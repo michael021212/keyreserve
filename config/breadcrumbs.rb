@@ -37,6 +37,22 @@ crumb :edit_admin_corporation_user do |corporation, user|
   parent :admin_corporation, corporation
 end
 
+# admin_corporation_shops
+crumb :new_admin_corporation_shop do |corporation|
+  link '店舗新規登録', new_admin_corporation_shop_path
+  parent :admin_corporation, corporation
+end
+
+crumb :admin_corporation_shop do |corporation, shop|
+  link '店舗詳細', admin_corporation_shop_path(corporation, shop)
+  parent :edit_admin_corporation_shop, corporation, shop
+end
+
+crumb :edit_admin_corporation_shop do |corporation, shop|
+  link '店舗編集', edit_admin_corporation_shop_path(corporation, shop)
+  parent :admin_corporation, corporation
+end
+
 # admin_users
 crumb :admin_users do
   link 'ユーザ管理', admin_users_path
@@ -56,6 +72,22 @@ end
 crumb :edit_admin_user do |user|
   link 'ユーザ編集', edit_admin_user_path(user)
   parent :admin_users
+end
+
+# admin_corporation_shop_facilities
+crumb :new_admin_corporation_shop_facility do |corporation, shop|
+  link '施設新規登録', new_admin_corporation_shop_facility_path(corporation, shop)
+  parent :admin_corporation_shop, corporation, shop
+end
+
+crumb :admin_corporation_shop_facility do |corporation, shop, facility|
+  link '施設詳細', admin_corporation_shop_facility_path(corporation, shop, facility)
+  parent :edit_admin_corporation_shop, corporation, shop, facility
+end
+
+crumb :edit_admin_corporation_shop_facility do |corporation, shop, facility|
+  link '施設編集', edit_admin_corporation_shop_facility_path(corporation, shop, facility)
+  parent :admin_corporation, corporation, shop, facility
 end
 
 # admin_admin_users

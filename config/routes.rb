@@ -12,33 +12,31 @@ Rails.application.routes.draw do
     resources :users
     resources :corporations do
       resources :users, controller: 'corporations/users', except: [:index]
-    end
-  end
-
-  resource :user, only: [:new, :create]
-  namespace :users do
-    get '/dashboard' => 'dashboards#index'
-    get '/sign_in' => 'sessions#new'
-    post '/sign_in' => 'sessions#create'
-    get '/sign_out' => 'sessions#destroy'
-    resources :sessions, only: [:new, :create, :destroy] do
-      collection do
-        get :reminder
-        post :post_reminder
-        get 'reset_password/:token', to: 'sessions#reset_password', as: 'reset_password'
-        patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
+      resources :shops do
+        resources :facilities, except: [:index]
       end
     end
   end
 
-  resource :corporation, only: [:show, :edit, :update]
-  post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
-  namespace :corporations do
-    get '/dashboard' => 'dashboards#index'
-    resources :users, only: [:index, :new, :create, :show]
-    resources :plans, except: [:show]
-    resources :shops, except: [:destroy] do
-      resources :facilities, except: [:index]
+  resource :user, only: [:new, :create]
+  get '/sign_in' => 'sessions#new'
+  post '/sign_in' => 'sessions#create'
+  get '/sign_out' => 'sessions#destroy'
+  resources :sessions, only: [:new, :create, :destroy] do
+    collection do
+      get :reminder
+      post :post_reminder
+      get 'reset_password/:token', to: 'sessions#reset_password', as: 'reset_password'
+      patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
     end
+  end
+
+  post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
+  # 法人メニュー
+  resource :corporation, only: [:show, :edit, :update]
+  resources :users, only: [:index, :new, :create, :show]
+  resources :plans, except: [:show]
+  resources :shops, except: [:destroy] do
+    resources :facilities, except: [:index]
   end
 end

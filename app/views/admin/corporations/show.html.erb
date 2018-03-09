@@ -15,6 +15,10 @@
         <td><%= @corporation.id %></td>
       </tr>
       <tr>
+        <th><%= Corporation.human_attribute_name(:ks_corporation_id) %></th>
+        <td><%= @corporation.ks_corporation_id %></td>
+      </tr>
+      <tr>
         <th><%= Corporation.human_attribute_name(:name) %></th>
         <td><%= @corporation.name %></td>
       </tr>
@@ -38,6 +42,39 @@
         <th><%= Corporation.human_attribute_name(:note) %></th>
         <td><%= @corporation.note  %></td>
       </tr>
+    </table>
+  </div>
+</div>
+<hr>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Shop.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to "新規追加", new_admin_corporation_shop_path(@corporation), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= Shop.human_attribute_name(:id) %></th>
+          <th><%= Shop.human_attribute_name(:name) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @corporation.shops.reverse_order.each do |shop| %>
+          <tr>
+            <td><%= shop.id %></td>
+            <td><%= shop.name %></td>
+            <td>
+              <%= link_to '詳細', admin_corporation_shop_path(@corporation, shop), class: 'btn btn-default' %>
+              <%= link_to '編集', edit_admin_corporation_shop_path(@corporation, shop), class: 'btn btn-primary' %>
+              <%= link_to '削除', admin_corporation_shop_path(@corporation, shop), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
 </div>

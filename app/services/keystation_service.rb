@@ -1,7 +1,7 @@
 class KeystationService
   def self.initialize
     # TODO Change url and partner token
-    conn = Faraday.new(:url => 'http://localhost:3000')
+    conn = Faraday.new(:url => Settings.keystation_endpoint)
     conn.headers['Authorization'] = "Bearer #{Settings.keyreserve_partner_token}"
     conn
   end

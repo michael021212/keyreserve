@@ -1,6 +1,6 @@
 /*! (Sept - Site Template) 2015-10-10 */
 body {
-  font-family: "Open Sans";
+  font-family: "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "Meiryo UI", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", Avenir, "Open Sans", "Helvetica Neue", Helvetica, Arial, Verdana, Roboto, sans-serif;
   font-size: 14px;
   line-height: 23px;
   font-weight: 400;
@@ -28,7 +28,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Playfair Display", serif;
   color: #16262e;
 }
 h1,
@@ -62,7 +61,6 @@ hr {
   margin: 30px 0;
 }
 blockquote {
-  font-family: "Playfair Display", serif;
   font-style: italic;
   background-image: url(../images/blockquote.png);
   background-color: #f7f7f7;
@@ -146,7 +144,6 @@ input[type=radio]:checked:before {
 .mg-404-error-txt .mg-404-badg {
   background-color: #16262e;
   color: #fff;
-  font-family: "Playfair Display", serif;
   text-transform: uppercase;
   text-align: center;
   padding: 30px 28px;
@@ -180,7 +177,6 @@ input[type=radio]:checked:before {
   text-align: left;
 }
 .mg-404-error-txt .mg-404-txt-search strong {
-  font-family: "Playfair Display", serif;
   font-size: 23px;
   line-height: 33px;
   margin-bottom: 10px;
@@ -188,7 +184,6 @@ input[type=radio]:checked:before {
   text-transform: uppercase;
 }
 .mg-404-error-txt .mg-404-txt-search p {
-  font-family: "Playfair Display", serif;
   font-size: 16px;
 }
 .mg-404-error-txt .mg-404-txt-search .mg-404-search-form input {
@@ -436,7 +431,6 @@ ul.styled-list li {
 }
 ul.styled-list li:before {
   content: '\f00c';
-  font-family: 'FontAwesome';
   display: inline-block;
   margin-left: -1.5em;
   width: 1.5em;
@@ -458,7 +452,6 @@ ul.styled-list.list-star li:before {
   content: '\f006';
 }
 .btn {
-  font-family: "Playfair Display", serif;
   border-radius: 1px;
   font-weight: 600;
   border-width: 0;
@@ -650,7 +643,6 @@ ul.styled-list.list-star li:before {
           transition: height 0.3s;
 }
 .navbar {
-  font-family: "Playfair Display", serif;
   margin-bottom: 0;
 }
 .navbar-default {
@@ -851,7 +843,7 @@ ul.styled-list.list-star li:before {
 .mg-page-title {
   padding-top: 70px;
   padding-bottom: 50px;
-  background-image: url(../images/page-title.png);
+  background-image: image-url("page-title.png");
   color: #fff;
   text-align: center;
 }
@@ -859,7 +851,6 @@ ul.styled-list.list-star li:before {
   background-color: transparent;
 }
 .mg-page-title h2 {
-  font-family: "Playfair Display", serif;
   color: #fff;
   text-transform: uppercase;
   position: relative;
@@ -915,7 +906,6 @@ ul.styled-list.list-star li:before {
           transform: translate(0, 50%);
 }
 .carousel-caption > h2 {
-  font-family: "Playfair Display", serif;
   color: #fff;
   font-size: 67px;
   font-weight: 400;
@@ -1049,7 +1039,6 @@ ul.styled-list.list-star li:before {
   padding: 30px 0;
 }
 .mg-book-now .mg-bn-title {
-  font-family: "Playfair Display", serif;
   color: #e7b315;
   font-size: 30px;
   line-height: 43px;
@@ -1347,7 +1336,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   position: static;
 }
 .mg-c2a strong {
-  font-family: "Playfair Display", serif;
   font-size: 30px;
   font-weight: 300;
   display: block;
@@ -1360,7 +1348,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-c2a .mg-c2a-offer-badg {
   text-align: center;
-  font-family: "Playfair Display", serif;
   font-size: 20px;
   line-height: 30px;
   text-transform: uppercase;
@@ -1402,7 +1389,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-sec-title {
   text-align: center;
-  font-family: "Playfair Display", serif;
   position: relative;
   padding-bottom: 10px;
   margin-bottom: 40px;
@@ -1436,7 +1422,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-sec-left-title,
 .mg-widget-title {
-  font-family: "Playfair Display", serif;
   color: #16262e;
   font-size: 25px;
   text-transform: uppercase;
@@ -1475,7 +1460,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
           transition: background-color 0.3s;
 }
 .mg-room figcaption h2 {
-  font-family: "Playfair Display", serif;
   color: #fff;
   margin: 0;
   font-size: 20px;
@@ -1511,7 +1495,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   font-size: 17px;
 }
 .mg-room figcaption .mg-room-rating {
-  font-family: "Open Sans";
   background-color: #e7b315;
   float: right;
   font-size: 13px;
@@ -1530,7 +1513,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
           transition-delay: 0.45s;
 }
 .mg-room figcaption .mg-room-price {
-  font-family: "Open Sans";
   font-size: 24px;
   font-weight: 300;
   margin-bottom: 10px;
@@ -1691,7 +1673,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
           transform: translate(0, 310px);
 }
 .mg-room.mg-featured figcaption .mg-room-price {
-  font-family: "Open Sans";
   font-size: 30px;
   line-height: 41px;
   font-weight: 300;
@@ -1765,7 +1746,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-feature .mg-feature-icon-title h3 {
   display: block;
-  font-family: "Playfair Display", serif;
   font-size: 20px;
   color: #16262e;
   font-weight: 400;
@@ -1806,7 +1786,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-light-testimonial .mg-testimonial-slider blockquote footer {
   color: #e7b315;
-  font-family: "Playfair Display", serif;
   font-style: italic;
 }
 .mg-light-testimonial .mg-testimonial-slider blockquote footer:before {
@@ -1823,7 +1802,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-testimonial-slider blockquote footer {
   color: #e7b315;
-  font-family: "Playfair Display", serif;
   font-style: italic;
 }
 .mg-testimonial-slider blockquote footer:before {
@@ -1900,7 +1878,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-recnt-post .mg-rp-date {
   width: 70px;
-  font-family: "Playfair Display", serif;
   font-size: 27px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1928,7 +1905,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   margin-top: 10px;
 }
 .mg-recnt-post > h3 {
-  font-family: "Playfair Display", serif;
   font-size: 22px;
   font-weight: 400;
   margin-top: 0;
@@ -2019,7 +1995,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   display: block;
 }
 .mg-contact-form-input label {
-  font-family: "Playfair Display", serif;
   font-size: 16px;
   line-height: 26px;
   font-weight: 300;
@@ -2075,7 +2050,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   position: relative;
 }
 .mg-single-room-price .mg-srp-inner {
-  font-family: "Playfair Display", serif;
   width: 100px;
   padding: 21px 0px 17px;
   text-align: center;
@@ -2155,7 +2129,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   border-bottom-width: 0;
 }
 .mg-reviews .media .media-body .media-heading {
-  font-family: "Playfair Display", serif;
   color: #16262e;
   font-style: italic;
   font-size: 22px;
@@ -2237,7 +2210,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 .mg-star-rating-title {
   display: inline-block;
   font-size: 16px;
-  font-family: "Playfair Display", serif;
   color: #16262e;
   min-width: 65px;
 }
@@ -2350,7 +2322,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   margin-bottom: 60px;
 }
 .mg-post .mg-post-title {
-  font-family: "Playfair Display", serif;
   margin-bottom: 15px;
 }
 .mg-post .mg-post-title a {
@@ -2363,7 +2334,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   border-bottom: 1px solid #f2f2f2;
   padding-bottom: 15px;
   margin-bottom: 20px;
-  font-family: "Playfair Display", serif;
   color: #96a3a9;
 }
 .mg-post .mg-post-meta span {
@@ -2385,7 +2355,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   color: #e7b315;
 }
 .mg-post .mg-read-more {
-  font-family: "Playfair Display", serif;
   font-style: italic;
   font-size: 15px;
 }
@@ -2414,7 +2383,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   padding-bottom: 0;
 }
 .mg-widget .mg-recnt-posts .mg-recnt-post p {
-  font-family: "Open Sans";
   margin-bottom: 0;
 }
 .mg-widget .mg-recnt-posts .mg-recnt-post .mg-rp-date {
@@ -2426,7 +2394,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   list-style: none;
 }
 .mg-widget ul li {
-  font-family: "Playfair Display", serif;
   padding: 10px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -2462,7 +2429,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   margin-bottom: 70px;
   border-bottom: 1px solid #F2F2F2;
   border-top: 1px solid #F2F2F2;
-  font-family: "Playfair Display", serif;
   font-size: 16px;
   line-height: 30px;
   color: #16262e;
@@ -2534,7 +2500,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .nav-tabs > li,
 .nav-tabs.nav-justified > li {
-  font-family: "Playfair Display", serif;
   font-size: 18px;
 }
 .nav-tabs > li > a,
@@ -2898,7 +2863,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-booking-form .nav-tabs > li > a span.mg-bs-tab-num {
   display: block;
-  font-family: "Playfair Display", serif;
   font-weight: 600;
   color: #16262e;
   vertical-align: middle;
@@ -2967,7 +2931,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   min-height: 100px;
 }
 .mg-book-form-input label {
-  font-family: "Playfair Display", serif;
   font-weight: 400;
   color: #16262e;
   font-size: 16px;
@@ -3005,7 +2968,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   padding: 50px 0 10px;
   font-size: 25px;
   line-height: 35px;
-  font-family: "Playfair Display", serif;
   color: #fff;
   font-weight: 400;
 }
@@ -3060,7 +3022,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   color: #16262e;
 }
 .mg-available-rooms .mg-avl-room-title span {
-  font-family: "Open Sans";
   font-weight: 300;
   color: #e7b315;
   float: right;
@@ -3229,7 +3190,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   box-shadow: none;
 }
 .progress .progress-bar .mg-progress-bar-popup {
-  font-family: "Playfair Display", serif;
   color: #16262e;
   font-size: 16px;
   line-height: 30px;
@@ -3239,7 +3199,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   right: 0;
 }
 .progress .progress-bar .mg-progress-bar-left {
-  font-family: "Playfair Display", serif;
   color: #16262e;
   font-size: 16px;
   line-height: 30px;

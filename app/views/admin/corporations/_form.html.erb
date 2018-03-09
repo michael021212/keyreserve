@@ -1,9 +1,10 @@
 <%= bootstrap_form_for([:admin, corporation], layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9") do |f| %>
+  <%= f.select :ks_corporation_id, options_for_select(key_corporation_select, selected: f.object.ks_corporation_id), include_blank: true %>
   <%= f.text_field :name %>
   <%= f.text_field :kana %>
   <%= f.text_field :tel %>
   <%= f.number_field :postal_code %>
   <%= f.text_field :address %>
   <%= f.text_field :note %>
-  <%= f.submit class: 'btn btn-primary' %>
+  <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

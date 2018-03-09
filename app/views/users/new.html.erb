@@ -1,9 +1,16 @@
+<div class="mg-page-title parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>アカウント登録</h2>
+        <p>以下の情報を入力して会員登録を行ってください</p>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-offset-3 col-md-6">
     <div class="panel panel-default">
-      <div class="panel-heading text-center">
-        アカウント登録
-      </div>
       <div class="panel-body">
         <%= bootstrap_form_for @user, url: user_path do |f| %>
           <%= f.text_field :name, placeholder: "例)山田太郎" %>
@@ -11,14 +18,13 @@
           <%= f.text_field :tel , placeholder: "例)08012345678"  %>
           <%= f.password_field :password, placeholder: "4文字以上" %>
           <%= f.password_field :password_confirmation, placeholder: "4文字以上" %>
-          <%= f.select :payway, User.payways_i18n.invert %>
           <%= f.hidden_field :corporation_token, value: params[:token] %>
           <div class="row">
             <div class="col-md-12 col-xs-12 text-center">
               <%= f.button '規約に同意して会員登録', class: 'btn btn-primary mb20' %>
             </div>
             <div class="col-md-12 col-xs-12 mt-10">
-              <%= link_to 'ログインはこちら', users_sign_in_path, class: 'pull-right' %>
+              <%= link_to 'ログインはこちら', sign_in_path, class: 'pull-right' %>
             </div>
             <div class="col-md-3 col-sm-2 col-xs-12"></div>
           </div>

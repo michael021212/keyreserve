@@ -1,0 +1,10 @@
+<% breadcrumb :edit_admin_corporation_shop_facility, @corporation, @shop, @facility %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Facility.model_name.human %>編集</h4>
+  </div>
+  <div class="box-body">
+    <%= render 'form', corporation: @corporation, shop: @shop, facility: @facility %>
+  </div>
+</div>

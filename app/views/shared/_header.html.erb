@@ -1,24 +1,46 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid header">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle Navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to root_path, class: 'navbar-brand' do %><%= image_tag 'img_logo.png' %><% end %>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <% if logged_in? %>
+<header class="header transp sticky"> <!-- available class for header: .sticky .center-content .transp -->
+  <nav class="navbar navbar-inverse">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><%= image_tag 'logo.png' %></a>
+      </div>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <ul class="dropdown-menu" role="menu">
-              <li><%= link_to 'ログアウト', users_sign_out_path, method: :delete %></li>
-            </ul>
-          </li>
+          <% if logged_in? && current_corporation? %>
+            <li class="<%= active_class('corporations') %>">
+              <%= link_to corporation_path do %>
+                法人情報設定
+              <% end %>
+            </li>
+            <li class="<%= active_class('shops') %>">
+              <%= link_to shops_path do %>
+                店舗管理
+              <% end %>
+            </li>
+          <% end %>
+          <% if logged_in? %>
+            <li>
+              <%= link_to sign_out_path do %>
+                ログアウト
+              <% end %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to sign_in_path do %>
+                ログイン
+              <% end %>
+            </li>
+          <% end %>
         </ul>
-      <% end %>
-    </div>
-  </div>
-</nav>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+</header>

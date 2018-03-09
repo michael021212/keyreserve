@@ -3,7 +3,7 @@
     <%= image_tag 'login_logo.png' %>
   </div>
   <div class="panel-body">
-    <%= form_tag(users_sessions_path, class: 'login-form text-center') do %>
+    <%= form_tag(sessions_path, class: 'login-form text-center') do %>
       <div class="row">
         <div class="col-md-12">
           <div class="strike">
@@ -32,7 +32,7 @@
           <p class="forgot-pwd"><%= link_to 'アカウント登録', new_user_path %></p>
         </div>
         <div class="col-md-12">
-          <p class="forgot-pwd"><%= link_to 'パスワードを忘れた方', reminder_users_sessions_path %></p>
+          <p class="forgot-pwd"><%= link_to 'パスワードを忘れた方', reminder_sessions_path %></p>
         </div>
       </div>
       <div class="row">

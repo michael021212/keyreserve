@@ -1,6 +1,5 @@
-class Users::SessionsController < ApplicationController
-  layout 'users/layouts/sign_in'
-  skip_before_action :require_login
+class SessionsController < ApplicationController
+  layout 'sign_in'
 
   def new; end
 
@@ -15,7 +14,7 @@ class Users::SessionsController < ApplicationController
 
   def destroy
     logout
-    redirect_to users_sign_in_path, notice: 'ログアウトしました。'
+    redirect_to root_path, notice: 'ログアウトしました。'
   end
 
   def post_reminder

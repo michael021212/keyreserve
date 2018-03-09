@@ -1,0 +1,9 @@
+<%= bootstrap_form_for([:admin, corporation, shop], layout: :horizontal) do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :postal_code %>
+  <%= f.text_field :address %>
+  <%= f.text_field :tel %>
+  <%= f.time_select :opening_time, { include_blank: true }, { class: 'bootstrap-date' } %>
+  <%= f.time_select :closing_time, { include_blank: true }, { class: 'bootstrap-date'} %>
+  <%= f.submit class: 'btn btn-primary center-block' %>
+<% end %>
