@@ -1,0 +1,48 @@
+<% breadcrumb :admin_corporation_user_contracts, @corporation %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= UserContract.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to '新規追加', new_admin_corporation_user_contract_path(@corporation), class: 'btn btn-info' %>
+      <%= link_to '戻る', admin_corporation_path(@corporation), class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ユーザID</th>
+          <th><%= User.human_attribute_name(:name) %></th>
+          <th><%= UserContract.human_attribute_name(:state) %></th>
+          <th><%= UserContract.human_attribute_name(:plan_id) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @user_contracts.present? %>
+          <% @user_contracts.each do |user_contract| %>
+            <tr>
+              <td><%= user_contract.user_id %></td>
+              <td><%= user_contract.user_name %></td>
+              <td><%= user_contract.state_i18n %></td>
+              <td><%= user_contract.plan_name %></td>
+              <td>
+                <%= link_to '詳細', admin_corporation_user_contract_path(@corporation, user_contract), class: 'btn btn-default' %>
+                <%= link_to '編集', edit_admin_corporation_user_contract_path(@corporation, user_contract), class: 'btn btn-primary' %>
+                <%= link_to '削除', admin_corporation_user_contract_path(@corporation, user_contract), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= UserContract.model_name.human %>はありません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @user_contracts %>
+  </div>
+</div>

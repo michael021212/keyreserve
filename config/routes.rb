@@ -8,10 +8,11 @@ Rails.application.routes.draw do
     get '/sign_out' => 'sessions#destroy'
     resources :dashboards, only: [:index]
     resources :admin_users, except: [:show]
-    # resources :plans
     resources :users
     resources :corporations do
-      resources :users, controller: 'corporations/users', except: [:index]
+      resources :users, controller: 'corporations/users'
+      resources :user_contracts
+      resources :plans
       resources :shops, except: [:index] do
         resources :facilities, except: [:index] do
           resources :facility_keys, except: [:index]

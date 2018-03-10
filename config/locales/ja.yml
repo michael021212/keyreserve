@@ -8,6 +8,7 @@ ja:
       shop: 店舗
       facility: 施設
       facility_key: 施設鍵
+      user_contract: 契約
     attributes:
       admin_user:
         id: ID
@@ -58,6 +59,14 @@ ja:
         password: パスワード
       facility_plan:
         plan_id: 施設利用可能プラン
+      user_contract:
+        corporation_id: 法人
+        shop_id: 店舗
+        user_id: 契約ユーザ
+        plan_id: 契約プラン
+        started_on: 契約開始日
+        finished_on: 契約終了日
+        state: ステータス
   enums:
     corporation:
       payway:
@@ -70,6 +79,10 @@ ja:
       payway:
         creditcard: クレジットカード
         invoice: 請求書
+    user_contract:
+      state:
+        under_contract: 契約中
+        finished: 契約終了
   date:
     abbr_day_names:
     - 日

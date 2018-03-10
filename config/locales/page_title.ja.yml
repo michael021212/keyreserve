@@ -57,15 +57,24 @@ ja:
         title: 施設鍵編集
       show:
         title: 施設鍵詳細
+    user_contracts:
+      index:
+        title: 契約一覧
+      new:
+        title: 契約登録
+      edit:
+        title: 契約編集
+      show:
+        title: 契約詳細
     users:
       index:
-        title: ユーザ一覧
+        title: 利用者一覧
       new:
-        title: ユーザ登録
+        title: 利用者登録
       edit:
-        title: ユーザ編集
+        title: 利用者編集
       show:
-        title: ユーザ詳細
+        title: 利用者詳細
   users:
     dashboards:
       index:

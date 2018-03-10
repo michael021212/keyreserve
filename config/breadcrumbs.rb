@@ -22,19 +22,39 @@ crumb :edit_admin_corporation do |corporation|
 end
 
 # admin_corporation_users
+crumb :admin_corporation_users do |corporation|
+  link '施設管理者一覧', admin_corporation_users_path
+  parent :admin_corporation, corporation
+end
 crumb :new_admin_corporation_user do |corporation|
-  link 'ユーザ新規登録', new_admin_corporation_user_path
-  parent :admin_corporation, corporation
+  link '施設管理者新規登録', new_admin_corporation_user_path
+  parent :admin_corporation_users, corporation
 end
-
 crumb :admin_corporation_user do |corporation, user|
-  link 'ユーザ詳細', admin_corporation_user_path(corporation, user)
-  parent :admin_corporation, corporation
+  link '施設管理者詳細', admin_corporation_user_path(corporation, user)
+  parent :admin_corporation_users, corporation
+end
+crumb :edit_admin_corporation_user do |corporation, user|
+  link '施設管理者編集', edit_admin_corporation_user_path(corporation, user)
+  parent :admin_corporation_user, corporation, user
 end
 
-crumb :edit_admin_corporation_user do |corporation, user|
-  link 'ユーザ編集', edit_admin_corporation_user_path(corporation, user)
-  parent :admin_corporation_user, corporation, user
+# admin_corporation_user_contracts
+crumb :admin_corporation_user_contracts do |corporation|
+  link '契約一覧', admin_corporation_user_contracts_path
+  parent :admin_corporation, corporation
+end
+crumb :new_admin_corporation_user_contract do |corporation|
+  link '契約新規登録', new_admin_corporation_user_contract_path
+  parent :admin_corporation_user_contracts, corporation
+end
+crumb :admin_corporation_user_contract do |corporation, user_contract|
+  link '施設管理者詳細', admin_corporation_user_contract_path(corporation, user_contract)
+  parent :admin_corporation_user_contracts, corporation
+end
+crumb :edit_admin_corporation_user_contract do |corporation, user_contract|
+  link '施設管理者編集', edit_admin_corporation_user_contract_path(corporation, user_contract)
+  parent :admin_corporation_user_contract, corporation, user_contract
 end
 
 # admin_corporation_shops
