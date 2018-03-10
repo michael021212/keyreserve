@@ -19,3 +19,14 @@
 //= require jquery.slimscroll.min
 //= require map
 //= require jquery_nested_form
+//= require lib/owl.carousel.min
+//= require lib/jssor.slider.mini
+//= require lib/classie
+//= require lib/selectFx
+//= require lib/bootstrap-datepicker.min
+//= require lib/starrr.min
+//= require lib/nivo-lightbox.min
+//= require lib/jquery.shuffle.min
+//= require lib/gmaps.min
+//= require lib/jquery.parallax-1.1.3
+//= require script

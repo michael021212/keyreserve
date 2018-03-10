@@ -14,3 +14,15 @@
       </div>
     </div>
   </div>
+</div>
+<div class="row middle-menu">
+  <div class="col-md-12">
+    <div class="mg-filter">
+      <% if logged_in? %>
+        <%= link_to 'ご利用可能な施設', facilities_path, class: 'btn btn-dark btn-main' %>
+      <% else %>
+        <%= link_to 'ログイン', sign_in_path, class: 'btn btn-dark btn-main' %>
+      <% end %>
+    </div>
+  </div>
+</div>

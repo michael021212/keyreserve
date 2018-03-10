@@ -30,5 +30,9 @@ module Keyreserve
       generator.template_engine = :erb
       generator.test_framework :rspec, view_specs: false, helper_specs: false
     end
+
+    def inspect
+      "#<#{self.class}>"
+    end
   end
 end

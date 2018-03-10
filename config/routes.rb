@@ -33,13 +33,14 @@ Rails.application.routes.draw do
       patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
     end
   end
+  resources :facilities, only: [:index, :show]
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー
   resource :corporation, only: [:show, :edit, :update]
-  resources :users, only: [:index, :new, :create, :show]
-  resources :plans, except: [:show]
-  resources :shops, except: [:destroy] do
-    resources :facilities, except: [:index]
-  end
+  # resources :users, only: [:index, :new, :create, :show]
+  # resources :plans, except: [:show]
+  # resources :shops, except: [:destroy] do
+  #   resources :facilities, except: [:index]
+  # end
 end

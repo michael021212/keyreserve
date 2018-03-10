@@ -1,43 +1,38 @@
-<div class="panel panel-default">
-  <div class="panel-heading login-page">
-    <%= image_tag 'login_logo.png' %>
-  </div>
-  <div class="panel-body">
-    <%= form_tag(sessions_path, class: 'login-form text-center') do %>
+<% content_for :middle_title do %>
+  <h2>ログイン</h2>
+<% end %>
+<div class="login">
+  <div class="container">
+    <%= form_tag(sessions_path, class: 'clearfix') do %>
       <div class="row">
-        <div class="col-md-12">
-          <div class="strike">
-            <span class="img-circle">Or</span>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="input-group">
-            <label class="input-group-addon" id="sizing-addon2"><%= image_tag 'icon/ic_email.png' %></label>
+        <div class="col-md-offset-3 col-md-6 col-xs-12">
+          <div class="mg-contact-form-input">
+            <label>メールアドレス</label>
             <%= text_field_tag :email, params[:email], class: "form-control", placeholder: "メールアドレス" %>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <div class="input-group">
-            <label class="input-group-addon" id="sizing-addon2"><%= image_tag 'icon/ic_lock.png' %></label>
+        <div class="col-md-offset-3 col-md-6 col-xs-12">
+          <div class="mg-contact-form-input">
+            <label>パスワード</label>
             <%= password_field_tag :password, '', id: 'password', class: "form-control login-page-textfield", placeholder: 'パスワード' %>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <p class="forgot-pwd"><%= link_to 'アカウント登録', new_user_path %></p>
-        </div>
-        <div class="col-md-12">
-          <p class="forgot-pwd"><%= link_to 'パスワードを忘れた方', reminder_sessions_path %></p>
+        <div class="col-md-offset-4 col-md-4 col-xs-12">
+          <%= button_tag "ログイン", class: "btn btn-main btn-block" %>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12 login-set">
-          <%= button_tag "ログイン", class: "btn login-page-btn" %>
+      <div class="notice-area">
+        <div class="row">
+          <div class="col-md-9 col-md-offset-right-3 col-xs-12">
+            <div class="pull-right"><%= link_to 'アカウント登録', new_user_path %></div>
+          </div>
+          <div class="col-md-9 col-md-offset-right-3 col-xs-12">
+            <p class="pull-right"><%= link_to 'パスワードを忘れた方', reminder_sessions_path %></p>
+          </div>
         </div>
       </div>
     <% end %>

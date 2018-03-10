@@ -14,29 +14,22 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          <% if logged_in? && current_corporation? %>
-            <li class="<%= active_class('corporations') %>">
-              <%= link_to corporation_path do %>
-                法人情報設定
-              <% end %>
-            </li>
-            <li class="<%= active_class('shops') %>">
-              <%= link_to shops_path do %>
-                店舗管理
-              <% end %>
-            </li>
-          <% end %>
           <% if logged_in? %>
             <li>
-              <%= link_to sign_out_path do %>
-                ログアウト
-              <% end %>
+              <%= link_to 'ご利用可能な施設', facilities_path  %>
+            </li>
+            <li>
+              <%= link_to 'ログアウト', sign_out_path %>
             </li>
           <% else %>
             <li>
-              <%= link_to sign_in_path do %>
-                ログイン
-              <% end %>
+              <%= link_to 'ログイン', sign_in_path %>
+            </li>
+          <% end %>
+
+          <% if logged_in? && current_corporation? %>
+            <li class="<%= active_class('corporations') %>">
+              <%= link_to '施設管理者メニュー', corporation_path %>
             </li>
           <% end %>
         </ul>
