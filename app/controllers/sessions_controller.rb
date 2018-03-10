@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
       @user = User.find_by(email: params[:email])
       @user.deliver_reset_password_instructions! if @user.present?
     else
-      flash[:alert] = 'メールアドレスが入力されていないか、メールアドレスが登録されていません。'
+      flash[:danger] = 'メールアドレスが入力されていないか、メールアドレスが登録されていません。'
       render :reminder
     end
   end
@@ -34,17 +34,13 @@ class SessionsController < ApplicationController
     @user = User.load_from_reset_password_token(params[:token])
     if @user.blank?
       not_authenticated
-      return
+      render :reset_password
     end
     @user.password_confirmation = params[:user][:password_confirmation]
     if @user.change_password!(params[:user][:password])
       @user.generate_reset_password_token!
       auto_login(@user)
-      if current_corporation.present?
-        redirect_to corporations_dashboard_path, notice: 'パスワードの再設定が完了しました。'
-      else
-        redirect_to users_dashboard_path, notice: 'パスワードの再設定が完了しました。'
-      end
+      redirect_to root_path, notice: 'パスワードの再設定が完了しました。'
     else
       render :reset_password
     end

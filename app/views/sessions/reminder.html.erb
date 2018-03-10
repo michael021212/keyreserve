@@ -1,23 +1,24 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading tl_c">
-        パスワード再発行
-      </div>
-      <div class="panel-body">
-        <%= bootstrap_form_tag url: post_reminder_users_sessions_path do |f| %>
-          <%= f.text_field :email, label: 'メールアドレス' %>
-          <div class="row">
-            <div class="col-md-1 col-sm-1"></div>
-            <div class="col-md-5 col-sm-5 col-xs-12">
-              <%= f.button 'パスワード再発行', class: 'btn btn-default' %>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= link_to 'キャンセル', users_sign_in_path, class: 'btn btn-default' %>
-            </div>
+<% content_for :middle_title do %>
+  <h2>パスワード再発行</h2>
+<% end %>
+<div class="login">
+  <div class="container">
+    <%= bootstrap_form_tag url: post_reminder_sessions_path do |f| %>
+      <div class="row">
+        <div class="col-md-offset-3 col-md-6 col-xs-12">
+          <div class="mg-contact-form-input">
+            <%= f.text_field :email, label: 'メールアドレス' %>
           </div>
-        <% end %>
+        </div>
       </div>
-    </div>
+      <div class="row">
+        <div class="col-md-offset-3 col-md-3 col-xs-12">
+          <%= f.button 'パスワード再発行', class: 'btn btn-main btn-block' %>
+        </div>
+        <div class="col-md-3 col-xs-12">
+          <%= link_to 'キャンセル', sign_in_path, class: 'btn btn-dark btn-block' %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
