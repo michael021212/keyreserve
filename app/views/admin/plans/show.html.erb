@@ -1,0 +1,24 @@
+<% breadcrumb :admin_corporation_plan, @corporation, @plan %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Plan.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", admin_corporation_plans_path(@corporation), class: 'btn btn-default' %>
+      <%= link_to "編集", edit_admin_corporation_plan_path(@corporation, @plan), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th style="width: 200px;"><%= Plan.human_attribute_name(:id) %></th>
+        <td><%= @plan.id %></td>
+      </tr>
+      <tr>
+        <th style="width: 200px;"><%= Plan.human_attribute_name(:name) %></th>
+        <td><%= @plan.name %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+

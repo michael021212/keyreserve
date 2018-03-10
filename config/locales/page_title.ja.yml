@@ -66,6 +66,15 @@ ja:
         title: 契約編集
       show:
         title: 契約詳細
+    plans:
+      index:
+        title: プラン一覧
+      new:
+        title: プラン登録
+      edit:
+        title: プラン編集
+      show:
+        title: プラン詳細
     users:
       index:
         title: 利用者一覧

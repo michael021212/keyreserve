@@ -39,6 +39,24 @@ crumb :edit_admin_corporation_corporation_user do |corporation, corporation_user
   parent :admin_corporation_corporation_user, corporation, corporation_user
 end
 
+# admin_plans
+crumb :admin_corporation_plans do |corporation|
+  link 'プラン一覧', admin_corporation_plans_path
+  parent :admin_corporation, corporation
+end
+crumb :new_admin_corporation_plan do |corporation|
+  link 'プラン新規登録', new_admin_corporation_plan_path
+  parent :admin_corporation_plans, corporation
+end
+crumb :admin_corporation_plan do |corporation, plan|
+  link 'プラン詳細', admin_corporation_plan_path(corporation, plan)
+  parent :admin_corporation_plans, corporation
+end
+crumb :edit_admin_corporation_plan do |corporation, plan|
+  link 'プラン編集', edit_admin_corporation_plan_path(corporation, plan)
+  parent :admin_corporation_plan, corporation, plan
+end
+
 # admin_corporation_user_contracts
 crumb :admin_corporation_user_contracts do |corporation|
   link '契約一覧', admin_corporation_user_contracts_path
