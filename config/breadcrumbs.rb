@@ -22,21 +22,21 @@ crumb :edit_admin_corporation do |corporation|
 end
 
 # admin_corporation_users
-crumb :admin_corporation_users do |corporation|
-  link '施設管理者一覧', admin_corporation_users_path
+crumb :admin_corporation_corporation_users do |corporation|
+  link '施設管理者一覧', admin_corporation_corporation_users_path
   parent :admin_corporation, corporation
 end
-crumb :new_admin_corporation_user do |corporation|
-  link '施設管理者新規登録', new_admin_corporation_user_path
-  parent :admin_corporation_users, corporation
+crumb :new_admin_corporation_corporation_user do |corporation|
+  link '施設管理者新規登録', new_admin_corporation_corporation_user_path
+  parent :admin_corporation_corporation_users, corporation
 end
-crumb :admin_corporation_user do |corporation, user|
-  link '施設管理者詳細', admin_corporation_user_path(corporation, user)
-  parent :admin_corporation_users, corporation
+crumb :admin_corporation_corporation_user do |corporation, corporation_user|
+  link '施設管理者詳細', admin_corporation_corporation_user_path(corporation, corporation_user)
+  parent :admin_corporation_corporation_users, corporation
 end
-crumb :edit_admin_corporation_user do |corporation, user|
-  link '施設管理者編集', edit_admin_corporation_user_path(corporation, user)
-  parent :admin_corporation_user, corporation, user
+crumb :edit_admin_corporation_corporation_user do |corporation, corporation_user|
+  link '施設管理者編集', edit_admin_corporation_corporation_user_path(corporation, corporation_user)
+  parent :admin_corporation_corporation_user, corporation, corporation_user
 end
 
 # admin_corporation_user_contracts

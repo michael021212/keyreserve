@@ -1,0 +1,19 @@
+<%= bootstrap_form_for([:admin, corporation, corporation_user], layout: :horizontal) do |f| %>
+  <%= f.fields_for :user do |u| %>
+    <%= u.hidden_field :id %>
+    <%= u.text_field :name %>
+    <%= u.text_field :email %>
+    <%= u.text_field :tel %>
+    <%= u.select :state, User.states_i18n.invert %>
+    <%= u.select :payway, User.payways_i18n.invert %>
+    <% if u.object.new_record? %>
+      <%= u.password_field :password %>
+      <%= u.password_field :password_confirmation %>
+    <% else %>
+      <%= u.password_field :password, help: '変更したくない場合は空にしてください' %>
+      <%= u.password_field :password_confirmation, help: '変更したくない場合は空にしてください' %>
+    <% end %>
+  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
+
+<% end %>

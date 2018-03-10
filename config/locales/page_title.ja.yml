@@ -21,15 +21,15 @@ ja:
         title: 法人編集
       show:
         title: 法人詳細
-      users:
-        index:
-          title: ユーザ一覧
-        new:
-          title: ユーザ登録
-        edit:
-          title: ユーザ編集
-        show:
-          title: ユーザ詳細
+    corporation_users:
+      index:
+        title: 施設管理者一覧
+      new:
+        title: 施設管理者登録
+      edit:
+        title: 施設管理者編集
+      show:
+        title: 施設管理者詳細
     shops:
       index:
         title: 店舗一覧

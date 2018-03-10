@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :admin_users, except: [:show]
     resources :users
     resources :corporations do
-      resources :users, controller: 'corporations/users'
+      resources :corporation_users
       resources :user_contracts
       resources :plans
       resources :shops, except: [:index] do

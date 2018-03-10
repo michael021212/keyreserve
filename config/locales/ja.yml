@@ -3,12 +3,13 @@ ja:
     models:
       admin_user: 管理者
       corporation: 法人
-      user: ユーザ
+      user: 利用者
       plan: プラン
       shop: 店舗
       facility: 施設
       facility_key: 施設鍵
       user_contract: 契約
+      corporation_user: 施設管理者
     attributes:
       admin_user:
         id: ID
@@ -28,7 +29,7 @@ ja:
         ks_corporation_id: Keystation法人
       corporation_user:
         corporation_id: 法人
-        user_id: ユーザ
+        user_id: 施設管理者
       user:
         id: ID
         email: メールアドレス
@@ -62,7 +63,7 @@ ja:
       user_contract:
         corporation_id: 法人
         shop_id: 店舗
-        user_id: 契約ユーザ
+        user_id: 契約利用者
         plan_id: 契約プラン
         started_on: 契約開始日
         finished_on: 契約終了日

@@ -1,10 +1,15 @@
 class Admin::Corporations::UsersController < AdminController
-  before_action :set_corporation, only: [:new, :create, :show, :edit, :update, :destroy]
+  before_action :set_corporation
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+
+
+  def index
+    @users = @corporation.users.order(id: :desc).page(params[:page])
+  end
 
   def new
     @user = User.new
-    @user.corporation_users.build
+    @user.corporation_users
   end
 
   def edit; end
