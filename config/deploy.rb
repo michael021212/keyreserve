@@ -29,7 +29,7 @@ set :linked_files, %w(.env config/database.yml)
 set :rbenv_type, :user
 set :rbenv_path, '/usr/local/rbenv'
 set :rbenv_ruby, File.read('.ruby-version').strip
-set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
+set :rbenv_prefix, "WEBPACKER_COMPILE=false RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_roles, :all
 
 namespace :deploy do
