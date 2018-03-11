@@ -1,4 +1,2 @@
-google_key: AIzaSyCamWpJFRMrSWPy-dYrjU7hhJMEmG44vmA
-# TODO Change keyreserve partner' token
-keystation_endpoint: 'http://staging.key-stations.com/'
-keyreserve_partner_token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiS2V5UmVzZXJ2ZSIsImNyZWF0ZWRfYXQiOiIyMDE4LzAzLzA5IDEyOjUzIiwicGFydG5lciI6dHJ1ZX0.g6ssbwCRTcTGqYC-DQ9vHk3EQG8DAiAu311T9njTXKE'
+keystation_endpoint: <%= ENV.fetch('KS_ENDPOINT') %>
+keyreserve_partner_token: <%= ENV.fetch('KS_PARTNER_TOKEN') %>
