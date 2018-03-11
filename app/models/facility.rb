@@ -4,8 +4,13 @@ class Facility < ApplicationRecord
   has_many :facility_plans, dependent: :destroy
   has_many :plans, through: :facility_plans
   has_many :facility_keys, dependent: :destroy
+
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank
+
+  delegate :name, to: :shop, prefix: true, allow_nil: true
+
+  mount_uploader :image, ImageUploader
 
   validates :name, presence: true
 

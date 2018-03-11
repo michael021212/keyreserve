@@ -54,6 +54,8 @@ ja:
         closing_time: 閉店時間
       facility:
         name: 施設名
+        image: 施設画像
+        description: 施設説明
       facility_key:
         ks_room_key_id: 鍵
         name: 鍵名称

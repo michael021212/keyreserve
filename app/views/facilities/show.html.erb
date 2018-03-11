@@ -1,0 +1,51 @@
+<div class="mg-page-title parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-2 col-md-8 col-xs-12">
+        <div class="text-center">
+          <%= image_tag @facility.image.main.url, class: 'img-responsive' %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-xs-12">
+        <div class="mg-single-room-txt">
+          <h2 class="mg-sec-left-title">鍵一覧</h2>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>鍵名称</th>
+                <th>パスワード</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @facility.facility_keys.each do |key| %>
+                <tr>
+                  <td><%= key.name %></td>
+                  <td><%= key.password %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-xs-12">
+        <div class="mg-single-room-txt">
+          <h2 class="mg-sec-left-title">施設詳細</h2>
+          <p><%= simple_format @facility.description %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

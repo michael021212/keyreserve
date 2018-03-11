@@ -1,17 +1,8 @@
 class FacilitiesController <  ApplicationController
+  before_action :set_facility, only: [:show]
 
   def index
-  end
-
-  def edit
-  end
-
-  def update
-    if @facility.update(facility_params)
-      redirect_to facility_path, notice: 'アカウント情報を更新しました'
-    else
-      render :edit
-    end
+    @facilities = current_user.available_facilities
   end
 
   def show
@@ -20,16 +11,6 @@ class FacilitiesController <  ApplicationController
   private
 
   def set_facility
-    @facility = current_facility
-  end
-
-  def set_ks_facility
-    @ks_facilitys = Facility.sync_from_api
-  end
-
-  def facility_params
-    params.require(:facility).permit(
-      :name, :kana, :tel, :postal_code, :address, :note
-    )
+    @facility = current_user.available_facilities.find(params[:id])
   end
 end

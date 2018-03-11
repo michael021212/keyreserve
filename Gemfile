@@ -60,6 +60,12 @@ gem 'seed-fu'
 # HTTP client lib
 gem 'faraday'
 
+# Upload
+gem 'carrierwave'
+gem 'carrierwave-aws'
+gem 'carrierwave-data-uri'
+gem 'rmagick'
+
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # gem 'capybara', '~> 2.13'

@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :corporation_users, dependent: :destroy
   has_many :corporations, through: :corporation_users
+  has_many :user_contracts, dependent: :destroy
 
   accepts_nested_attributes_for :corporation_users
 
@@ -15,4 +16,11 @@ class User < ApplicationRecord
   validates :tel,
             presence: true, length: { maximum: 13 }
   validates :password, confirmation: true, presence:true, length: { minimum: 4, maximum: 20, allow_blank: true }, if: -> { new_record? || changes[:crypted_password] }
+
+
+  def available_facilities
+    Facility.joins(:facility_plans)
+      .where(facility_plans: {plan_id: user_contracts.under_contract.pluck(:plan_id)})
+  end
+
 end

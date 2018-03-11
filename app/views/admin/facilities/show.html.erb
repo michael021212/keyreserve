@@ -15,6 +15,14 @@
         <td><%= @facility.name %></td>
       </tr>
       <tr>
+        <th><%= Facility.human_attribute_name(:image) %></th>
+        <td><%= image_tag @facility.image.main.url, width: "374px" %></td>
+      </tr>
+      <tr>
+        <th><%= Facility.human_attribute_name(:description) %></th>
+        <td><%= simple_format @facility.description %></td>
+      </tr>
+      <tr>
         <th>対象プラン</th>
         <td><%= simple_format @facility.plans.pluck(:name).join("\n") %></td>
       </tr>
