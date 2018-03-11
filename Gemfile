@@ -106,10 +106,16 @@ group :development, :test do
   gem 'awesome_print'
 
   # Deploy
-  gem 'capistrano'
-  gem 'capistrano-rails'
-  gem 'capistrano-rbenv'
+  gem 'capistrano', '3.9.1'
   gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rails-console'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-rbenv-vars'
+  # gem 'capistrano-resque', require: false
+  gem 'capistrano3-puma'
+  # gem 'capistrano-yarn'
+  # gem 'capistrano3-delayed-job'
 end
 
 group :development do
