@@ -65,6 +65,9 @@ gem 'carrierwave-aws'
 gem 'carrierwave-data-uri'
 gem 'rmagick'
 
+gem 'nested_form'
+gem 'geocoder'
+
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # gem 'capybara', '~> 2.13'
@@ -74,10 +77,8 @@ group :development, :test do
   gem 'letter_opener'
 
   # Geocoding
-  gem 'geocoder'
 
   # manage multiple nested models
-  gem 'nested_form'
 
   # CLI
   gem 'spring'
