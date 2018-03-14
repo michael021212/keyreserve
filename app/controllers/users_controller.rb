@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update]
+
   def new
     @user = User.new
   end
@@ -26,11 +28,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    if @user.update(user_params)
+      redirect_to user_path, notice: 'アカウント情報を更新しました'
+    else
+      render :edit
+    end
+  end
+
   private
+
+  def set_user
+    @user = current_user
+  end
 
   def user_params
     params.require(:user).permit(
-      :email, :password, :password_confirmation, :name, :tel, :payway
+      :email, :password, :password_confirmation, :name, :tel, :state, :payway
     )
   end
 end

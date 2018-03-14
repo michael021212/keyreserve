@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :user, only: [:new, :create]
+  resource :user
   get '/sign_in' => 'sessions#new'
   post '/sign_in' => 'sessions#create'
   get '/sign_out' => 'sessions#destroy'
