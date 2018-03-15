@@ -43,6 +43,8 @@ ja:
       plan:
         name: プラン名
         price: 月額
+        description: 説明
+        default_flag: 申し込み時選択可能プラン
       shop:
         name: 店舗名
         postal_code: 郵便番号

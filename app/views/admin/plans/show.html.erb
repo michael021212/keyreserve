@@ -15,12 +15,20 @@
         <td><%= @plan.id %></td>
       </tr>
       <tr>
-        <th style="width: 200px;"><%= Plan.human_attribute_name(:name) %></th>
+        <th><%= Plan.human_attribute_name(:default_flag) %></th>
+        <td><%= @plan.default_flag? ? '◯' : '' %></td>
+      </tr>
+      <tr>
+        <th><%= Plan.human_attribute_name(:name) %></th>
         <td><%= @plan.name %></td>
       </tr>
       <tr>
-        <th style="width: 200px;"><%= Plan.human_attribute_name(:price) %></th>
+        <th><%= Plan.human_attribute_name(:price) %></th>
         <td><%= @plan.price %></td>
+      </tr>
+      <tr>
+        <th><%= Plan.human_attribute_name(:description) %></th>
+        <td><%= @plan.description %></td>
       </tr>
     </table>
   </div>
