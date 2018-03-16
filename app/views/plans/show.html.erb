@@ -1,19 +1,16 @@
-<% breadcrumb :admin_corporation_plan, @corporation, @plan %>
-
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title"><%= Plan.model_name.human %>詳細</h4>
-    <div class="box-tools">
-      <%= link_to "戻る", admin_corporation_plans_path(@corporation), class: 'btn btn-default' %>
-      <%= link_to "編集", edit_admin_corporation_plan_path(@corporation, @plan), class: 'btn btn-primary' %>
+<% content_for :middle_title do %>
+  <h2><%= Plan.model_name.human %>管理</h2>
+<% end %>
+<div class='container mt30'>
+<div class="panel">
+  <div class="panel-header mb50">
+    <div class="panel-tools pull-right">
+      <%= link_to "編集", edit_plan_path(@plan), class: 'btn btn-main' %>
+      <%= link_to '削除', plan_path(@plan), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-dark-main' %>
     </div>
   </div>
-  <div class="box-body">
+  <div class="panel-body">
     <table class="table table-striped">
-      <tr>
-        <th style="width: 200px;"><%= Plan.human_attribute_name(:id) %></th>
-        <td><%= @plan.id %></td>
-      </tr>
       <tr>
         <th><%= Plan.human_attribute_name(:default_flag) %></th>
         <td><%= @plan.default_flag? ? '◯' : '' %></td>
@@ -33,4 +30,4 @@
     </table>
   </div>
 </div>
-
+</div>

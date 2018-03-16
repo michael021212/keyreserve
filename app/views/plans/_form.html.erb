@@ -1,6 +1,6 @@
-<%= bootstrap_form_for([:admin, corporation, plan], layout: :horizontal) do |f| %>
-  <%= f.form_group :default_flag do %>
-    <%= f.check_box :default_flag %>
+<%= bootstrap_form_for plan do |f| %>
+  <%= f.form_group :default_flag, label: { } do %>
+    <%= f.check_box :default_flag, label: '' %>
   <% end %>
   <%= f.text_field :name %>
   <%= f.text_field :price %>

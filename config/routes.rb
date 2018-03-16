@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
   end
   resources :facilities, only: [:index, :show]
+  resources :plans
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー

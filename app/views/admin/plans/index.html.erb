@@ -13,8 +13,10 @@
       <thead>
         <tr>
           <th><%= Plan.human_attribute_name(:id) %></th>
+          <th style="width: 300px;"><%= Plan.human_attribute_name(:default_flag) %></th>
           <th><%= Plan.human_attribute_name(:name) %></th>
-          <th style="width: 200px;"></th>
+          <th><%= Plan.human_attribute_name(:price) %></th>
+          <th style="width: 350px;"></th>
         </tr>
       </thead>
       <tbody>
@@ -22,8 +24,9 @@
           <% @plans.each do |plan| %>
             <tr>
               <td><%= plan.id %></td>
+              <td><%= plan.default_flag? ? '◯' : '' %></td>
               <td><%= plan.name %></td>
-              <td><%= plan.price %></td>
+              <td><%= delimiter_price(plan.price) %></td>
               <td>
                 <%= link_to '詳細', admin_corporation_plan_path(@corporation, plan), class: 'btn btn-default' %>
                 <%= link_to '編集', edit_admin_corporation_plan_path(@corporation, plan), class: 'btn btn-primary' %>
