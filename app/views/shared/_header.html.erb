@@ -1,4 +1,4 @@
-<header class="header transp sticky"> <!-- available class for header: .sticky .center-content .transp -->
+<header class="header transp sticky"> <!-- available class for header: .sticky .center-content .transp --> 
   <nav class="navbar navbar-inverse">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -18,18 +18,23 @@
             <li>
               <%= link_to 'ご利用可能な施設', facilities_path  %>
             </li>
-            <li>
-              <%= link_to 'ログアウト', sign_out_path %>
+            <!-- 法人メニュー開始-->
+            <% if current_corporation? %>
+              <li class="<%= active_class('corporations') %>">
+                <%= link_to '施設管理者メニュー', corporation_path %>
+              </li>
+            <% end %>
+            <!-- 法人メニュー結束 -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.name %>様<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to '個人設定', user_path %></li>
+                <li><%= link_to 'ログアウト', sign_out_path %></li>
+              </ul>
             </li>
           <% else %>
             <li>
               <%= link_to 'ログイン', sign_in_path %>
-            </li>
-          <% end %>
-
-          <% if logged_in? && current_corporation? %>
-            <li class="<%= active_class('corporations') %>">
-              <%= link_to '施設管理者メニュー', corporation_path %>
             </li>
           <% end %>
         </ul>

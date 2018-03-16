@@ -1,8 +1,8 @@
 <%
   flash.each do |msg_type, message|
-    concat(content_tag(:div, message, class: "full-width-alert text-center alert alert-#{flash_class_for(msg_type)} alert-dismissible fade in", role: 'alert') do
+    concat(content_tag(:div, message, class: "full-width-alert text-center alert #{flash_class_for(msg_type)} alert-dismissible fade in", role: 'alert') do
       concat (content_tag(:span) do
-        concat content_tag(:span, "×", class: "close", "aria-hidden": true, data: { dismiss: "alert" })
+        concat content_tag(:span, '×'.html_safe, class: "close", "aria-hidden": true, data: { dismiss: "alert" })
         concat content_tag(:span, 'close', class: 'sr-only')
       end)
       concat message
