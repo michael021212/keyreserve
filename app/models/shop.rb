@@ -1,5 +1,7 @@
 class Shop < ApplicationRecord
   acts_as_paranoid
+  mount_uploader :image, ImageUploader
+
   belongs_to :corporation
   has_many :facilities, dependent: :destroy
 

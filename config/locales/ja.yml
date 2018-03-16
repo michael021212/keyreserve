@@ -52,6 +52,7 @@ ja:
         tel: 電話番号
         opening_time: 開店時間
         closing_time: 閉店時間
+        image: 店舖画像
       facility:
         name: 施設名
         image: 施設画像
