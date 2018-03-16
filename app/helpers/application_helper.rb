@@ -71,6 +71,11 @@ module ApplicationHelper
     "#{number_with_delimiter num} 円"
   end
 
+  def yen_sign(price)
+    return if price.nil?
+    "¥#{price}"
+  end
+
   def key_corporation_select
     KeystationService.sync_corporations
   end

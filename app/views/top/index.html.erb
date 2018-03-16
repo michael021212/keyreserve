@@ -44,7 +44,7 @@
                 <%= image_tag shop.image_url(:main), class: 'img-responsive' %>
                 <figcaption>
                   <h2><%= shop.name %></h2>
-                  <div class="mg-room-price"><sup>最低料金 </sup><%= Plan.lowest_price(shop.id) %></div>
+                  <div class="mg-room-price"><sup>最低料金 </sup><%= yen_sign(Plan.lowest_price(shop.id)) %></div>
                   <%= link_to shop_path(shop) do %>
                     詳細を見る <i class="fa fa-angle-double-right"></i>
                   <% end %>
