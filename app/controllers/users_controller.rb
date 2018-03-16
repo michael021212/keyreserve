@@ -28,6 +28,8 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit; end
+
   def update
     if @user.update(user_params)
       redirect_to user_path, notice: 'アカウント情報を更新しました'
