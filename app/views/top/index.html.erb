@@ -26,3 +26,36 @@
     </div>
   </div>
 </div>
+
+<!-- ご利用可能な部屋 -->
+<div class="mg-best-rooms">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-sec-title">
+          <h2>Our Spaces</h2>
+          <p>These best spaces chosen by our customers</p>
+        </div>
+        <div class="row">
+          <!-- -->
+          <% @shops.each do |shop| %>
+            <div class="col-sm-4">
+              <figure class="mg-room">
+                <%= image_tag shop.image_url(:main), class: 'img-responsive' %>
+                <figcaption>
+                  <h2><%= shop.name %></h2>
+                  <div class="mg-room-price"><sup>最低料金 </sup><%= Plan.lowest_price(shop.id) %></div>
+                  <%= link_to shop_path(shop) do %>
+                    詳細を見る <i class="fa fa-angle-double-right"></i>
+                  <% end %>
+                  <p>
+                  <a href="#" class="btn btn-main">今すぐ予約</a>
+                </figcaption>
+              </figure>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

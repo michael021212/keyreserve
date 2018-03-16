@@ -1,0 +1,46 @@
+<% content_for :middle_title do %>
+  <h2><%= "スペースー#{@shop.name}" %></h2>
+<% end %>
+<div class="mg-single-room">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <%= image_tag @shop.image_url(:main), class: 'img-responsive' %>
+      </div>
+      <div class="col-md-5 mg-room-fecilities">
+        <h2 class="mg-sec-left-title"><%= @shop.name %></h2>
+        <div class="row">
+          <div class="col-xs-12">
+            <p> <%= "〒#{@shop.postal_code} #{@shop.address}" %></p>
+            <div class="row mg-room-fecilities">
+              <div class="col-sm-12">
+                <ul class='ul-newline'>
+                  <li>
+                    <%= "電話: #{tel_fmt(@shop.tel)}" %>
+                  </li>
+                  <li>
+                    <%= "営業時間: #{time_fmt(@shop.opening_time)} - #{time_fmt(@shop.closing_time)}" %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-single-room-txt">
+          <h4 class="mg-sec-left-title">ご利用可能な施設</h4>
+          <div class="row">
+            <div class="col-md-12">
+              <%= render 'facilities', shop: @shop %>
+            </div>
+          </div>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
     end
   end
+  resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
   resources :plans
 

@@ -1,4 +1,5 @@
 module ApplicationHelper
+  extend ActiveSupport::NumberHelper
   FLASH_MSG = {
     success: 'alert-success',
     error: 'alert-danger',
@@ -58,6 +59,11 @@ module ApplicationHelper
   def time_fmt(t)
     return '' if t.blank?
     t.try(:strftime, '%H:%M')
+  end
+
+  def tel_fmt(t)
+    return '' if t.blank?
+    ApplicationHelper.number_to_phone(t)
   end
 
   def delimiter_price(num)

@@ -14,6 +14,9 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
+          <li>
+            <%= link_to 'スペース一覧', shops_path  %>
+          </li>
           <% if logged_in? %>
             <li>
               <%= link_to 'ご利用可能な施設', facilities_path  %>
