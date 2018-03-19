@@ -1,4 +1,4 @@
-class Admin::PlansController < AdminController
+class PlansController < ApplicationController
   before_action :set_corporation
   before_action :set_plan, only: [:show, :edit, :update, :destroy]
 
@@ -13,7 +13,7 @@ class Admin::PlansController < AdminController
   def create
     @plan = @corporation.plans.new(plan_params)
     if @plan.save
-      redirect_to [:admin, @corporation, @plan], notice: "#{Plan.model_name.human}を作成しました。"
+      redirect_to plans_path, notice: "#{Plan.model_name.human}を作成しました。"
     else
       render :new
     end
@@ -25,7 +25,7 @@ class Admin::PlansController < AdminController
 
   def update
     if @plan.update(plan_params)
-      redirect_to [:admin, @corporation, @plan], notice: "#{Plan.model_name.human}を更新しました。"
+      redirect_to @plan, notice: "#{Plan.model_name.human}を更新しました。"
     else
       render :edit
     end
@@ -33,13 +33,14 @@ class Admin::PlansController < AdminController
 
   def destroy
     @plan.destroy
-    redirect_to admin_corporation_path(@corporation)
+    redirect_to plans_path, notice: "#{Plan.model_name.human}を削除しました。"
+
   end
 
   private
 
   def set_corporation
-    @corporation = Corporation.find(params[:corporation_id])
+    @corporation = current_corporation
   end
 
   def set_plan

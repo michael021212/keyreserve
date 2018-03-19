@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :user, only: [:new, :create]
+  resource :user
   get '/sign_in' => 'sessions#new'
   post '/sign_in' => 'sessions#create'
   get '/sign_out' => 'sessions#destroy'
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
   end
   resources :facilities, only: [:index, :show]
+  resources :plans
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー

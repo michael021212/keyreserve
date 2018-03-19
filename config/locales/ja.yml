@@ -43,6 +43,8 @@ ja:
       plan:
         name: プラン名
         price: 月額
+        description: 説明
+        default_flag: 申し込み時選択可能プラン
       shop:
         name: 店舗名
         postal_code: 郵便番号
@@ -52,6 +54,7 @@ ja:
         tel: 電話番号
         opening_time: 開店時間
         closing_time: 閉店時間
+        image: 店舖画像
       facility:
         name: 施設名
         image: 施設画像

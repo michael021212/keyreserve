@@ -1,0 +1,49 @@
+<% content_for :middle_title do %>
+  <h2><%= Plan.model_name.human %>管理</h2>
+<% end %>
+<div class="container mt30">
+<div class="panel">
+  <div class="panel-heading mb50">
+    <%= link_to '新しいプランを追加', new_plan_path, class: 'btn btn-main glyphicon glyphicon-plus pull-right' %>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= Plan.human_attribute_name(:name) %></th>
+          <th><%= Plan.human_attribute_name(:price) %></th>
+          <th class='text-center'><%= Plan.human_attribute_name(:default_flag) %></th>
+          <th style="width: 150px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @plans.present? %>
+          <% @plans.each do |plan| %>
+            <tr>
+              <td>
+                <%= link_to plan_path(plan) do %>
+                  <%= plan.name %>
+                <% end %>
+              </td>
+              <td><%= delimiter_price(plan.price) %></td>
+              <td class='text-center'><%= plan.default_flag? ? '◯' : '' %></td>
+              <td class='pull-right'>
+              <%= link_to plan_path(plan), class: 'btn btn-dark' do %>
+                詳細<i class="fa fa-angle-double-right"></i>
+              <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= Plan.model_name.human %>はありません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @plans %>
+  </div>
+</div>
+</div>
