@@ -17,4 +17,8 @@ class Facility < ApplicationRecord
   def self.sync_from_api(ks_corporation_id)
     KeystationService.sync_rooms(ks_corporation_id)
   end
+
+  def selectable_plans
+    plans.where(default_flag: true)
+  end
 end
