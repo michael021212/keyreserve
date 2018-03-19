@@ -33,8 +33,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="mg-sec-title">
-          <h2>Our Spaces</h2>
-          <p>These best spaces chosen by our customers</p>
+          <h2>スペース一覧</h2>
         </div>
         <div class="row">
           <!-- -->
@@ -44,12 +43,12 @@
                 <%= image_tag shop.image_url(:main), class: 'img-responsive' %>
                 <figcaption>
                   <h2><%= shop.name %></h2>
-                  <div class="mg-room-price"><sup>最低料金 </sup><%= yen_sign(Plan.lowest_price(shop.id)) %></div>
-                  <%= link_to shop_path(shop) do %>
+                  <div class="mg-room-price"><sup><%# 最低料金 %></sup><%#= yen_sign(Plan.lowest_price(shop.id)) %></div>
+                  <%= link_to shop_path(shop), class: 'btn btn-link' do %>
                     詳細を見る <i class="fa fa-angle-double-right"></i>
                   <% end %>
                   <p>
-                  <a href="#" class="btn btn-main">今すぐ予約</a>
+                  <%#= link_to '詳細', shop_path(shop), class: 'btn btn-main' %>
                 </figcaption>
               </figure>
             </div>
