@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315005435) do
+ActiveRecord::Schema.define(version: 20180319072404) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20180315005435) do
     t.string "tel"
     t.integer "state", default: 0, null: false
     t.integer "payway", default: 1, null: false
+    t.string "stripe_customer_id"
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.string "reset_password_token"

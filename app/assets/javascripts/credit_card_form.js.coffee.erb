@@ -1,0 +1,38 @@
+$ ->
+  $('.cc-number').payment('formatCardNumber')
+  $('.cc-exp').payment('formatCardExpiry')
+  $('.cc-cvc').payment('formatCardCVC')
+  $('[data-numeric]').payment('restrictNumeric')
+  $('.cc-number').on 'keyup', ->
+    cardtype = $.payment.cardType($(this).val())
+    if cardtype
+      $(this).attr("data-cardtype", cardtype)
+      $(this).css("background-image", 'url("/cards/card_' + cardtype + '.png")')
+
+  $('.cc-holder').on 'keyup', ->
+    $(this).val($(this).val().toUpperCase())
+
+    if cardtype == "amex"
+      $('.cc-cvc')
+        .attr("placeholder", "XXXX")
+        .attr("maxlength", "4")
+        .attr("pattern", "\\d{4}")
+    else
+      $('.cc-cvc')
+        .attr("placeholder", "XXX")
+        .attr("maxlength", "3")
+        .attr("pattern", "\\d{3}")
+
+  $('.cc-cvc').on "focus focusout", ->
+    if $("#credit_card_number").attr("data-cardtype") == "amex"
+      content = '<img src="/cards/securitycode_amex.png" width="185" height="126" style="max-width: 100%;"><p>セキュリティコードはカード表面の番号右上に記>載の数字4桁になります</p>'
+    else
+      content = '<img src="/cards/securitycode_visa.png" width="185" height="126" style="max-width: 100%;"><p>セキュリティコードはカード裏面の署名欄に記載>の数字末尾3桁になります</p>'
+
+    $(this).popover({
+    html: true,
+    placement: "top",
+    trigger: "manual",
+    title: "記載場所",
+    content: content
+    }).popover("toggle")

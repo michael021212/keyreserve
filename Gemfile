@@ -65,6 +65,9 @@ gem 'carrierwave-aws'
 gem 'carrierwave-data-uri'
 gem 'rmagick'
 
+# Credit Card
+gem 'stripe'
+
 gem 'nested_form'
 gem 'geocoder'
 

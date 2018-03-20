@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :corporation_users, dependent: :destroy
   has_many :corporations, through: :corporation_users
   has_many :user_contracts, dependent: :destroy
+  has_one :credit_card, dependent: :destroy
 
   accepts_nested_attributes_for :corporation_users
 
@@ -23,4 +24,14 @@ class User < ApplicationRecord
       .where(facility_plans: {plan_id: user_contracts.under_contract.pluck(:plan_id)})
   end
 
+  def set_stripe_customer
+    stripe_customer = Stripe::Customer.create(email: email)
+    update(stripe_customer_id: stripe_customer.id)
+  end
+
+  def retrieve_stripe_customer
+    # Retrieves the details of an existing customer.
+    return unless stripe_customer_id
+    Stripe::Customer.retrieve(stripe_customer_id)
+  end
 end

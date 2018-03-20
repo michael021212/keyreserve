@@ -30,3 +30,5 @@
 //= require lib/gmaps.min
 //= require lib/jquery.parallax-1.1.3
 //= require script
+//= require jquery.payment.min.js
+//= require credit_card_form

@@ -1,0 +1,7 @@
+<%= bootstrap_form_for credit_card, url: credit_card_path, layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-9' do |f| %>
+  <%= f.text_field :number, placeholder: '例: 4723 4567 8901 2345', help: 'カード番号を入力してください', class: 'cc-number alphabet numeric', id: 'credit_card_number' %>
+  <%= f.text_field :holder_name, placeholder: '例: YAMADA TARO', class: 'cc-holder alphabet', help: '英字大文字で姓名の間にはスペースを入れてください', id: 'credit_card_holder_name' %>
+  <%= f.text_field :exp, placeholder: '例: 12 / 20（月 / 年）', help: '有効期限を月、年の順に入力してください',  class: 'cc-exp alphabet' %>
+  <%= f.text_field :cvc, placeholder: 'XXX', help: 'カードの裏面にある数桁の数字です', class: 'cc-cvc alphabet' %>
+  <%= f.button '登録', class: 'btn btn-primary center-block' %>
+<% end %>

@@ -10,6 +10,7 @@ ja:
       facility_key: 施設鍵
       user_contract: 契約
       corporation_user: 施設管理者
+      credit_card: クレジットカード
     attributes:
       admin_user:
         id: ID
@@ -30,6 +31,11 @@ ja:
       corporation_user:
         corporation_id: 法人
         user_id: 施設管理者
+      credit_card:
+        number: カード番号
+        holder_name: カード名義人
+        exp: 有効期限
+        cvc: セキュリティコード
       user:
         id: ID
         email: メールアドレス
