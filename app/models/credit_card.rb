@@ -4,7 +4,7 @@ class CreditCard < ApplicationRecord
   belongs_to :user
   before_save :create_or_update_stripe_card
 
-  validates :holder_name, presence: true
+  validates :number, :holder_name, presence: true
   validates :exp,
             presence: true,
             format: { with: /\A\d{2}\s\/\s\d{2}\z/ }

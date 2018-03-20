@@ -1,0 +1,33 @@
+<% content_for :middle_title do %>
+  <h2>申し込み</h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-booking-form">
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in">
+              <div class='row'>
+                <div class="col-md-8">
+                  <div class="mg-book-form-personal">
+                    <h2 class="mg-sec-left-title">スペース情報</h2>
+                    <%= render 'shop', shop: @shop %>
+                    <h2 class="mg-sec-left-title">施設情報</h2>
+                     <%= render 'facility', facility: @facility %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mg-cart-container">
+                    <%= render 'plan', plan: @plan %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>

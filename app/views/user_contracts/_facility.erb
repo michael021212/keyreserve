@@ -1,0 +1,19 @@
+<% if facility.image? %>
+  <%= link_to facility_path(facility) do %>
+    <%= image_tag facility.image_url(:main), class: 'img-responsive' %>
+  <% end %>
+  <% else %>
+    <%= link_to facility_path(facility) do %>
+      <%= image_tag 'noimage.png', class: 'img-responsive' %>
+    <% end %>
+<% end %>
+<table class="table table-striped">
+  <tr>
+    <th><%= Facility.human_attribute_name(:name) %></th>
+    <td><%= facility.name %></td>
+  </tr>
+  <tr>
+    <th><%= Facility.human_attribute_name(:description) %></th>
+    <td><%= facility.description %></td>
+  </tr>
+</table>
