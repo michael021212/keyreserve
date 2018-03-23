@@ -13,8 +13,6 @@
                   <div class="mg-book-form-personal">
                     <h2 class="mg-sec-left-title">スペース情報</h2>
                     <%= render 'shop', shop: @shop %>
-                    <h2 class="mg-sec-left-title">施設情報</h2>
-                     <%= render 'facility', facility: @facility %>
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -22,12 +20,15 @@
                     <%= render 'plan', plan: @plan %>
                   </div>
                 </div>
+                <div class="col-md-8">
+                  <%= link_to '次へ', current_user.credit_card.present? ? user_contracts_credit_card_path(shop_name: @shop.name, plan_name: @plan.name) : new_credit_card_path(shop_name: @shop.name, plan_name: @plan.name), class: 'btn btn-dark-main pull-right' %>
+                  <%= link_to '戻る', shop_path(@shop), class: 'btn btn-default pull-left' %>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-2"></div>
     </div>
   </div>
 </div>

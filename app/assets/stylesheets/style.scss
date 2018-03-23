@@ -2966,7 +2966,7 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-widget-cart-row strong {
   color: #fff;
-  display: inline-block;
+  display: block;
   margin-right: 5px;
 }
 .mg-cart-room h3 {
@@ -3086,8 +3086,8 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .alert-success {
   border-color: #d0edce;
-  background-color: #effbf0;
-  color: #60a662;
+  background-color: #effbf0 !important;
+  color: #60a662 !important;
 }
 .alert-success .mg-alert-icon {
   color: #60a662;

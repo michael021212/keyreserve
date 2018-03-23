@@ -37,7 +37,16 @@ Rails.application.routes.draw do
   resources :facilities, only: [:index, :show]
   resources :plans
   resource :credit_card, only: [:new, :create, :show, :edit, :update]
-  resource :user_contract, only: [:new, :create]
+  get 'user_contracts/credit_card', to: 'user_contracts#credit_card', as: 'user_contracts/credit_card'
+  resources :user_contracts, only: [:new, :create, :show]
+
+#  resources :shops do
+#    resources :plans do
+#      resource :user_contract, only: [:new, :create, :show] do
+#        get :credit_card
+#      end
+#    end
+#  end
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー

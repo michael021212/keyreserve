@@ -1,0 +1,47 @@
+<% content_for :middle_title do %>
+  <h2>申し込み</h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-booking-form">
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in">
+              <div class='row'>
+                <div class="col-md-8">
+                  <div class="mg-book-form-personal">
+                    <h2 class="mg-sec-left-title">クレジットカード情報</h2>
+                    <table class="table table-striped">
+                      <tr>
+                        <th><%= CreditCard.human_attribute_name(:holder_name) %>
+                        <td><%= current_user.credit_card.holder_name %></td>
+                      </tr>
+                      <tr>
+                        <th><%= CreditCard.human_attribute_name(:number) %></th>
+                        <td><%= current_user.credit_card.full_card_no %></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mg-cart-container">
+                    <%= render 'plan', plan: @plan %>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <%= bootstrap_form_for @user_contract do |f| %>
+                    <%= f.hidden_field :plan_id, value: @plan.id %>
+                    <%= f.hidden_field :shop_id, value: @shop.id %>
+                    <%= f.submit '申し込み', class: 'btn btn-dark-main pull-right' %>
+                  <% end %>
+                  <%= link_to '戻る', new_user_contract_path(user_contract: { shop_id: @shop.id, plan_id: @plan.id }), class: 'btn btn-default pull-left' %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

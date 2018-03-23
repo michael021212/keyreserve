@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319072404) do
+ActiveRecord::Schema.define(version: 20180323072753) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20180319072404) do
     t.integer "sequence"
     t.integer "kind"
     t.string "holder_name", null: false
-    t.string "stripe_card_id"
+    t.string "stripe_card_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 20180319072404) do
     t.bigint "plan_id", null: false
     t.date "started_on", null: false
     t.date "finished_on"
-    t.integer "state", default: 1, null: false
+    t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

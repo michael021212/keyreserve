@@ -11,7 +11,11 @@ class CreditCardsController <  ApplicationController
     begin
       @credit_card.save!
       current_user.activated!
-      redirect_to credit_card_path, notice: 'クレジットカードを登録しました。'
+      if session[:shop_name].present? && session[:plan_name].present?
+        redirect_to credit_card_user_contracts_path(shop_name: session[:shop_name], plan_name: session[:plan_name]), notice: 'クレジットカードを登録しました。'
+      else
+        redirect_to credit_card_path, notice: 'クレジットカードを登録しました。'
+      end
     rescue => e
       logger.warn("#{e.class.name} #{e.message}")
       flash[:alert] = 'クレジットカードの登録に失敗しました'
