@@ -44,14 +44,6 @@ Rails.application.routes.draw do
     end
   end
 
-#  resources :shops do
-#    resources :plans do
-#      resource :user_contract, only: [:new, :create, :show] do
-#        get :credit_card
-#      end
-#    end
-#  end
-
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー
   resource :corporation, only: [:show, :edit, :update]
