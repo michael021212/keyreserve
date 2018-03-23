@@ -93,6 +93,7 @@ ja:
         invoice: 請求書
     user_contract:
       state:
+        applying: 契約申し込み
         under_contract: 契約中
         finished: 契約終了
   date:

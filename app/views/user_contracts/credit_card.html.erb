@@ -30,12 +30,12 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <%= bootstrap_form_for @user_contract do |f| %>
+                  <%= bootstrap_form_for [@shop, @plan, @user_contract] do |f| %>
                     <%= f.hidden_field :plan_id, value: @plan.id %>
                     <%= f.hidden_field :shop_id, value: @shop.id %>
                     <%= f.submit '申し込み', class: 'btn btn-dark-main pull-right' %>
                   <% end %>
-                  <%= link_to '戻る', new_user_contract_path(user_contract: { shop_id: @shop.id, plan_id: @plan.id }), class: 'btn btn-default pull-left' %>
+                  <%= link_to '戻る', new_shop_plan_user_contract_path(@shop.id, @plan.id), class: 'btn btn-default pull-left' %>
                 </div>
               </div>
             </div>

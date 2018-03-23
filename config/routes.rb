@@ -37,8 +37,12 @@ Rails.application.routes.draw do
   resources :facilities, only: [:index, :show]
   resources :plans
   resource :credit_card, only: [:new, :create, :show, :edit, :update]
-  get 'user_contracts/credit_card', to: 'user_contracts#credit_card', as: 'user_contracts/credit_card'
-  resources :user_contracts, only: [:new, :create, :show]
+  resources :shops do
+    resources :plans do
+      get 'user_contracts/credit_card'
+      resources :user_contracts, only: [:new, :create, :show]
+    end
+  end
 
 #  resources :shops do
 #    resources :plans do

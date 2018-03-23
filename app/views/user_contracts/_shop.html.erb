@@ -13,19 +13,19 @@
     <td><%= shop.name %></td>
   </tr>
   <tr>
+    <th><%= Shop.human_attribute_name(:tel) %></th>
+    <td><%= shop.tel %></td>
+  </tr>
+  <tr>
     <th><%= Shop.human_attribute_name(:address) %></th>
     <td><%= shop.address %></td>
   </tr>
   <tr>
     <th><%= Shop.human_attribute_name(:opening_time) %></th>
-    <td><%= shop.opening_time %></td>
+    <td><%= time_fmt(shop.opening_time) %></td>
   </tr>
   <tr>
     <th><%= Shop.human_attribute_name(:closing_time) %></th>
-    <td><%= shop.closing_time %></td>
-  </tr>
-  <tr>
-    <th><%= Shop.human_attribute_name(:address) %></th>
-    <td><%= shop.address %></td>
+    <td><%= time_fmt(shop.closing_time) %></td>
   </tr>
 </table>

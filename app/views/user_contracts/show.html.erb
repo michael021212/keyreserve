@@ -30,16 +30,16 @@
                       <div class="col-md-6">
                         <h3 class="mg-payment-id"><%= @user_contract.shop.name %></h3>
                         <div class="mg-widget-cart-row">
+                          <strong><%= UserContract.human_attribute_name(:started_on) %></strong>
+                          <span><%= @user_contract.started_on %></span>
+                        </div>
+                        <div class="mg-widget-cart-row">
                           <strong><%= Shop.human_attribute_name(:opening_time) %></strong>
                           <span><%= time_fmt(@user_contract.shop.opening_time) %></span>
                         </div>
                         <div class="mg-widget-cart-row">
                           <strong><%= Shop.human_attribute_name(:closing_time) %></strong>
                           <span><%= time_fmt(@user_contract.shop.closing_time) %></span>
-                        </div>
-                        <div class="mg-widget-cart-row">
-                          <strong><%= UserContract.human_attribute_name(:started_on) %></strong>
-                          <span><%= @user_contract.started_on %></span>
                         </div>
                         <div class="mg-widget-cart-row">
                           <strong><%= Shop.human_attribute_name(:tel) %></strong>
