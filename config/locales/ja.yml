@@ -10,6 +10,7 @@ ja:
       facility_key: 施設鍵
       user_contract: 契約
       corporation_user: 施設管理者
+      information: お知らせ
     attributes:
       admin_user:
         id: ID
@@ -55,6 +56,7 @@ ja:
         opening_time: 開店時間
         closing_time: 閉店時間
         image: 店舖画像
+        calendar_url: イベントカレンダーURL
       facility:
         name: 施設名
         image: 施設画像
@@ -73,6 +75,12 @@ ja:
         started_on: 契約開始日
         finished_on: 契約終了日
         state: ステータス
+      information:
+        id: お知らせID
+        shop_id: 店舗
+        title: タイトル
+        description: 詳細
+        created_at: 日付
   enums:
     corporation:
       payway:

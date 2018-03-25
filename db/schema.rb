@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180315005435) do
+ActiveRecord::Schema.define(version: 20180325091726) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -88,6 +88,16 @@ ActiveRecord::Schema.define(version: 20180315005435) do
     t.index ["plan_id"], name: "index_facility_plans_on_plan_id"
   end
 
+  create_table "information", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "shop_id", null: false
+    t.string "title", null: false
+    t.text "description", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["shop_id"], name: "index_information_on_shop_id"
+  end
+
   create_table "payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id", null: false
     t.bigint "corporation_id", null: false
@@ -143,6 +153,7 @@ ActiveRecord::Schema.define(version: 20180315005435) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "calendar_url"
     t.index ["corporation_id"], name: "index_shops_on_corporation_id"
   end
 

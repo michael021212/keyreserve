@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index]
     resources :admin_users, except: [:show]
     resources :users
+    resources :information
     resources :corporations do
       resources :corporation_users
       resources :user_contracts
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
       patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
     end
   end
+  resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
   resources :plans
 
