@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap_form'
 gem 'adminlte2-rails'
 gem 'jquery-slimscroll-rails'
+gem 'rails_autolink'
 
 # Authentication
 gem 'sorcery'

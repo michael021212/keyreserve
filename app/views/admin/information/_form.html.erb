@@ -1,0 +1,6 @@
+<%= bootstrap_form_for([:admin, @information], layout: :horizontal) do |f| %>
+  <%= f.collection_select :shop_id, Shop.all, :id, :name, include_blank: true %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description, rows: 10 %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
