@@ -12,6 +12,15 @@ ja:
         title: 管理者編集
       show:
         title: 管理者詳細
+    information:
+      index:
+        title: お知らせ一覧
+      new:
+        title: お知らせ登録
+      edit:
+        title: お知らせ編集
+      show:
+        title: お知らせ詳細
     corporations:
       index:
         title: 法人一覧

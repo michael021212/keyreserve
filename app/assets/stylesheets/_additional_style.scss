@@ -165,3 +165,32 @@ html,body {
     margin-top: 20px;
   }
 }
+
+.login-page-btn {
+  width: 100%;
+  background: #16262e;
+  color: #e7b315;
+}
+
+@media (min-width: 768px) {
+  .edit-user-panel {
+    width: 800px;
+    margin-left: 350px;
+  }
+}
+
+.ul-newline li {
+  display: block;
+}
+
+.mg-news-gallery {
+  padding-top: 0px;
+  padding-bottom: 20px;
+}
+.mg-best-rooms {
+  padding-top: 20px;
+}
+
+.mg-recnt-post > p {
+  margin-left: 0px;
+}

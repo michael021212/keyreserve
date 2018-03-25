@@ -16,11 +16,11 @@ class Admin::PlansController < AdminController
       redirect_to [:admin, @corporation, @plan], notice: "#{Plan.model_name.human}を作成しました。"
     else
       render :new
-    end 
+    end
   end
 
   def show; end
-  
+
   def edit; end
 
   def update
@@ -48,7 +48,7 @@ class Admin::PlansController < AdminController
 
   def plan_params
     params.require(:plan).permit(
-      :name, :price
+      :name, :price, :description, :default_flag
     )
   end
 end

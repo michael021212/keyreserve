@@ -12,11 +12,11 @@ class Admin::ShopsController < AdminController
       redirect_to [:admin, @corporation, @shop], notice: "#{Shop.model_name.human}を作成しました。"
     else
       render :new
-    end 
+    end
   end
 
   def show; end
-  
+
   def edit; end
 
   def update
@@ -44,7 +44,7 @@ class Admin::ShopsController < AdminController
 
   def shop_params
     params.require(:shop).permit(
-      :name, :postal_code, :address, :lat, :lon, :tel, :opening_time, :closing_time
+      :name, :postal_code, :address, :lat, :lon, :tel, :opening_time, :closing_time, :image, :calendar_url
     )
   end
 end

@@ -1,0 +1,10 @@
+<% breadcrumb :edit_admin_information, @information %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Information.model_name.human %>編集</h4>
+  </div>
+  <div class="box-body">
+    <%= render 'form', information: @information %>
+  </div>
+</div>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index]
     resources :admin_users, except: [:show]
     resources :users
+    resources :information
     resources :corporations do
       resources :corporation_users
       resources :user_contracts
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :user, only: [:new, :create]
+  resource :user
   get '/sign_in' => 'sessions#new'
   post '/sign_in' => 'sessions#create'
   get '/sign_out' => 'sessions#destroy'
@@ -33,7 +34,9 @@ Rails.application.routes.draw do
       patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
     end
   end
+  resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
+  resources :plans
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー

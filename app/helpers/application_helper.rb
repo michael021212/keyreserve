@@ -1,4 +1,5 @@
 module ApplicationHelper
+  extend ActiveSupport::NumberHelper
   FLASH_MSG = {
     success: 'alert-success',
     error: 'alert-danger',
@@ -60,9 +61,19 @@ module ApplicationHelper
     t.try(:strftime, '%H:%M')
   end
 
+  def tel_fmt(t)
+    return '' if t.blank?
+    ApplicationHelper.number_to_phone(t)
+  end
+
   def delimiter_price(num)
     num = num ? num : 0
     "#{number_with_delimiter num} 円"
+  end
+
+  def yen_sign(price)
+    return if price.nil?
+    "¥#{price}"
   end
 
   def key_corporation_select

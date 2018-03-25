@@ -1,0 +1,33 @@
+<% content_for :middle_title do %>
+  <h2><%= Plan.model_name.human %>管理</h2>
+<% end %>
+<div class='container mt30'>
+<div class="panel">
+  <div class="panel-header mb50">
+    <div class="panel-tools pull-right">
+      <%= link_to "編集", edit_plan_path(@plan), class: 'btn btn-main' %>
+      <%= link_to '削除', plan_path(@plan), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-dark-main' %>
+    </div>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Plan.human_attribute_name(:default_flag) %></th>
+        <td><%= @plan.default_flag? ? '◯' : '' %></td>
+      </tr>
+      <tr>
+        <th><%= Plan.human_attribute_name(:name) %></th>
+        <td><%= @plan.name %></td>
+      </tr>
+      <tr>
+        <th><%= Plan.human_attribute_name(:price) %></th>
+        <td><%= delimiter_price(@plan.price) %></td>
+      </tr>
+      <tr>
+        <th><%= Plan.human_attribute_name(:description) %></th>
+        <td><%= @plan.description %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>

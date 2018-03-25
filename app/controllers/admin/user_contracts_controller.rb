@@ -16,11 +16,11 @@ class Admin::UserContractsController < AdminController
       redirect_to [:admin, @corporation, @user_contract], notice: "#{UserContract.model_name.human}を作成しました。"
     else
       render :new
-    end 
+    end
   end
 
   def show; end
-  
+
   def edit; end
 
   def update

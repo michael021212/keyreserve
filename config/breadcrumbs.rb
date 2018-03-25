@@ -160,6 +160,27 @@ crumb :edit_admin_admin_user do |admin_user|
   parent :admin_admin_users
 end
 
+# admin_informations
+crumb :admin_information_index do
+  link 'お知らせ管理', admin_information_index_path
+  parent :admin_root
+end
+
+crumb :admin_information do |information|
+  link 'お知らせ詳細', admin_information_path(information)
+  parent :admin_information_index
+end
+
+crumb :new_admin_information do
+  link 'お知らせ新規登録', new_admin_information_path
+  parent :admin_information_index
+end
+
+crumb :edit_admin_information do |information|
+  link 'お知らせ編集', edit_admin_information_path(information)
+  parent :admin_information
+end
+
 # admin_corporations
 crumb :admin_corporations do
   link '法人管理', admin_corporations_path

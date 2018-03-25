@@ -26,3 +26,64 @@
     </div>
   </div>
 </div>
+
+<div class="mg-news-gallery">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <h2 class="mg-sec-left-title">お知らせ</h2>
+        <ul class="mg-recnt-posts">
+          <% @information.each do |information| %>
+            <li>
+              <div class="mg-recnt-post">
+                <div class="mg-rp-month"><%= date_short_ja information.created_at %> - <%= information.shop_name %></div>
+                <h3><%= information.title %></h3>
+                <p><%= auto_link(simple_format(h(information.description)), :all, target: '_blank') %></p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="col-md-7">
+        <h2 class="mg-sec-left-title">イベント情報</h2>
+        <% @shops.each do |shop| %>
+          <% if shop.calendar_url.present? %>
+            <iframe src="<%= shop.calendar_url %>" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ご利用可能な部屋 -->
+<div class="mg-best-rooms">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-sec-title">
+          <h2>店舗情報</h2>
+        </div>
+        <div class="row">
+          <!-- -->
+          <% @shops.each do |shop| %>
+            <div class="col-sm-4">
+              <figure class="mg-room">
+                <%= image_tag shop.image_url(:main), class: 'img-responsive' %>
+                <figcaption>
+                  <h2><%= shop.name %></h2>
+                  <div class="mg-room-price"><sup><%# 最低料金 %></sup><%#= yen_sign(Plan.lowest_price(shop.id)) %></div>
+                  <%= link_to shop_path(shop), class: 'btn btn-link' do %>
+                    詳細を見る <i class="fa fa-angle-double-right"></i>
+                  <% end %>
+                  <p>
+                  <%#= link_to '詳細', shop_path(shop), class: 'btn btn-main' %>
+                </figcaption>
+              </figure>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

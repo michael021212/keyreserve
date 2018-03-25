@@ -7,8 +7,6 @@ class Corporations::UsersController < ApplicationController
 
   def show; end
 
-  def new; end
-
   def create
     current_corporation.update(token: Digest::MD5.hexdigest(current_corporation.id.to_s)) if current_corporation.token.nil?
     if params[:email].present?

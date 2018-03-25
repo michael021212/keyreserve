@@ -1,6 +1,5 @@
 class Corporation < ApplicationRecord
   acts_as_paranoid
-  attr_accessor :token
 
   has_many :corporation_users, dependent: :destroy
   has_many :users, through: :corporation_users
