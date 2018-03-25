@@ -46,7 +46,11 @@
       </div>
       <div class="col-md-7">
         <h2 class="mg-sec-left-title">イベント情報</h2>
-        <iframe src="https://calendar.google.com/calendar/embed?src=key-stations.jp_g2kp825anha9ogdaroav6ghu1o%40group.calendar.google.com&ctz=Asia%2FTokyo" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+        <% @shops.each do |shop| %>
+          <% if shop.calendar_url.present? %>
+            <iframe src="<%= shop.calendar_url %>" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+          <% end %>
+        <% end %>
       </div>
     </div>
   </div>

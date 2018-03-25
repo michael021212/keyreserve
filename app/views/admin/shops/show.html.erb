@@ -44,6 +44,14 @@
         <td><%= time_fmt(@shop.closing_time) %></td>
       </tr>
       <tr>
+        <th><%= Shop.human_attribute_name(:calendar_url) %></th>
+        <td>
+          <% if @shop.calendar_url.present? %>
+            <iframe src="<%= @shop.calendar_url %>" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
         <th><%= Shop.human_attribute_name(:image) %></th>
         <td><%= image_tag @shop.image.main.url, class: 'img-responsive' %></td>
       </tr>

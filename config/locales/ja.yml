@@ -56,6 +56,7 @@ ja:
         opening_time: 開店時間
         closing_time: 閉店時間
         image: 店舖画像
+        calendar_url: イベントカレンダーURL
       facility:
         name: 施設名
         image: 施設画像
