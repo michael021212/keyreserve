@@ -1,4 +1,5 @@
 class FacilitiesController <  ApplicationController
+  before_action :require_login
   before_action :set_facility, only: [:show]
 
   def index
