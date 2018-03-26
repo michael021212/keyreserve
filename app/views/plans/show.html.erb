@@ -12,7 +12,7 @@
   <div class="panel-body">
     <table class="table table-striped">
       <tr>
-        <th><%= Plan.human_attribute_name(:default_flag) %></th>
+        <th id="response-plan-col"><%= Plan.human_attribute_name(:default_flag) %></th>
         <td><%= @plan.default_flag? ? '◯' : '' %></td>
       </tr>
       <tr>
@@ -25,7 +25,7 @@
       </tr>
       <tr>
         <th><%= Plan.human_attribute_name(:description) %></th>
-        <td><%= @plan.description %></td>
+        <td><%= auto_link(simple_format(h(@plan.description)), :all, target: '_blank') %></td>
       </tr>
     </table>
   </div>
