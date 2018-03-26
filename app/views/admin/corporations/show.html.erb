@@ -72,7 +72,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @corporation.shops.reverse_order.each do |shop| %>
+        <% @shops.each do |shop| %>
           <tr>
             <td><%= shop.id %></td>
             <td><%= shop.name %></td>
@@ -85,6 +85,7 @@
         <% end %>
       </tbody>
     </table>
+    <%= paginate @shops %>
   </div>
 </div>
 
