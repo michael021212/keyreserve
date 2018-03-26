@@ -178,7 +178,7 @@ end
 
 crumb :edit_admin_information do |information|
   link 'お知らせ編集', edit_admin_information_path(information)
-  parent :admin_information
+  parent :admin_information_index
 end
 
 # admin_corporations
