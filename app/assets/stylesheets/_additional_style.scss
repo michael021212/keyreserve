@@ -166,12 +166,6 @@ html,body {
   }
 }
 
-.login-page-btn {
-  width: 100%;
-  background: #16262e;
-  color: #e7b315;
-}
-
 @media (min-width: 768px) {
   .edit-user-panel {
     width: 800px;
@@ -202,4 +196,20 @@ html,body {
 
 .pagination > .active > a {
   border-color: #e7b315 !important;
+}
+
+@media (max-width: 767px) {
+  .sp-center {
+    text-align: center;
+  }
+
+  #response-plan-col {
+    width: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  #response-plan-col {
+    width: 200px;
+  }
 }
