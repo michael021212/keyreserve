@@ -34,6 +34,10 @@
         <th><%= User.human_attribute_name(:payway) %></th>
         <td><%= @user.payway_i18n %></td>
       </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:advertise_notice_flag) %></th>
+        <td><%= @user.advertise_notice_flag? ? '◯' : '' %></td>
+      </tr>
     </table>
   </div>
 </div>

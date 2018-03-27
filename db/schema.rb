@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325091726) do
+ActiveRecord::Schema.define(version: 20180327060536) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20180325091726) do
     t.integer "sequence"
     t.integer "kind"
     t.string "holder_name", null: false
-    t.string "stripe_card_id"
+    t.string "stripe_card_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 20180325091726) do
     t.bigint "plan_id", null: false
     t.date "started_on", null: false
     t.date "finished_on"
-    t.integer "state", default: 1, null: false
+    t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -182,11 +182,13 @@ ActiveRecord::Schema.define(version: 20180325091726) do
     t.string "tel"
     t.integer "state", default: 0, null: false
     t.integer "payway", default: 1, null: false
+    t.string "stripe_customer_id"
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.string "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
+    t.boolean "advertise_notice_flag", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
