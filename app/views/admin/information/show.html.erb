@@ -26,6 +26,18 @@
         <th><%= Information.human_attribute_name(:description) %></th>
         <td><%= auto_link(simple_format(h(@information.description)), :all, target: '_blank') %></td>
       </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:publish_time) %></th>
+        <td><%= date_ja(@information.publish_time) %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:info_type) %></th>
+        <td><%= @information.info_type_i18n %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:mail_send_flag) %></th>
+        <td><%= @information.mail_send_flag? ? '◯' : '' %></td>
+      </tr>
     </table>
   </div>
 </div>
