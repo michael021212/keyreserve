@@ -1,4 +1,4 @@
-<% @shop.facilities.each do |facility| %>
+<% @facilities.each do |facility| %>
   <div class="mg-avl-room mb30">
     <div class="row">
       <div class="col-sm-4">
@@ -15,3 +15,4 @@
     </div>
   </div>
 <% end %>
+<%= paginate @facilities %>
