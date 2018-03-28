@@ -23,4 +23,9 @@ class User < ApplicationRecord
       .where(facility_plans: {plan_id: user_contracts.under_contract.pluck(:plan_id)})
   end
 
+  def self.has_contract_with_shop(shop_id)
+    User.includes(user_contracts: :shop)
+        .where(user_contracts: { shop: shop_id })
+        .where.not(user_contracts: { state: UserContract.states[:finished] })
+  end
 end

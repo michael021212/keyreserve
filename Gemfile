@@ -68,6 +68,7 @@ gem 'rmagick'
 
 gem 'nested_form'
 gem 'geocoder'
+gem 'whenever', require: false
 
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
