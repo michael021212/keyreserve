@@ -9,6 +9,9 @@
       <%= f.text_field :email %>
       <%= f.password_field :password, placeholder: "4文字以上" %>
       <%= f.password_field :password_confirmation, placeholder: "4文字以上" %>
+      <%= f.form_group :advertise_notice_flag, label: { } do %>
+        <%= f.check_box :advertise_notice_flag, label: '' %>
+      <% end %>
       <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4 col-sm-6 col-xs-6">
