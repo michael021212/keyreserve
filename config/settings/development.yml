@@ -1,2 +1,3 @@
+google_key: AIzaSyCamWpJFRMrSWPy-dYrjU7hhJMEmG44vmA
 keystation_endpoint: <%= ENV.fetch('KS_ENDPOINT') %>
 keyreserve_partner_token: <%= ENV.fetch('KS_PARTNER_TOKEN') %>

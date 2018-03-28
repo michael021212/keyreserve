@@ -1,4 +1,8 @@
-<%= bootstrap_form_for([:admin, corporation, shop, facility, facility_key], layout: :horizontal) do |f| %>
-  <%= f.select :ks_room_key_id, options_for_select(ks_room_key_select(corporation), selected: f.object.ks_room_key_id), include_blank: true %>
-  <%= f.submit class: 'btn btn-primary center-block' %>
+<% if ks_room_key_select(corporation).present? %>
+  <%= bootstrap_form_for([:admin, corporation, shop, facility, facility_key], layout: :horizontal) do |f| %>
+    <%= f.select :ks_room_key_id, options_for_select(ks_room_key_select(corporation), selected: f.object.ks_room_key_id), include_blank: true %>
+    <%= f.submit class: 'btn btn-primary center-block' %>
+  <% end %>
+<% else %>
+  <h4>ただ今、選択できる施設鍵はございません</h4>
 <% end %>

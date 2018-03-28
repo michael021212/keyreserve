@@ -18,3 +18,4 @@
 //= require app
 //= require jquery.slimscroll.min
 //= require jquery_nested_form
+//= require map
