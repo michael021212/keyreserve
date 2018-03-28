@@ -14,6 +14,8 @@
           <th><%= Information.human_attribute_name(:created_at) %></th>
           <th><%= Information.human_attribute_name(:shop_id) %></th>
           <th><%= Information.human_attribute_name(:title) %></th>
+          <th><%= Information.human_attribute_name(:publish_time) %></th>
+          <th><%= Information.human_attribute_name(:mail_send_flag) %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
@@ -24,6 +26,8 @@
               <td><%= date_ja information.created_at %></td>
               <td><%= information.shop_name %></td>
               <td><%= information.title %></td>
+              <td><%= date_ja(information.publish_time) %></td>
+              <td><%= information.mail_send_flag? ? '◯' : '' %></td>
               <td>
                 <%= link_to '詳細', admin_information_path(information), class: 'btn btn-default' %>
                 <%= link_to '編集', edit_admin_information_path(information), class: 'btn btn-primary' %>
