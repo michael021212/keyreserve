@@ -1,33 +1,36 @@
 <% content_for :middle_title do %>
   <h2>法人設定</h2>
 <% end %>
-<div class="box box-default">
-  <div class="box-body">
-    <table class="table table-striped">
-      <tr>
-        <th style="width: 200px"><%= Corporation.human_attribute_name(:name) %></th>
-        <td><%= @corporation.name %></td>
-      </tr>
-      <tr>
-        <th><%= Corporation.human_attribute_name(:kana) %></th>
-        <td><%= @corporation.kana %></td>
-      </tr>
-      <tr>
-        <th><%= Corporation.human_attribute_name(:tel) %></th>
-        <td><%= @corporation.tel %></td>
-      </tr>
-      <tr>
-        <th><%= Corporation.human_attribute_name(:postal_code) %></th>
-        <td><%= @corporation.postal_code %></td>
-      </tr>
-      <tr>
-        <th><%= Corporation.human_attribute_name(:address) %></th>
-        <td><%= @corporation.address %></td>
-      </tr>
-      <tr>
-        <th><%= Corporation.human_attribute_name(:note) %></th>
-        <td><%= @corporation.note  %></td>
-      </tr>
-    </table>
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-body mt40">
+      <table class="table table-striped">
+        <tr>
+          <th><%= Corporation.human_attribute_name(:name) %></th>
+          <td><%= @corporation.name %></td>
+        </tr>
+        <tr>
+          <th><%= Corporation.human_attribute_name(:kana) %></th>
+          <td><%= @corporation.kana %></td>
+        </tr>
+        <tr>
+          <th><%= Corporation.human_attribute_name(:tel) %></th>
+          <td><%= @corporation.tel %></td>
+        </tr>
+        <tr>
+          <th><%= Corporation.human_attribute_name(:postal_code) %></th>
+          <td><%= @corporation.postal_code %></td>
+        </tr>
+        <tr>
+          <th><%= Corporation.human_attribute_name(:address) %></th>
+          <td><%= @corporation.address %></td>
+        </tr>
+        <tr>
+          <th><%= Corporation.human_attribute_name(:note) %></th>
+          <td><%= @corporation.note  %></td>
+        </tr>
+      </table>
+      </div>
+    </div>
   </div>
 </div>
