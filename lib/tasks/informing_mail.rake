@@ -1,8 +1,7 @@
 namespace :information do
   desc "Send informing mail to users"
   task :informing_mail => :environment do
-    Information.all.each do |information|
-      next if information.mail_send_flag? || information.publish_time < Time.zone.now
+    Information.ready_to_send.each do |information|
       if information.important_notice?
         User.all.each do |user|
           UserMailer.event_informing_mail(information, user).deliver_now
