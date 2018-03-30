@@ -11,8 +11,14 @@
     <%= f.password_field :password, help: '変更したくない場合は空にしてください' %>
     <%= f.password_field :password_confirmation, help: '変更したくない場合は空にしてください' %>
   <% end %>
-  <%= f.form_group :advertise_notice_flag, label: {} do %>
-    <%= f.check_box :advertise_notice_flag %>
+  <% if params[:parent_id].present? %>
+    <%= f.hidden_field :parent_id, value: params[:parent_id] %>
+  <% else %>
+    <%= f.select :user_type, User.user_types_i18n.invert %>
+    <%= f.text_field :max_user_num, help: '法人の場合に使用者の追加出来る上限数の設定' %>
+    <%= f.form_group :advertise_notice_flag, label: {} do %>
+      <%= f.check_box :advertise_notice_flag %>
+    <% end %>
   <% end %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>

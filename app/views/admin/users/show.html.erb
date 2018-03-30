@@ -35,9 +35,74 @@
         <td><%= @user.payway_i18n %></td>
       </tr>
       <tr>
+        <th><%= User.human_attribute_name(:user_type) %></th>
+        <td><%= @user.user_type_i18n %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:parent_id) %></th>
+        <td><%= link_to @user.parent.name, admin_user_path(@user.parent) if @user.parent.present? %></td>
+      </tr>
+      <% if @user.corporation? %>
+        <tr>
+          <th><%= User.human_attribute_name(:max_user_num) %></th>
+          <td><%= @user.max_user_num %></td>
+        </tr>
+      <% end %>
+      <tr>
         <th><%= User.human_attribute_name(:advertise_notice_flag) %></th>
         <td><%= @user.advertise_notice_flag? ? '◯' : '' %></td>
       </tr>
     </table>
   </div>
 </div>
+</hr>
+<% if @user.corporation? %>
+  <div class="box box-default">
+    <div class="box-header with-border">
+      <h4 class="box-title"><%= User.model_name.human %>一覧</h4>
+      <div class="box-tools">
+        <% if @user.max_user_num > User.belong_to_parent(@user.parent_id).count %>
+          <%= link_to "新規追加", new_admin_user_path(parent_id: @user.id), class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="box-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><%= User.human_attribute_name(:id) %></th>
+            <th><%= User.human_attribute_name(:name) %></th>
+            <th><%= User.human_attribute_name(:email) %></th>
+            <th><%= User.human_attribute_name(:tel) %></th>
+            <th><%= User.human_attribute_name(:advertise_notice_flag) %></th>
+            <th style="width: 200px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if User.belong_to_parent(@user.parent_id).present? %>
+            <% User.belong_to_parent(@user.parent_id).each do |user| %>
+              <tr>
+                <td><%= user.id %></td>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.tel %></td>
+                <td><%= user.advertise_notice_flag? ? '◯' : '' %></td>
+                <td>
+                  <%= link_to '詳細', admin_user_path(user), class: 'btn btn-default' %>
+                  <%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary' %>
+                  <%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="20">
+                表示するユーザがいません
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

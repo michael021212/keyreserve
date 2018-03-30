@@ -41,6 +41,9 @@ ja:
         state: 状態
         payway: 支払い方法
         created_at: 登録日時
+        user_type: 法人/個人
+        parent_id: 属する法人
+        max_user_num:  使用者追加の上限数
         advertise_notice_flag: お知らせメールを受け取る
       plan:
         name: プラン名
@@ -97,6 +100,9 @@ ja:
       payway:
         creditcard: クレジットカード
         invoice: 請求書
+      user_type:
+        user: 個人
+        corporation: 法人
     user_contract:
       state:
         under_contract: 契約中

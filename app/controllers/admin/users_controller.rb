@@ -15,8 +15,13 @@ class Admin::UsersController < AdminController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.update(parent_id: @user.id) if @user.corporation?
       flash[:notice] = "#{User.model_name.human}を作成しました。"
-      redirect_to admin_user_path(@user)
+      if @user.user? && @user.parent_id?
+        redirect_to admin_user_path(@user.parent)
+      else
+        redirect_to admin_user_path(@user)
+      end
     else
       render :new
     end
@@ -24,6 +29,7 @@ class Admin::UsersController < AdminController
 
   def update
     if @user.update(user_params)
+      @user.update(parent_id: @user.id) if @user.corporation?
       flash[:notice] = "#{User.model_name.human}を更新しました。"
       redirect_to admin_user_path(@user)
     else
@@ -45,7 +51,8 @@ class Admin::UsersController < AdminController
 
   def user_params
     params.require(:user).permit(
-      :email, :password, :password_confirmation, :name, :tel, :state, :payway, :advertise_notice_flag
+      :email, :password, :password_confirmation, :name, :tel, :state,
+      :payway, :user_type, :parent_id, :max_user_num, :advertise_notice_flag
     )
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327100037) do
+ActiveRecord::Schema.define(version: 20180330085354) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20180327100037) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["corporation_id"], name: "index_corporation_users_on_corporation_id"
     t.index ["user_id"], name: "index_corporation_users_on_user_id"
   end
@@ -106,7 +107,7 @@ ActiveRecord::Schema.define(version: 20180327100037) do
     t.bigint "corporation_id", null: false
     t.bigint "facility_id", null: false
     t.bigint "credit_card_id", null: false
-    t.string "price", null: false
+    t.integer "price", null: false
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -190,6 +191,9 @@ ActiveRecord::Schema.define(version: 20180327100037) do
     t.string "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
+    t.integer "user_type", default: 1
+    t.integer "parent_id"
+    t.integer "max_user_num"
     t.boolean "advertise_notice_flag", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
