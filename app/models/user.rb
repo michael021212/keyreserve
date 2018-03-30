@@ -21,7 +21,7 @@ class User < ApplicationRecord
   scope(:is_user, -> { where(user_type: User.user_types[:user]) })
   scope(:with_parent, ->(parent_id) { where(parent_id: parent_id) })
 
-  # before_update :leave_parent, if: :become_user
+  before_update :leave_parent, if: :become_user
 
   def available_facilities
     Facility.joins(:facility_plans)
@@ -42,5 +42,13 @@ class User < ApplicationRecord
   end
 
   def leave_parent
+    User.belong_to_parent(parent_id).map{ |user| user.update(parent_id: nil) }
+    self.parent_id = nil
+    self.max_user_num = nil
+  end
+
+  def add_new_user?
+    return false if max_user_num.nil?
+    try(:max_user_num) > User.belong_to_parent(parent_id).count
   end
 end

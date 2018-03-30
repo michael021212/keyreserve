@@ -61,7 +61,7 @@
     <div class="box-header with-border">
       <h4 class="box-title"><%= User.model_name.human %>一覧</h4>
       <div class="box-tools">
-        <% if @user.max_user_num > User.belong_to_parent(@user.parent_id).count %>
+        <% if @user.add_new_user? %>
           <%= link_to "新規追加", new_admin_user_path(parent_id: @user.id), class: 'btn btn-primary' %>
         <% end %>
       </div>

@@ -11,8 +11,8 @@
     <%= f.password_field :password, help: '変更したくない場合は空にしてください' %>
     <%= f.password_field :password_confirmation, help: '変更したくない場合は空にしてください' %>
   <% end %>
-  <% if params[:parent_id].present? %>
-    <%= f.hidden_field :parent_id, value: params[:parent_id] %>
+  <% if session[:parent_id].present? %>
+    <%= f.hidden_field :parent_id, value: session[:parent_id] %>
   <% else %>
     <%= f.select :user_type, User.user_types_i18n.invert %>
     <%= f.text_field :max_user_num, help: '法人の場合に使用者の追加出来る上限数の設定' %>
