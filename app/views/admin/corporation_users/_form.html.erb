@@ -6,7 +6,6 @@
     <%= u.text_field :tel %>
     <%= u.select :state, User.states_i18n.invert %>
     <%= u.select :payway, User.payways_i18n.invert %>
-    <%= u.hidden_field :user_type, value: 0 %>
     <% if u.object.new_record? %>
       <%= u.password_field :password %>
       <%= u.password_field :password_confirmation %>
