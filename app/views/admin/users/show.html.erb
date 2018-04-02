@@ -40,9 +40,9 @@
       </tr>
       <tr>
         <th><%= User.human_attribute_name(:parent_id) %></th>
-        <td><%= link_to @user.parent.name, admin_user_path(@user.parent) if @user.parent.present? %></td>
+        <td><%= link_to @user.parent.try(:name), admin_user_path(@user.parent) if @user.parent_id? %></td>
       </tr>
-      <% if @user.corporation? %>
+      <% if @user.id == @user.parent_id %>
         <tr>
           <th><%= User.human_attribute_name(:max_user_num) %></th>
           <td><%= @user.max_user_num %></td>
@@ -56,7 +56,7 @@
   </div>
 </div>
 </hr>
-<% if @user.corporation? %>
+<% if @user.id == @user.parent_id %>
   <div class="box box-default">
     <div class="box-header with-border">
       <h4 class="box-title"><%= User.model_name.human %>一覧</h4>
@@ -79,8 +79,8 @@
           </tr>
         </thead>
         <tbody>
-          <% if User.belong_to_parent(@user.parent_id).present? %>
-            <% User.belong_to_parent(@user.parent_id).each do |user| %>
+          <% if User.parent_users(@user.parent_id).present? %>
+            <% User.parent_users(@user.parent_id).each do |user| %>
               <tr>
                 <td><%= user.id %></td>
                 <td><%= user.name %></td>

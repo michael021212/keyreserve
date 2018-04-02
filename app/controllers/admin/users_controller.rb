@@ -16,10 +16,9 @@ class Admin::UsersController < AdminController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.update(parent_id: @user.id) if @user.corporation?
       flash[:notice] = "#{User.model_name.human}を作成しました。"
       session[:parent_id] = nil
-      if @user.user? && @user.parent_id?
+      if @user.corporation? && @user.parent_id?
         redirect_to admin_user_path(@user.parent)
       else
         redirect_to admin_user_path(@user, parent_id: params[:parent_id])
@@ -31,7 +30,6 @@ class Admin::UsersController < AdminController
 
   def update
     if @user.update(user_params)
-      @user.update(parent_id: @user.id) if @user.corporation?
       flash[:notice] = "#{User.model_name.human}を更新しました。"
       redirect_to admin_user_path(@user)
     else

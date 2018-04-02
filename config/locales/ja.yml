@@ -42,7 +42,7 @@ ja:
         payway: 支払い方法
         created_at: 登録日時
         user_type: 法人/個人
-        parent_id: 属する法人
+        parent_id: 法人
         max_user_num:  使用者追加の上限数
         advertise_notice_flag: お知らせメールを受け取る
       plan:
