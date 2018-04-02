@@ -21,17 +21,23 @@ class User < ApplicationRecord
   scope(:is_corporation, -> { where(user_type: User.user_types[:corporation]) })
   scope(:with_parent, ->(parent_id) { where(parent_id: parent_id) })
 
-  before_update :leave_parent, if: proc { |_user| user_type_was == 'corporation' && user_type == 'user' }
+  before_update :leave_parent, if: proc { |_user| user_type_was == 'corporation' && user_type == 'user' && max_user_num.present? }
   before_destroy :leave_parent, if: proc { |_user| user_type == 'corporation' && max_user_num.present? }
-  before_save :convert_to_corporation, if: proc { |_user| user? && parent_id? }
-  after_save :set_parent_id, if: proc { |_user| user_type == 'corporation' && parent_id.nil? }
+  before_update :convert_to_user, if: proc { |_user| user_type_was == 'corporation' && user_type == 'user' }
+  before_update :set_parent_id, if: proc { |_user| user_type_was == 'user' && user_type == 'corporation' }
+  before_create :convert_to_corporation, if: proc { |_user| user? && parent_id? }
 
-  def convert_to_corporation
-    self.user_type = :corporation
+  def convert_to_user
+    self.parent_id = nil
+    self.max_user_num = nil
   end
 
   def set_parent_id
-    self.update(parent_id: id)
+    self.parent_id = id
+  end
+
+  def convert_to_corporation
+    self.user_type = :corporation
   end
 
   def available_facilities

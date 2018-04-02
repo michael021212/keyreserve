@@ -16,13 +16,10 @@ class Admin::UsersController < AdminController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.update(parent_id: @user.id) if @user.corporation? && @user.parent_id.nil?
       flash[:notice] = "#{User.model_name.human}を作成しました。"
       session[:parent_id] = nil
-      if @user.corporation? && @user.parent_id?
-        redirect_to admin_user_path(@user.parent)
-      else
-        redirect_to admin_user_path(@user, parent_id: params[:parent_id])
-      end
+      redirect_to admin_users_path
     else
       render :new
     end

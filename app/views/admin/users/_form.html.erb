@@ -11,8 +11,9 @@
     <%= f.password_field :password, help: '変更したくない場合は空にしてください' %>
     <%= f.password_field :password_confirmation, help: '変更したくない場合は空にしてください' %>
   <% end %>
-  <%= f.hidden_field :parent_id, value: session[:parent_id] %>
-  <% if session[:parent_id].nil? %>
+  <% if session[:parent_id].present? %>
+    <%= f.hidden_field :parent_id, value: session[:parent_id] %>
+  <% else %>
     <%= f.select :user_type, User.user_types_i18n.invert %>
   <% end %>
   <% if f.object.id && f.object.id == f.object.parent_id %>
