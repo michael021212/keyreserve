@@ -43,7 +43,7 @@ class User < ApplicationRecord
   end
 
   def available_facilities
-    user ||= User.find(parent_id)
+    user = user? ? self : User.find(parent_id)
     Facility.joins(:facility_plans)
             .where(facility_plans: { plan_id: user.user_contracts.under_contract.pluck(:plan_id) })
   end
