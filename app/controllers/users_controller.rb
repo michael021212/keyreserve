@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
   def new
+    logout if logged_in?
     @user = User.new
+    session[:parent_token] = params[:parent_token] if params[:parent_token].present?
   end
 
   def create
@@ -46,7 +48,8 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(
-      :email, :password, :password_confirmation, :name, :tel, :state, :payway, :advertise_notice_flag
+      :email, :password, :password_confirmation, :name, :tel, :state, :payway,
+      :parent_id, :advertise_notice_flag
     )
   end
 end

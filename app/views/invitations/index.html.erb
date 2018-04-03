@@ -1,0 +1,45 @@
+<% content_for :middle_title do %>
+  <h2><%= User.model_name.human %>管理</h2>
+<% end %>
+<div class="container mt30">
+<div class="panel">
+  <div class="panel-heading mb50">
+    <% if current_user.parent.add_new_user? %>
+      <%= link_to '新規利用者招待', new_invitation_path, class: 'btn btn-main glyphicon glyphicon-plus pull-right' %>
+    <% end %>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= User.human_attribute_name(:name) %></th>
+          <th><%= User.human_attribute_name(:email) %></th>
+          <th><%= User.human_attribute_name(:tel) %></th>
+          <th><%= User.human_attribute_name(:state) %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @users.present? %>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.tel %></td>
+              <td><%= user.state_i18n %></td>
+              <td><%= link_to '詳細', invitation_path(user), class: 'btn btn-default' %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= User.model_name.human %>はありません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @users %>
+  </div>
+</div>
+</div>

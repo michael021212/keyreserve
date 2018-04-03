@@ -42,6 +42,12 @@ class User < ApplicationRecord
     User.find_by(id: parent_id)
   end
 
+  def available_facilities
+    user ||= User.find(parent_id)
+    Facility.joins(:facility_plans)
+            .where(facility_plans: { plan_id: user.user_contracts.under_contract.pluck(:plan_id) })
+  end
+
   def add_new_user?
     return false if max_user_num.nil?
     try(:max_user_num) > User.where(parent_id: id).count
@@ -62,6 +68,12 @@ class User < ApplicationRecord
     User.includes(user_contracts: :shop)
         .where(user_contracts: { shop_id: shop_id })
         .where.not(user_contracts: { state: UserContract.states[:finished] })
+  end
+
+  def self.set_id_by_parent_token(parent_token)
+    user = find_by(parent_token: parent_token)
+    return unless user.parent.add_new_user?
+    user.id
   end
 
   private

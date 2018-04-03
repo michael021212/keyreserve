@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180330085354) do
+ActiveRecord::Schema.define(version: 20180403062150) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20180330085354) do
     t.datetime "reset_password_email_sent_at"
     t.integer "user_type", default: 1
     t.integer "parent_id"
+    t.string "parent_token"
     t.integer "max_user_num"
     t.boolean "advertise_notice_flag", default: true
     t.datetime "created_at", null: false
