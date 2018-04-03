@@ -19,17 +19,30 @@ class User < ApplicationRecord
   validates :password, confirmation: true, presence:true, length: { minimum: 4, maximum: 20, allow_blank: true }, if: -> { new_record? || changes[:crypted_password] }
 
   scope(:is_corporation, -> { where(user_type: User.user_types[:corporation]) })
-  scope(:with_parent, ->(parent_id) { where(parent_id: parent_id) })
+  scope(:has_parent, ->(parent_id) { where(parent_id: parent_id) })
 
   before_update :leave_parent, if: proc { |_user| user_type_was == 'corporation' && user_type == 'user' && max_user_num.present? }
   before_destroy :leave_parent, if: proc { |_user| user_type == 'corporation' && max_user_num.present? }
-  before_update :convert_to_user, if: proc { |_user| user_type_was == 'corporation' && user_type == 'user' }
-  before_update :set_parent_id, if: proc { |_user| user_type_was == 'user' && user_type == 'corporation' }
+  before_save :change_user_type, if: proc { |_user| user_type_changed? && max_user_num.nil? }
+  before_create :set_max_user_num, if: proc { |_user| corporation? && parent_id.nil? }
   before_create :convert_to_corporation, if: proc { |_user| user? && parent_id? }
 
-  def convert_to_user
+  DEFAULT_MAX_USER_NUM = 5
+
+  def leave_parent
+    User.parent_users(id).where.not(id: parent_id).each do |user|
+      user.update(user_type: 'user', parent_id: nil)
+    end
     self.parent_id = nil
     self.max_user_num = nil
+  end
+
+  def change_user_type
+    self.parent_id = nil if user_type_was == 'corporation' && user_type == 'user' && parent_id.present?
+    if user_type_was == 'user' && user_type == 'corporation'
+      self.parent_id = id
+      self.max_user_num = DEFAULT_MAX_USER_NUM
+    end
   end
 
   def set_parent_id
@@ -40,13 +53,12 @@ class User < ApplicationRecord
     self.user_type = :corporation
   end
 
-  def available_facilities
-    Facility.joins(:facility_plans)
-      .where(facility_plans: {plan_id: user_contracts.under_contract.pluck(:plan_id)})
+  def set_max_user_num
+    self.max_user_num = DEFAULT_MAX_USER_NUM
   end
 
   def self.parent_users(parent_id)
-    is_corporation.with_parent(parent_id).where.not(id: parent_id)
+    is_corporation.has_parent(parent_id)
   end
 
   def parent
@@ -54,16 +66,19 @@ class User < ApplicationRecord
     User.find_by(parent_id: parent_id)
   end
 
-  def leave_parent
-    User.parent_users(id).each do |user|
-      user.update(user_type: 'user', parent_id: nil)
-    end
-    self.parent_id = nil
-    self.max_user_num = nil
-  end
-
   def add_new_user?
     return false if max_user_num.nil?
     try(:max_user_num) > User.parent_users(parent_id).count
+  end
+
+  def self.set_id_by_parent_token(parent_token)
+    user = find_by(parent_token: parent_token)
+    return unless user.parent.add_new_user?
+    user.id
+  end
+
+  def available_facilities
+    Facility.joins(:facility_plans)
+            .where(facility_plans: { plan_id: user_contracts.under_contract.pluck(:plan_id) })
   end
 end
