@@ -18,7 +18,6 @@ class CorporationsController <  ApplicationController
   private
 
   def set_corporation
-    current_user
     @corporation = current_corporation
   end
 

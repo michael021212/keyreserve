@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_corporation, :current_corporation?
 
   def current_corporation
-    current_user ||= User.find_by(id: @current_user.try(:parent_id))
     current_user.corporations.first if current_user.try(:corporations)
   end
 

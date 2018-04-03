@@ -40,7 +40,6 @@ class PlansController < ApplicationController
   private
 
   def set_corporation
-    current_user
     @corporation = current_corporation
   end
 
