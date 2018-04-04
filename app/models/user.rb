@@ -71,8 +71,8 @@ class User < ApplicationRecord
   end
 
   def self.set_id_by_parent_token(parent_token)
-    user = find_by(parent_token: parent_token)
-    return unless user.parent.add_new_user?
+    user = find_by(parent_token: parent_token).parent
+    return unless user.add_new_user?
     user.id
   end
 
