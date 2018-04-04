@@ -19,3 +19,8 @@
 //= require jquery.slimscroll.min
 //= require jquery_nested_form
 //= require map
+//= require moment
+//= require fullcalendar.min.js
+//= require scheduler.min.js
+//= require fullcalendar_ja.js
+//= require plan_price_table.js

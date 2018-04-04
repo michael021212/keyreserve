@@ -1,5 +1,6 @@
 <% breadcrumb :admin_corporation_shop_facility, @corporation, @shop, @facility %>
 
+<!-- 施設詳細 -->
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= Facility.model_name.human %>詳細</h4>
@@ -30,6 +31,7 @@
   </div>
 </div>
 
+<!-- 施設鍵一覧 -->
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= FacilityKey.model_name.human %>一覧</h4>
@@ -62,3 +64,19 @@
     </table>
   </div>
 </div>
+
+<!-- 都度課金対象プラン -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title">都度課金対象プラン</h4>
+    <div class="box-tools">
+      <%= link_to "追加", '', class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div id="plan_price_table"
+    data-corporation=<%="#{params[:corporation_id]}"%>
+    data-shop=<%="#{params[:shop_id]}"%>
+    data-facility=<%="#{params[:id]}"%>>
+  </div>
+</div>
+<div id="formModal" class="modal fade"></div>

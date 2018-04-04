@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       resources :plans
       resources :shops, except: [:index] do
         resources :facilities, except: [:index] do
+          member do
+            get :resources
+          end
           resources :facility_keys, except: [:index]
         end
       end
