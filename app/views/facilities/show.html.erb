@@ -79,15 +79,24 @@
           <div class="mg-single-room-txt">
             <h2 class="mg-sec-left-title">月額対象プラン</h2>
             <div class="row">
-              <% @facility.selectable_plans.in_groups_of(4, false).each do |plans| %>
-                <div class="row ml10">
-                  <% plans.each do |plan| %>
-                    <div class="col-sm-3">
-                      <h5>●<%= link_to " #{plan.name}", plan_path(plan) %></h5>
-                    </div>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th><%= Plan.human_attribute_name(:name) %></th>
+                    <th><%= Plan.human_attribute_name(:price) %></th>
+                    <th style="width: 200px;"><%= Plan.human_attribute_name(:default_flag) %></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @facility.selectable_plans.each do |plan| %>
+                    <tr>
+                      <td><%= link_to plan.name, plan_path(plan) %></td>
+                      <td><%= plan.price %></td>
+                      <td><%= plan.default_flag? ? '◯' : '' %></td>
+                    </tr>
                   <% end %>
-                </div>
-              <% end %>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

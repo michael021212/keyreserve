@@ -9,13 +9,17 @@ class FacilitiesController <  ApplicationController
   def show; end
 
   def resources
-    facilities = Facility.includes(shop: :corporation).where(shops: { corporation_id: current_corporation.id })
+    facilities = Facility.belong_to_corporation(current_corporation)
     @plans = facilities.find(params[:id]).plans
   end
 
   private
 
   def set_facility
-    @facility = current_user.available_facilities.find(params[:id])
+    if params[:corporation_name].present?
+      @facility = Facility.belong_to_corporation(current_corporation).find(params[:id])
+    else
+      @facility = current_user.available_facilities.find(params[:id])
+    end
   end
 end
