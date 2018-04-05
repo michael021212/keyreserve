@@ -30,3 +30,8 @@
 //= require lib/jquery.parallax-1.1.3
 //= require script
 //= require map
+//= require moment
+//= require fullcalendar.min.js
+//= require scheduler.min.js
+//= require fullcalendar_ja.js
+//= require plan_price_table.js

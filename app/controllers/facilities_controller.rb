@@ -6,7 +6,11 @@ class FacilitiesController <  ApplicationController
     @facilities = current_user.available_facilities
   end
 
-  def show
+  def show; end
+
+  def resources
+    facilities = Facility.includes(shop: :corporation).where(shops: { corporation_id: current_corporation.id })
+    @plans = facilities.find(params[:id]).plans
   end
 
   private

@@ -16,51 +16,54 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 col-xs-12">
-        <div class="mg-single-room-txt">
-          <h2 class="mg-sec-left-title">鍵一覧</h2>
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>鍵名称</th>
-                <th>パスワード</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @facility.facility_keys.each do |key| %>
+    <!-- 使用者の場合は表示する -->
+    <% unless current_corporation_name?(params[:corporation_name]) %>
+      <div class="row">
+        <div class="col-md-12 col-xs-12">
+          <div class="mg-single-room-txt">
+            <h2 class="mg-sec-left-title">鍵一覧</h2>
+            <table class="table table-bordered">
+              <thead>
                 <tr>
-                  <td><%= key.name %></td>
-                  <td><%= key.password %></td>
+                  <th>鍵名称</th>
+                  <th>パスワード</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <% @facility.facility_keys.each do |key| %>
+                  <tr>
+                    <td><%= key.name %></td>
+                    <td><%= key.password %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-5">
-        <h2 class="mg-sec-left-title">お知らせ</h2>
-        <ul class="mg-recnt-posts">
-          <% @facility.shop.information.each do |information| %>
-            <li>
-              <div class="mg-recnt-post">
-                <div class="mg-rp-month"><%= date_short_ja information.created_at %> - <%= information.shop_name %></div>
-                <h3><%= information.title %></h3>
-                <p><%= auto_link(simple_format(h(information.description)), :all, target: '_blank') %></p>
-              </div>
-            </li>
-          <% end %>
-        </ul>
+      <div class="row">
+        <div class="col-md-5">
+          <h2 class="mg-sec-left-title">お知らせ</h2>
+          <ul class="mg-recnt-posts">
+            <% @facility.shop.information.each do |information| %>
+              <li>
+                <div class="mg-recnt-post">
+                  <div class="mg-rp-month"><%= date_short_ja information.created_at %> - <%= information.shop_name %></div>
+                  <h3><%= information.title %></h3>
+                  <p><%= auto_link(simple_format(h(information.description)), :all, target: '_blank') %></p>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="col-md-7">
+          <h2 class="mg-sec-left-title">イベント情報</h2>
+            <% if @facility.shop.calendar_url.present? %>
+              <iframe src="<%= @facility.shop.calendar_url %>" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+            <% end %>
+        </div>
       </div>
-      <div class="col-md-7">
-        <h2 class="mg-sec-left-title">イベント情報</h2>
-          <% if @facility.shop.calendar_url.present? %>
-            <iframe src="<%= @facility.shop.calendar_url %>" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
-          <% end %>
-      </div>
-    </div>
+    <% end %>
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <div class="mg-single-room-txt">
@@ -69,5 +72,35 @@
         </div>
       </div>
     </div>
+    <!-- 施設管理者の場合は表示する -->
+    <% if current_corporation_name?(params[:corporation_name]) %>
+      <div class="row mb10">
+        <div class="col-md-12 col-xs-12">
+          <div class="mg-single-room-txt">
+            <h2 class="mg-sec-left-title">月額対象プラン</h2>
+            <div class="row">
+              <% @facility.selectable_plans.in_groups_of(4, false).each do |plans| %>
+                <div class="row ml10">
+                  <% plans.each do |plan| %>
+                    <div class="col-sm-3">
+                      <h5>●<%= link_to " #{plan.name}", plan_path(plan) %></h5>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-xs-12">
+          <div class="mg-single-room-txt">
+            <h2 class="mg-sec-left-title">都度課金対象プラン</h2>
+            <div class='pull-right mb10'><%= link_to '追加', '#', class: 'btn btn-dark-main' %></div>
+            <div id="plan_price_table" data-facility=<%="#{params[:id]}"%>></div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

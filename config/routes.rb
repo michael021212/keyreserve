@@ -19,6 +19,7 @@ Rails.application.routes.draw do
           member do
             get :resources
           end
+          # resources :facility_temporary_plans, only: [:new, :edit, :create, :update]
           resources :facility_keys, except: [:index]
         end
       end
@@ -38,7 +39,11 @@ Rails.application.routes.draw do
     end
   end
   resources :shops, only: [:index, :show]
-  resources :facilities, only: [:index, :show]
+  resources :facilities, only: [:index, :show] do
+    member do
+      get :resources
+    end
+  end
   resources :plans
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'

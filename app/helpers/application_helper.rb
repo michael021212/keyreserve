@@ -83,4 +83,8 @@ module ApplicationHelper
   def ks_room_key_select(corporation)
     KeystationService.sync_rooms(corporation.ks_corporation_id)
   end
+
+  def current_corporation_name?(name)
+    Corporation.find_by(name: name) == current_corporation
+  end
 end

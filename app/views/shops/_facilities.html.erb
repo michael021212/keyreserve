@@ -11,6 +11,29 @@
         <p>
           <%= facility.description %>
         </p>
+        <% unless current_corporation_name?(params[:corporation_name]) %>
+          <div class="row">
+            <div class='mg-sec-title mb30'>
+              <h4>ご利用可能なプラン</h4>
+            </div>
+            <% facility.selectable_plans.in_groups_of(3, false).each do |plans| %>
+              <div class="row">
+                <% plans.each do |plan| %>
+                  <div class="col-sm-4">
+                    <div class="mg-feature">
+                      <h5 class='text-center'><%= plan.name %></h5>
+                      <p class='desc-col'><%= truncate(plan.description, length: 100) %></p>
+                      <%= link_to '申し込み', '#', class: 'btn btn-dark-main center-block' %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <% if current_corporation_name?(params[:corporation_name]) %>
+          <%= link_to '詳細', facility_path(facility, corporation_name: params[:corporation_name]), class: 'btn btn-dark-main' %>
+        <% end %>
       </div>
     </div>
   </div>

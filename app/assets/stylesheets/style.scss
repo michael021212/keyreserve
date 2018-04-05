@@ -1717,9 +1717,24 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   padding: 70px 0 30px;
   background-color: #fff;
 }
+
 .mg-feature {
   margin-bottom: 40px;
+  @media (min-width: 767px) {
+    .desc-col {
+      height: 130px;
+      padding: 10px;
+      word-wrap:break-word;
+    }
+  }
+  @media (max-width: 768px) {
+    .desc-col {
+      padding: 10px;
+      word-wrap:break-word;
+    }
+  }
 }
+
 .mg-feature .mg-feature-icon-title {
   margin-bottom: 10px;
 }

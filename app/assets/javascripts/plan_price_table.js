@@ -33,11 +33,19 @@ $(document).ready(function() {
       var corporation = $('#plan_price_table').data('corporation')
       var shop = $('#plan_price_table').data('shop')
       var facility = $('#plan_price_table').data('facility')
-      ajaxRequest(
-        "/admin/corporations/" + corporation + "/shops/" + shop + "/facilities/" + facility + "/resources"
-      ).then(function(resources) {
-        callback(resources);
-      })
+      if (corporation === undefined && shop === undefined) {
+        ajaxRequest(
+          "/facilities/" + facility + "/resources"
+        ).then(function(resources) {
+          callback(resources);
+        })
+      } else {
+        ajaxRequest(
+          "/admin/corporations/" + corporation + "/shops/" + shop + "/facilities/" + facility + "/resources"
+        ).then(function(resources) {
+          callback(resources);
+        })
+      }
     }
   });
 });
