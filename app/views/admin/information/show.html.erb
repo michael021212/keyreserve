@@ -11,12 +11,12 @@
   <div class="box-body">
     <table class="table table-striped">
       <tr>
-        <th><%= Information.human_attribute_name(:id) %></th>
-        <td><%= @information.id %></td>
+        <th><%= Information.human_attribute_name(:publish_time) %></th>
+        <td><%= date_ja(@information.publish_time) %></td>
       </tr>
       <tr>
-        <th><%= Information.human_attribute_name(:created_at) %></th>
-        <td><%= date_ja @information.created_at %></td>
+        <th><%= Information.human_attribute_name(:id) %></th>
+        <td><%= @information.id %></td>
       </tr>
       <tr>
         <th><%= Information.human_attribute_name(:title) %></th>
@@ -27,12 +27,12 @@
         <td><%= auto_link(simple_format(h(@information.description)), :all, target: '_blank') %></td>
       </tr>
       <tr>
-        <th><%= Information.human_attribute_name(:publish_time) %></th>
-        <td><%= date_ja(@information.publish_time) %></td>
-      </tr>
-      <tr>
         <th><%= Information.human_attribute_name(:info_type) %></th>
         <td><%= @information.info_type_i18n %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:created_at) %></th>
+        <td><%= date_ja @information.created_at %></td>
       </tr>
       <tr>
         <th><%= Information.human_attribute_name(:mail_send_flag) %></th>
