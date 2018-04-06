@@ -189,6 +189,15 @@ html,body {
   margin-left: 0px;
 }
 
+.pagination a, .pagination span.current, .pagination span.gap {
+  background: #16262e !important;
+  color: #fff !important;
+}
+
+.pagination > .active > a {
+  border-color: #e7b315 !important;
+}
+
 @media (max-width: 767px) {
   .sp-center {
     text-align: center;

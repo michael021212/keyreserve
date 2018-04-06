@@ -27,6 +27,6 @@
 //= require lib/starrr.min
 //= require lib/nivo-lightbox.min
 //= require lib/jquery.shuffle.min
-//= require lib/gmaps.min
 //= require lib/jquery.parallax-1.1.3
 //= require script
+//= require map
