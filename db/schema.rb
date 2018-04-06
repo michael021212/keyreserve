@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325091726) do
+ActiveRecord::Schema.define(version: 20180327100037) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -89,9 +89,12 @@ ActiveRecord::Schema.define(version: 20180325091726) do
   end
 
   create_table "information", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "shop_id", null: false
+    t.integer "shop_id"
     t.string "title", null: false
     t.text "description", null: false
+    t.datetime "publish_time", null: false
+    t.boolean "mail_send_flag", default: false
+    t.integer "info_type", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -187,6 +190,7 @@ ActiveRecord::Schema.define(version: 20180325091726) do
     t.string "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
+    t.boolean "advertise_notice_flag", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

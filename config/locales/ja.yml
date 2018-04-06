@@ -41,6 +41,7 @@ ja:
         state: 状態
         payway: 支払い方法
         created_at: 登録日時
+        advertise_notice_flag: お知らせメールを受け取る
       plan:
         name: プラン名
         price: 月額
@@ -80,6 +81,9 @@ ja:
         shop_id: 店舗
         title: タイトル
         description: 詳細
+        publish_time: 公開日時
+        mail_send_flag: メール送信済みフラグ
+        info_type: お知らせ種別
         created_at: 日付
   enums:
     corporation:
@@ -97,6 +101,10 @@ ja:
       state:
         under_contract: 契約中
         finished: 契約終了
+    information:
+      info_type:
+        event: イベントや告知
+        notice: 重要なお知らせ
   date:
     abbr_day_names:
     - 日

@@ -9,15 +9,17 @@
       <%= f.text_field :email %>
       <%= f.password_field :password, placeholder: "4文字以上" %>
       <%= f.password_field :password_confirmation, placeholder: "4文字以上" %>
+      <%= f.form_group :advertise_notice_flag, label: { } do %>
+        <%= f.check_box :advertise_notice_flag, label: '' %>
+      <% end %>
       <div class="row">
-        <div class="col-md-4 col-sm-2 col-xs-12"></div>
-        <div class="col-md-4 col-sm-4 col-xs-12">
-          <%= link_to 'キャンセル', user_path, class: 'btn btn-cancel' %>
+        <div class="col-md-4"></div>
+        <div class="col-md-4 col-sm-6 col-xs-6">
+          <%= link_to 'キャンセル', user_path, class: 'btn btn-default' %>
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-12">
-          <%= f.button '更新', class: 'btn btn-default login-page-btn' %>
+        <div class="col-md-4 col-sm-6 col-xs-6">
+          <%= f.button '更新', class: 'btn btn-dark-main' %>
         </div>
-        <div class="col-md-2 col-sm-2 col-xs-12"></div>
       </div>
     <% end %>
   </div>

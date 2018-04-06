@@ -26,6 +26,10 @@ class Admin::CorporationsController < AdminController
     end
   end
 
+  def show
+    @shops = @corporation.shops.order(id: :desc).page(params[:page])
+  end
+
   # PATCH/PUT /admin/corporations/1
   def update
     if @corporation.update(corporation_params)

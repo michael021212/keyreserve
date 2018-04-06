@@ -46,7 +46,7 @@ class Admin::InformationController < AdminController
 
   def information_params
     params.require(:information).permit(
-      :shop_id, :title, :description
+      :shop_id, :title, :description, :publish_time, :mail_send_flag, :info_type
     )
   end
 end
