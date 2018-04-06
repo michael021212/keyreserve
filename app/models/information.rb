@@ -9,5 +9,5 @@ class Information < ApplicationRecord
   validates :title, length: { maximum: 100, allow_blank: true }
   validates :description, length: { maximum: 512, allow_blank: true }
 
-  scope(:ready_to_send, -> { where(mail_send_flag: false).where('publish_time >= ?', Time.zone.now) })
+  scope(:ready_to_send, -> { where(mail_send_flag: false).where('publish_time <= ?', Time.zone.now) })
 end
