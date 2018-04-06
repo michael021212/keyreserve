@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404025545) do
+ActiveRecord::Schema.define(version: 20180406025654) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -90,14 +90,14 @@ ActiveRecord::Schema.define(version: 20180404025545) do
   end
 
   create_table "facility_temporary_plan_prices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "facility_plan_id", null: false
+    t.bigint "facility_temporary_plan_id", null: false
     t.time "starting_time", null: false
     t.time "ending_time", null: false
     t.integer "price", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
-    t.index ["facility_plan_id"], name: "index_facility_temporary_plan_prices_on_facility_plan_id"
+    t.index ["facility_temporary_plan_id"], name: "index_prices_on_facility_temporary_plan_id"
   end
 
   create_table "facility_temporary_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -214,10 +214,6 @@ ActiveRecord::Schema.define(version: 20180404025545) do
     t.string "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
-    t.integer "user_type", default: 1
-    t.integer "parent_id"
-    t.string "parent_token"
-    t.integer "max_user_num"
     t.boolean "advertise_notice_flag", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
