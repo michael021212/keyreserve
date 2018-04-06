@@ -1,7 +1,7 @@
-<%= @information.title %>のお知らせです。
-お知らせの詳細は、以下の通りです。
+<%= @information.shop_name || 'KEY STATION OFFICE運営' %>からのお知らせです。
 
--------------------------------------
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<%= @information.title %>
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<%= Information.human_attribute_name(:title) %>: <%= @information.title %>
-<%= Information.human_attribute_name(:description) %>: <%= @information.description %>
+<%= @information.description %>
