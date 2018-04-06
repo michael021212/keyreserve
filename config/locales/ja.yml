@@ -84,7 +84,7 @@ ja:
         publish_time: 公開日時
         mail_send_flag: メール送信済みフラグ
         info_type: お知らせ種別
-        created_at: 日付
+        created_at: 登録日時
   enums:
     corporation:
       payway:
