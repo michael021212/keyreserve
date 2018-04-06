@@ -53,12 +53,6 @@ class User < ApplicationRecord
     try(:max_user_num) > User.where(parent_id: id).count
   end
 
-  def self.set_id_by_parent_token(parent_token)
-    user = find_by(parent_token: parent_token)
-    return unless user.parent.add_new_user?
-    user.id
-  end
-
   def available_facilities
     Facility.joins(:facility_plans)
             .where(facility_plans: { plan_id: user_contracts.under_contract.pluck(:plan_id) })
