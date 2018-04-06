@@ -87,4 +87,8 @@ module ApplicationHelper
   def current_corporation_name?(name)
     Corporation.find_by(name: name) == current_corporation
   end
+
+  def current_date(time)
+    time.change(year: Time.zone.now.year, month: Time.zone.now.month, day: Time.zone.now.day)
+  end
 end

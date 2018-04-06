@@ -14,6 +14,10 @@ $(document).ready(function() {
     });
   };
 
+  var corporation = $('#plan_price_table').data('corporation')
+  var shop = $('#plan_price_table').data('shop')
+  var facility = $('#plan_price_table').data('facility')
+
   $('#plan_price_table').fullCalendar({
     schedulerLicenseKey: '0140948959-fcs-1515040346',
     defaultView: 'agendaDay',
@@ -30,22 +34,20 @@ $(document).ready(function() {
       }
     }],
     resources: function (callback) {
-      var corporation = $('#plan_price_table').data('corporation')
-      var shop = $('#plan_price_table').data('shop')
-      var facility = $('#plan_price_table').data('facility')
       if (corporation === undefined && shop === undefined) {
         ajaxRequest(
-          "/facilities/" + facility + "/resources"
+          "/facilities/" + facility + "/facility_temporary_plans/resources"
         ).then(function(resources) {
           callback(resources);
         })
       } else {
         ajaxRequest(
-          "/admin/corporations/" + corporation + "/shops/" + shop + "/facilities/" + facility + "/resources"
+          "/admin/corporations/" + corporation + "/facilities/" + facility + "/facility_temporary_plans/resources"
         ).then(function(resources) {
           callback(resources);
         })
       }
-    }
+    },
+    eventSources: ['/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_temporary_plans/events']
   });
 });

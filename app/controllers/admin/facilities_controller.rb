@@ -34,13 +34,6 @@ class Admin::FacilitiesController < AdminController
     redirect_to admin_corporation_shop_path(@corporation, @shop), notice: "#{Facility.model_name.human}を削除しました"
   end
 
-  def resources
-    @plans = Facility.find(params[:id]).plans
-    respond_to do |format|
-      format.json
-    end
-  end
-
   private
 
   def set_corporation

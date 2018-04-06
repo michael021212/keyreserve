@@ -144,6 +144,12 @@ crumb :edit_admin_corporation_shop_facility_facility_key do |corporation, shop, 
   parent :admin_corporation_shop_facility_facility_key, corporation, shop, facility, facility_key
 end
 
+# admin_corporation_facility_facility_temporary_plans
+crumb :new_admin_corporation_facility_facility_temporary_plan do |corporation, shop, facility|
+  link '施設利用都度課金プラン追加・編集', new_admin_corporation_shop_facility_facility_key_path(corporation, shop, facility)
+  parent :admin_corporation_shop_facility, corporation, shop, facility
+end
+
 # admin_admin_users
 crumb :admin_admin_users do
   link '管理者管理', admin_admin_users_path

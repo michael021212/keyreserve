@@ -20,7 +20,7 @@ class User < ApplicationRecord
 
   def available_facilities
     Facility.joins(:facility_plans)
-      .where(facility_plans: {plan_id: user_contracts.under_contract.pluck(:plan_id)})
+            .where(facility_plans: {plan_id: user_contracts.under_contract.pluck(:plan_id)})
   end
 
   def self.has_contract_with_shop(shop_id)

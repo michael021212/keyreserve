@@ -4,6 +4,7 @@ class Facility < ApplicationRecord
   has_many :facility_plans, dependent: :destroy
   has_many :plans, through: :facility_plans
   has_many :facility_keys, dependent: :destroy
+  has_many :facility_temporary_plans, dependent: :destroy
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank

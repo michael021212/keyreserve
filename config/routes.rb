@@ -14,12 +14,16 @@ Rails.application.routes.draw do
       resources :corporation_users
       resources :user_contracts
       resources :plans
+      resources :facilities, only: [] do
+        resources :facility_temporary_plans, only: [:new, :edit, :create, :update] do
+          collection do
+            get :resources
+            get :events
+          end
+        end
+      end
       resources :shops, except: [:index] do
         resources :facilities, except: [:index] do
-          member do
-            get :resources
-          end
-          # resources :facility_temporary_plans, only: [:new, :edit, :create, :update]
           resources :facility_keys, except: [:index]
         end
       end
@@ -40,6 +44,11 @@ Rails.application.routes.draw do
   end
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show] do
+    resources :facility_temporary_plans, only: [:new, :edit, :create, :update] do
+      collection do
+        get :resources
+      end
+    end
     member do
       get :resources
     end

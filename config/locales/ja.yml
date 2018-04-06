@@ -8,6 +8,7 @@ ja:
       shop: 店舗
       facility: 施設
       facility_key: 施設鍵
+      facility_temporary_plan: 施設利用都度課金プラン
       user_contract: 契約
       corporation_user: 施設管理者
       information: お知らせ
@@ -68,6 +69,14 @@ ja:
         password: パスワード
       facility_plan:
         plan_id: 施設利用可能プラン
+      facility_temporary_plan:
+        plan_id: プラン名
+        standard_price_per_hour: 標準価格（時間課金）
+        standard_price_per_day: 標準価格（1日課金）
+      facility_temporary_plan_price:
+        starting_time: 開始時間
+        ending_time: 終了時間
+        price: 価格
       user_contract:
         corporation_id: 法人
         shop_id: 店舗
