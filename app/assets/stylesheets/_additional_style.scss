@@ -213,3 +213,17 @@ html,body {
     width: 200px;
   }
 }
+
+.short-box {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mg-recnt-post {
+  h3 {
+    font-size: 20px;
+    margin-top: 5px;
+    line-height: 28px;
+  }
+}

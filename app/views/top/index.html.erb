@@ -38,7 +38,9 @@
               <div class="mg-recnt-post">
                 <div class="mg-rp-month"><%= date_short_ja information.created_at %> - <%= information.shop_name %></div>
                 <h3><%= information.title %></h3>
-                <p><%= auto_link(simple_format(h(information.description)), :all, target: '_blank') %></p>
+                <div class="short-box">
+                  <%= information.description %>
+                </div>
               </div>
             </li>
           <% end %>
