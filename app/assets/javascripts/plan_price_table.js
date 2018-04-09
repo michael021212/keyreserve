@@ -23,6 +23,7 @@ $(document).ready(function() {
     defaultView: 'agendaDay',
     header: false,
     lang: 'ja',
+    backgroundColor: 'white',
     viewRender: function(view, element) {
       element.find('.fc-day-header').html('');
     },

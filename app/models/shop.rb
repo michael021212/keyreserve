@@ -13,4 +13,8 @@ class Shop < ApplicationRecord
   validates :tel,
             length: { maximum: 13 },
             numericality: { only_integer: true, allow_blank: true }
+
+  def self.time_today(time)
+    time.change(year: Time.zone.now.year, month: Time.zone.now.month, day: Time.zone.now.day)
+  end
 end
