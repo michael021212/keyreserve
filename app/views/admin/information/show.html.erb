@@ -31,6 +31,18 @@
         <td><%= @information.info_type_i18n %></td>
       </tr>
       <tr>
+        <th><%= Information.human_attribute_name(:info_target_type) %></th>
+        <td>
+          <%= @information.info_target_type_i18n %>
+        </td>
+      </tr>
+      <% if @information.shop_users? %>
+        <tr>
+          <th><%= Information.human_attribute_name(:information_shops) %></th>
+          <td><%= simple_format @information.shops.pluck(:name).join("\n") %></td>
+        </tr>
+      <% end %>
+      <tr>
         <th><%= Information.human_attribute_name(:created_at) %></th>
         <td><%= date_ja @information.created_at %></td>
       </tr>
