@@ -24,16 +24,10 @@ $(document).ready(function() {
     header: false,
     lang: 'ja',
     backgroundColor: 'white',
-    viewRender: function(view, element) {
-      element.find('.fc-day-header').html('');
+    resourceRender: function(resource, el) {
+      link = "/admin/corporations/" + corporation + "/facilities/" + facility + "/facility_temporary_plans/" + resource.id + "/edit"
+      el.append("<p><a href=" + link + '>編集</a></p>');
     },
-    resourceColumns: [{
-      labelText: 'プラン名',
-      text: function(resource) {
-        var title = resource.title;
-        return title;
-      }
-    }],
     resources: function (callback) {
       if (corporation === undefined && shop === undefined) {
         ajaxRequest(

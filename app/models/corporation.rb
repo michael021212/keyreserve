@@ -16,4 +16,9 @@ class Corporation < ApplicationRecord
   def self.sync_from_api
     KeystationService.sync_corporations
   end
+
+  def selectable_facility_temporary_plans
+    selected_plan_ids = FacilityTemporaryPlan.includes(plan: :corporation).where(plans: { corporation_id: id }).map(&:plan_id)
+    plans.where.not(id: selected_plan_ids)
+  end
 end
