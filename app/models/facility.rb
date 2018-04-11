@@ -15,7 +15,7 @@ class Facility < ApplicationRecord
 
   validates :name, presence: true
 
-  scope(:belong_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
+  scope(:belongs_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
 
   def self.sync_from_api(ks_corporation_id)
     KeystationService.sync_rooms(ks_corporation_id)

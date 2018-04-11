@@ -22,10 +22,15 @@ $(document).ready(function() {
     schedulerLicenseKey: '0140948959-fcs-1515040346',
     defaultView: 'agendaDay',
     header: false,
+    height: 'auto',
     lang: 'ja',
     backgroundColor: 'white',
     resourceRender: function(resource, el) {
-      link = "/admin/corporations/" + corporation + "/facilities/" + facility + "/facility_temporary_plans/" + resource.id + "/edit"
+      if (corporation === undefined && shop === undefined) {
+        link = "/facilities/" + facility + "/facility_temporary_plans/" + resource.id + "/edit"
+      } else {
+        link = "/admin/corporations/" + corporation + "/facilities/" + facility + "/facility_temporary_plans/" + resource.id + "/edit"
+      }
       el.append("<p><a href=" + link + '>編集</a></p>');
     },
     resources: function (callback) {
@@ -43,6 +48,24 @@ $(document).ready(function() {
         })
       }
     },
-    eventSources: ['/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_temporary_plans/events']
+    eventSources: [
+      {
+        events: function (start, end, timezone, callback) {
+          if (corporation === undefined && shop === undefined) {
+            ajaxRequest(
+              '/facilities/' + facility + '/facility_temporary_plans/events'
+            ).then(function(events) {
+              callback(events);
+            })
+          } else {
+            ajaxRequest(
+              '/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_temporary_plans/events'
+            ).then(function(events) {
+              callback(events);
+            })
+          }
+        }
+      }
+    ]
   });
 });

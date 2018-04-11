@@ -1,0 +1,19 @@
+<div class="mg-page-title parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2><%= FacilityTemporaryPlan.model_name.human %>編集</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <%= link_to '削除', facility_facility_temporary_plan_path(@facility, @facility_temporary_plan), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger pull-right' %>
+    </div>
+    <div class="row">
+      <%= render 'form', facility: @facility, facility_temporary_plan: @facility_temporary_plan %>
+    </div>
+  </div>
+</div>

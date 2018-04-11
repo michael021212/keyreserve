@@ -18,7 +18,8 @@ class Corporation < ApplicationRecord
   end
 
   def selectable_facility_temporary_plans
-    selected_plan_ids = FacilityTemporaryPlan.includes(plan: :corporation).where(plans: { corporation_id: id }).map(&:plan_id)
-    plans.where.not(id: selected_plan_ids)
+    selected_facility_temporary_plan_ids = FacilityTemporaryPlan.includes(plan: :corporation).where(plans: { corporation_id: id }).map(&:plan_id)
+    selected_facility_plan_ids = FacilityPlan.includes(plan: :corporation).where(plans: {corporation_id: id }).map(&:plan_id)
+    plans.where.not(id: selected_facility_temporary_plan_ids.concat(selected_facility_plan_ids))
   end
 end

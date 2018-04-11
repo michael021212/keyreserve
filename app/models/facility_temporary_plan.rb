@@ -12,19 +12,23 @@ class FacilityTemporaryPlan < ApplicationRecord
 
   delegate :name, to: :plan, prefix: true, allow_nil: true
 
+  scope(:belongs_to_corporation, ->(corporation) { includes(facility: { shop: :corporation }).where(facilities: { shops: { corporation_id: corporation.id }}) })
+
   def overlap_facility_temporary_plan_prices
     arr = []
     facility_temporary_plan_prices.each do |pp|
       range = "#{pp.starting_time.strftime('%H')}-#{pp.ending_time.strftime('%H')}"
       arr << range
     end
-    arr.sort.each_with_index { |item, idx|
-      next if arr[idx+1].blank?
+    arr_sort = arr.sort
+    arr_sort.each_with_index { |item, idx|
+      next if arr_sort[idx+1].blank?
       first_end = item.split('-')[1].to_i
-      sec_start = arr[idx+1].split('-')[0].to_i
+      sec_start = arr_sort[idx+1].split('-')[0].to_i
       if first_end > sec_start
-        errors.add(:plan_id, '施設利用都度課金プラン時間帯価格が重複されました')
-        # facility_temporary_plan_prices[0].errors.add(:starting_time, '選択した時間帯が重複されました')
+        errors.add(:base, '')
+        facility_temporary_plan_prices[arr.index(item)+1].errors.add(:starting_time, '選択した時間帯が重複されました')
+        facility_temporary_plan_prices[arr.index(item)].errors.add(:ending_time, '選択した時間帯が重複されました')
       end
     }
   end

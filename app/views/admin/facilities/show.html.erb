@@ -65,6 +65,40 @@
   </div>
 </div>
 
+<!-- 月額対象プラン -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title">月額対象プラン</h4>
+    <div class="box-tools"></div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= Plan.human_attribute_name(:default_flag) %></th>
+          <th><%= Plan.human_attribute_name(:name) %></th>
+          <th><%= Plan.human_attribute_name(:price) %></th>
+          <th style="width: 300px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @facility.plans.each do |plan| %>
+          <tr>
+            <td><%= plan.default_flag? ? '◯' : '' %></td>
+            <td><%= plan.name %></td>
+            <td><%= plan.price %></td>
+            <td>
+              <%= link_to '詳細', admin_corporation_plan_path(@corporation, plan), class: 'btn btn-default' %>
+              <%= link_to '編集', edit_admin_corporation_plan_path(@corporation, plan), class: 'btn btn-primary' %>
+              <%= link_to '削除', admin_corporation_plan_path(@corporation, plan, form: 'facilities_show'), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 <!-- 都度課金対象プラン -->
 <div class="box box-default">
   <div class="box-header with-border">

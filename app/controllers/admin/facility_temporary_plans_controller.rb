@@ -35,7 +35,7 @@ class Admin::FacilityTemporaryPlansController < AdminController
   def resources; end
 
   def events
-    @facility_temporary_plans = FacilityTemporaryPlan.includes(facility: { shop: :corporation }).where(facilities: { shops: { corporation_id: @corporation.id }})
+    @facility_temporary_plans = FacilityTemporaryPlan.belongs_to_corporation(@corporation)
   end
 
   private
@@ -45,7 +45,7 @@ class Admin::FacilityTemporaryPlansController < AdminController
   end
 
   def set_facility
-    @facility = Facility.belong_to_corporation(@corporation).find(params[:facility_id])
+    @facility = Facility.belongs_to_corporation(@corporation).find(params[:facility_id])
   end
 
   def set_facility_temporary_plans
@@ -60,7 +60,7 @@ class Admin::FacilityTemporaryPlansController < AdminController
     params.require(:facility_temporary_plan).permit(
       :plan_id, :standard_price_per_hour, :standard_price_per_day,
       facility_temporary_plan_prices_attributes: [
-        :id, :facility_temporary_plan_id, :starting_time, :ending_time, :price
+        :id, :facility_temporary_plan_id, :starting_time, :ending_time, :price, :_destroy
       ]
     )
   end

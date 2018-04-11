@@ -44,13 +44,11 @@ Rails.application.routes.draw do
   end
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show] do
-    resources :facility_temporary_plans, only: [:new, :edit, :create, :update] do
+    resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
       collection do
         get :resources
+        get :events
       end
-    end
-    member do
-      get :resources
     end
   end
   resources :plans

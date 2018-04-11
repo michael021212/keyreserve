@@ -33,7 +33,11 @@ class Admin::PlansController < AdminController
 
   def destroy
     @plan.destroy
-    redirect_to admin_corporation_path(@corporation)
+    if params[:form] == 'facilities_show'
+      redirect_to request.referrer, notice: "#{Plan.model_name.human}を削除しました。"
+    else
+      redirect_to admin_corporation_path(@corporation), notice: "#{Plan.model_name.human}を削除しました。"
+    end
   end
 
   private

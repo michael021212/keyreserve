@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h2>都度課金対象プラン追加・編集</h2>
+        <h2><%= FacilityTemporaryPlan.model_name.human %>新規登録</h2>
       </div>
     </div>
   </div>
@@ -10,12 +10,7 @@
 <div class="mg-page">
   <div class="container">
     <div class="row">
-      <%= bootstrap_nested_form_for([:facility, @facility_temporary_plan]) do |f| %>
-        <%= f.collection_select :plan_id, Plan.all, :id, :name, include_blank: true  %>
-        <%= f.text_field :standard_price_per_day %>
-        <%= f.text_field :standard_price_per_hour %>
-        <%= f.submit class: 'btn btn-primary' %>
-      <% end %>
+      <%= render 'form', facility: @facility, facility_temporary_plan: @facility_temporary_plan %>
     </div>
   </div>
 </div>
