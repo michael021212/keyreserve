@@ -17,9 +17,9 @@ class Corporation < ApplicationRecord
     KeystationService.sync_corporations
   end
 
-  def selectable_facility_temporary_plans
+  def selectable_plans(default_plan_id)
     selected_facility_temporary_plan_ids = FacilityTemporaryPlan.includes(plan: :corporation).where(plans: { corporation_id: id }).map(&:plan_id)
     selected_facility_plan_ids = FacilityPlan.includes(plan: :corporation).where(plans: {corporation_id: id }).map(&:plan_id)
-    plans.where.not(id: selected_facility_temporary_plan_ids.concat(selected_facility_plan_ids))
+    selectable_plans = plans.where.not(id: selected_facility_temporary_plan_ids.concat(selected_facility_plan_ids) - [default_plan_id])
   end
 end

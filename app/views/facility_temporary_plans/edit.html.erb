@@ -8,12 +8,18 @@
   </div>
 </div>
 <div class="mg-page">
-  <div class="container">
-    <div class="row">
-      <%= link_to '削除', facility_facility_temporary_plan_path(@facility, @facility_temporary_plan), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger pull-right' %>
-    </div>
-    <div class="row">
-      <%= render 'form', facility: @facility, facility_temporary_plan: @facility_temporary_plan %>
+  <div class="mg-about-features">
+    <div class="container">
+      <div class="row">
+        <div class='col-md-offset-2 col-md-8'>
+          <%= link_to '削除', facility_facility_temporary_plan_path(@facility, @facility_temporary_plan), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger pull-right' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class='col-md-offset-2 col-md-8'>
+          <%= render 'form', facility: @facility, facility_temporary_plan: @facility_temporary_plan %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

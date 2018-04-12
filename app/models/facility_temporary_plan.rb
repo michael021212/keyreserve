@@ -15,20 +15,22 @@ class FacilityTemporaryPlan < ApplicationRecord
   scope(:belongs_to_corporation, ->(corporation) { includes(facility: { shop: :corporation }).where(facilities: { shops: { corporation_id: corporation.id }}) })
 
   def overlap_facility_temporary_plan_prices
-    arr = []
-    facility_temporary_plan_prices.each do |pp|
-      range = "#{pp.starting_time.strftime('%H')}-#{pp.ending_time.strftime('%H')}"
-      arr << range
+    time_period_with_indices = []
+    facility_temporary_plan_prices.each_with_index do |pp, idx|
+      time_period_with_index = "#{pp.starting_time.strftime('%H')}-#{pp.ending_time.strftime('%H')}-#{idx}"
+      time_period_with_indices << time_period_with_index
     end
-    arr_sort = arr.sort
-    arr_sort.each_with_index { |item, idx|
-      next if arr_sort[idx+1].blank?
-      first_end = item.split('-')[1].to_i
-      sec_start = arr_sort[idx+1].split('-')[0].to_i
+    time_period_with_indices_sort = time_period_with_indices.sort
+    time_period_with_indices_sort.each_with_index { |time_period_with_index, idx|
+      next if time_period_with_indices[idx+1].blank?
+      first_end = time_period_with_index.split('-')[1].to_i
+      sec_start = time_period_with_indices_sort[idx+1].split('-')[0].to_i
+      first_idx =  time_period_with_indices_sort[idx].split('-')[2].to_i
+      sec_idx =  time_period_with_indices_sort[idx+1].split('-')[2].to_i
       if first_end > sec_start
         errors.add(:base, '')
-        facility_temporary_plan_prices[arr.index(item)+1].errors.add(:starting_time, '選択した時間帯が重複されました')
-        facility_temporary_plan_prices[arr.index(item)].errors.add(:ending_time, '選択した時間帯が重複されました')
+        facility_temporary_plan_prices[first_idx].errors.add(:ending_time, '時間帯が重なっています')
+        facility_temporary_plan_prices[sec_idx].errors.add(:starting_time, '時間帯が重なっています')
       end
     }
   end
@@ -53,6 +55,7 @@ class FacilityTemporaryPlan < ApplicationRecord
         arr << closing_time
       end
     end
+    arr << opening_time << closing_time if facility_temporary_plan_prices.blank?
     arr.each_slice(2).to_a
   end
 end

@@ -24,7 +24,7 @@ $(document).ready(function() {
     header: false,
     height: 'auto',
     lang: 'ja',
-    backgroundColor: 'white',
+    slotDuration: '01:00:00',
     resourceRender: function(resource, el) {
       if (corporation === undefined && shop === undefined) {
         link = "/facilities/" + facility + "/facility_temporary_plans/" + resource.id + "/edit"
