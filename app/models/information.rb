@@ -15,4 +15,5 @@ class Information < ApplicationRecord
   validates :info_target_type, :info_type, :publish_time, presence: true
 
   scope(:ready_to_send, -> { where(mail_send_flag: false).where('publish_time <= ?', Time.zone.now) })
+  scope(:enable_disp, -> {where('publish_time <= ?', Time.zone.now) })
 end
