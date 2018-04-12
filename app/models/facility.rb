@@ -24,4 +24,8 @@ class Facility < ApplicationRecord
   def selectable_plans
     plans.where(default_flag: true)
   end
+
+  def target_plans
+    plans + Plan.is_divided_into_facility_temporary_plans(self.id)
+  end
 end

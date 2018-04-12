@@ -8,11 +8,6 @@ class FacilitiesController <  ApplicationController
 
   def show; end
 
-  def resources
-    facilities = Facility.belongs_to_corporation(current_corporation)
-    @plans = facilities.find(params[:id]).plans
-  end
-
   private
 
   def set_facility

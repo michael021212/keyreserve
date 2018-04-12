@@ -1,7 +1,7 @@
 class FacilityTemporaryPlansController <  ApplicationController
   before_action :set_facility
   before_action :set_facility_temporary_plan, only: [:edit, :update, :destroy]
-  before_action :set_facility_temporary_plans
+  before_action :set_facility_temporary_plans, only: [:resources, :events]
 
   def new
     @facility_temporary_plan = @facility.facility_temporary_plans.new

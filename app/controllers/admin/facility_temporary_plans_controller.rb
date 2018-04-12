@@ -1,7 +1,7 @@
 class Admin::FacilityTemporaryPlansController < AdminController
   before_action :set_corporation
   before_action :set_facility
-  before_action :set_facility_temporary_plans
+  before_action :set_facility_temporary_plans, only: [:resources, :events]
   before_action :set_facility_temporary_plan, only: [:edit, :update, :destroy]
 
   def new
