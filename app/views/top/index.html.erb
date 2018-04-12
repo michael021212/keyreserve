@@ -37,14 +37,18 @@
             <li>
               <div class="mg-recnt-post">
                 <div class="mg-rp-month"><%= date_short_ja information.created_at %> - <%= information.shop_name %></div>
-                <h3><%= information.title %></h3>
+                <h3><%= link_to information.title, information_path(information) %></h3>
                 <div class="short-box">
                   <%= information.description %>
+                </div>
+                <div class="text-right mt15">
+                  <%= link_to '続きを読む', information_path(information) %>
                 </div>
               </div>
             </li>
           <% end %>
         </ul>
+        <div class="text-center"><%= link_to '過去のお知らせを見る', information_index_path %></div>
       </div>
       <div class="col-md-7">
         <h2 class="mg-sec-left-title">イベント情報</h2>
