@@ -2,7 +2,7 @@ class InvitationsController <  ApplicationController
   before_action :set_user, only: [:show]
 
   def index
-    @users = User.parent_users(current_user.parent_id).order(id: :desc).page(params[:page])
+    @users = User.parent_corporation_and_users(current_user).order(id: :desc).page(params[:page])
   end
 
   def show; end

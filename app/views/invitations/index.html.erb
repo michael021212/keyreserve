@@ -4,7 +4,7 @@
 <div class="container mt30">
 <div class="panel">
   <div class="panel-heading mb50">
-    <% if current_user.parent.add_new_user? %>
+    <% if current_user.parent.try(:add_new_user?) %>
       <%= link_to '新規利用者招待', new_invitation_path, class: 'btn btn-main glyphicon glyphicon-plus pull-right' %>
     <% end %>
   </div>

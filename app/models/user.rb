@@ -33,13 +33,15 @@ class User < ApplicationRecord
     self.parent_id = id
   end
 
-  def self.parent_users(parent_id)
-    parent_corporation.has_parent(parent_id)
+  def self.parent_corporation_and_users(user)
+    id = user.parent_id.present? ? user.parent_id : user.id
+    User.parent_corporation_users(id).or(User.where(id: id))
   end
 
   def parent
-    return if parent_id.nil?
-    User.find_by(id: parent_id)
+    return if personal?
+    id = parent_id.present? ? parent_id : self.id
+    User.find_by(id: id)
   end
 
   def available_facilities
@@ -66,14 +68,12 @@ class User < ApplicationRecord
 
   def self.set_id_by_parent_token(parent_token)
     user = find_by(parent_token: parent_token).parent
-    return unless user.add_new_user?
     user.id
   end
 
   private
 
   def leave_parent_corporation
-    binding.pry
     return if User.parent_corporation_users(id).nil?
     User.parent_corporation_users(id).each do |user|
       user.update(user_type: 'personal', parent_id: nil)

@@ -4,13 +4,14 @@ class UsersController < ApplicationController
   def new
     logout if logged_in?
     @user = User.new
-    session[:parent_token] = params[:parent_token] if params[:parent_token].present?
+    session[:parent_token] = params[:parent_token]
   end
 
   def create
     corporation ||= Corporation.find_by(token: params[:user][:corporation_token])
     @user = User.new(user_params)
     if @user.save
+      session[:parent_token] = nil if session[:parent_token].present?
       respond_to do |format|
         format.html do
           auto_login(@user)
@@ -48,7 +49,8 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(
-      :email, :password, :password_confirmation, :name, :tel, :state, :payway, :parent_id, :advertise_notice_flag
+      :email, :password, :password_confirmation, :name, :tel, :state, :payway, :user_type, :parent_id,
+      :advertise_notice_flag
     )
   end
 end
