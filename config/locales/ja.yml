@@ -101,8 +101,8 @@ ja:
         creditcard: クレジットカード
         invoice: 請求書
       user_type:
-        user: 個人
-        corporation: 法人
+        personal: 個人
+        parent_corporation: 法人
     user_contract:
       state:
         under_contract: 契約中

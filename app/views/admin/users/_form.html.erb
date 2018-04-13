@@ -13,14 +13,38 @@
   <% end %>
   <% if session[:parent_id].present? && f.object.new_record? %>
     <%= f.hidden_field :parent_id, value: session[:parent_id] %>
+    <%= f.hidden_field :user_type, value: :parent_corporation %>
   <% else %>
-    <%= f.select :user_type, User.user_types_i18n.invert %>
-  <% end %>
-  <% if f.object.id && f.object.id == f.object.parent_id %>
-    <%= f.text_field :max_user_num, help: '法人の場合に使用者の追加出来る上限数の設定' %>
-  <% end %>
-  <%= f.form_group :advertise_notice_flag, label: {} do %>
-    <%= f.check_box :advertise_notice_flag %>
+    <%= f.form_group :user_type, label: {} do %>
+      <% User.user_types_i18n.each do |type| %>
+        <div class="radio-inline">
+          <%= f.radio_button :user_type, type.first, label: type.last, inline: true%>
+        </div>
+      <% end %>
+    <% end %>
+    <span class='ml25' id="new_or_exist_parent">
+      <%= f.form_group :new_or_exist_parent do %>
+        <div class="radio-inline">
+          <%= radio_button 'new', 'parent', 'user_type', { checked: f.object.max_user_num? ? true : false } %>新規法人
+        </div>
+        <% if User.exist_corporation_parents.present? %>
+          <div class="radio-inline">
+            <%= radio_button 'exist', 'parent', 'user_type', { checked: f.object.parent_id? ? true : false } %>既存法人
+          </div>
+        <% end %>
+      <% end %>
+    </span>
+    <!-- 新規法人のみ表示する-->
+    <span id='new_parent_field'>
+      <%= f.text_field :max_user_num, help: '法人の場合に使用者の追加出来る上限数の設定' %>
+    </span>
+    <!-- 既存法人のみ表示する-->
+    <span id='exist_parent_field'>
+      <%= f.collection_select :parent_id, User.exist_corporation_parents, :id, :name %>
+    </span>
+    <%= f.form_group :advertise_notice_flag, label: {} do %>
+      <%= f.check_box :advertise_notice_flag %>
+    <% end %>
   <% end %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>

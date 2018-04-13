@@ -10,6 +10,7 @@
     <div class="box-tools">
       <%= link_to "戻る", admin_users_path, class: 'btn btn-default' %>
       <%= link_to "編集", edit_admin_user_path(@user), class: 'btn btn-primary' %>
+      <%= link_to '削除', admin_user_path(@user), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
     </div>
   </div>
   <div class="box-body">
@@ -60,7 +61,7 @@
   </div>
 </div>
 </hr>
-<% if @user.id == @user.parent_id %>
+<% if @user.max_user_num.present? %>
   <div class="box box-default">
     <div class="box-header with-border">
       <h4 class="box-title"><%= User.model_name.human %>一覧</h4>
@@ -83,8 +84,8 @@
           </tr>
         </thead>
         <tbody>
-          <% if User.parent_users(@user.parent_id).present? %>
-            <% User.parent_users(@user.parent_id).each do |user| %>
+          <% if User.parent_corporation_users(@user.id).present? %>
+            <% User.parent_corporation_users(@user.id).each do |user| %>
               <tr>
                 <td><%= user.id %></td>
                 <td><%= user.name %></td>

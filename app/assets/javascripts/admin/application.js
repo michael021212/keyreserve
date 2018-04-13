@@ -19,3 +19,4 @@
 //= require jquery.slimscroll.min
 //= require jquery_nested_form
 //= require map
+//= require admin/user_type_radios
