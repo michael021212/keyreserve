@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 20180403062150) do
     t.integer "shop_id"
     t.string "title", null: false
     t.text "description", null: false
-    t.datetime "publish_time", null: false
+    t.datetime "publish_time", default: "2018-01-01 00:00:00", null: false
     t.boolean "mail_send_flag", default: false
     t.integer "info_type", default: 1, null: false
     t.datetime "created_at", null: false

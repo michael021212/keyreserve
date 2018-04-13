@@ -23,14 +23,10 @@ class User < ApplicationRecord
 
   before_save :remove_parent_id, if: proc { |_user| user_type_was == 'parent_corporation' && user_type == 'personal' ||  max_user_num.present? }
   before_update :leave_parent_corporation, if: proc { |_user| user_type_was == 'parent_corporation' && user_type == 'personal' && max_user_num.present? }
-  before_destroy :leave_parent_corporation, if: proc { |_user| parent_corporation? && max_user_num.present? }
+  before_destroy :leave_parent_corporation, if: proc { |_user| user_type = 'parent_corporation' && max_user_num.present? }
 
   def remove_parent_id
     self.parent_id = nil
-  end
-
-  def set_parent_id
-    self.parent_id = id
   end
 
   def self.parent_corporation_and_users(user)
