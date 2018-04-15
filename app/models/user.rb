@@ -22,8 +22,13 @@ class User < ApplicationRecord
   scope(:exist_corporation_parents, -> { where.not(max_user_num: nil) })
 
   before_save :remove_parent_id, if: proc { |_user| user_type_was == 'parent_corporation' && user_type == 'personal' ||  max_user_num.present? }
-  before_update :leave_parent_corporation, if: proc { |_user| user_type_was == 'parent_corporation' && user_type == 'personal' && max_user_num.present? }
-  before_destroy :leave_parent_corporation, if: proc { |_user| user_type = 'parent_corporation' && max_user_num.present? }
+
+  before_update :leave_parent_corporation, if: proc { |_user| corporation_parent_become_personal? }
+  before_destroy :leave_parent_corporation, if: proc { |_user| parent_corporation? && max_user_num.present? }
+
+  def corporation_parent_become_personal?
+    user_type_was == 'parent_corporation' && user_type == 'personal' && max_user_num.present?
+  end
 
   def remove_parent_id
     self.parent_id = nil
