@@ -2,7 +2,7 @@ ja:
   activerecord:
     models:
       admin_user: 管理者
-      corporation: 法人
+      corporation: 運営会社
       user: 利用者
       plan: プラン
       shop: 店舗
@@ -20,8 +20,8 @@ ja:
         password: パスワード
         password_confirmation: パスワード確認
       corporation:
-        name: 法人名
-        kana: 法人名(カナ)
+        name: 運営会社名
+        kana: 運営会社名(カナ)
         tel: 電話番号
         postal_code: 郵便番号
         address: 住所
@@ -29,7 +29,7 @@ ja:
         state: 状態
         ks_corporation_id: Keystation法人
       corporation_user:
-        corporation_id: 法人
+        corporation_id: 運営会社
         user_id: 施設管理者
       user:
         id: ID
@@ -72,7 +72,7 @@ ja:
       facility_plan:
         plan_id: 施設利用可能プラン
       user_contract:
-        corporation_id: 法人
+        corporation_id: 運営者会社
         shop_id: 店舗
         user_id: 契約利用者
         plan_id: 契約プラン
