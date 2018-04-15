@@ -1,0 +1,4 @@
+<%= @user.name %>様からのご招待お知らせです。
+
+下記のリンクから新規登録またはログインをして下さい。
+<%= new_parent_token_user_url(@user.parent_token) %>

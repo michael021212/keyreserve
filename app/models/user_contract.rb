@@ -1,4 +1,5 @@
 class UserContract < ApplicationRecord
+  acts_as_paranoid
   belongs_to :corporation
   belongs_to :shop, optional: true
   belongs_to :user

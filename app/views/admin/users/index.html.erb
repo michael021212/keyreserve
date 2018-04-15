@@ -43,7 +43,7 @@
               </td>
               <td><%= user.email %></td>
               <td><%= user.tel %></td>
-              <td><%= link_to user.parent.try(:name), admin_user_path(user.parent) if user.parent.present? %></td>
+              <td><%= link_to user.parent.try(:name), admin_user_path(user.parent) if user.parent_id? %></td>
               <td><%= user.advertise_notice_flag? ? '◯' : '' %></td>
               <td>
                 <%= link_to '詳細', admin_user_path(user), class: 'btn btn-default' %>

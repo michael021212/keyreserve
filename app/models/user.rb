@@ -22,6 +22,7 @@ class User < ApplicationRecord
   scope(:exist_corporation_parents, -> { where.not(max_user_num: nil) })
 
   before_save :remove_parent_id, if: proc { |_user| user_type_was == 'parent_corporation' && user_type == 'personal' ||  max_user_num.present? }
+
   before_update :leave_parent_corporation, if: proc { |_user| corporation_parent_become_personal? }
   before_destroy :leave_parent_corporation, if: proc { |_user| parent_corporation? && max_user_num.present? }
 
@@ -33,28 +34,26 @@ class User < ApplicationRecord
     self.parent_id = nil
   end
 
-  def set_parent_id
-    self.parent_id = id
-  end
-
-  def self.parent_users(parent_id)
-    parent_corporation.has_parent(parent_id)
+  def self.parent_corporation_and_users(user)
+    id = user.parent_id.present? ? user.parent_id : user.id
+    User.parent_corporation_users(id).or(User.where(id: id))
   end
 
   def parent
-    return if parent_id.nil?
-    User.find_by(id: parent_id)
+    return if personal?
+    id = parent_id.present? ? parent_id : self.id
+    User.find_by(id: id)
+  end
+
+  def available_facilities
+    user = user? ? self : User.find(parent_id)
+    Facility.joins(:facility_plans)
+            .where(facility_plans: { plan_id: user.user_contracts.under_contract.pluck(:plan_id) })
   end
 
   def add_new_user?
     return false if max_user_num.nil?
     try(:max_user_num) > User.where(parent_id: id).count
-  end
-
-  def self.set_id_by_parent_token(parent_token)
-    user = find_by(parent_token: parent_token)
-    return unless user.parent.add_new_user?
-    user.id
   end
 
   def available_facilities
@@ -68,10 +67,14 @@ class User < ApplicationRecord
         .where.not(user_contracts: { state: UserContract.states[:finished] })
   end
 
+  def self.set_id_by_parent_token(parent_token)
+    user = find_by(parent_token: parent_token).parent
+    user.id
+  end
+
   private
 
   def leave_parent_corporation
-    binding.pry
     return if User.parent_corporation_users(id).nil?
     User.parent_corporation_users(id).each do |user|
       user.update(user_type: 'personal', parent_id: nil)

@@ -9,5 +9,4 @@ class ApplicationController < ActionController::Base
   def current_corporation?
     current_corporation.present?
   end
-
 end
