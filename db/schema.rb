@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407054952) do
+ActiveRecord::Schema.define(version: 20180330032920) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20180407054952) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["corporation_id"], name: "index_corporation_users_on_corporation_id"
     t.index ["user_id"], name: "index_corporation_users_on_user_id"
   end
@@ -116,7 +117,7 @@ ActiveRecord::Schema.define(version: 20180407054952) do
     t.bigint "corporation_id", null: false
     t.bigint "facility_id", null: false
     t.bigint "credit_card_id", null: false
-    t.string "price", null: false
+    t.integer "price", null: false
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
