@@ -96,13 +96,15 @@ ja:
         state: ステータス
       information:
         id: お知らせID
-        shop_id: 店舗
+        shop_id: 送信元店舗
         title: タイトル
         description: 詳細
         publish_time: 公開日時
         mail_send_flag: メール送信済みフラグ
         info_type: お知らせ種別
+        info_target_type: 配信対象
         created_at: 登録日時
+        information_shops: 配信対象店舗
   enums:
     corporation:
       payway:
@@ -126,6 +128,9 @@ ja:
       info_type:
         event: イベントや告知
         important_notice: 重要なお知らせ
+      info_target_type:
+        all_users: 全会員
+        shop_users: 店舗契約者
   date:
     abbr_day_names:
     - 日

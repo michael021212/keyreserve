@@ -20,3 +20,4 @@
 //= require jquery_nested_form
 //= require map
 //= require admin/user_type_radios
+//= require admin/common
