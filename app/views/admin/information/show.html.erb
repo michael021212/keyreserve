@@ -12,7 +12,7 @@
     <table class="table table-striped">
       <tr>
         <th><%= Information.human_attribute_name(:publish_time) %></th>
-        <td><%= date_ja(@information.publish_time) %></td>
+        <td><%= datetime_ja(@information.publish_time) %></td>
       </tr>
       <tr>
         <th><%= Information.human_attribute_name(:id) %></th>
@@ -44,7 +44,7 @@
       <% end %>
       <tr>
         <th><%= Information.human_attribute_name(:created_at) %></th>
-        <td><%= date_ja @information.created_at %></td>
+        <td><%= datetime_ja @information.created_at %></td>
       </tr>
       <tr>
         <th><%= Information.human_attribute_name(:mail_send_flag) %></th>
