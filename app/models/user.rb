@@ -6,6 +6,9 @@ class User < ApplicationRecord
   has_many :corporations, through: :corporation_users
   has_many :user_contracts, dependent: :destroy
 
+  belongs_to :user_corp, foreign_key: :parent_id, optional: true
+  delegate :name, to: :user_corp, prefix: true, allow_nil: true
+
   accepts_nested_attributes_for :corporation_users
 
   enum state: { registered: 0, activated: 1 }
@@ -22,28 +25,6 @@ class User < ApplicationRecord
   scope(:exist_corporation_parents, -> { where.not(max_user_num: nil) })
 
   before_save :remove_parent_id, if: proc { |_user| user_type_was == 'parent_corporation' && user_type == 'personal' ||  max_user_num.present? }
-
-  before_update :leave_parent_corporation, if: proc { |_user| corporation_parent_become_personal? }
-  before_destroy :leave_parent_corporation, if: proc { |_user| parent_corporation? && max_user_num.present? }
-
-  def corporation_parent_become_personal?
-    user_type_was == 'parent_corporation' && user_type == 'personal' && max_user_num.present?
-  end
-
-  def remove_parent_id
-    self.parent_id = nil
-  end
-
-  def self.parent_corporation_and_users(user)
-    id = user.parent_id.present? ? user.parent_id : user.id
-    User.parent_corporation_users(id).or(User.where(id: id))
-  end
-
-  def parent
-    return if personal?
-    id = parent_id.present? ? parent_id : self.id
-    User.find_by(id: id)
-  end
 
   def available_facilities
     user = user? ? self : User.find(parent_id)

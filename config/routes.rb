@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index]
     resources :admin_users, except: [:show]
     resources :users
+    resources :user_corps do
+      resources :users, controller: 'users'
+    end
     resources :information
     resources :corporations do
       resources :corporation_users

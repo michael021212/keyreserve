@@ -93,6 +93,15 @@ ja:
         title: 利用者編集
       show:
         title: 利用者詳細
+    user_corps:
+      index:
+        title: 法人一覧
+      new:
+        title: 法人登録
+      edit:
+        title: 法人編集
+      show:
+        title: 法人詳細
   users:
     dashboards:
       index:

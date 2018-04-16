@@ -93,23 +93,60 @@ end
 
 # admin_users
 crumb :admin_users do
-  link 'ユーザ管理', admin_users_path
+  link '利用者管理', admin_users_path
   parent :admin_root
 end
 
 crumb :new_admin_user do
-  link 'ユーザ新規登録', new_admin_user_path
+  link '利用者新規登録', new_admin_user_path
   parent :admin_users
 end
 
 crumb :admin_user do |user|
-  link 'ユーザ詳細', admin_user_path(user)
+  link '利用者詳細', admin_user_path(user)
   parent :edit_admin_user, user
 end
 
 crumb :edit_admin_user do |user|
-  link 'ユーザ編集', edit_admin_user_path(user)
+  link '利用者編集', edit_admin_user_path(user)
   parent :admin_users
+end
+
+# admin_user_corp_users
+crumb :new_admin_user_corp_user do |user_corp|
+  link '利用者新規登録', new_admin_user_corp_user_path(user_corp)
+  parent :admin_user_corp, user_corp
+end
+
+crumb :admin_user_corp_user do |user_corp, user|
+  link '利用者詳細', admin_user_corp_user_path(user_corp, user)
+  parent :admin_user_corp, user_corp
+end
+
+crumb :edit_admin_user_corp_user do |user_corp, user|
+  link '利用者編集', edit_admin_user_corp_user_path(user_corp, user)
+  parent :admin_user_corp_user, user_corp, user
+end
+
+# admin_user_corps
+crumb :admin_user_corps do
+  link '法人管理', admin_user_corps_path
+  parent :admin_root
+end
+
+crumb :new_admin_user_corp do
+  link '法人新規登録', new_admin_user_corp_path
+  parent :admin_user_corps
+end
+
+crumb :admin_user_corp do |user_corp|
+  link '法人詳細', admin_user_corp_path(user_corp)
+  parent :edit_admin_user_corp, user_corp
+end
+
+crumb :edit_admin_user_corp do |user_corp|
+  link '法人編集', edit_admin_user_corp_path(user_corp)
+  parent :admin_user_corps
 end
 
 # admin_corporation_shop_facilities
