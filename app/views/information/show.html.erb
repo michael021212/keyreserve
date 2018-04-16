@@ -1,0 +1,27 @@
+<% content_for :middle_title do %>
+  <h2><%= @information.title %></h2>
+<% end %>
+<div class="mg-blog-list">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8">
+        <main>
+        <article class="mg-post">
+          <header>
+            <h2 class="mg-post-title"><%= @information.title %></h2>
+            <div class="mg-post-meta">
+              <span><%= date_short_ja @information.created_at %> - <%= @information.shop_name %></span>
+            </div>
+          </header>
+          <div>
+            <%= auto_link(simple_format(h(@information.description)), :all, target: '_blank') %>
+          </div>
+        </article>
+        </main>
+      </div>
+      <div class="col-md-4">
+        <%= render 'recent_information', recent_information: @recent_information %>
+      </div>
+    </div>
+  </div>
+</div>

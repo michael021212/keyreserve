@@ -213,3 +213,33 @@ html,body {
     width: 200px;
   }
 }
+
+.short-box {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.middle-box {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.mg-recnt-post {
+  h3 {
+    font-size: 20px;
+    margin-top: 5px;
+    line-height: 28px;
+  }
+}
+
+.mg-blog-list {
+  padding: 30px 0 100px;
+}
+
+.mg-post-title {
+  font-size: 28px;
+  line-height: 38px;
+}

@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
   resources :plans
+  resources :information, only: [:index, :show]
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー
