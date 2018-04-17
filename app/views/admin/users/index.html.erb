@@ -36,9 +36,7 @@
           <% @users.each do |user| %>
             <tr>
               <td><%= user.id %></td>
-              <td>
-              <%= user.max_user_num? ? (link_to user.name, admin_user_path(user)) : user.name %>
-              </td>
+              <td><%= user.name %></td>
               <td><%= user.email %></td>
               <td><%= user.tel %></td>
               <td>
