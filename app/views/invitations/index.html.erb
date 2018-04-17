@@ -1,22 +1,14 @@
 <% content_for :middle_title do %>
-  <h2><%= User.model_name.human %>管理</h2>
+  <h2><%= User.model_name.human %>招待管理</h2>
 <% end %>
 <div class="mg-page">
   <div class="container">
     <div class="row">
       <div class="col-offset-2 col-md-10">
-        <div class='mg-sec-title'>
-          <h3><%= UserCorp.model_name.human %>詳細</h3>
+        <div class='mg-sec-left-title'>
+          <h3><%= current_user_corp.name %></h3>
         </div>
         <table class="table mb100">
-          <tr>
-            <th><%= UserCorp.human_attribute_name(:id) %></th>
-            <td><%= current_user_corp.id %></td>
-          </tr>
-          <tr>
-            <th><%= UserCorp.human_attribute_name(:name) %></th>
-            <td><%= current_user_corp.name %></td>
-          </tr>
           <tr>
             <th><%= UserCorp.human_attribute_name(:tel) %></th>
             <td><%= current_user_corp.tel %></td>

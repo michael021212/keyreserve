@@ -1,6 +1,5 @@
 class Admin::UsersController < AdminController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_user_corp
 
   def index
     @q = User.ransack(params[:q])
@@ -17,7 +16,7 @@ class Admin::UsersController < AdminController
     @user = User.new(user_params)
     if @user.save!
       flash[:notice] = "#{User.model_name.human}を作成しました。"
-      redirect_to @user_corp.present? ? [:admin, @user_corp, @user] : [:admin, @user]
+      redirect_to @user.user_corp.present? ? [:admin, @user.user_corp, @user] : [:admin, @user]
     else
       render :new
     end
@@ -26,7 +25,7 @@ class Admin::UsersController < AdminController
   def update
     if @user.update(user_params)
       flash[:notice] = "#{User.model_name.human}を更新しました。"
-      redirect_to @user_corp.present? ? [:admin, @user_corp, @user] : [:admin, @user]
+      redirect_to @user.user_corp.present? ? [:admin, @user.user_corp, @user] : [:admin, @user]
     else
       render :edit
     end
@@ -35,17 +34,13 @@ class Admin::UsersController < AdminController
   def destroy
     @user.destroy
     flash[:notice] = "#{User.model_name.human}を削除しました。"
-    redirect_to @user_corp.present? ? admin_user_corp_path(@user_corp) : admin_users_path
+    redirect_to @user.user_corp.present? ? admin_user_corp_path(@user.user_corp) : admin_users_path
   end
 
   private
 
   def set_user
     @user = User.find(params[:id])
-  end
-
-  def set_user_corp
-    @user_corp = UserCorp.find_by(params[:user_corp_id])
   end
 
   def user_params
