@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
   resources :plans
-  resources :invitations, only: [:index, :show, :new, :create]
+  resources :invitations, only: [:index, :new, :create]
   resources :information, only: [:index, :show]
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'

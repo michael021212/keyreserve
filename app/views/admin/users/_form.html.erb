@@ -16,6 +16,6 @@
   <%= f.form_group :advertise_notice_flag, label: {} do %>
     <%= f.check_box :advertise_notice_flag %>
   <% end %>
-  <%= f.hidden_field :parent_id %>
+  <%= f.hidden_field :parent_id, value: params[:user_corp_id] %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>

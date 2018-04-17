@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407054952) do
+ActiveRecord::Schema.define(version: 20180417042656) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 20180407054952) do
     t.bigint "corporation_id", null: false
     t.bigint "shop_id"
     t.bigint "user_id", null: false
-    t.bigint "plan_id", null: false
+    t.integer "plan_id"
     t.date "started_on", null: false
     t.date "finished_on"
     t.integer "state", default: 1, null: false

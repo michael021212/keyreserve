@@ -21,25 +21,12 @@ class User < ApplicationRecord
             presence: true, length: { maximum: 13 }
   validates :password, confirmation: true, presence:true, length: { minimum: 4, maximum: 20, allow_blank: true }, if: -> { new_record? || changes[:crypted_password] }
 
-  scope(:parent_corporation_users, ->(id) { where(parent_id: id) })
-  scope(:exist_corporation_parents, -> { where.not(max_user_num: nil) })
-
-  before_save :remove_parent_id, if: proc { |_user| user_type_was == 'parent_corporation' && user_type == 'personal' ||  max_user_num.present? }
-
-  def available_facilities
-    user = user? ? self : User.find(parent_id)
-    Facility.joins(:facility_plans)
-            .where(facility_plans: { plan_id: user.user_contracts.under_contract.pluck(:plan_id) })
-  end
+  scope(:user_corp_token, ->(token) { find_by(parent_token: token) })
+  scope(:parent_is_nil, -> { where(parent_id: nil) })
 
   def add_new_user?
     return false if max_user_num.nil?
     try(:max_user_num) > User.where(parent_id: id).count
-  end
-
-  def available_facilities
-    Facility.joins(:facility_plans)
-            .where(facility_plans: { plan_id: user_contracts.under_contract.pluck(:plan_id) })
   end
 
   def self.has_contract_with_shops(shop_ids)
@@ -48,17 +35,16 @@ class User < ApplicationRecord
         .where.not(user_contracts: { state: UserContract.states[:finished] })
   end
 
-  def self.set_id_by_parent_token(parent_token)
-    user = find_by(parent_token: parent_token).parent
-    user.id
+  def self.selectable_user_contracts
+     User.personal.parent_is_nil.or(User.parent_corporation)
   end
 
-  private
-
-  def leave_parent_corporation
-    return if User.parent_corporation_users(id).nil?
-    User.parent_corporation_users(id).each do |user|
-      user.update(user_type: 'personal', parent_id: nil)
+  def under_contract_facilities
+    facility_ids = []
+    user_contracts.under_contract.each do |user_contract|
+      facility_ids << user_contract.shop.facilities.map(&:id) if user_contract.shop_id?
+      facility_ids << user_contract.plan.facilities.map(&:id) if user_contract.plan_id?
     end
+    Facility.where(id: facility_ids.flatten)
   end
 end
