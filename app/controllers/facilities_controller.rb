@@ -11,10 +11,6 @@ class FacilitiesController <  ApplicationController
   private
 
   def set_facility
-    if params[:corporation_name].present?
-      @facility = Facility.belongs_to_corporation(current_corporation).find(params[:id])
-    else
-      @facility = current_user.available_facilities.find(params[:id])
-    end
+    @facility = current_user.available_facilities.find(params[:id])
   end
 end

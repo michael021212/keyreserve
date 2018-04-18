@@ -2,14 +2,15 @@
   <%= f.text_field :name %>
   <%= f.file_field :image %>
   <%= f.text_area :description, rows: 6 %>
-  <%= f.form_group :facility_plans, label: {text: "対象プラン"} do %>
-    <%= f.fields_for :facility_plans do |fp| %>
+  <!-- TODO こちらは削除するかどうか? -->
+  <!--<#%= f.form_group :facility_plans, label: {text: "対象プラン"} do %>
+    <#%= f.fields_for :facility_plans do |fp| %>
       <div class="form-inline">
-        <%= fp.collection_select :plan_id, corporation.plans, :id, :name, { include_blank: 'プランを選択してください' , hide_label: true }, { class: 'add-link-column', inline: true } %>
-        <%= fp.link_to_remove "削除", :confirm => t('cargo_item.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>
+        <#%= fp.collection_select :plan_id, corporation.plans, :id, :name, { include_blank: 'プランを選択してください' , hide_label: true }, { class: 'add-link-column', inline: true } %>
+        <#%= fp.link_to_remove "削除", :confirm => t('cargo_item.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>
       </div>
-    <% end %>
-    <p><%= f.link_to_add "プランを追加する", :facility_plans, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
-  <% end %>
+    <#% end %>
+    <p><#%= f.link_to_add "プランを追加する", :facility_plans, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
+  <#% end %>-->
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :user_contracts
       resources :plans
       resources :facilities, only: [] do
+        resources :facility_plans, only: [:new, :create, :destroy]
         resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
           collection do
             get :resources
@@ -43,14 +44,7 @@ Rails.application.routes.draw do
     end
   end
   resources :shops, only: [:index, :show]
-  resources :facilities, only: [:index, :show] do
-    resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
-      collection do
-        get :resources
-        get :events
-      end
-    end
-  end
+  resources :facilities, only: [:index, :show]
   resources :plans
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'

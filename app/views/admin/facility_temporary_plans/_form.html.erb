@@ -1,5 +1,5 @@
 <%= bootstrap_nested_form_for([:admin, corporation, facility, facility_temporary_plan]) do |f| %>
-  <%= f.collection_select :plan_id, corporation.selectable_plans(f.object.plan_id), :id, :name, f.object.plan_id.present? ? { selected: f.object.plan_id, include_blank: true } : { include_blank: true } %>
+  <%= f.collection_select :plan_id, @facility.selectable_plans(ftp_id: f.object.id), :id, :name, { include_blank: true } %>
   <%= f.text_field :standard_price_per_day %>
   <%= f.text_field :standard_price_per_hour %>
   <%= f.form_group :facility_temporary_plan_prices, label: {text: "施設利用都度課金プラン時間帯価格"} do %>

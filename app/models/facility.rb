@@ -26,6 +26,13 @@ class Facility < ApplicationRecord
   end
 
   def target_plans
-    plans + Plan.is_divided_into_facility_temporary_plans(self.id)
+    plans + Plan.temporary_plans_belongs_to_facility(self.id)
+  end
+
+  def selectable_plans(options = {})
+    facility_temporary_plan_ids = facility_temporary_plans.map(&:plan_id)
+    not_be_selected = shop.corporation.plans - plans - Plan.where(id: facility_temporary_plan_ids)
+    not_be_selected << options[:ftp_id] if options[:ftp_id].present?
+    Plan.where(id: not_be_selected)
   end
 end

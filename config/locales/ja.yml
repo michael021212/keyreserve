@@ -8,6 +8,7 @@ ja:
       shop: 店舗
       facility: 施設
       facility_key: 施設鍵
+      facility_plan: 月額対象プラン 
       facility_temporary_plan: 施設利用都度課金プラン
       user_contract: 契約
       corporation_user: 施設管理者
