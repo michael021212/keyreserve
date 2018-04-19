@@ -3,7 +3,12 @@ class FacilitiesController <  ApplicationController
   before_action :set_facility, only: [:show]
 
   def index
-    @facilities = current_user.available_facilities
+    if URI(request.referer).path == '/facilities'
+      @facilities = current_user.available_facilities
+    else
+      @facilities = Facility.order(id: :desc).page(params[:page])
+      render template: 'spot_facilities/index'
+    end
   end
 
   def show; end

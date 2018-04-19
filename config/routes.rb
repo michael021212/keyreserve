@@ -45,7 +45,9 @@ Rails.application.routes.draw do
   end
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
+  resources :spot_facilities, only: [:index], controller: 'facilities'
   resources :plans
+  resources :user_contracts, only: [:new, :create]
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー

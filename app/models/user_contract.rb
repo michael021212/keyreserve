@@ -9,5 +9,5 @@ class UserContract < ApplicationRecord
 
   enum state: { under_contract: 1, finished: 9 }
 
-  validates :user_id, :plan_id, :started_on, :state, presence: true
+  validates :user_id, :plan_id, :started_on, presence: true
 end

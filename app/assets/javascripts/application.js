@@ -31,3 +31,8 @@
 //= require script
 //= require map
 //= require moment
+//= require fullcalendar.min.js
+//= require scheduler.min.js
+//= require fullcalendar_ja.js
+//= require reservable_calendar.js
+//= require plan_description

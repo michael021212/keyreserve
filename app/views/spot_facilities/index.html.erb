@@ -1,0 +1,42 @@
+<% content_for :middle_title do %>
+  <h2>スポット利用可能施設</h2>
+<% end %>
+<div class="mg-single-room">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-single-room-txt">
+          <div class="row">
+            <div class="col-md-12">
+              <div id='facility_calendaers' data-facility="<%= @facilities.pluck(:id) %>"></div>
+              <% @facilities.each do |facility| %>
+                <div class="mg-available-rooms">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                    </div>
+                    <div class="col-sm-4">
+                      <h3 class="mg-avl-room-title">
+                        <%= facility.name %>
+                      </h3>
+                      <div class='mg-avl-room-desc'>
+                      <%= truncate(facility.description, length: 100, separator: ' ') %>
+                      </div>
+                      <%= link_to spot_facility_path(facility), class: 'btn btn-dark' do %>
+                        詳細<i class="fa fa-angle-double-right"></i>
+                      <% end %>
+                    </div>
+                    <div class="col-sm-4">
+                      <div id=<%="facility_reservation_calendar_#{facility.id}" %> class='facility_reservation_calendar'></div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+              <%= paginate @facilities %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
