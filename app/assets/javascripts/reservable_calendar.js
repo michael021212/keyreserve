@@ -32,16 +32,4 @@ $(document).ready(function() {
       }
     });
   });
-
-  $('#facility_reservation_calendar').fullCalendar({
-    schedulerLicenseKey: '0140948959-fcs-1515040346',
-    header: {
-      left: 'prev',
-      center: 'title',
-      right: 'next'
-    },
-    height: 'auto',
-    aspectRatio: 2,
-    lang: 'ja'
-  });
 });
