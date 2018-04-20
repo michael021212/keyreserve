@@ -5,6 +5,8 @@ class Facility < ApplicationRecord
   has_many :plans, through: :facility_plans
   has_many :facility_keys, dependent: :destroy
   has_many :facility_temporary_plans, dependent: :destroy
+  has_many :reservations, dependent: :destroy
+
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank
@@ -34,5 +36,17 @@ class Facility < ApplicationRecord
     not_be_selected = shop.corporation.plans - plans - Plan.where(id: facility_temporary_plan_ids)
     not_be_selected << options[:ftp_id] if options[:ftp_id].present?
     Plan.where(id: not_be_selected)
+  end
+
+  def self.login_spots(user)
+    plan_ids = user.user_contracts.map(&:plan_id)
+    FacilityTemporaryPlan.where(plan_id: plan_ids)
+    facility_ids = FacilityTemporaryPlan.where(plan_id: plan_ids).map(&:facility_id)
+    Facility.where(id: facility_ids).or(Facility.logout_spots)
+  end
+
+  def self.logout_spots
+    facility_ids = FacilityTemporaryPlan.where(plan_id: nil).map(&:facility_id)
+    Facility.where(id: facility_ids)
   end
 end

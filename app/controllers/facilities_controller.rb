@@ -1,17 +1,17 @@
 class FacilitiesController <  ApplicationController
-  before_action :require_login
+  before_action :require_login, only: [:index, :show]
   before_action :set_facility, only: [:show]
 
   def index
-    if URI(request.referer).path == '/facilities'
-      @facilities = current_user.available_facilities
-    else
-      @facilities = Facility.order(id: :desc).page(params[:page])
-      render template: 'spot_facilities/index'
-    end
+    @facilities = current_user.available_facilities.order(id: :desc).page(params[:page])
   end
 
   def show; end
+
+  def index_spot
+    @facilities = logged_in? ? Facility.login_spots(current_user) : Facility.logout_spots
+    @facilities = @facilities.order(id: :desc).page(params[:page])
+  end
 
   private
 

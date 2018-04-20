@@ -8,7 +8,7 @@
         <div class="mg-single-room-txt">
           <div class="row">
             <div class="col-md-12">
-              <div id='facility_calendaers' data-facility="<%= @facilities.pluck(:id) %>"></div>
+              <div id='facility_calendars' data-facility="<%= @facilities.pluck(:id) %>"></div>
               <% @facilities.each do |facility| %>
                 <div class="mg-available-rooms">
                   <div class="row">
@@ -19,12 +19,15 @@
                       <h3 class="mg-avl-room-title">
                         <%= facility.name %>
                       </h3>
+                      <h5 class="mg-avl-room-title">
+                        <%= facility.shop.name %>
+                      </h5>
                       <div class='mg-avl-room-desc'>
                       <%= truncate(facility.description, length: 100, separator: ' ') %>
                       </div>
-                      <%= link_to spot_facility_path(facility), class: 'btn btn-dark' do %>
+                      <!--<#%= link_to show_spot_facility_path(facility), class: 'btn btn-dark' do %>
                         詳細<i class="fa fa-angle-double-right"></i>
-                      <% end %>
+                        <#% end %>-->
                     </div>
                     <div class="col-sm-4">
                       <div id=<%="facility_reservation_calendar_#{facility.id}" %> class='facility_reservation_calendar'></div>

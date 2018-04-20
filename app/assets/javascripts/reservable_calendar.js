@@ -14,8 +14,7 @@ $(document).ready(function() {
     });
   };
 
-  var facility_ids = $('#facility_calendaers').data('facility')
-
+  var facility_ids = $('#facility_calendars').data('facility')
   $.each(facility_ids, function(i, facility_id) {
     $('#facility_reservation_calendar_' + facility_id).fullCalendar({
       schedulerLicenseKey: '0140948959-fcs-1515040346',
@@ -27,9 +26,23 @@ $(document).ready(function() {
       height: 'auto',
       aspectRatio: 10,
       lang: 'ja',
-      eventAfterAllRender: function(){
-        $('.fc-week').attr('style', 'min-height: 1.5em');
-      }
+      displayEventTime: false,
+      events: function (start, end, timezone, callback) {
+        facility_id = this.el[0].id.replace('facility_reservation_calendar_', '')
+        ajaxRequest(
+          '/facilities/' + facility_id + '/reservations/events'
+        ).then(function(events) {
+          callback(events);
+        })
+      },
+      eventRender: function(event, element){
+        element.popover({
+          placement: 'left',
+          animation:true,
+          content: event.start,
+          trigger: 'hover'
+        });
+      },
     });
   });
 });

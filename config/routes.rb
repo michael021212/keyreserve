@@ -44,8 +44,13 @@ Rails.application.routes.draw do
     end
   end
   resources :shops, only: [:index, :show]
-  resources :facilities, only: [:index, :show]
-  resources :spot_facilities, only: [:index, :show], controller: 'facilities'
+  resources :facilities, only: [:index, :show] do
+    get 'index_spot', on: :collection
+    get 'show_spot', on: :member
+    resources :reservations, only: [:new, :create] do
+      get 'events', on: :collection
+    end
+  end
   resources :plans
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
