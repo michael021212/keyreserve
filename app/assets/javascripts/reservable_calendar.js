@@ -37,12 +37,15 @@ $(document).ready(function() {
       },
       eventRender: function(event, element){
         element.popover({
-          placement: 'left',
+          placement: 'bottom',
           animation:true,
-          content: event.start,
+          container:'body',
+          title:event.title,
+          content: event.reservation,
           trigger: 'hover'
         });
       },
     });
   });
 });
+
