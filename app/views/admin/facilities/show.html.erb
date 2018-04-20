@@ -86,7 +86,7 @@
         <% @facility.facility_plans.each do |fp| %>
           <tr>
             <td><%= fp.plan.name %></td>
-            <td><%= fp.plan.price %></td>
+            <td><%= delimiter_price(fp.plan.price) %></td>
             <td>
               <%= link_to '削除', admin_corporation_facility_facility_plan_path(@corporation, @facility, fp), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
             </td>
