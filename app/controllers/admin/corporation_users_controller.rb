@@ -17,11 +17,11 @@ class Admin::CorporationUsersController < AdminController
       redirect_to [:admin, @corporation, @corporation_user], notice: "#{CorporationUser.model_name.human}を作成しました。"
     else
       render :new
-    end 
+    end
   end
 
   def show; end
-  
+
   def edit; end
 
   def update

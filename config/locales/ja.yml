@@ -2,8 +2,9 @@ ja:
   activerecord:
     models:
       admin_user: 管理者
-      corporation: 法人
+      corporation: 運営会社
       user: 利用者
+      user_corp: 法人
       plan: プラン
       shop: 店舗
       facility: 施設
@@ -22,8 +23,8 @@ ja:
         password: パスワード
         password_confirmation: パスワード確認
       corporation:
-        name: 法人名
-        kana: 法人名(カナ)
+        name: 運営会社名
+        kana: 運営会社名(カナ)
         tel: 電話番号
         postal_code: 郵便番号
         address: 住所
@@ -31,18 +32,34 @@ ja:
         state: 状態
         ks_corporation_id: Keystation法人
       corporation_user:
-        corporation_id: 法人
+        corporation_id: 運営会社
         user_id: 施設管理者
       user:
         id: ID
         email: メールアドレス
         password: パスワード
         password_confirmation: 確認用パスワード
-        name: 名前
+        name: お名前
         tel: 電話番号
         state: 状態
-        payway: 支払い方法
+        payway: お支払い方法
         created_at: 登録日時
+        user_type: 法人/個人
+        parent_id: 法人
+        advertise_notice_flag: お知らせメールを受け取る
+      user_corp:
+        id: ID
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        name: 法人名
+        tel: 電話番号
+        state: 状態
+        payway: お支払い方法
+        created_at: 登録日時
+        user_type: 法人/個人
+        parent_id: 法人
+        max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
       plan:
         name: プラン名
@@ -79,7 +96,7 @@ ja:
         ending_time: 終了時間
         price: 価格
       user_contract:
-        corporation_id: 法人
+        corporation_id: 運営者会社
         shop_id: 店舗
         user_id: 契約利用者
         plan_id: 契約プラン
@@ -88,13 +105,15 @@ ja:
         state: ステータス
       information:
         id: お知らせID
-        shop_id: 店舗
+        shop_id: 送信元店舗
         title: タイトル
         description: 詳細
         publish_time: 公開日時
         mail_send_flag: メール送信済みフラグ
         info_type: お知らせ種別
+        info_target_type: 配信対象
         created_at: 登録日時
+        information_shops: 配信対象店舗
   enums:
     corporation:
       payway:
@@ -107,6 +126,9 @@ ja:
       payway:
         creditcard: クレジットカード
         invoice: 請求書
+      user_type:
+        personal: 個人
+        parent_corporation: 法人
     user_contract:
       state:
         under_contract: 契約中
@@ -115,6 +137,9 @@ ja:
       info_type:
         event: イベントや告知
         important_notice: 重要なお知らせ
+      info_target_type:
+        all_users: 全会員
+        shop_users: 店舗契約者
   date:
     abbr_day_names:
     - 日

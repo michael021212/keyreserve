@@ -15,7 +15,11 @@
         <td><%= @user_contract.user_name %></td>
       </tr>
       <tr>
-        <th style="width: 200px;"><%= UserContract.human_attribute_name(:plan_id) %></th>
+        <th><%= UserContract.human_attribute_name(:shop_id) %></th>
+        <td><%= @user_contract.shop_name %></td>
+      </tr>
+      <tr>
+        <th><%= UserContract.human_attribute_name(:plan_id) %></th>
         <td><%= @user_contract.plan_name %></td>
       </tr>
       <tr>

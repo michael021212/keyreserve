@@ -1,0 +1,7 @@
+KEY STATION OFFICEから施設ご利用についてのお知らせです。
+
+<%= @user.name %>様からご招待が届きました。
+
+下記のリンクから新規登録またはログインを行っていただくと
+施設ご利用のためのパスワードが取得出来ます。
+<%= new_parent_token_user_url(@user.parent_token) %>
