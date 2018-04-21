@@ -33,7 +33,7 @@ class Admin::PlansController < AdminController
 
   def destroy
     @plan.destroy
-    redirect_to admin_corporation_path(@corporation)
+    redirect_to request.referrer, notice: "#{Plan.model_name.human}を削除しました。"
   end
 
   private

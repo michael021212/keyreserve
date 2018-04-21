@@ -28,7 +28,6 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">施設管理者メニュー<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><%= link_to '法人設定', corporation_path %></li>
-                  <li><%= link_to '店舖管理', shops_path(corporation_name: current_corporation.name) %></li>
                   <li><%= link_to 'プラン管理', plans_path %></li>
                 </ul>
               </li>

@@ -3,11 +3,13 @@ class Plan < ApplicationRecord
   belongs_to :corporation
   has_many :facility_plans, dependent: :destroy
   has_many :facilities, through: :facility_plans
+  has_many :facility_temporary_plans, dependent: :destroy
 
   validates :name, presence: true
   validates :price, presence: true, numericality: {only_integer: true}
 
   scope(:fetch_shops, ->(shop_id) { includes(facilities: :shop).where(facilities: { shops: { id: shop_id } }) })
+  scope(:temporary_plans_belongs_to_facility, ->(facility_id) { includes(facility_temporary_plans: :facility).where(facility_temporary_plans: { plans: { facilities: { id: facility_id } } }) })
 
   def self.lowest_price(shop_id)
     return if fetch_shops(shop_id).blank?

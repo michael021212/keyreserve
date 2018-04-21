@@ -84,7 +84,7 @@ module ApplicationHelper
     KeystationService.sync_rooms(corporation.ks_corporation_id)
   end
 
-  def current_corporation_name?(name)
-    Corporation.find_by(name: name) == current_corporation
+  def current_date(time)
+    time.change(year: Time.zone.now.year, month: Time.zone.now.month, day: Time.zone.now.day)
   end
 end

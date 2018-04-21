@@ -14,38 +14,37 @@ $(document).ready(function() {
     });
   };
 
+  var corporation = $('#plan_price_table').data('corporation')
+  var facility = $('#plan_price_table').data('facility')
+
   $('#plan_price_table').fullCalendar({
     schedulerLicenseKey: '0140948959-fcs-1515040346',
     defaultView: 'agendaDay',
     header: false,
+    height: 'auto',
     lang: 'ja',
-    viewRender: function(view, element) {
-      element.find('.fc-day-header').html('');
+    slotDuration: '01:00:00',
+    resourceRender: function(resource, el) {
+      link = "/admin/corporations/" + corporation + "/facilities/" + facility + "/facility_temporary_plans/" + resource.id + "/edit";
+      el.append("<p><a href=" + link + '>編集</a></p>');
     },
-    resourceColumns: [{
-      labelText: 'プラン名',
-      text: function(resource) {
-        var title = resource.title;
-        return title;
-      }
-    }],
     resources: function (callback) {
-      var corporation = $('#plan_price_table').data('corporation')
-      var shop = $('#plan_price_table').data('shop')
-      var facility = $('#plan_price_table').data('facility')
-      if (corporation === undefined && shop === undefined) {
-        ajaxRequest(
-          "/facilities/" + facility + "/resources"
-        ).then(function(resources) {
-          callback(resources);
-        })
-      } else {
-        ajaxRequest(
-          "/admin/corporations/" + corporation + "/shops/" + shop + "/facilities/" + facility + "/resources"
-        ).then(function(resources) {
-          callback(resources);
-        })
+      ajaxRequest(
+        "/admin/corporations/" + corporation + "/facilities/" + facility + "/facility_temporary_plans/resources"
+      ).then(function(resources) {
+        callback(resources);
+      })
+    },
+    eventSources: [
+      {
+        events: function (start, end, timezone, callback) {
+          ajaxRequest(
+            '/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_temporary_plans/events'
+          ).then(function(events) {
+            callback(events);
+          })
+        }
       }
-    }
+    ]
   });
 });
