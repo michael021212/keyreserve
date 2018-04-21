@@ -23,13 +23,13 @@ ja:
         title: お知らせ詳細
     corporations:
       index:
-        title: 法人一覧
+        title: 運営会社一覧
       new:
-        title: 法人登録
+        title: 運営会社登録
       edit:
-        title: 法人編集
+        title: 運営会社編集
       show:
-        title: 法人詳細
+        title: 運営会社詳細
     corporation_users:
       index:
         title: 施設管理者一覧
@@ -93,6 +93,15 @@ ja:
         title: 利用者編集
       show:
         title: 利用者詳細
+    user_corps:
+      index:
+        title: 法人一覧
+      new:
+        title: 法人登録
+      edit:
+        title: 法人編集
+      show:
+        title: 法人詳細
   users:
     dashboards:
       index:

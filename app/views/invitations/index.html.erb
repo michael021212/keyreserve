@@ -1,0 +1,77 @@
+<% content_for :middle_title do %>
+  <h2>ご利用者様招待</h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-offset-2 col-md-10">
+        <div class='mg-sec-left-title'>
+          <h3>法人様情報</h3>
+        </div>
+        <table class="table mb100">
+          <tr>
+            <th><%= UserCorp.human_attribute_name(:name) %></th>
+            <td><%= current_user_corp.name %></td>
+          </tr>
+          <tr>
+            <th><%= UserCorp.human_attribute_name(:tel) %></th>
+            <td><%= current_user_corp.tel %></td>
+          </tr>
+          <tr>
+            <th><%= UserCorp.human_attribute_name(:max_user_num) %></th>
+            <td><%= current_user_corp.max_user_num %></td>
+          </tr>
+          <tr>
+            <th><%= UserCorp.human_attribute_name(:payway) %></th>
+            <td><%= current_user_corp.payway_i18n %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class='mg-sec-left-title'>
+          <h3>ご利用者様</h3>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <% if current_user_corp.try(:add_new_user?) %>
+          <%= link_to '新規利用者招待', new_invitation_path, class: 'btn btn-main glyphicon glyphicon-plus pull-right' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row mt30">
+      <div class="col-offset-2 col-md-10">
+        <table class="table">
+          <thead>
+            <tr>
+              <th><%= User.human_attribute_name(:name) %></th>
+              <th><%= User.human_attribute_name(:email) %></th>
+              <th class="hidden-xs"><%= User.human_attribute_name(:tel) %></th>
+              <th class="hidden-xs"><%= User.human_attribute_name(:state) %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @users.present? %>
+              <% @users.each do |user| %>
+                <tr>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td class="hidden-xs"><%= user.tel %></td>
+                  <td class="hidden-xs"><%= user.state_i18n %></td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr>
+                <td colspan="20">
+                  表示する<%= User.model_name.human %>はありません
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= paginate @users %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,6 @@
-<%= bootstrap_form_for([:admin, user], layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9") do |f| %>
+<% fpath = user_corp.present? ? [:admin, user_corp, user] : [:admin, user] %>
+<%= bootstrap_form_for(fpath, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9") do |f| %>
+  <%= f.collection_select :parent_id, UserCorp.parent_corporation.all, :id, :name, include_blank: true %>
   <%= f.text_field :name %>
   <%= f.text_field :email %>
   <%= f.text_field :tel %>
@@ -11,8 +13,10 @@
     <%= f.password_field :password, help: '変更したくない場合は空にしてください' %>
     <%= f.password_field :password_confirmation, help: '変更したくない場合は空にしてください' %>
   <% end %>
+
   <%= f.form_group :advertise_notice_flag, label: {} do %>
     <%= f.check_box :advertise_notice_flag %>
   <% end %>
+  <%= f.hidden_field :parent_id, value: params[:user_corp_id] if params[:user_corp_id].present? %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>

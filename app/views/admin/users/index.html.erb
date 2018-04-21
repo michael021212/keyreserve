@@ -28,9 +28,6 @@
           <th><%= User.human_attribute_name(:name) %></th>
           <th><%= User.human_attribute_name(:email) %></th>
           <th><%= User.human_attribute_name(:tel) %></th>
-          <th><%= User.human_attribute_name(:state) %></th>
-          <th><%= User.human_attribute_name(:payway) %></th>
-          <th><%= User.human_attribute_name(:advertise_notice_flag) %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
@@ -42,9 +39,6 @@
               <td><%= user.name %></td>
               <td><%= user.email %></td>
               <td><%= user.tel %></td>
-              <td><%= user.state_i18n %></td>
-              <td><%= user.payway_i18n %></td>
-              <td><%= user.advertise_notice_flag? ? '◯' : '' %></td>
               <td>
                 <%= link_to '詳細', admin_user_path(user), class: 'btn btn-default' %>
                 <%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary' %>
@@ -55,7 +49,7 @@
         <% else %>
           <tr>
             <td colspan="20">
-              表示するユーザがいません
+              表示する<%= User.model_name.human %>がいません
             </td>
           </tr>
         <% end %>

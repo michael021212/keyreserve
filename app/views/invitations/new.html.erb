@@ -1,0 +1,13 @@
+<% content_for :middle_title do %>
+  <h2>ご利用者様招待</h2>
+<% end %>
+<div class="container mt30">
+  <div class="panel">
+    <div class="panel-body">
+      <%= bootstrap_form_tag(url: invitations_path) do |f| %>
+        <%= f.email_field :email, label: "メールアドレス" %>
+        <%= f.submit '招待メール送信', :class => 'btn btn-primary center-block' %>
+      <% end %>
+    </div>
+  </div>
+</div>

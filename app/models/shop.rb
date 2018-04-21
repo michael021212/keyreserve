@@ -13,4 +13,8 @@ class Shop < ApplicationRecord
   validates :tel,
             length: { maximum: 13 },
             numericality: { only_integer: true, allow_blank: true }
+
+  def self.belongs_to_corporation(c_id)
+    Corporation.find(c_id).shops
+  end
 end
