@@ -37,28 +37,27 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: 確認用パスワード
-        name: 名前
+        name: お名前
         tel: 電話番号
         state: 状態
-        payway: 支払い方法
+        payway: お支払い方法
         created_at: 登録日時
         user_type: 法人/個人
         parent_id: 法人
-        max_user_num:  使用者追加の上限数
         advertise_notice_flag: お知らせメールを受け取る
       user_corp:
         id: ID
         email: メールアドレス
         password: パスワード
         password_confirmation: 確認用パスワード
-        name: 名前
+        name: 法人名
         tel: 電話番号
         state: 状態
-        payway: 支払い方法
+        payway: お支払い方法
         created_at: 登録日時
         user_type: 法人/個人
         parent_id: 法人
-        max_user_num:  使用者追加の上限数
+        max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
       plan:
         name: プラン名
