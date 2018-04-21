@@ -41,12 +41,13 @@ class Admin::UsersController < AdminController
 
   def set_user
     @user = User.find(params[:id])
+    @user_corp = @user.user_corp
   end
 
   def user_params
     params.require(:user).permit(
       :email, :password, :password_confirmation, :name, :tel, :state,
-      :payway, :parent_id, :advertise_notice_flag
+      :payway, :parent_id, :advertise_notice_flag, :parent_id
     )
   end
 end

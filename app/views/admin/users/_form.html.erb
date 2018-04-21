@@ -1,5 +1,6 @@
 <% fpath = user_corp.present? ? [:admin, user_corp, user] : [:admin, user] %>
 <%= bootstrap_form_for(fpath, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9") do |f| %>
+  <%= f.collection_select :parent_id, UserCorp.parent_corporation.all, :id, :name, include_blank: true %>
   <%= f.text_field :name %>
   <%= f.text_field :email %>
   <%= f.text_field :tel %>
