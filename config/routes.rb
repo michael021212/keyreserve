@@ -51,7 +51,13 @@ Rails.application.routes.draw do
     end
   end
   resources :shops, only: [:index, :show]
-  resources :facilities, only: [:index, :show]
+  resources :facilities, only: [:index, :show] do
+    get 'index_spot', on: :collection
+    get 'show_spot', on: :member
+    resources :reservations, only: [:new, :create] do
+      get 'events', on: :collection
+    end
+  end
   resources :plans
   resource :credit_card, only: [:new, :create, :show, :edit, :update]
   resources :invitations, only: [:index, :new, :create]

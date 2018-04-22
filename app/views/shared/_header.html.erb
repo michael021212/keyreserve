@@ -17,7 +17,9 @@
           <li>
             <%= link_to '店舗情報', shops_path  %>
           </li>
-
+          <li>
+            <%= link_to 'スポット利用', index_spot_facilities_path %>
+          </li>
           <% if logged_in? %>
             <li>
               <%= link_to 'ご利用可能な施設', facilities_path  %>
