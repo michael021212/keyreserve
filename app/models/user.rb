@@ -45,6 +45,12 @@ class User < ApplicationRecord
      User.personal.parent_is_nil.or(User.parent_corporation)
   end
 
+  def login_spots
+    plan_ids = self.user_contracts.map(&:plan_id)
+    facility_ids = FacilityTemporaryPlan.where(plan_id: plan_ids).map(&:facility_id)
+    Facility.where(id: facility_ids).or(Facility.logout_spots)
+  end
+
   def set_stripe_customer
     stripe_customer = Stripe::Customer.create(email: email)
     update(stripe_customer_id: stripe_customer.id)

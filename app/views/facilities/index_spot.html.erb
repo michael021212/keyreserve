@@ -13,24 +13,19 @@
                 <div class="mg-available-rooms">
                   <div class="row">
                     <div class="col-sm-4">
-                      <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                      <%= link_to show_spot_facility_path(facility) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-8">
                       <h3 class="mg-avl-room-title">
-                        <%= facility.name %>
+                        <%= link_to show_spot_facility_path(facility) do %>
+                          <%= facility.name %> - <%= facility.shop.name %>
+                        <% end %>
+                        <span>&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</span>
                       </h3>
-                      <h5 class="mg-avl-room-title">
-                        <%= facility.shop.name %>
-                      </h5>
                       <div class='mg-avl-room-desc'>
-                      <%= truncate(facility.description, length: 100, separator: ' ') %>
+                      <%= simple_format facility.description %>
                       </div>
-                      <!--<#%= link_to show_spot_facility_path(facility), class: 'btn btn-dark' do %>
-                        詳細<i class="fa fa-angle-double-right"></i>
-                        <#% end %>-->
-                    </div>
-                    <div class="col-sm-4">
-                      <div id=<%="facility_reservation_calendar_#{facility.id}" %> class='facility_reservation_calendar'></div>
+                      <%= link_to '予約する', show_spot_facility_path(facility), class: 'btn btn-main btn-next-tab' %>
                     </div>
                   </div>
                 </div>

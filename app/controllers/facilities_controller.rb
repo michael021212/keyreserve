@@ -10,7 +10,7 @@ class FacilitiesController <  ApplicationController
   def show; end
 
   def index_spot
-    @facilities = logged_in? ? Facility.login_spots(current_user) : Facility.logout_spots
+    @facilities = logged_in? ? current_user.login_spots : Facility.logout_spots
     @facilities = @facilities.order(id: :desc).page(params[:page])
   end
 

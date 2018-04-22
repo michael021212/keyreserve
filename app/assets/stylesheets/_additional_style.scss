@@ -217,7 +217,7 @@ html,body {
 select.form-control {
   height: 34px !important;
 }
-<<<<<<< HEAD
+
 .short-box {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -255,14 +255,10 @@ select.form-control {
 }
 
 .facility_reservation_calendar {
-  width: 65%;
+  width: 100%;
   height: auto;
 }
 
-.fc-toolbar h2 {
-  font-size: 24px;
-}
-
-.fc-toolbar {
-  height: 36px;
+.mg-avl-room-desc {
+  height: initial;
 }

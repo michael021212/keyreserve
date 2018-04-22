@@ -18,6 +18,7 @@ $(document).ready(function() {
   $.each(facility_ids, function(i, facility_id) {
     $('#facility_reservation_calendar_' + facility_id).fullCalendar({
       schedulerLicenseKey: '0140948959-fcs-1515040346',
+      defaultView: 'agendaWeek',
       header: {
         left: 'prev',
         center: 'title',
