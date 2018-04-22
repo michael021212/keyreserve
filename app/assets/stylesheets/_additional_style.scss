@@ -166,12 +166,6 @@ html,body {
   }
 }
 
-.login-page-btn {
-  width: 100%;
-  background: #16262e;
-  color: #e7b315;
-}
-
 @media (min-width: 768px) {
   .edit-user-panel {
     width: 800px;
@@ -181,4 +175,74 @@ html,body {
 
 .ul-newline li {
   display: block;
+}
+
+.mg-news-gallery {
+  padding-top: 0px;
+  padding-bottom: 20px;
+}
+.mg-best-rooms {
+  padding-top: 20px;
+}
+
+.mg-recnt-post > p {
+  margin-left: 0px;
+}
+
+.pagination a, .pagination span.current, .pagination span.gap {
+  background: #16262e !important;
+  color: #fff !important;
+}
+
+.pagination > .active > a {
+  border-color: #e7b315 !important;
+}
+
+@media (max-width: 767px) {
+  .sp-center {
+    text-align: center;
+  }
+
+  #response-plan-col {
+    width: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  #response-plan-col {
+    width: 200px;
+  }
+}
+
+select.form-control {
+  height: 34px !important;
+}
+.short-box {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.middle-box {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.mg-recnt-post {
+  h3 {
+    font-size: 20px;
+    margin-top: 5px;
+    line-height: 28px;
+  }
+}
+
+.mg-blog-list {
+  padding: 30px 0 100px;
+}
+
+.mg-post-title {
+  font-size: 28px;
+  line-height: 38px;
 }

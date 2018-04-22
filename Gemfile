@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootstrap_form'
 gem 'adminlte2-rails'
 gem 'jquery-slimscroll-rails'
+gem 'rails_autolink'
 
 # Authentication
 gem 'sorcery'
@@ -70,6 +71,7 @@ gem 'stripe'
 
 gem 'nested_form'
 gem 'geocoder'
+gem 'whenever', require: false
 
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

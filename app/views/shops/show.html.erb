@@ -1,5 +1,5 @@
 <% content_for :middle_title do %>
-  <h2><%= "スペースー#{@shop.name}" %></h2>
+  <h2><%= "#{@shop.name}" %></h2>
 <% end %>
 <div class="mg-single-room">
   <div class="container">
@@ -32,7 +32,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="mg-single-room-txt">
-          <h4 class="mg-sec-left-title">ご利用可能なプラン</h4>
+          <h4 class="mg-sec-left-title">施設</h4>
           <div class="row">
             <div class="col-md-12">
               <p>
@@ -49,6 +49,22 @@
               </p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-single-room-txt">
+          <h4 class="mg-sec-left-title"><%= Shop.human_attribute_name(:address) %></h4>
+          <div class="row">
+            <div class="col-md-12">
+              <% if @shop.lat? && @shop.lon? %>
+                <div class="google-map" style="height: 300px;" data-lat="<%= @shop.lat %>" data-lon="<%= @shop.lon %>"></div>
+              <% end %>
+            </div>
+          </div>
+          <p></p>
         </div>
       </div>
     </div>

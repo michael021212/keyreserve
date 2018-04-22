@@ -1,0 +1,55 @@
+<% breadcrumb :admin_information, @information %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Information.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", admin_information_index_path, class: 'btn btn-default' %>
+      <%= link_to "編集", edit_admin_information_path(@information), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Information.human_attribute_name(:publish_time) %></th>
+        <td><%= date_ja(@information.publish_time) %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:id) %></th>
+        <td><%= @information.id %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:title) %></th>
+        <td><%= @information.title %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:description) %></th>
+        <td><%= auto_link(simple_format(h(@information.description)), :all, target: '_blank') %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:info_type) %></th>
+        <td><%= @information.info_type_i18n %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:info_target_type) %></th>
+        <td>
+          <%= @information.info_target_type_i18n %>
+        </td>
+      </tr>
+      <% if @information.shop_users? %>
+        <tr>
+          <th><%= Information.human_attribute_name(:information_shops) %></th>
+          <td><%= simple_format @information.shops.pluck(:name).join("\n") %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <th><%= Information.human_attribute_name(:created_at) %></th>
+        <td><%= date_ja @information.created_at %></td>
+      </tr>
+      <tr>
+        <th><%= Information.human_attribute_name(:mail_send_flag) %></th>
+        <td><%= @information.mail_send_flag? ? '◯' : '' %></td>
+      </tr>
+    </table>
+  </div>
+</div>

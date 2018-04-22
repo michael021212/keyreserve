@@ -1,0 +1,16 @@
+<div class="mg-widget-area">
+  <aside class="mg-widget">
+    <h2 class="mg-widget-title">最新のお知らせ</h2>
+    <ul class="mg-recnt-posts">
+      <% recent_information.each do |information| %>
+        <li>
+          <div class="mg-recnt-post">
+            <div class="mg-rp-month"><%= date_short_ja information.created_at %></div>
+            <h3><%= link_to information.title, information_path(information) %></h3>
+            <p><%= information.shop_name %></p>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
+</div>

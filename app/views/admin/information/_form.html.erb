@@ -1,0 +1,14 @@
+<%= bootstrap_form_for([:admin, @information], layout: :horizontal) do |f| %>
+  <%= f.collection_select :shop_id, Shop.all, :id, :name, include_blank: true %>
+  <%= f.text_field :title %>
+  <%= f.text_area :description, rows: 10 %>
+  <%= f.datetime_select :publish_time, { use_month_numbers: true }, { class: 'form-control bootstrap-date' } %>
+  <%= f.select :info_type, Information.info_types_i18n.invert %>
+  <%= f.select :info_target_type, Information.info_target_types_i18n.invert, class: 'js-info-target-type' %>
+  <%= f.form_group :information_shops, label: {}, class: 'js-info-shops' do %>
+    <%= collection_check_boxes(:information, :shop_ids, Shop.all, :id, :name) do |b| %>
+      <%= b.label { b.check_box + b.text } %>
+    <% end %>
+  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

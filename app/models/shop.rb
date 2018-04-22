@@ -4,6 +4,8 @@ class Shop < ApplicationRecord
 
   belongs_to :corporation
   has_many :facilities, dependent: :destroy
+  has_many :information
+  has_many :user_contracts, dependent: :destroy
 
   geocoded_by :address, latitude: :lat, longitude: :lon
   before_validation :geocode
@@ -11,4 +13,8 @@ class Shop < ApplicationRecord
   validates :tel,
             length: { maximum: 13 },
             numericality: { only_integer: true, allow_blank: true }
+
+  def self.belongs_to_corporation(c_id)
+    Corporation.find(c_id).shops
+  end
 end

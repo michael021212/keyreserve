@@ -1,10 +1,14 @@
-<% breadcrumb :new_admin_user %>
+<% if @user_corp.present? %>
+  <% breadcrumb :new_admin_user_corp_user, @user_corp %>
+<% else %>
+  <% breadcrumb :new_admin_user %>
+<% end %>
 
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= User.model_name.human %>新規登録</h4>
   </div>
   <div class="box-body">
-    <%= render 'form', user: @user %>
+    <%= render 'form', user: @user, user_corp: @user_corp %>
   </div>
 </div>

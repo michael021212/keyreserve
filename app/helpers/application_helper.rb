@@ -87,4 +87,8 @@ module ApplicationHelper
   def set_credit_card(user)
     user.credit_card.present? ? credit_card_path : new_credit_card_path
   end
+
+  def current_date(time)
+    time.change(year: Time.zone.now.year, month: Time.zone.now.month, day: Time.zone.now.day)
+  end
 end

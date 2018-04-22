@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323072753) do
+ActiveRecord::Schema.define(version: 20180417042656) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20180323072753) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["corporation_id"], name: "index_corporation_users_on_corporation_id"
     t.index ["user_id"], name: "index_corporation_users_on_user_id"
   end
@@ -88,12 +89,58 @@ ActiveRecord::Schema.define(version: 20180323072753) do
     t.index ["plan_id"], name: "index_facility_plans_on_plan_id"
   end
 
+  create_table "facility_temporary_plan_prices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_temporary_plan_id", null: false
+    t.time "starting_time", null: false
+    t.time "ending_time", null: false
+    t.integer "price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_temporary_plan_id"], name: "index_prices_on_facility_temporary_plan_id"
+  end
+
+  create_table "facility_temporary_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id", null: false
+    t.bigint "plan_id"
+    t.integer "standard_price_per_hour", null: false
+    t.integer "standard_price_per_day", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_id"], name: "index_facility_temporary_plans_on_facility_id"
+    t.index ["plan_id"], name: "index_facility_temporary_plans_on_plan_id"
+  end
+
+  create_table "information", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "shop_id"
+    t.string "title", null: false
+    t.text "description", null: false
+    t.datetime "publish_time", default: "2018-01-01 00:00:00", null: false
+    t.boolean "mail_send_flag", default: false
+    t.integer "info_type", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.integer "info_target_type", default: 2, null: false
+    t.index ["shop_id"], name: "index_information_on_shop_id"
+  end
+
+  create_table "information_shops", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "information_id", null: false
+    t.bigint "shop_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["information_id"], name: "index_information_shops_on_information_id"
+    t.index ["shop_id"], name: "index_information_shops_on_shop_id"
+  end
+
   create_table "payments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id", null: false
     t.bigint "corporation_id", null: false
     t.bigint "facility_id", null: false
     t.bigint "credit_card_id", null: false
-    t.string "price", null: false
+    t.integer "price", null: false
     t.string "token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -143,6 +190,7 @@ ActiveRecord::Schema.define(version: 20180323072753) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "calendar_url"
     t.index ["corporation_id"], name: "index_shops_on_corporation_id"
   end
 
@@ -150,7 +198,7 @@ ActiveRecord::Schema.define(version: 20180323072753) do
     t.bigint "corporation_id", null: false
     t.bigint "shop_id"
     t.bigint "user_id", null: false
-    t.bigint "plan_id", null: false
+    t.integer "plan_id"
     t.date "started_on", null: false
     t.date "finished_on"
     t.integer "state", default: 0, null: false
@@ -177,6 +225,11 @@ ActiveRecord::Schema.define(version: 20180323072753) do
     t.string "reset_password_token"
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
+    t.integer "user_type", default: 1
+    t.integer "parent_id"
+    t.string "parent_token"
+    t.integer "max_user_num"
+    t.boolean "advertise_notice_flag", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

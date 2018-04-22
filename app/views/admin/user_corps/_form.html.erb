@@ -1,0 +1,8 @@
+<%= bootstrap_form_for([:admin, user_corp], layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9") do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :tel %>
+  <%= f.text_field :max_user_num, help: '追加可能な利用者人数' %>
+  <%= f.select :state, UserCorp.states_i18n.invert %>
+  <%= f.select :payway, UserCorp.payways_i18n.invert %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

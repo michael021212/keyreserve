@@ -2,7 +2,7 @@
   <%= f.text_field :name %>
   <%= f.file_field :image %>
   <%= f.text_area :description, rows: 6 %>
-  <%= f.form_group :facility_plans, label: {text: "対象プラン"} do %>
+  <%= f.form_group :facility_plans, label: {text: "月額対象プラン"} do %>
     <%= f.fields_for :facility_plans do |fp| %>
       <div class="form-inline">
         <%= fp.collection_select :plan_id, corporation.plans, :id, :name, { include_blank: 'プランを選択してください' , hide_label: true }, { class: 'add-link-column', inline: true } %>
