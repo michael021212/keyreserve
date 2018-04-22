@@ -86,7 +86,7 @@ ja:
         name: 鍵名称
         password: パスワード
       facility_plan:
-        plan_id: 施設利用可能プラン
+        plan_id: 月額プラン
       facility_temporary_plan:
         plan_id: プラン名
         standard_price_per_hour: 標準価格（時間課金）

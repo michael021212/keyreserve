@@ -165,12 +165,6 @@ crumb :edit_admin_corporation_shop_facility do |corporation, shop, facility|
   parent :admin_corporation_shop_facility, corporation, shop, facility
 end
 
-# admin_corporation_shop_facility_facility_plans
-crumb :new_admin_corporation_facility_facility_plan do |corporation, facility|
-  link '月額対象プラン登録', new_admin_corporation_facility_facility_plan_path(corporation, facility)
-  parent :admin_corporation_shop_facility, corporation, facility.shop, facility
-end
-
 # admin_corporation_facility_facility_temporary_plans
 crumb :new_admin_corporation_facility_facility_temporary_plan do |corporation, facility|
   link '施設利用都度課金プラン追加', new_admin_corporation_facility_facility_temporary_plan_path(corporation, facility)

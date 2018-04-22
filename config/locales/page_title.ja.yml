@@ -57,9 +57,6 @@ ja:
         title: 施設編集
       show:
         title: 施設詳細
-    facility_plans:
-      new:
-        title: 月額対象プラン登録
     facility_keys:
       index:
         title: 施設鍵一覧

@@ -1,4 +1,0 @@
-<%= bootstrap_form_for([:admin, corporation, facility, @facility_plan], layout: :horizontal) do |f| %>
-  <%= f.collection_select :plan_id, @facility.selectable_plans , :id, :name, { include_blank: true } %>
-  <%= f.submit class: 'btn btn-primary center-block' %>
-<% end %>
