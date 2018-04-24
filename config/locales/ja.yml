@@ -6,6 +6,7 @@ ja:
       user: 利用者
       user_corp: 法人
       plan: プラン
+      reservation: 予約
       shop: 店舗
       facility: 施設
       facility_key: 施設鍵
@@ -64,6 +65,12 @@ ja:
         price: 月額
         description: 説明
         default_flag: 申し込み時選択可能プラン
+      reservation:
+        checkin: 利用開始時間
+        checkout: 利用終了時間
+        usage_period: 利用時間
+        state: 状態
+        price: 利用料金
       shop:
         name: 店舗名
         postal_code: 郵便番号
@@ -130,6 +137,10 @@ ja:
       info_target_type:
         all_users: 全会員
         shop_users: 店舗契約者
+    reservation:
+      state:
+        unconfirmed: 未確定
+        confirmed: 確定
   date:
     abbr_day_names:
     - 日

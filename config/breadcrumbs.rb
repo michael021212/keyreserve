@@ -57,6 +57,12 @@ crumb :edit_admin_corporation_plan do |corporation, plan|
   parent :admin_corporation_plan, corporation, plan
 end
 
+#admin_reservations
+crumb :admin_reservations do
+  link '予約管理', admin_reservations_path
+  parent :admin_root
+end
+
 # admin_corporation_user_contracts
 crumb :admin_corporation_user_contracts do |corporation|
   link '契約一覧', admin_corporation_user_contracts_path
