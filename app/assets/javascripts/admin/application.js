@@ -24,4 +24,4 @@
 //= require map
 //= require admin/user_type_radios
 //= require admin/common
-//= require datetimepicker
+//= require datetimepicker_fmt

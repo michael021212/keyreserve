@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $(".monthPicker").datetimepicker({ 
+  $(".monthPicker").datetimepicker({
     format: 'YYYY-MM'
   });
 });
