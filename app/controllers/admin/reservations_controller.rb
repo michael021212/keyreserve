@@ -1,4 +1,6 @@
 class Admin::ReservationsController < AdminController
+  include ApplicationHelper
+
   def index
     @reservations = Reservation.all.order(id: :desc).page(params[:page])
     q = params[:q] || {}
@@ -9,7 +11,7 @@ class Admin::ReservationsController < AdminController
         @reservations = @reservations.page(params[:page]).per(30)
       end
       format.csv do
-        send_data @reservations.to_csv(col_sep: "\t"), filename: 'reservations.csv'
+        send_data @reservations.to_csv(col_sep: "\t"), filename: "reservations_#{csv_datetime}.csv"
       end
     end
   end
