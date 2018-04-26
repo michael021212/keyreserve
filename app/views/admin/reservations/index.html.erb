@@ -15,7 +15,8 @@
       <%= f.search_field :facility_shop_corporation_name_cont, placeholder: "運営会社名", class: "form-control" %>
       <%= f.search_field :facility_shop_name_cont, placeholder: "店舖名", class: "form-control" %>
       <%= f.search_field :facility_name_cont, placeholder: "施設名", class: "form-control" %>
-      <%= f.text_field :user_name_cont, placeholder: "ユーザ又は法人名", class: "form-control" %>
+      <%= f.search_field :user_name_cont, placeholder: "ユーザ又は法人名", class: "form-control" %>
+      <%= f.select :state_eq, options_for_select([['未確定', 0], ['確定', 1], ['キャンセル', 9]], selected: Reservation.confirmed_to_i),{ include_blank: {} }, class: "form-control" %>
       <% q = params[:q] || {} %>
       <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
     <% end %>

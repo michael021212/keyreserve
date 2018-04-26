@@ -3,7 +3,8 @@ class Reservation < ApplicationRecord
   belongs_to :facility
   belongs_to :user
 
-  enum state: { unconfirmed: 0, confirmed: 1 }
+  enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
+  scope(:confirmed_to_i, -> { Reservation.states[:confirmed] })
 
   def self.to_csv(options)
     csv_data = CSV.generate(options) do |csv|
