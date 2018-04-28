@@ -1,7 +1,7 @@
 class FacilitiesController <  ApplicationController
   before_action :require_login
-  before_action :set_user, only: [:index, :show]
-  before_action :set_facility, only: [:show]
+  before_action :set_user, only: [:index, :show, :index_spot, :show_spot]
+  before_action :set_facility, only: [:show, :show_spot]
 
   def index
     @facilities = @user.under_contract_facilities
@@ -19,9 +19,14 @@ class FacilitiesController <  ApplicationController
     checkout = Time.zone.parse(cond[:checkin]) + cond[:use_hour].to_i.hours
     @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
 
-    @facilities = logged_in? ? current_user.login_spots : Facility.logout_spots
+    @facilities = logged_in? ? @user.login_spots : Facility.logout_spots
     @facilities = @facilities.where.not(id: @exclude_facility_ids)
     @facilities = @facilities.order(id: :desc).page(params[:page])
+    session[:spot] = cond
+  end
+
+  def show_spot
+    params[:spot] ||= session[:spot]
   end
 
   private
@@ -31,6 +36,6 @@ class FacilitiesController <  ApplicationController
   end
 
   def set_facility
-    @facility = @user.under_contract_facilities.find(params[:id])
+    @facility = @user.login_spots.find(params[:id])
   end
 end

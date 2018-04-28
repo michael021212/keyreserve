@@ -1,0 +1,69 @@
+<div class="mg-page-title parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mb20">
+        <div class="text-center">
+          <%= image_tag @facility.image.main.url, class: 'img-responsive' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mg-booking-form">
+          <%= form_for :spot, url: index_spot_facilities_path, method: :get, html: {class: 'form-horizontal'} do |f| %>
+            <div class="mg-saerch-room">
+              <div class="mg-book-now">
+                
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用日</label>
+                  <div class="input-group date mg-check-in col-sm-6">
+                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                    <%= f.text_field :checkin, value: params[:spot][:checkin], class: 'form-control', placeholder: 'ご利用日' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用時間</label>
+                  <div class="input-group col-sm-6 col-xs-12">
+                    <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, {selected: params[:spot][:use_hour].to_i, include_blank: 'ご利用時間'}, class: 'cs-select cs-skin-elastic' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用人数</label>
+                  <div class="input-group col-sm-6 col-xs-12">
+                    <%= f.select :use_num, (1..20).map{|i| [i.to_s + '名', i]}, {selected: params[:spot][:use_num].to_i, include_blank: 'ご利用人数'}, class: 'cs-select cs-skin-elastic' %>
+                  </div>
+                </div>
+                <div class="price-area form-group">
+                  <label class="col-sm-4 control-label">料金</label>
+                  <div class="input-group col-sm-6 text-right">
+                    <span id="js-price">0</span><span>円</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-offset-8 col-md-4">
+                    <button type="submit" class="btn btn-main btn-block">予約する</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-xs-12">
+        <div class="mg-single-room-txt">
+          <h2 class="mg-sec-left-title">施設詳細</h2>
+          <p><%= simple_format @facility.description %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

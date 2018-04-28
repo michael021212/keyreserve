@@ -279,6 +279,14 @@
     format: "yyyy/mm/dd",
     language: 'ja'
 	});
+	$('.timepicker').wickedpicker({
+    now: "12:00",
+    upArrow: 'arrow-font angle-up',
+    downArrow: 'arrow-font angle-down',
+    twentyFour: true,
+    title: 'ご利用時刻',
+    minutesInterval: 60
+  });
 
 	$('.input-group.mg-check-in').on('hide', function (e) {
 

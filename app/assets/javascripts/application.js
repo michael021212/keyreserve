@@ -29,6 +29,7 @@
 //= require lib/nivo-lightbox.min
 //= require lib/jquery.shuffle.min
 //= require lib/jquery.parallax-1.1.3
+//= require lib/wickedpicker.min
 //= require script
 //= require jquery.payment.min.js
 //= require credit_card_form

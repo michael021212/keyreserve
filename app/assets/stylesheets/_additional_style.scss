@@ -262,3 +262,35 @@ select.form-control {
 .mg-avl-room-desc {
   height: initial;
 }
+
+.mg-book-now {
+  label {
+    color: #fff;
+  }
+}
+
+.price-area {
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  color: #fff;
+  span {
+    font-size: 32px;
+  }
+}
+
+.arrow-font {
+  display: block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+}
+.angle-up:before {
+  content: "\f106";
+}
+
+.angle-down:before {
+  content: "\f107";
+}
+
+.mg-book-now .mg-bn-title .mg-bn-big {
+  font-size: 13px;
+}

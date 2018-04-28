@@ -62,12 +62,4 @@ class User < ApplicationRecord
     Stripe::Customer.retrieve(stripe_customer_id)
   end
 
-  def under_contract_facilities
-    facility_ids = []
-    user_contracts.under_contract.each do |user_contract|
-      facility_ids << user_contract.shop.facilities.map(&:id) if user_contract.shop_id?
-      facility_ids << user_contract.plan.facilities.map(&:id) if user_contract.plan_id?
-    end
-    Facility.where(id: facility_ids.flatten)
-  end
 end
