@@ -280,7 +280,7 @@
     language: 'ja'
 	});
 	$('.timepicker').wickedpicker({
-    now: "12:00",
+    now: $('#spot_checkin_time').val(),
     upArrow: 'arrow-font angle-up',
     downArrow: 'arrow-font angle-down',
     twentyFour: true,

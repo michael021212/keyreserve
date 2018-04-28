@@ -11,6 +11,7 @@ class FacilitiesController <  ApplicationController
 
   def index_spot
     params[:spot] ||= {}
+    params[:spot][:checkin_time] ||= '12:00'
     cond = params[:spot]
     if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
       return render :index_spot

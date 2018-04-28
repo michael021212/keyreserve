@@ -29,6 +29,12 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用時刻</label>
+                  <div class="input-group col-sm-6">
+                    <%= f.text_field :checkin_time, value: params[:spot][:checkin_time], class: 'form-control timepicker', placeholder: 'ご利用時刻' %>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用時間</label>
                   <div class="input-group col-sm-6 col-xs-12">
                     <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, {selected: params[:spot][:use_hour].to_i, include_blank: 'ご利用時間'}, class: 'cs-select cs-skin-elastic' %>
