@@ -275,7 +275,9 @@
 	 */
 	$('.input-group.mg-check-in').datepicker({
 		startDate: "dateToday",
-		autoclose: true
+		autoclose: true,
+    format: "yyyy/mm/dd",
+    language: 'ja'
 	});
 
 	$('.input-group.mg-check-in').on('hide', function (e) {

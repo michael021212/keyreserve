@@ -10,7 +10,17 @@ class FacilitiesController <  ApplicationController
   def show; end
 
   def index_spot
+    params[:spot] ||= {}
+    cond = params[:spot]
+    if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
+      return render :index_spot
+    end
+    checkin = cond[:checkin]
+    checkout = Time.zone.parse(cond[:checkin]) + cond[:use_hour].to_i.hours
+    @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
+
     @facilities = logged_in? ? current_user.login_spots : Facility.logout_spots
+    @facilities = @facilities.where.not(id: @exclude_facility_ids)
     @facilities = @facilities.order(id: :desc).page(params[:page])
   end
 

@@ -24,6 +24,7 @@
 //= require lib/classie
 //= require lib/selectFx
 //= require lib/bootstrap-datepicker.min
+//= require lib/bootstrap-datepicker.ja.min.js
 //= require lib/starrr.min
 //= require lib/nivo-lightbox.min
 //= require lib/jquery.shuffle.min
@@ -33,6 +34,7 @@
 //= require credit_card_form
 //= require map
 //= require moment
+//= require moment/ja.js
 //= require fullcalendar.min.js
 //= require scheduler.min.js
 //= require fullcalendar_ja.js

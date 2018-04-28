@@ -1,36 +1,77 @@
 <% content_for :middle_title do %>
   <h2>スポット利用可能施設</h2>
 <% end %>
-<div class="mg-single-room">
+<div class="mg-page">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="mg-single-room-txt">
-          <div class="row">
-            <div class="col-md-12">
-              <div id='facility_calendars' data-facility="<%= @facilities.pluck(:id) %>"></div>
-              <% @facilities.each do |facility| %>
-                <div class="mg-available-rooms">
+        <div class="mg-booking-form">
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="select-room">
+              <div class="mg-saerch-room">
+                <div class="mg-book-now mt80">
                   <div class="row">
-                    <div class="col-sm-4">
-                      <%= link_to show_spot_facility_path(facility) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
+                    <div class="col-md-3">
+                      <h2 class="mg-bn-title">Search Rooms <span class="mg-bn-big">検索条件を入力してください</span></h2>
                     </div>
-                    <div class="col-sm-8">
-                      <h3 class="mg-avl-room-title">
-                        <%= link_to show_spot_facility_path(facility) do %>
-                          <%= facility.name %> - <%= facility.shop.name %>
+                    <div class="col-md-9">
+                      <div class="mg-bn-forms">
+                        <%= form_for :spot, url: index_spot_facilities_path, method: :get do |f| %>
+                          <div class="row">
+                            <div class="col-md-3 col-xs-6">
+                              <div class="input-group date mg-check-in">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <%= f.text_field :checkin, value: params[:spot][:checkin], class: 'form-control', placeholder: 'ご利用日' %>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6">
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, {selected: params[:spot][:use_hour].to_i, include_blank: 'ご利用時間'}, class: 'cs-select cs-skin-elastic' %>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <%= f.select :use_num, (1..20).map{|i| [i.to_s + '名', i]}, {selected: params[:spot][:use_num].to_i, include_blank: 'ご利用人数'}, class: 'cs-select cs-skin-elastic' %>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3">
+                              <button type="submit" class="btn btn-main btn-block">探す</button>
+                            </div>
+                          </div>
                         <% end %>
-                        <span>&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</span>
-                      </h3>
-                      <div class='mg-avl-room-desc'>
-                      <%= simple_format facility.description %>
                       </div>
-                      <%= link_to '予約する', show_spot_facility_path(facility), class: 'btn btn-main btn-next-tab' %>
                     </div>
                   </div>
                 </div>
+              </div>
+              <% if @facilities.present? %>
+                <% @facilities.each do |facility| %>
+                  <div class="mg-available-rooms">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <%= link_to show_spot_facility_path(facility) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
+                      </div>
+                      <div class="col-sm-8">
+                        <h3 class="mg-avl-room-title">
+                          <%= link_to show_spot_facility_path(facility) do %>
+                            <%= facility.name %> - <%= facility.shop.name %>
+                          <% end %>
+                          <span>&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</span>
+                        </h3>
+                        <div class='mg-avl-room-desc'>
+                          <%= simple_format facility.description %>
+                        </div>
+                        <%= link_to '予約する', show_spot_facility_path(facility), class: 'btn btn-main btn-next-tab' %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <%= paginate @facilities %>
               <% end %>
-              <%= paginate @facilities %>
             </div>
           </div>
         </div>
