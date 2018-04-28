@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417042656) do
+ActiveRecord::Schema.define(version: 20180428051425) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20180417042656) do
     t.datetime "deleted_at"
     t.string "image"
     t.text "description"
+    t.integer "max_num", default: 0
+    t.integer "facility_type", default: 0
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 
@@ -172,6 +174,7 @@ ActiveRecord::Schema.define(version: 20180417042656) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.integer "num", default: 0
     t.index ["facility_id"], name: "index_reservations_on_facility_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end

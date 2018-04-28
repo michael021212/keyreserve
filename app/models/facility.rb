@@ -7,6 +7,8 @@ class Facility < ApplicationRecord
   has_many :facility_temporary_plans, dependent: :destroy
   has_many :reservations, dependent: :destroy
 
+  enum facility_type: {conference_room: 1, dropin: 2}
+
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank

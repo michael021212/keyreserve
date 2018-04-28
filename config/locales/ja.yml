@@ -87,6 +87,8 @@ ja:
         name: 施設名
         image: 施設画像
         description: 施設説明
+        max_num: 最大利用人数
+        facility_type: 施設タイプ（スポット利用時）
       facility_key:
         ks_room_key_id: 鍵
         name: 鍵名称
@@ -147,6 +149,10 @@ ja:
       info_target_type:
         all_users: 全会員
         shop_users: 店舗契約者
+    facility:
+      facility_type:
+        conference_room: 会議室
+        dropin: ドロップイン
   date:
     abbr_day_names:
     - 日
