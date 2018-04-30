@@ -40,3 +40,4 @@
 //= require scheduler.min.js
 //= require fullcalendar_ja.js
 //= require reservable_calendar.js
+//= require common

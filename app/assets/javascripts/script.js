@@ -2,13 +2,6 @@
 	"use strict";
 
 	/*
-	 * Customly Styled Select input field
-	 */
-	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
-		new SelectFx(el);
-	} );
-
-	/*
 	 * On Parallax for .parallax class
 	 */
 	$('.parallax').parallax("50%", 0.2);
