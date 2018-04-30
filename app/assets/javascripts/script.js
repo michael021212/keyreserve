@@ -272,18 +272,8 @@
     format: "yyyy/mm/dd",
     language: 'ja'
 	});
-	$('.timepicker').wickedpicker({
-    now: $('#spot_checkin_time').val(),
-    upArrow: 'arrow-font angle-up',
-    downArrow: 'arrow-font angle-down',
-    twentyFour: true,
-    title: 'ご利用時刻',
-    minutesInterval: 60
-  });
-
+	
 	$('.input-group.mg-check-in').on('hide', function (e) {
-
-
 		if (e.dates.length) {
 			var strDate = e.date;
 			strDate.setDate(strDate.getDate() + 1);

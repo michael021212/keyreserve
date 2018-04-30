@@ -1,13 +1,13 @@
 $ ->
   calc_price = -> 
     fid = $('#js-price').data('fid')
-    url = "/facilities/#{fid}/get_price"
+    url = "/reservations/price"
     $.ajax({
       url: url,
       type:      "GET"
       dataType:  "json"
       cache:      false
-      data: $('.js-calc-price-form').serialize()
+      data: $('.js-calc-price-form').serialize() + '&facility_id=' + fid
     }).done((data) ->
       $('#js-price').text(data.price)
     )

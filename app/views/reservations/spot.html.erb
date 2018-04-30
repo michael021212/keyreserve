@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-9">
                       <div class="mg-bn-forms">
-                        <%= form_for :spot, url: index_spot_facilities_path(anchor: :searchbox), method: :get do |f| %>
+                        <%= form_for :spot, url: spot_reservations_path(anchor: :searchbox), method: :get do |f| %>
                           <div class="row">
                             <div class="col-md-3 col-xs-6">
                               <div class="input-group date mg-check-in">
@@ -70,11 +70,11 @@
                     <div class="mg-available-rooms">
                       <div class="row">
                         <div class="col-sm-4">
-                          <%= link_to show_spot_facility_path(facility) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
+                          <%= link_to new_reservation_path(facility_id: facility.id) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
                         </div>
                         <div class="col-sm-8">
                           <h3 class="mg-avl-room-title">
-                            <%= link_to show_spot_facility_path(facility) do %>
+                            <%= link_to new_reservation_path(facility_id: facility.id) do %>
                               <%= facility.name %> - <%= facility.shop.name %>
                             <% end %>
                             <span>&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</span>
@@ -82,7 +82,7 @@
                           <div class='mg-avl-room-desc'>
                             <%= simple_format facility.description %>
                           </div>
-                          <%= link_to '予約する', show_spot_facility_path(facility), class: 'btn btn-main' %>
+                          <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
                         </div>
                       </div>
                     </div>
