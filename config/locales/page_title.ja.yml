@@ -89,6 +89,9 @@ ja:
         title: プラン編集
       show:
         title: プラン詳細
+    reservations:
+      index:
+        title: 予約一覧
     users:
       index:
         title: 利用者一覧

@@ -15,6 +15,9 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap-sprockets
+//= require moment
+//= require moment/ja.js
+//= require bootstrap-datetimepicker
 //= require app
 //= require jquery.slimscroll.min
 //= require jquery_nested_form
@@ -26,3 +29,4 @@
 //= require plan_price_table.js
 //= require admin/user_type_radios
 //= require admin/common
+//= require datetimepicker_fmt

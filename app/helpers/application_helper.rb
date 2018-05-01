@@ -91,4 +91,8 @@ module ApplicationHelper
   def current_date(time)
     time.change(year: Time.zone.now.year, month: Time.zone.now.month, day: Time.zone.now.day)
   end
+
+  def csv_datetime
+    Time.zone.now.strftime('%Y%m%d%H%M')
+  end
 end
