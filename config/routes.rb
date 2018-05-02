@@ -58,6 +58,9 @@ Rails.application.routes.draw do
       get :price
       get :spot
       post :confirm
+      get :confirm
+      post :credit_card
+      get :thanks
     end
   end
   resources :plans

@@ -17,8 +17,8 @@
       </div>
       <div class="col-md-6">
         <div class="mg-booking-form">
-          <%= form_for :spot, url: confirm_reservations_path, method: :get, html: {class: 'form-horizontal js-calc-price-form'} do |f| %>
-            <%= f.hidden_field :facilty_id, value: @facility.id %>
+          <%= form_for :spot, url: confirm_reservations_path, html: {class: 'form-horizontal js-calc-price-form'} do |f| %>
+            <%= f.hidden_field :facility_id, value: @facility.id %>
             <div class="mg-saerch-room">
               <div class="mg-book-now">
                 

@@ -2,6 +2,9 @@ class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
   belongs_to :facility
   belongs_to :user
+  belongs_to :payment, optional: true
+
+  before_save :create_payment
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   scope :in_range, ->(range) do
@@ -9,12 +12,29 @@ class Reservation < ApplicationRecord
   end
   scope(:confirmed_to_i, -> { Reservation.states[:confirmed] })
 
+  def create_payment
+    return unless self.user.creditcard?
+    self.payment = Payment.create!(
+      user_id: self.user_id,
+      corporation_id: self.facility.shop.corporation_id,
+      facility_id: self.facility_id,
+      credit_card_id: self.user.credit_card.id,
+      price: self.price,
+    )
+  end
+
   def self.new_from_spot(spot, card)
-    checkin = DateTime.parse(spot[:checkin] + " " + spot[:checkin_time])
+    checkin = DateTime.parse(spot['checkin'] + " " + spot['checkin_time'])
+    facility = Facility.find(spot['facility_id'].to_i)
+    price = facility.calc_price(card.user, checkin, spot['use_hour'].to_i)
     Reservation.new(
-      facility_id: spot[:facility_id],
+      facility_id: spot['facility_id'],
       user_id: card.user_id,
       checkin: checkin,
+      usage_period: spot['use_hour'],
+      state: :confirmed,
+      price: price,
+      num: spot['use_num']
     )
   end
 

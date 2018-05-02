@@ -1,7 +1,6 @@
 class ReservationsController <  ApplicationController
   before_action :set_user
   before_action :require_login, except: [:spots]
-  before_action :set_facility, except: [:spot]
   include ActionView::Helpers::NumberHelper
 
   def spot
@@ -24,9 +23,12 @@ class ReservationsController <  ApplicationController
 
   def new
     params[:spot] ||= session[:spot]
+    session[:reservation_id] = nil
+    @facility = @user.login_spots.find(params[:facility_id]) if params[:facility_id].present?
   end
 
   def price
+    @facility = @user.login_spots.find(params[:facility_id]) if params[:facility_id].present?
     cond = params[:spot]
     if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank? || cond[:checkin_time].blank?
       return render json: {price: ''}
@@ -37,7 +39,9 @@ class ReservationsController <  ApplicationController
   end
 
   def credit_card
-    @credit_card = current_user.build_credit_card(credit_card_params)
+    @facility = Facility.find(session[:spot]['facility_id'].to_i)
+    return redirect_to confirm_reservations_url if current_user.credit_card.present?
+    @credit_card = @user.build_credit_card(credit_card_params)
     return(render :credit_card) unless @credit_card.valid?
     begin
       @credit_card.save!
@@ -52,14 +56,20 @@ class ReservationsController <  ApplicationController
 
   def confirm
     session[:spot] = params[:spot] if params[:spot].present?
-    if @user.credit_card.blank? || params[:change_card].present?
+    @facility = Facility.find(session[:spot]['facility_id'].to_i)
+    checkin = DateTime.parse(session[:spot]['checkin'] + " " + session[:spot]['checkin_time'])
+    @price = @facility.calc_price(@user, checkin, session[:spot]['use_hour'].to_i)
+      if @user.credit_card.blank? && @user.creditcard?
+      @credit_card = current_user.build_credit_card
       return render :credit_card
     end
   end
 
   def create
     @reservation = Reservation.new_from_spot(session[:spot], @user.credit_card)
-    if @reservation.save
+    if @reservation.save!
+      session[:spot] = nil
+      session[:reservation_id] = @reservation.id
       redirect_to thanks_reservations_url
     else
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
@@ -68,6 +78,8 @@ class ReservationsController <  ApplicationController
   end
 
   def thanks
+    @reservation = Reservation.find(session[:reservation_id])
+    @facility = @reservation.facility
   end
 
   private
@@ -76,7 +88,9 @@ class ReservationsController <  ApplicationController
     @user = current_user_corp.present? ? current_user_corp : current_user if logged_in?
   end
 
-  def set_facility
-    @facility = @user.login_spots.find(params[:facility_id])
+  def credit_card_params
+    params.require(:credit_card).permit(
+      :number, :exp, :holder_name, :cvc
+    )
   end
 end

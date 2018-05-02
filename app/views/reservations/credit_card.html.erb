@@ -1,0 +1,23 @@
+<div class="mg-page-title parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <%= render 'credit_cards/form', credit_card: @credit_card, form_url: credit_card_reservations_path %>
+      </div>
+      <div class="col-md-3 mb20">
+        <div class="text-center">
+          <%= image_tag @facility.image.main.url, class: 'img-responsive' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
