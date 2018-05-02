@@ -13,4 +13,9 @@ class NotificationMailer < ApplicationMailer
     @user = user
     mail(to: email, subject: "【#{Settings.sitename}】#{user.name}様からのご招待")
   end
+
+  def reserved(reservation)
+    @reservation = reservation
+    mail(to: reservation.user.email, subject: "【KeyStation Office】施設のご予約を承りました")
+  end
 end
