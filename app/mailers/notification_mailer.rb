@@ -18,4 +18,9 @@ class NotificationMailer < ApplicationMailer
     @reservation = reservation
     mail(to: reservation.user.email, subject: "【KeyStation Office】施設のご予約を承りました")
   end
+
+  def notice_password(reservation)
+    @reservation = reservation
+    mail(to: reservation.user.email, subject: "【KeyStation Office】ご予約30分前になりました")
+  end
 end
