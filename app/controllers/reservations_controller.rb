@@ -10,8 +10,8 @@ class ReservationsController <  ApplicationController
     if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
       return render :spot
     end
-    checkin = cond[:checkin]
-    checkout = Time.zone.parse(cond[:checkin]) + cond[:use_hour].to_i.hours
+    checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
+    checkout = checkin + cond[:use_hour].to_i.hours
     @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
 
     @facilities = logged_in? ? @user.login_spots : Facility.logout_spots
@@ -33,7 +33,7 @@ class ReservationsController <  ApplicationController
     if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank? || cond[:checkin_time].blank?
       return render json: {price: ''}
     end 
-    checkin = DateTime.parse(cond[:checkin] + " " + cond[:checkin_time])
+    checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
     price = @facility.calc_price(@user, checkin, cond[:use_hour].to_i)
     render json: {price: number_with_delimiter(price)}
   end
@@ -57,7 +57,7 @@ class ReservationsController <  ApplicationController
   def confirm
     session[:spot] = params[:spot] if params[:spot].present?
     @facility = Facility.find(session[:spot]['facility_id'].to_i)
-    checkin = DateTime.parse(session[:spot]['checkin'] + " " + session[:spot]['checkin_time'])
+    checkin = Time.zone.parse(session[:spot]['checkin'] + " " + session[:spot]['checkin_time'])
     @price = @facility.calc_price(@user, checkin, session[:spot]['use_hour'].to_i)
       if @user.credit_card.blank? && @user.creditcard?
       @credit_card = current_user.build_credit_card

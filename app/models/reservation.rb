@@ -8,7 +8,7 @@ class Reservation < ApplicationRecord
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   scope :in_range, ->(range) do
-    where(arel_table[:checkout].gteq(range.first)).where(arel_table[:checkin].lteq(range.last)) 
+    where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last)) 
   end
   scope(:confirmed_to_i, -> { Reservation.states[:confirmed] })
 
@@ -24,13 +24,14 @@ class Reservation < ApplicationRecord
   end
 
   def self.new_from_spot(spot, card)
-    checkin = DateTime.parse(spot['checkin'] + " " + spot['checkin_time'])
+    checkin = Time.zone.parse(spot['checkin'] + " " + spot['checkin_time'])
     facility = Facility.find(spot['facility_id'].to_i)
     price = facility.calc_price(card.user, checkin, spot['use_hour'].to_i)
     Reservation.new(
       facility_id: spot['facility_id'],
       user_id: card.user_id,
       checkin: checkin,
+      checkout: checkin + spot['use_hour'].to_i.hours,
       usage_period: spot['use_hour'],
       state: :confirmed,
       price: price,

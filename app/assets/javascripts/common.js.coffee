@@ -1,6 +1,7 @@
 $ ->
   calc_price = -> 
     fid = $('#js-price').data('fid')
+    return unless fid
     url = "/reservations/price"
     $.ajax({
       url: url,
