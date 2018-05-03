@@ -13,7 +13,7 @@ class Reservation < ApplicationRecord
   scope(:confirmed_to_i, -> { Reservation.states[:confirmed] })
 
   scope :ready_to_send, -> do
-    target = Time.zone.now - 30.minutes
+    target = Time.zone.now + 30.minutes
     where(mail_send_flag: false).where(arel_table[:checkin].lteq(target))
   end
 
