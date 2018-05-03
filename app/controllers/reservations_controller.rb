@@ -1,6 +1,6 @@
 class ReservationsController <  ApplicationController
   before_action :set_user
-  before_action :require_login, except: [:spots]
+  before_action :require_login, except: [:spot]
   include ActionView::Helpers::NumberHelper
 
   def spot

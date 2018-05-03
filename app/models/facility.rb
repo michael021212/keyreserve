@@ -22,7 +22,7 @@ class Facility < ApplicationRecord
   scope(:belongs_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
 
   def min_hourly_price(user, target_time=nil)
-    plan_ids = user.user_contracts.map(&:plan_id)
+    plan_ids = user.present? ? user.user_contracts.map(&:plan_id) : []
     ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
       where(plan_id: nil).or(self.facility_temporary_plans.where(plan_id: plan_ids))
     options = FacilityTemporaryPlanPrice.where.not(price: 0).where(facility_temporary_plan_id: ftps.pluck(:id).push(nil))

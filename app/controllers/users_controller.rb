@@ -19,7 +19,9 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html do
           auto_login(@user)
-          redirect_to root_path, notice: "#{User.model_name.human}を作成しました。"
+          target = session[:return_to_url].present? ? session[:return_to_url] : root_url
+          session[:return_to_url] = nil
+          redirect_to target, notice: "#{User.model_name.human}を作成しました。"
         end
       end
     else
