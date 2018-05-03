@@ -2,13 +2,6 @@
 	"use strict";
 
 	/*
-	 * Customly Styled Select input field
-	 */
-	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
-		new SelectFx(el);
-	} );
-
-	/*
 	 * On Parallax for .parallax class
 	 */
 	$('.parallax').parallax("50%", 0.2);
@@ -275,12 +268,12 @@
 	 */
 	$('.input-group.mg-check-in').datepicker({
 		startDate: "dateToday",
-		autoclose: true
+		autoclose: true,
+    format: "yyyy/mm/dd",
+    language: 'ja'
 	});
-
+	
 	$('.input-group.mg-check-in').on('hide', function (e) {
-
-
 		if (e.dates.length) {
 			var strDate = e.date;
 			strDate.setDate(strDate.getDate() + 1);

@@ -66,6 +66,11 @@ ja:
         title: 施設鍵編集
       show:
         title: 施設鍵詳細
+    facility_temporary_plans:
+      new:
+        title: 施設利用都度課金プラン登録
+      edit:
+        title: 施設利用都度課金プラン編集
     user_contracts:
       index:
         title: 契約一覧
@@ -84,6 +89,9 @@ ja:
         title: プラン編集
       show:
         title: プラン詳細
+    reservations:
+      index:
+        title: 予約一覧
     users:
       index:
         title: 利用者一覧

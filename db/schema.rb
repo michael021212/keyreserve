@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417042656) do
+ActiveRecord::Schema.define(version: 20180502104012) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20180417042656) do
     t.integer "sequence"
     t.integer "kind"
     t.string "holder_name", null: false
-    t.string "stripe_card_id"
+    t.string "stripe_card_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20180417042656) do
     t.datetime "deleted_at"
     t.string "image"
     t.text "description"
+    t.integer "max_num", default: 0
+    t.integer "facility_type", default: 0
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 
@@ -87,6 +89,29 @@ ActiveRecord::Schema.define(version: 20180417042656) do
     t.datetime "deleted_at"
     t.index ["facility_id"], name: "index_facility_plans_on_facility_id"
     t.index ["plan_id"], name: "index_facility_plans_on_plan_id"
+  end
+
+  create_table "facility_temporary_plan_prices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_temporary_plan_id", null: false
+    t.time "starting_time", null: false
+    t.time "ending_time", null: false
+    t.integer "price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_temporary_plan_id"], name: "index_prices_on_facility_temporary_plan_id"
+  end
+
+  create_table "facility_temporary_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id", null: false
+    t.bigint "plan_id"
+    t.integer "standard_price_per_hour", null: false
+    t.integer "standard_price_per_day", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_id"], name: "index_facility_temporary_plans_on_facility_id"
+    t.index ["plan_id"], name: "index_facility_temporary_plans_on_plan_id"
   end
 
   create_table "information", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -143,12 +168,17 @@ ActiveRecord::Schema.define(version: 20180417042656) do
   create_table "reservations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "facility_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "checkin", null: false
-    t.datetime "checkout", null: false
+    t.datetime "checkin"
+    t.datetime "checkout"
+    t.integer "usage_period"
     t.integer "state", default: 0, null: false
+    t.integer "price", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.integer "num", default: 0
+    t.integer "payment_id"
+    t.boolean "mail_send_flag", default: false
     t.index ["facility_id"], name: "index_reservations_on_facility_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -178,7 +208,7 @@ ActiveRecord::Schema.define(version: 20180417042656) do
     t.integer "plan_id"
     t.date "started_on", null: false
     t.date "finished_on"
-    t.integer "state", default: 1, null: false
+    t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
@@ -196,6 +226,7 @@ ActiveRecord::Schema.define(version: 20180417042656) do
     t.string "tel"
     t.integer "state", default: 0, null: false
     t.integer "payway", default: 1, null: false
+    t.string "stripe_customer_id"
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.string "reset_password_token"

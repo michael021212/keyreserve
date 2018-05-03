@@ -214,6 +214,10 @@ html,body {
   }
 }
 
+select.form-control {
+  height: 34px !important;
+}
+
 .short-box {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -242,4 +246,60 @@ html,body {
 .mg-post-title {
   font-size: 28px;
   line-height: 38px;
+}
+
+#credit_card_number {
+  background-image: none;
+  background-position: 97% 50%;
+  background-repeat: no-repeat;
+}
+
+.facility_reservation_calendar {
+  width: 100%;
+  height: auto;
+}
+
+.mg-avl-room-desc {
+  height: initial;
+}
+
+.mg-book-now {
+  label {
+    color: #fff;
+  }
+}
+
+.price-area {
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  color: #fff;
+  span {
+    font-size: 32px;
+  }
+}
+
+.arrow-font {
+  display: block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+}
+.angle-up:before {
+  content: "\f106";
+}
+
+.angle-down:before {
+  content: "\f107";
+}
+
+.mg-book-now .mg-bn-title .mg-bn-big {
+  font-size: 13px;
+}
+.input-group .timepicker {
+  z-index: 100;
+}
+
+.input-group.static-text {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 6px;
 }

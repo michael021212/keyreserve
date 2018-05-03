@@ -8,7 +8,9 @@ class SessionsController < ApplicationController
         current_user.update(parent_id: user_corp.id) if user_corp.present?
         session[:parent_token] = nil
       end
-      redirect_to root_path
+      target = session[:return_to_url].present? ? session[:return_to_url] : root_url
+      session[:return_to_url] = nil
+      redirect_to target
     else
       flash[:danger] = "メールアドレスまたはパスワードが間違っています"
       render :new

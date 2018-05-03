@@ -1,0 +1,14 @@
+<% content_for :middle_title do %>
+  <h2><%= CreditCard.model_name.human %>設定</h2>
+<% end %>
+<div class="mg-page mt30">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <%= render 'form', credit_card: @credit_card %>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>

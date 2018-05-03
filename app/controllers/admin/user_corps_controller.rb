@@ -15,7 +15,7 @@ class Admin::UserCorpsController < AdminController
   def create
     @user_corp = UserCorp.new(user_corp_params)
     @user_corp.user_type = :personal
-    if @user_corp.save!
+    if @user_corp.save
       flash[:notice] = "#{UserCorp.model_name.human}を作成しました。"
       redirect_to admin_user_corp_path(@user_corp)
     else

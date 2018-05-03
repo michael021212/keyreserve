@@ -9,7 +9,7 @@ class UserContract < ApplicationRecord
   delegate :name, to: :shop, prefix: true, allow_nil: true
   delegate :name, to: :plan, prefix: true, allow_nil: true
 
-  enum state: { under_contract: 1, finished: 9 }
+  enum state: { applying: 0, under_contract: 1, finished: 9 }
 
-  validates :user_id, :started_on, :state, presence: true
+  validates :user_id, :plan_id, :started_on, :state, presence: true
 end

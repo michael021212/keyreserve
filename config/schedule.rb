@@ -1,5 +1,7 @@
-set :output, "/path/to/my/cron_log.log"
-
 every 5.minutes do
   rake 'information:informing_mail'
+end
+
+every 5.minutes do
+  rake 'reservation:notice_password_mail'
 end
