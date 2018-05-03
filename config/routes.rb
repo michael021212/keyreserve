@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   end
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
-  resources :reservations, only: [:new, :create] do
+  resources :reservations, only: [:index, :show, :new, :create] do
     collection do
       get :price
       get :spot

@@ -3,6 +3,14 @@ class ReservationsController <  ApplicationController
   before_action :require_login, except: [:spot]
   include ActionView::Helpers::NumberHelper
 
+  def index
+    @reservations = @user.reservations.order(checkin: :desc)
+  end
+
+  def show
+    @reservation = @user.reservations.find(params[:id])
+  end
+
   def spot
     params[:spot] ||= {}
     params[:spot][:checkin_time] ||= '12:00'
