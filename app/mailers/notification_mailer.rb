@@ -1,6 +1,4 @@
 class NotificationMailer < ApplicationMailer
-  default from: 'support@key-reserve.com'
-
   def new_user_contract(cu, user_contract)
     @user_contract = user_contract
     @user = user_contract.user
