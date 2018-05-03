@@ -92,6 +92,8 @@ ja:
     reservations:
       index:
         title: 予約一覧
+      show:
+        title: 予約詳細
     users:
       index:
         title: 利用者一覧

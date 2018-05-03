@@ -40,7 +40,8 @@ class Reservation < ApplicationRecord
       usage_period: spot['use_hour'],
       state: :confirmed,
       price: price,
-      num: spot['use_num']
+      num: spot['use_num'],
+      mail_send_flag: true # TODO 暫定
     )
   end
 
@@ -64,12 +65,13 @@ class Reservation < ApplicationRecord
       checkin.strftime('%Y/%m/%d %H:%M'),
       checkout.strftime('%Y/%m/%d %H:%M'),
       "#{usage_period}時間",
+      num,
       state_i18n,
       "#{number_with_delimiter(price)}円"
     ]
   end
 
   def self.csv_column_names
-    %w[運営会社名 店舗名 施設名 お名前 利用開始時間 利用終了時間 利用時間 状態 利用料金]
+    %w[運営会社名 店舗名 施設名 お名前 利用開始時間 利用終了時間 利用時間 利用人数 状態 利用料金]
   end
 end
