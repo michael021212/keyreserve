@@ -3,7 +3,14 @@ class SessionsController < ApplicationController
 
   def create
     if login(params[:email], params[:password])
-      redirect_to root_path
+      if session[:parent_token].present?
+        user_corp ||= UserCorp.find_by(parent_token: session[:parent_token])
+        current_user.update(parent_id: user_corp.id) if user_corp.present?
+        session[:parent_token] = nil
+      end
+      target = session[:return_to_url].present? ? session[:return_to_url] : root_url
+      session[:return_to_url] = nil
+      redirect_to target
     else
       flash[:danger] = "メールアドレスまたはパスワードが間違っています"
       render :new

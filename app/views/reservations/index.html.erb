@@ -1,0 +1,73 @@
+<% content_for :middle_title do %>
+  <h2>ご予約履歴</h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <% @reservations.each do |reservation| %>
+          <% facility = reservation.facility %>
+          <div class="mg-booking-form">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= link_to reservation_path(reservation) do %>
+                  <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+              <% end %>
+              </div>
+              <div class="col-sm-8">
+                <div class="mg-booking-form">
+                  <div class="mg-saerch-room">
+                    <div class="mg-book-now">
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご予約ID</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= reservation.id %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">施設名</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= facility.name %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご利用日時</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= datetime_ja reservation.checkin %>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご利用時間</label>
+                        <div class="input-group col-sm-6 col-xs-12 static-text">
+                          <%= reservation.usage_period %>時間
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご利用人数</label>
+                        <div class="input-group col-sm-6 col-xs-12 static-text">
+                          <%= reservation.num %>名
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">料金</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <span><%= number_with_delimiter reservation.price %></span><span>円</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-offset-4 col-md-4">
+                          <%= link_to "詳細", reservation_path(reservation), class: 'btn btn-main btn-block' %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <%= bootstrap_form_for([:admin, corporation, user_contract], layout: :horizontal) do |f| %>
-  <%= f.collection_select :shop_id, Shop.all, :id, :name, include_blank: true %>
-  <%= f.collection_select :user_id, User.all, :id, :name, include_blank: true %>
+  <%= f.collection_select :shop_id, Shop.belongs_to_corporation(params[:corporation_id]), :id, :name, include_blank: true %>
+  <%= f.collection_select :user_id, User.selectable_user_contracts, :id, :name, include_blank: true %>
   <%= f.collection_select :plan_id, corporation.plans, :id, :name, include_blank: true %>
   <%= f.select :state, UserContract.states_i18n.invert %>
   <%= f.date_select :started_on, { include_blank: true }, { class: 'bootstrap-date' } %>

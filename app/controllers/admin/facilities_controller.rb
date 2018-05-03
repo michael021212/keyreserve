@@ -50,7 +50,7 @@ class Admin::FacilitiesController < AdminController
 
   def facility_params
     params.require(:facility).permit(
-      :shop_id, :name, :image, :description,
+      :shop_id, :name, :image, :description, :max_num, :facility_type,
       facility_plans_attributes: [:id, :plan_id, '_destroy']
     )
   end

@@ -9,20 +9,37 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index]
     resources :admin_users, except: [:show]
     resources :users
+    resources :user_corps do
+      resources :users, controller: 'users'
+    end
     resources :information
     resources :corporations do
       resources :corporation_users
       resources :user_contracts
       resources :plans
+      resources :facilities, only: [] do
+        resources :facility_plans, only: [:new, :create, :destroy]
+        resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
+          collection do
+            get :resources
+            get :events
+          end
+        end
+      end
       resources :shops, except: [:index] do
         resources :facilities, except: [:index] do
           resources :facility_keys, except: [:index]
         end
       end
     end
+    resources :reservations, only: [:index]
   end
 
-  resource :user
+  resource :user do
+    collection do
+      get 'new/:parent_token', to: 'users#new', as: 'new_parent_token'
+    end
+  end
   get '/sign_in' => 'sessions#new'
   post '/sign_in' => 'sessions#create'
   get '/sign_out' => 'sessions#destroy'
@@ -36,7 +53,19 @@ Rails.application.routes.draw do
   end
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
+  resources :reservations, only: [:index, :show, :new, :create] do
+    collection do
+      get :price
+      get :spot
+      post :confirm
+      get :confirm
+      post :credit_card
+      get :thanks
+    end
+  end
   resources :plans
+  resource :credit_card, only: [:new, :create, :show, :edit, :update]
+  resources :invitations, only: [:index, :new, :create]
   resources :information, only: [:index, :show]
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
