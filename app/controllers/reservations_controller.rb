@@ -30,6 +30,7 @@ class ReservationsController <  ApplicationController
 
     @facilities = logged_in? ? @user.login_spots : Facility.logout_spots
     @facilities = @facilities.where.not(id: @exclude_facility_ids)
+    @facilities = @facilities.conference_room
     @facilities = @facilities.joins(:shop).
       where(Shop.arel_table[:opening_time].lteq(checkin)).
       where(Shop.arel_table[:closing_time].gteq(checkout))
