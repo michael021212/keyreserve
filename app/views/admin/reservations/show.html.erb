@@ -53,12 +53,8 @@
         <td><%= number_with_delimiter @reservation.price %>円</td>
       </tr>
       <tr>
-        <th><%= Reservation.human_attribute_name(:payment_id) %></th>
-        <td><%= @reservation.payment_id %></td>
-      </tr>
-      <tr>
-        <th><%= Reservation.human_attribute_name(:payment_id) %></th>
-        <td><%= @reservation.payment_id %></td>
+        <th><%= Payment.human_attribute_name(:token) %></th>
+        <td><%= @reservation.payment.try(:token) %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:mail_send_flag) %></th>
