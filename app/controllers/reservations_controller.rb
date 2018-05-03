@@ -100,6 +100,7 @@ class ReservationsController <  ApplicationController
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
       NotificationMailer.reserved(@reservation).deliver_now
+      NotificationMailer.reserved_to_admin(@reservation).deliver_now
       redirect_to thanks_reservations_url
     else
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
