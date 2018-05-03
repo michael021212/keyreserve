@@ -12,10 +12,19 @@ class ReservationsController <  ApplicationController
     end
     checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
     checkout = checkin + cond[:use_hour].to_i.hours
+
+    if checkin < Time.zone.now - 30.minutes
+      flash[:error] = 'ご予約はご利用の30分前までとなります'
+      return render :spot
+    end
+
     @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
 
     @facilities = logged_in? ? @user.login_spots : Facility.logout_spots
     @facilities = @facilities.where.not(id: @exclude_facility_ids)
+    @facilities = @facilities.joins(:shop).
+      where(Shop.arel_table[:opening_time].lteq(checkin)).
+      where(Shop.arel_table[:closing_time].gteq(checkout))
     @facilities = @facilities.where(max_num: cond[:use_num].to_i .. Float::INFINITY) if cond[:use_num].present?
     @facilities = @facilities.order(id: :desc).page(params[:page])
     session[:spot] = cond
@@ -58,6 +67,17 @@ class ReservationsController <  ApplicationController
     session[:spot] = params[:spot] if params[:spot].present?
     @facility = Facility.find(session[:spot]['facility_id'].to_i)
     checkin = Time.zone.parse(session[:spot]['checkin'] + " " + session[:spot]['checkin_time'])
+    checkout = checkin + session[:spot]['use_hour'].to_i.hours
+    if checkin < Time.zone.now - 30.minutes
+      flash[:error] = 'ご予約はご利用の30分前までとなります'
+      return render :new
+    end
+    if checkin.to_s(:time) < @facility.shop.opening_time.to_s(:time) ||
+        checkout.to_s(:time) > @facility.shop.closing_time.to_time.to_s(:time)
+      flash[:error] = 'ご予約時間が営業時間外となります'
+      return render :new
+    end
+
     @price = @facility.calc_price(@user, checkin, session[:spot]['use_hour'].to_i)
       if @user.credit_card.blank? && @user.creditcard?
       @credit_card = current_user.build_credit_card

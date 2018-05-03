@@ -1,12 +1,6 @@
-<div class="mg-page-title parallax">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
-      </div>
-    </div>
-  </div>
-</div>
+<% content_for :middle_title do %>
+  <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
+<% end %>
 <div class="mg-page">
   <div class="container">
     <div class="mg-booking-form">
