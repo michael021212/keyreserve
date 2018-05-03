@@ -17,6 +17,11 @@ class NotificationMailer < ApplicationMailer
     mail(to: reservation.user.email, subject: "【KeyStation Office】施設のご予約を承りました")
   end
 
+  def reserved_to_admin(reservation)
+    @reservation = reservation
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】会議室の予約が入りました")
+  end
+
   def notice_password(reservation)
     @reservation = reservation
     mail(to: reservation.user.email, subject: "【KeyStation Office】ご予約30分前になりました")

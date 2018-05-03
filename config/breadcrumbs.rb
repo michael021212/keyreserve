@@ -62,6 +62,10 @@ crumb :admin_reservations do
   link '予約管理', admin_reservations_path
   parent :admin_root
 end
+crumb :admin_reservation do |reservation|
+  link '予約詳細', admin_reservation_path(reservation)
+  parent :admin_reservations
+end
 
 # admin_corporation_user_contracts
 crumb :admin_corporation_user_contracts do |corporation|

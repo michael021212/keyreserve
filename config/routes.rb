@@ -32,7 +32,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :reservations, only: [:index]
+    resources :reservations, only: [:index, :show]
   end
 
   resource :user do
