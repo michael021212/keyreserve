@@ -28,13 +28,13 @@ class Reservation < ApplicationRecord
     )
   end
 
-  def self.new_from_spot(spot, card)
+  def self.new_from_spot(spot, user)
     checkin = Time.zone.parse(spot['checkin'] + " " + spot['checkin_time'])
     facility = Facility.find(spot['facility_id'].to_i)
-    price = facility.calc_price(card.user, checkin, spot['use_hour'].to_i)
+    price = facility.calc_price(user, checkin, spot['use_hour'].to_i)
     Reservation.new(
       facility_id: spot['facility_id'],
-      user_id: card.user_id,
+      user_id: user.id,
       checkin: checkin,
       checkout: checkin + spot['use_hour'].to_i.hours,
       usage_period: spot['use_hour'],

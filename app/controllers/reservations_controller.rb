@@ -95,7 +95,7 @@ class ReservationsController <  ApplicationController
   end
 
   def create
-    @reservation = Reservation.new_from_spot(session[:spot], @user.credit_card)
+    @reservation = Reservation.new_from_spot(session[:spot], @user)
     if @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
