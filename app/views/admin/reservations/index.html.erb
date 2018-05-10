@@ -3,6 +3,9 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= Reservation.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to '新規追加', new_admin_reservation_path, class: 'btn btn-info' %>
+    </div>
   </div>
   <div class="box-header with-border">
     <%= search_form_for @q, url: admin_reservations_path, class: "form-inline" do |f| %>
@@ -42,7 +45,7 @@
             <tr>
               <td><%= reservation.facility.shop.name %></td>
               <td><%= reservation.facility.name %></td>
-              <td><%= reservation.user.name %></td>
+              <td><%= reservation.user.try(:name) %></td>
               <td><%= reservation.checkin %></td>
               <td><%= "#{reservation.usage_period}時間" %></td>
               <td><%= reservation.state_i18n %></td>

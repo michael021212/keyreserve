@@ -30,7 +30,7 @@
       </tr>
       <tr>
         <th><%= User.human_attribute_name(:name) %></th>
-        <td><%= @reservation.user.name %></td>
+        <td><%= @reservation.user.try(:name) %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:checkin) %></th>
