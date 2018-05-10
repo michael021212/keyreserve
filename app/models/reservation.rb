@@ -4,6 +4,8 @@ class Reservation < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
 
+  attr_accessor :block_flag
+
   before_save :create_payment, if: Proc.new { |reservation| reservation.user_id? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 

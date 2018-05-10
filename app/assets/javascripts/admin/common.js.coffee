@@ -8,3 +8,9 @@ $ ->
   $('#information_info_target_type').on 'change', disp_info_shops
 
   disp_info_shops()
+
+  $('#js-block-flag').change (e) ->
+    if $(this).is(':checked')
+      $('#reservation_user_id').attr('disabled', 'true')
+    else
+      $('#reservation_user_id').removeAttr('disabled')

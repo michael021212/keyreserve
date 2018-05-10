@@ -26,6 +26,7 @@ class Admin::ReservationsController < AdminController
 
   def create
     @reservation = Reservation.new(reservation_params)
+    @reservation.user_id = nil if  @reservation.block_flag == 'true'
     if @reservation.checkin > @reservation.checkout
       flash[:error] = '利用開始時間が利用終了時間を越しています'
       return render :new
@@ -48,7 +49,7 @@ class Admin::ReservationsController < AdminController
 
   def reservation_params
     params.require(:reservation).permit(
-      :facility_id, :user_id, :checkin, :checkout, :state
+      :facility_id, :user_id, :checkin, :checkout, :state, :block_flag
     )
   end
 end
