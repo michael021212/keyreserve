@@ -25,6 +25,7 @@
         <tr>
           <th><%= UserCorp.human_attribute_name(:id) %></th>
           <th><%= UserCorp.human_attribute_name(:name) %></th>
+          <th><%= UserCorp.human_attribute_name(:email) %></th>
           <th><%= UserCorp.human_attribute_name(:tel) %></th>
           <th style="width: 200px;"></th>
         </tr>
@@ -35,6 +36,7 @@
             <tr>
               <td><%= user_corp.id %></td>
               <td><%= user_corp.name %></td>
+              <td><%= user_corp.email %></td>
               <td><%= user_corp.tel %></td>
               <td>
                 <%= link_to '詳細', admin_user_corp_path(user_corp), class: 'btn btn-default' %>
