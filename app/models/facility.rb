@@ -31,7 +31,7 @@ class Facility < ApplicationRecord
     option_min_price = options.minimum(:price)
     min_price = ftps.minimum(:standard_price_per_hour)
     min_price = option_min_price if option_min_price.present? && option_min_price < min_price
-    min_price
+    min_price ||= 0
   end
 
   def self.sync_from_api(ks_corporation_id)

@@ -32,7 +32,12 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :reservations
+    resources :reservations do
+      collection do
+        get :payment
+        get :confirm
+      end
+    end
   end
 
   resource :user do

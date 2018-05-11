@@ -2,8 +2,9 @@
   <%= f.form_group :block_flag do %>'
     <%= f.check_box :block_flag, { id: 'reservation_block_flag' }, true, false %>
   <% end %>
-  <%= f.select :facility_id, Facility.all.collect { |f| [f.name, f.id] } %>
+  <%= f.select :facility_id, Facility.conference_room.collect { |f| [f.name, f.id] } %>
   <%= f.select :user_id, User.all.collect { |u| [u.name, u.id] }, include_blank: true %>
+  <%= f.number_field :num %>
   <%= f.datetime_select :checkin, { use_month_numbers: true }, { class: 'form-control bootstrap-date' } %>
   <%= f.datetime_select :checkout, { use_month_numbers: true }, { class: 'form-control bootstrap-date' } %>
   <%= f.form_group :mail_send_flag do %>
