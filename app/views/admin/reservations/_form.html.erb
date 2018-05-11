@@ -1,6 +1,6 @@
 <%= bootstrap_form_for([:admin, reservation], layout: :horizontal) do |f| %>
-  <%= f.form_group :block_flag, {id: 'js-block-flag-content' } do %>'
-    <%= f.check_box :block_flag, { id: 'js-block-flag' }, true, false %>
+  <%= f.form_group :block_flag do %>'
+    <%= f.check_box :block_flag, { id: 'reservation_block_flag' }, true, false %>
   <% end %>
   <%= f.select :facility_id, Facility.all.collect { |f| [f.name, f.id] } %>
   <%= f.select :user_id, User.all.collect { |u| [u.name, u.id] }, include_blank: true %>
