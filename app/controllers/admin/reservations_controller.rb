@@ -52,7 +52,7 @@ class Admin::ReservationsController < AdminController
       redirect_to payment_admin_reservations_path
     else
       if @reservation.save
-        redirect_to admin_reservations_path, notice: "#{Reservation.model_name.human}を作成しました。"
+        redirect_to admin_reservations_path, notice: "#{Reservation.model_name.human}ブロックを作成しました。"
       else
         render :new
       end
@@ -72,6 +72,8 @@ class Admin::ReservationsController < AdminController
     end
     if @reservation.save
       session[:reservation] = nil
+      NotificationMailer.reserved(@reservation).deliver_now
+      NotificationMailer.reserved_to_admin(@reservation).deliver_now
       redirect_to admin_reservations_path
     else
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
