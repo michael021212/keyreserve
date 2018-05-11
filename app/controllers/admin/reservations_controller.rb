@@ -22,7 +22,11 @@ class Admin::ReservationsController < AdminController
   end
 
   def new
-    @reservation = Reservation.new
+    @reservation = if session[:reservation].present?
+                     Reservation.new(session[:reservation])
+                   else
+                     Reservation.new
+                   end
   end
 
   def create

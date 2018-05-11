@@ -22,11 +22,11 @@
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:checkin) %></th>
-        <td><%= @reservation.checkin %></td>
+        <td><%= datetime_ja(@reservation.checkin) %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:checkout) %></th>
-        <td><%= @reservation.checkout %></td>
+        <td><%= datetime_ja(@reservation.checkout) %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:usage_period) %></th>
@@ -41,8 +41,8 @@
         <td><%= @reservation.user.payway_i18n %></td>
       </tr>
     </table>
-    <div class="row">
-      <div class="col-md-offset-4 col-md-4">
+    <div class="row mt30">
+      <div class="col-md-offset-5 col-md-4">
         <%= link_to "決済する", confirm_admin_reservations_path, class: 'btn btn-primary' %>
       </div>
     </div>
