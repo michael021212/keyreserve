@@ -100,6 +100,8 @@ ja:
         title: 予約編集
       payment:
         title: 支払い詳細
+      confirm:
+        title: 支払い詳細
     users:
       index:
         title: 利用者一覧

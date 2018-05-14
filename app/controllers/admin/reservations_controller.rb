@@ -34,7 +34,7 @@ class Admin::ReservationsController < AdminController
     @reservation.user_id = nil if  @reservation.block_flag?
     @reservation.checkout = @reservation.checkin + @reservation.usage_period.hours
     if @reservation.facility.reservations.in_range(@reservation.checkin .. @reservation.checkout).present?
-      flash[:error] = 'この時間帯のご予約はありましたので、重複のご予約はできません'
+      flash[:error] = 'この時間帯の予約が既にあるので、重複の予約はできません'
       return render :new
     end
     if  @reservation.block_flag == 'true' || reservation_params[:user_id].nil?
@@ -63,18 +63,18 @@ class Admin::ReservationsController < AdminController
 
   def confirm
     if @reservation.user.credit_card.blank? && @reservation.user.creditcard?
-      flash[:error] = 'ご利用者のクレジットカード情報はまだ登録いたしません'
+      flash[:error] = 'ご利用者のクレジットカード情報がまだ登録されていません'
       return render :payment
     end
     if @reservation.user.creditcard? && @reservation.price <= 50
-      flash[:error] = 'クレジットカードで決済する場合に、利用料金は50円以上を超えてください'
+      flash[:error] = 'クレジットカードで決済する場合は、利用料金が50円を超えるようにしてください'
       return render :payment
     end
     if @reservation.save
       session[:reservation] = nil
       NotificationMailer.reserved(@reservation).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
-      redirect_to admin_reservations_path
+      redirect_to admin_reservations_path, notice: "#{Reservation.model_name.human}を作成しました。"
     else
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
       render :new
