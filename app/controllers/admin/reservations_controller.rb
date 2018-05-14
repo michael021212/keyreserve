@@ -31,15 +31,12 @@ class Admin::ReservationsController < AdminController
 
   def create
     @reservation = Reservation.new(reservation_params)
-    if @reservation.checkin > @reservation.checkout
-      flash[:error] = '利用開始時間が利用終了時間を越しています'
-      return render :new
-    end
+    @reservation.user_id = nil if  @reservation.block_flag?
+    @reservation.checkout = @reservation.checkin + @reservation.usage_period.hours
     if @reservation.facility.reservations.in_range(@reservation.checkin .. @reservation.checkout).present?
       flash[:error] = 'この時間帯のご予約はありましたので、重複のご予約はできません'
       return render :new
     end
-    usage_period = ((@reservation.checkout - @reservation.checkin) / 3600).ceil
     if  @reservation.block_flag == 'true' || reservation_params[:user_id].nil?
       @reservation.user_id = nil
     else
@@ -47,9 +44,8 @@ class Admin::ReservationsController < AdminController
       user = user.user_corp.present? ? user.user_corp : user
       @reservation.user_id = user.id
     end
-    price = @reservation.facility.calc_price(@reservation.user, @reservation.checkin, usage_period)
-    @reservation.usage_period = usage_period
     @reservation.state = :confirmed
+    price = @reservation.facility.calc_price(@reservation.user, @reservation.checkin, @reservation.usage_period)
     @reservation.price = price if @reservation.user_id?
     session[:reservation] = @reservation if @reservation.user_id?
     if @reservation.user_id?
@@ -93,7 +89,7 @@ class Admin::ReservationsController < AdminController
 
   def reservation_params
     params.require(:reservation).permit(
-      :facility_id, :user_id, :num, :checkin, :checkout, :state, :block_flag
+      :facility_id, :user_id, :num, :checkin, :usage_period, :state, :block_flag
     )
   end
 end
