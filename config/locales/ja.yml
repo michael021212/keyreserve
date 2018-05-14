@@ -87,7 +87,7 @@ ja:
         num: 利用人数
         payment_id: 決済ID
         mail_send_flag: 予約案内メール送信フラグ
-        block_flag: 予約をブロックする
+        block_flag: ブロック
       shop:
         name: 店舗名
         postal_code: 郵便番号
