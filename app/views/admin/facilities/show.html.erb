@@ -73,6 +73,19 @@
   </div>
 </div>
 
+<!-- 予約状況カレンダー -->
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title">予約状況カレンダー</h4>
+  </div>
+  <div id="reservation_calendar"
+    data-opening=<%="#{time_fmt(@shop.opening_time)}"%>
+    data-closing=<%="#{time_fmt(@shop.closing_time)}"%>
+    data-corporation=<%="#{@corporation.id}"%>
+    data-facility=<%="#{@facility.id}"%>>
+  </div>
+</div>
+
 <!-- 都度課金対象プラン -->
 <div class="box box-default">
   <div class="box-header with-border">
