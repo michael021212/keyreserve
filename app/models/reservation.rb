@@ -1,5 +1,6 @@
 class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
+  acts_as_paranoid
   belongs_to :facility
   belongs_to :user
   belongs_to :payment, optional: true
