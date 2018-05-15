@@ -16,4 +16,14 @@ class Corporation < ApplicationRecord
   def self.sync_from_api
     KeystationService.sync_corporations
   end
+
+  def selectable_keys
+    arrs = []
+    KeystationService.sync_rooms(ks_corporation_id).each do |arr|
+      ks_room_key_ids = FacilityKey.selected(self).pluck(:ks_room_key_id)
+      next if ks_room_key_ids.include?(arr[1])
+      arrs << arr
+    end
+    arrs
+  end
 end

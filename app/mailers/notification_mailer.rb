@@ -24,6 +24,9 @@ class NotificationMailer < ApplicationMailer
 
   def notice_password(reservation)
     @reservation = reservation
+    plan_ids = @reservation.user.user_contracts.pluck(:plan_id)
+    @member_ftps = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
+    @not_member_ftp = reservation.facility.facility_temporary_plans.where.not(standard_price_per_hour: 0).where(plan_id: nil)
     mail(to: reservation.user.email, subject: "【KeyStation Office】ご予約30分前になりました")
   end
 end
