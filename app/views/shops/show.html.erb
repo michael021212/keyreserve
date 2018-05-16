@@ -28,27 +28,32 @@
         </div>
       </div>
     </div>
-    <br/>
     <div class="row">
       <div class="col-md-12">
         <div class="mg-single-room-txt">
-          <h4 class="mg-sec-left-title">施設</h4>
-          <div class="row">
-            <div class="col-md-12">
-              <p>
-                <% Plan.available_in_shop(@shop.id).each_with_index do |plan, i| %>
-                  <div class="col-sm-4">
-                    <div class="mg-feature">
-                      <h5 class='text-center'><%= plan.name %></h5>
-                      <p class='desc-col'><%= truncate(plan.description, length: 100) %></p>
-                      <%= link_to '申し込み', new_shop_plan_user_contract_path(@shop, plan), class: 'btn btn-dark-main center-block' %>
-                    </div>
+          <h3 class="mg-shop-facility-title">施設一覧</h3>
+          <% @shop.facilities.conference_room.each do |facility| %>
+            <div class="mg-available-rooms">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= link_to new_reservation_path(facility_id: facility.id) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
+                </div>
+                <div class="col-sm-8">
+                  <h3 class="mg-avl-room-title">
+                    <%= link_to new_reservation_path(facility_id: facility.id) do %>
+                      <%= facility.name %>
+                    <% end %>
+                    <span>&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</span>
+                  </h3>
+                  <div class='mg-avl-room-desc'>
+                    <i class="fa fa-user"></i> <%= facility.max_num %>人まで<br/>
+                    <%= simple_format facility.description %>
                   </div>
-                  <div class="<%= 'clearfix' if (i+1) % 3 == 0 %>"></div>
-                <% end %>
-              </p>
+                  <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
+                </div>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
       </div>
     </div>
