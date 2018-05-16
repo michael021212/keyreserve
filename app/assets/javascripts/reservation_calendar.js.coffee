@@ -1,14 +1,5 @@
 $ ->
   $('#calendar').fullCalendar schedulerLicenseKey: 'ch_1BgQP1LMwfyPGVhWkF79a6da'
-
-  ajaxRequest = (url) ->
-    $.ajax
-      url: url
-      type: 'GET'
-      dataType: 'json'
-      cache: false
-      data: ''
-
   closing = $('#reservation_calendar').data('closing')
   opening = $('#reservation_calendar').data('opening')
   corporation_id = $('#reservation_calendar').data('corporation')
@@ -19,12 +10,12 @@ $ ->
     schedulerLicenseKey: '0140948959-fcs-1515040346'
     defaultView: 'agendaWeek'
     header:
-      left: 'prev'
+      left: 'prev,next'
       center: 'title'
-      right: 'next'
+      right: 'agendaDay,agendaWeek,month'
+    slotDuration: '01:00:00'
     height: 'auto'
     lang: 'ja'
-    displayEventTime: false
     businessHours: [
       {
         dow: [0, 1, 2, 3, 4, 5, 6]
@@ -32,10 +23,7 @@ $ ->
         end: closing
       }
     ]
-    eventSources: [
-      {
-        events: (start, end, timezone, callback) ->
-          ajaxRequest(url) ->
-            callback events
-      }
-    ]
+    displayEventEnd: {
+      month: true
+    }
+    events: url
