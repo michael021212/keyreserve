@@ -1,0 +1,81 @@
+<% content_for :middle_title do %>
+  <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row mt20">
+      <div class="col-md-6 mb20">
+        <div class="text-center">
+          <%= image_tag @facility.image.main.url, class: 'img-responsive' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mg-booking-form">
+          <%= form_for :spot, url: confirm_reservations_path, html: {class: 'form-horizontal js-calc-price-form'} do |f| %>
+            <%= f.hidden_field :facility_id, value: @facility.id %>
+            <div class="mg-saerch-room">
+              <div class="mg-book-now">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用日</label>
+                  <div class="input-group date mg-check-in col-sm-6">
+                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                    <%= f.text_field :checkin, class: 'js-calc-price form-control', placeholder: 'ご利用日' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用時刻</label>
+                  <div class="input-group col-sm-6">
+                    <%= f.text_field :checkin_time, class: 'js-calc-price form-control timepicker', placeholder: 'ご利用時刻' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用時間</label>
+                  <div class="input-group col-sm-6 col-xs-12">
+                    <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, { include_blank: 'ご利用時間' }, class: 'cs-select cs-skin-elastic js-calc-price' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用人数</label>
+                  <div class="input-group col-sm-6 col-xs-12">
+                    <%= f.select :use_num, (1..20).map{|i| [i.to_s + '名', i]}, { include_blank: 'ご利用人数' }, class: 'cs-select cs-skin-elastic js-calc-price' %>
+                  </div>
+                </div>
+                <div class="price-area form-group">
+                  <label class="col-sm-4 control-label">料金</label>
+                  <div class="input-group col-sm-6 text-right">
+                    <span id="js-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-offset-4 col-md-4">
+                    <button type="submit" class="btn btn-main btn-block">予約する</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active" role="presentation">
+          <a aria-controls="detail" data-toggle="tab" href="#detail" role="tab">詳細</a>
+        </li>
+        <li role="presentation">
+          <a aria-controls="reservation_calendar" data-toggle="tab" href="#reservation_calendar" role="tab">予約状況カレンダー</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="detail" role="tabpanel">
+          <div class="panel panel-warning">
+            <div class="panel-heading"><h4>詳細説明</h4></div>
+            <div class="panel-body"><%= simple_format(@facility.description) %></div>
+          </div>
+        </div>
+        <div class="tab-pane" id="reservation_calendar" role="tabpanel">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

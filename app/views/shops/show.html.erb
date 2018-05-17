@@ -49,7 +49,7 @@
                     <i class="fa fa-user"></i> <%= facility.max_num %>人まで<br/>
                     <%= simple_format facility.description %>
                   </div>
-                  <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
+                  <%= link_to '予約する', shop_facility_path(@shop, facility), class: 'btn btn-main' %>
                 </div>
               </div>
             </div>
