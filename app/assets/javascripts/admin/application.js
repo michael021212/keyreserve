@@ -30,4 +30,4 @@
 //= require admin/user_type_radios
 //= require admin/common
 //= require datetimepicker_fmt
-//= require reservation_calendar
+//= require admin/reservation_calendar
