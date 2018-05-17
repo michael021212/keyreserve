@@ -33,8 +33,12 @@
         <td><%= @reservation.facility.name %></td>
       </tr>
       <tr>
-        <th><%= User.human_attribute_name(:name) %></th>
-        <td><%= @reservation.user.try(:name) %></td>
+        <th><%= Reservation.human_attribute_name(:user_id) %></th>
+        <td><%= @reservation.user.name %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:email) %></th>
+        <td><%= @reservation.user.email %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:checkin) %></th>

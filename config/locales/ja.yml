@@ -78,7 +78,7 @@ ja:
       reservation:
         id: 予約ID
         facility_id: 施設
-        user_id: 利用者
+        user_id: 利用者名
         checkin: 利用開始時間
         checkout: 利用終了時間
         usage_period: 利用時間
