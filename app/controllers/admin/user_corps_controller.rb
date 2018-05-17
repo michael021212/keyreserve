@@ -46,7 +46,7 @@ class Admin::UserCorpsController < AdminController
 
   def user_corp_params
     params.require(:user_corp).permit(
-      :name, :tel, :state, :payway, :max_user_num
+      :email, :name, :tel, :state, :payway, :max_user_num
     )
   end
 end
