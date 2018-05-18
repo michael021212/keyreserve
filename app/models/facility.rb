@@ -52,4 +52,26 @@ class Facility < ApplicationRecord
     sum
   end
 
+  def available_reservation_area(date)
+    arr = []
+    y, m, d = date.split('-')
+    next_date = (DateTime.parse(date) + 1.day).strftime("%Y-%m-%d")
+    reservation = reservations.in_range(date..next_date)
+    total = reservation.count
+    return [[shop.opening_time.change(year: y, month: m, day: d).strftime("%Y-%m-%d %H:%M:%S"), shop.closing_time.change(year: y, month: m, day: d).strftime("%Y-%m-%d %H:%M:%S")]] if total == 0
+    reservation.order(:checkin).each_with_index do |r, i|
+      if i == 0
+        if shop.opening_time.strftime("%H:%M:%S") != r.checkin.strftime("%H:%M:%S")
+          arr << shop.opening_time.change(year: y, month: m, day: d).strftime("%Y-%m-%d %H:%M:%S")
+          arr << r.checkin.strftime("%Y-%m-%d %H:%M:%S")
+        end
+        arr << r.checkout.strftime("%Y-%m-%d %H:%M:%S")
+      else
+        arr << r.checkin.strftime("%Y-%m-%d %H:%M:%S")
+        arr << r.checkout.strftime("%Y-%m-%d %H:%M:%S") unless shop.closing_time.strftime("%H:%M:%S") == r.checkout.strftime("%H:%M:%S")
+      end
+      arr <<  shop.closing_time.change(year: y, month: m, day: d).strftime("%Y-%m-%d %H:%M:%S") if i == total - 1 && shop.closing_time.strftime("%H:%M:%S") != r.checkout.strftime("%H:%M:%S")
+    end
+    arr.each_slice(2).to_a
+  end
 end

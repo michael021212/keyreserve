@@ -4,6 +4,12 @@ class Shops::FacilitiesController <  ApplicationController
 
   def show; end
 
+  def events
+    @start = params[:start]
+    @end = params[:end]
+    @reservations = @facility.reservations.in_range(@start..@end)
+  end
+
   private
 
   def set_shop
