@@ -168,12 +168,13 @@ ActiveRecord::Schema.define(version: 20180514065359) do
 
   create_table "reservations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "facility_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "user_id"
     t.datetime "checkin"
     t.datetime "checkout"
     t.integer "usage_period"
     t.integer "state", default: 0, null: false
     t.integer "price", default: 0, null: false
+    t.boolean "block_flag", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

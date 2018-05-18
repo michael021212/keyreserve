@@ -94,6 +94,10 @@ ja:
         title: 予約一覧
       show:
         title: 予約詳細
+      new:
+        title: 予約登録
+      edit:
+        title: 予約編集
     users:
       index:
         title: 利用者一覧
