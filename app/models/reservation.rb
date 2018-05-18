@@ -1,5 +1,6 @@
 class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
+  acts_as_paranoid
   belongs_to :facility
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
@@ -41,7 +42,7 @@ class Reservation < ApplicationRecord
       state: :confirmed,
       price: price,
       num: spot['use_num'],
-      mail_send_flag: true # TODO 暫定
+      mail_send_flag: false
     )
   end
 

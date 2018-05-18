@@ -113,6 +113,7 @@ ja:
         plan_id: 月額プラン
       facility_temporary_plan:
         plan_id: プラン名
+        ks_room_key_id: 鍵
         standard_price_per_hour: 標準価格（時間課金）
         standard_price_per_day: 標準価格（1日課金）
       facility_temporary_plan_price:
