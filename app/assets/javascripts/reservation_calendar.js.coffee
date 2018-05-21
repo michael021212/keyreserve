@@ -40,4 +40,3 @@ $ ->
       end = moment(end._d).format('YYYY-MM-DD')
       ajaxRequest(url + '?start=' + start + '&end=' + end).then (events) ->
         callback events
-        debugger

@@ -57,4 +57,22 @@ class FacilityTemporaryPlan < ApplicationRecord
     arr << opening_time << closing_time if facility_temporary_plan_prices.blank?
     arr.each_slice(2).to_a
   end
+
+  def self.unit_price_for_user(user, facility, start_t, end_t)
+    plan_ids = user.user_contracts.pluck(:plan_id)
+    includes(:plan, :facility).where(plans: {id: plan_ids}, facilities: {id: facility.id})
+    arr = []
+    i = 1
+    while start_t < end_t do
+      i = 1
+      price_per_hour = facility.min_hourly_price(user, start_t)
+      while (facility.min_hourly_price(user, start_t)) == (facility.min_hourly_price(user, start_t + i.hours)) do
+        break if (start_t + i.hours) >= end_t
+        i += 1
+      end
+      arr << [start_t, start_t + i.hours, facility.min_hourly_price(user, start_t)]
+      start_t += i.hours
+    end
+    arr
+  end
 end
