@@ -40,6 +40,10 @@ gem 'dotenv-rails'
 gem 'config'
 gem 'enum_help'
 
+# Notification
+gem 'exception_notification'
+gem 'slack-notifier'
+
 # Search/Pagination
 gem 'kaminari'
 gem 'ransack'

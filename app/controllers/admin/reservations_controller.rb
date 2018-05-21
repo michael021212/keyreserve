@@ -19,4 +19,32 @@ class Admin::ReservationsController < AdminController
   def show
     @reservation = Reservation.find(params[:id])
   end
+
+  def new
+    @reservation = Reservation.new
+  end
+
+  def create
+    @reservation = Reservation.new(reservation_params)
+    @reservation.user_id = nil if  @reservation.block_flag?
+    @reservation.checkout = @reservation.checkin + @reservation.usage_period.hours
+    if @reservation.facility.reservations.in_range(@reservation.checkin .. @reservation.checkout).present?
+      flash[:error] = 'この時間帯のご予約はできません'
+      return render :new
+    end
+    @reservation.state = :confirmed
+    if @reservation.save
+      redirect_to admin_reservations_path, notice: "#{Reservation.model_name.human}を作成しました。"
+    else
+      render :new
+    end
+  end
+
+  private
+
+  def reservation_params
+    params.require(:reservation).permit(
+      :facility_id, :user_id, :checkin, :usage_period, :state, :block_flag
+    )
+  end
 end

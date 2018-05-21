@@ -13,7 +13,6 @@ class UserCorp < User
     pass = SecureRandom.hex(10)
     self.password = pass
     self.password_confirmation = pass
-    self.email = SecureRandom.hex(10) + '@key-stations.jp'
     self.advertise_notice_flag = false
     self.user_type = :parent_corporation
   end
