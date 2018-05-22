@@ -58,14 +58,13 @@ class FacilityTemporaryPlan < ApplicationRecord
     arr.each_slice(2).to_a
   end
 
-  def self.unit_price_for_user(user, facility, start_t, end_t)
-    plan_ids = user.user_contracts.pluck(:plan_id)
+  def self.unit_price(user, facility, start_t, end_t)
+    plan_ids = [nil]
+    plan_ids.push(user.user_contracts.pluck(:plan_id)) if user.present? && user.user_contracts.present?
     includes(:plan, :facility).where(plans: {id: plan_ids}, facilities: {id: facility.id})
     arr = []
-    i = 1
     while start_t < end_t do
       i = 1
-      price_per_hour = facility.min_hourly_price(user, start_t)
       while (facility.min_hourly_price(user, start_t)) == (facility.min_hourly_price(user, start_t + i.hours)) do
         break if (start_t + i.hours) >= end_t
         i += 1

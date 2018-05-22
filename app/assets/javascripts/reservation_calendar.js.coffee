@@ -1,5 +1,4 @@
 $ ->
-
   ajaxRequest = (url, data) ->
     $.ajax
       url: url
@@ -10,18 +9,15 @@ $ ->
 
   facility_id = $('#user_reservation_calendar').data('facility')
   shop_id = $('#user_reservation_calendar').data('shop')
-  # url = '/shops/' + shop_id + '/facilities/' + facility_id + '/events'
-  # start = $('#user_reservation_calendar').fullCalendar('getView').start.format('M/DD')
-  # end = $('#user_reservation_calendar').fullCalendar('getView').end.format('M/DD')
   url = '/shops/' + shop_id + '/facilities/' + facility_id + '/events'
 
   $('#user_reservation_calendar').fullCalendar
     schedulerLicenseKey: '0140948959-fcs-1515040346'
     defaultView: 'agendaWeek'
     header:
-      left: 'prev,next'
+      left: 'prev'
       center: 'title'
-      right: 'agendaWeek,month'
+      right: 'next'
     slotDuration: '01:00:00'
     height: 'auto'
     lang: 'ja'
@@ -33,10 +29,14 @@ $ ->
         end: '21:00'
       }
     ]
-    # events: url
-    # eventSources: [ { events: (start, end, timezone, callback) -> } ]
     events: (start, end, timezone, callback) ->
       start = moment(start._d).format('YYYY-MM-DD')
       end = moment(end._d).format('YYYY-MM-DD')
       ajaxRequest(url + '?start=' + start + '&end=' + end).then (events) ->
         callback events
+     eventClick: (event, jsEvent, view) ->
+       date = moment(event.start).format('YYYY/MM/DD')
+       time = moment(event.start).format('H:mm')
+       $('#spot_checkin').val(date)
+       $('#spot_checkin_time').val(time)
+       alert("ご利用日: " + date + "\n" + "ご利用時刻: " + time + "\n" + "上記の内容をご予約フォームに入力しました")

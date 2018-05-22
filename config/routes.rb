@@ -55,7 +55,7 @@ Rails.application.routes.draw do
     end
   end
   resources :shops, only: [:index, :show] do
-    resources :facilities, only: [:show], controller: 'shops/facilities'
+    resources :facilities, only: [:new, :create], controller: 'shops/facilities'
   end
   get '/shops/:shop_id/facilities/:id/events' => 'shops/facilities#events'
   resources :facilities, only: [:index, :show]

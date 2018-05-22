@@ -11,7 +11,7 @@
       </div>
       <div class="col-md-6">
         <div class="mg-booking-form">
-          <%= form_for :spot, url: confirm_reservations_path, html: {class: 'form-horizontal js-calc-price-form'} do |f| %>
+          <%= form_for :spot, url: shop_facilities_path(@shop, id: @facility.id), authenticity_token: true, html: {class: 'form-horizontal js-calc-price-form'} do |f| %>
             <%= f.hidden_field :facility_id, value: @facility.id %>
             <div class="mg-saerch-room">
               <div class="mg-book-now">
@@ -74,6 +74,17 @@
           </div>
         </div>
         <div class="tab-pane fade show" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
+          <div class="col-md-12 mt15">
+            <span class='cal-reminder-text'>
+              ※ カレンダーの<span class='cal-reminder-green'>緑色の箇所</span>を押すと、ご予約フォームが自動的に日付を入力する事ができます
+            </span>
+          </div>
+          <div class="col-md-12">
+            <span class='rect-shape rect-today'></span><span class='rect-text'>今日</span>
+            <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
+            <span class='rect-shape rect-full-booking'></span><span class='rect-text'>満室</span>
+            <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
+          </div>
           <div id="user_reservation_calendar"
             data-opening=<%="#{@facility.shop.opening_time}"%>
             data-closing=<%="#{@facility.shop.closing_time}"%>

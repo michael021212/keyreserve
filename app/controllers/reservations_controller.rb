@@ -50,7 +50,7 @@ class ReservationsController <  ApplicationController
     cond = params[:spot]
     if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank? || cond[:checkin_time].blank?
       return render json: {price: ''}
-    end 
+    end
     checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
     price = @facility.calc_price(@user, checkin, cond[:use_hour].to_i)
     render json: {price: number_with_delimiter(price)}

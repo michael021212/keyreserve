@@ -17,4 +17,12 @@ class Shop < ApplicationRecord
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
   end
+
+  def assign_date_for_opening(y, m, d)
+    opening_time.change(year: y, month: m, day: d)
+  end
+
+  def assign_date_for_closing(y, m, d)
+    closing_time.change(year: y, month: m, day: d)
+  end
 end
