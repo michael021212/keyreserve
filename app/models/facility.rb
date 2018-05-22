@@ -78,12 +78,4 @@ class Facility < ApplicationRecord
     end
     arr.each_slice(2).to_a
   end
-
-  def get_temporary_plan_names
-    arr = []
-    facility_temporary_plans.each do |ftp|
-      arr << "#{ftp.try(:plan).try(:name)} "
-    end
-    arr
-  end
 end
