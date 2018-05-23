@@ -11,6 +11,13 @@ $ ->
   shop_id = $('#user_reservation_calendar').data('shop')
   url = '/shops/' + shop_id + '/facilities/' + facility_id + '/events'
 
+  $('#detail-tab').on 'click', ->
+    $('#user_reservation_calendar').hide()
+
+  $('#calendar-tab').on 'click', ->
+    setTimeout "jQuery('#user_reservation_calendar').fullCalendar('render');", 1000
+    $('#user_reservation_calendar').show()
+
   $('#user_reservation_calendar').fullCalendar
     schedulerLicenseKey: '0140948959-fcs-1515040346'
     defaultView: 'agendaWeek'
