@@ -83,4 +83,16 @@ module ApplicationHelper
   def ks_room_key_select(corporation)
     KeystationService.sync_rooms(corporation.ks_corporation_id)
   end
+
+  def set_credit_card(user)
+    user.credit_card.present? ? credit_card_path : new_credit_card_path
+  end
+
+  def current_date(time)
+    time.change(year: Time.zone.now.year, month: Time.zone.now.month, day: Time.zone.now.day)
+  end
+
+  def csv_datetime
+    Time.zone.now.strftime('%Y%m%d%H%M')
+  end
 end

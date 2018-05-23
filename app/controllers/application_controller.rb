@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
   def current_user_corp
     current_user_corp ||= current_user.user_corp
   end
+
+  def not_authenticated
+    redirect_to new_session_url
+  end
 end

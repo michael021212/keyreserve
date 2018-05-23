@@ -4,7 +4,7 @@ class FacilitiesController <  ApplicationController
   before_action :set_facility, only: [:show]
 
   def index
-    @facilities = @user.under_contract_facilities
+    @facilities = @user.available_facilities
   end
 
   def show; end
@@ -16,6 +16,6 @@ class FacilitiesController <  ApplicationController
   end
 
   def set_facility
-    @facility = @user.under_contract_facilities.find(params[:id])
+    @facility = @user.available_facilities.find(params[:id])
   end
 end

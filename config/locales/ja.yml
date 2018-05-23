@@ -6,11 +6,15 @@ ja:
       user: 利用者
       user_corp: 法人
       plan: プラン
+      reservation: 予約
       shop: 店舗
       facility: 施設
       facility_key: 施設鍵
+      facility_plan: 月額対象プラン 
+      facility_temporary_plan: 施設利用都度課金プラン
       user_contract: 契約
       corporation_user: 施設管理者
+      credit_card: クレジットカード
       information: お知らせ
     attributes:
       admin_user:
@@ -32,6 +36,11 @@ ja:
       corporation_user:
         corporation_id: 運営会社
         user_id: 施設管理者
+      credit_card:
+        number: カード番号
+        holder_name: カード名義人
+        exp: 有効期限
+        cvc: セキュリティコード
       user:
         id: ID
         email: メールアドレス
@@ -59,11 +68,26 @@ ja:
         parent_id: 法人
         max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
+      payment:
+        token: 決済ID
       plan:
         name: プラン名
         price: 月額
         description: 説明
         default_flag: 申し込み時選択可能プラン
+      reservation:
+        id: 予約ID
+        facility_id: 施設
+        user_id: 利用者名
+        checkin: 利用開始時間
+        checkout: 利用終了時間
+        usage_period: 利用時間
+        state: 状態
+        price: 利用料金
+        num: 利用人数
+        payment_id: 決済ID
+        mail_send_flag: 予約案内メール送信フラグ
+        block_flag: ブロック
       shop:
         name: 店舗名
         postal_code: 郵便番号
@@ -79,12 +103,23 @@ ja:
         name: 施設名
         image: 施設画像
         description: 施設説明
+        max_num: 最大利用人数
+        facility_type: 施設タイプ（スポット利用時）
       facility_key:
         ks_room_key_id: 鍵
         name: 鍵名称
         password: パスワード
       facility_plan:
-        plan_id: 施設利用可能プラン
+        plan_id: 月額プラン
+      facility_temporary_plan:
+        plan_id: プラン名
+        ks_room_key_id: 鍵
+        standard_price_per_hour: 標準価格（時間課金）
+        standard_price_per_day: 標準価格（1日課金）
+      facility_temporary_plan_price:
+        starting_time: 開始時間
+        ending_time: 終了時間
+        price: 価格
       user_contract:
         corporation_id: 運営者会社
         shop_id: 店舗
@@ -121,6 +156,7 @@ ja:
         parent_corporation: 法人
     user_contract:
       state:
+        applying: 契約申し込み
         under_contract: 契約中
         finished: 契約終了
     information:
@@ -130,6 +166,15 @@ ja:
       info_target_type:
         all_users: 全会員
         shop_users: 店舗契約者
+    facility:
+      facility_type:
+        conference_room: 会議室
+        dropin: ドロップイン
+    reservation:
+      state:
+        unconfirmed: 未確定
+        confirmed: 確定
+        canceled: キャンセル
   date:
     abbr_day_names:
     - 日

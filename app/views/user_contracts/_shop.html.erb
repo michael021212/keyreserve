@@ -1,0 +1,31 @@
+<% if shop.image? %>
+  <%= link_to shop_path(shop) do %>
+    <%= image_tag shop.image_url(:main), class: 'img-responsive' %>
+  <% end %>
+  <% else %>
+    <%= link_to shop_path(shop) do %>
+      <%= image_tag 'noimage.png', class: 'img-responsive' %>
+    <% end %>
+<% end %>
+<table class="table table-striped">
+  <tr>
+    <th><%= Shop.human_attribute_name(:name) %></th>
+    <td><%= shop.name %></td>
+  </tr>
+  <tr>
+    <th><%= Shop.human_attribute_name(:tel) %></th>
+    <td><%= shop.tel %></td>
+  </tr>
+  <tr>
+    <th><%= Shop.human_attribute_name(:address) %></th>
+    <td><%= shop.address %></td>
+  </tr>
+  <tr>
+    <th><%= Shop.human_attribute_name(:opening_time) %></th>
+    <td><%= time_fmt(shop.opening_time) %></td>
+  </tr>
+  <tr>
+    <th><%= Shop.human_attribute_name(:closing_time) %></th>
+    <td><%= time_fmt(shop.closing_time) %></td>
+  </tr>
+</table>

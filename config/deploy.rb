@@ -32,6 +32,8 @@ set :rbenv_ruby, File.read('.ruby-version').strip
 set :rbenv_prefix, "WEBPACKER_COMPILE=false RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_roles, :all
 
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+
 namespace :deploy do
   desc "Restart Application"
   task :restart do

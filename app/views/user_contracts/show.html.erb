@@ -1,0 +1,69 @@
+<% content_for :middle_title do %>
+  <h2>申し込み</h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-booking-form">
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in">
+              <div class="alert alert-success alert-dismissible clearfix">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="mg-alert-icon"><i class="fa fa-check"></i></div>
+                <h3 class="mg-alert-payment">この度は、お申込み頂き、誠にありがとうございます。</h3>
+              </div>
+              <div class="mg-cart-container mg-paid">
+                <aside class="mg-widget mt50" id="mg-room-cart">
+                  <h2 class="mg-widget-title">申し込みの詳細</h2>
+                  <div class="mg-widget-cart">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mg-cart-room">
+                          <%= image_tag @user_contract.shop.image_url(:main), class: 'img-responsive' %>
+                          <h3><%= @user_contract.plan.name %></h3>
+                          <p>
+                            <%= @user_contract.plan.description %>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h3 class="mg-payment-id"><%= @user_contract.shop.name %></h3>
+                        <div class="mg-widget-cart-row">
+                          <strong><%= UserContract.human_attribute_name(:started_on) %></strong>
+                          <span><%= @user_contract.started_on %></span>
+                        </div>
+                        <div class="mg-widget-cart-row">
+                          <strong><%= Shop.human_attribute_name(:opening_time) %></strong>
+                          <span><%= time_fmt(@user_contract.shop.opening_time) %></span>
+                        </div>
+                        <div class="mg-widget-cart-row">
+                          <strong><%= Shop.human_attribute_name(:closing_time) %></strong>
+                          <span><%= time_fmt(@user_contract.shop.closing_time) %></span>
+                        </div>
+                        <div class="mg-widget-cart-row">
+                          <strong><%= Shop.human_attribute_name(:tel) %></strong>
+                          <span><%= tel_fmt(@user_contract.shop.tel) %></span>
+                        </div>
+                        <div class="mg-cart-address">
+                          <strong><%= Shop.human_attribute_name(:address) %></strong>
+                          <address>
+                            <strong><%= @user_contract.shop.postal_code %></strong><br>
+                              <%= @user_contract.shop.address %>
+                          </address>
+                        </div>
+                        <div class="mg-cart-total">
+                          <strong><%= Plan.human_attribute_name(:price) %>:</strong>
+                          <span><%= delimiter_price(@user_contract.plan.price) %></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

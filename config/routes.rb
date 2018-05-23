@@ -17,12 +17,22 @@ Rails.application.routes.draw do
       resources :corporation_users
       resources :user_contracts
       resources :plans
+      resources :facilities, only: [] do
+        resources :facility_plans, only: [:new, :create, :destroy]
+        resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
+          collection do
+            get :resources
+            get :events
+          end
+        end
+      end
       resources :shops, except: [:index] do
         resources :facilities, except: [:index] do
           resources :facility_keys, except: [:index]
         end
       end
     end
+    resources :reservations
   end
 
   resource :user do
@@ -43,7 +53,18 @@ Rails.application.routes.draw do
   end
   resources :shops, only: [:index, :show]
   resources :facilities, only: [:index, :show]
+  resources :reservations, only: [:index, :show, :new, :create] do
+    collection do
+      get :price
+      get :spot
+      post :confirm
+      get :confirm
+      post :credit_card
+      get :thanks
+    end
+  end
   resources :plans
+  resource :credit_card, only: [:new, :create, :show, :edit, :update]
   resources :invitations, only: [:index, :new, :create]
   resources :information, only: [:index, :show]
 

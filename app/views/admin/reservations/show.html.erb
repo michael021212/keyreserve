@@ -1,0 +1,73 @@
+<% breadcrumb :admin_reservation, @reservation %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Reservation.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", admin_reservations_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Reservation.human_attribute_name(:id) %></th>
+        <td><%= @reservation.id %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:block_flag) %></th>
+        <td><%= @reservation.block_flag? ? '◯' : '' %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:state) %></th>
+        <td><%= @reservation.state_i18n %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:name) %></th>
+        <td><%= @reservation.facility.shop.corporation.name %></td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:name) %></th>
+        <td><%= @reservation.facility.shop.name %></td>
+      </tr>
+      <tr>
+        <th><%= Facility.human_attribute_name(:name) %></th>
+        <td><%= @reservation.facility.name %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:user_id) %></th>
+        <td><%= @reservation.user.name %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:email) %></th>
+        <td><%= @reservation.user.email %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:checkin) %></th>
+        <td><%= datetime_ja @reservation.checkin %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:checkout) %></th>
+        <td><%= datetime_ja @reservation.checkout %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:usage_period) %></th>
+        <td><%= @reservation.usage_period %>時間</td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:num) %></th>
+        <td><%= @reservation.num %>名</td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:price) %></th>
+        <td><%= number_with_delimiter @reservation.price %>円</td>
+      </tr>
+      <tr>
+        <th><%= Payment.human_attribute_name(:token) %></th>
+        <td><%= @reservation.payment.try(:token) %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:mail_send_flag) %></th>
+        <td><%= @reservation.mail_send_flag? ? '◯' : '' %></td>
+      </tr>
+    </table>
+  </div>
+</div>

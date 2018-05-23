@@ -1,0 +1,69 @@
+<% breadcrumb :admin_reservations %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Reservation.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to '新規追加', new_admin_reservation_path, class: 'btn btn-info' %>
+    </div>
+  </div>
+  <div class="box-header with-border">
+    <%= search_form_for @q, url: admin_reservations_path, class: "form-inline" do |f| %>
+      <div class='input-group date datepicker'>
+        <%= f.text_field :checkin_during_month, data: { :date_format => 'YYYY/MM' }, :class => 'form-control monthPicker', placeholder: '年月を指定' %>
+           <span class="input-group-addon">
+             <span class="fa fa-calendar"></span>
+           </span>
+      </div>
+      <%= f.search_field :facility_shop_corporation_name_cont, placeholder: "運営会社名", class: "form-control" %>
+      <%= f.search_field :facility_shop_name_cont, placeholder: "店舖名", class: "form-control" %>
+      <%= f.search_field :facility_name_cont, placeholder: "施設名", class: "form-control" %>
+      <%= f.search_field :user_name_cont, placeholder: "ユーザ又は法人名", class: "form-control" %>
+      <%= f.select :state_eq, options_for_select([['未確定', 0], ['確定', 1], ['キャンセル', 9]], selected: Reservation.confirmed_to_i),{ include_blank: {} }, class: "form-control" %>
+      <% q = params[:q] || {} %>
+      <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
+    <% end %>
+    <%= link_to "CSVダウンロード", admin_reservations_path(q: request.params[:q], format: 'csv'), class: "btn btn-default" %>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= Reservation.human_attribute_name(:block_flag) %></th>
+          <th><%= Shop.human_attribute_name(:name) %></th>
+          <th><%= Facility.human_attribute_name(:name) %></th>
+          <th>名前</th>
+          <th><%= Reservation.human_attribute_name(:checkin) %></th>
+          <th><%= Reservation.human_attribute_name(:usage_period) %></th>
+          <th><%= Reservation.human_attribute_name(:state) %></th>
+          <th><%= Reservation.human_attribute_name(:price) %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @reservations.present? %>
+          <% @reservations.each do |reservation| %>
+            <tr>
+              <td><%= reservation.block_flag? ? '◯' : '' %></td>
+              <td><%= reservation.facility.shop.name %></td>
+              <td><%= reservation.facility.name %></td>
+              <td><%= reservation.user.try(:name) %></td>
+              <td><%= reservation.checkin %></td>
+              <td><%= "#{reservation.usage_period}時間" %></td>
+              <td><%= reservation.state_i18n %></td>
+              <td><%= delimiter_price(reservation.price) %></td>
+              <td><%= link_to '詳細', admin_reservation_path(reservation), class: 'btn btn-default' %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= Reservation.model_name.human %>はありません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @reservations %>
+  </div>
+</div>

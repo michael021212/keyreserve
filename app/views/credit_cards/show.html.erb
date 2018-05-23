@@ -1,0 +1,23 @@
+<% content_for :middle_title do %>
+  <h2><%= CreditCard.model_name.human %>情報</h2>
+<% end %>
+<div class="mg-page">
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8 col-xs-12">
+      <table class="table mb50">
+        <tr>
+          <th><%= CreditCard.human_attribute_name(:holder_name) %>
+          <td><%= @credit_card.holder_name  %></td>
+        </tr>
+        <tr>
+          <th><%= CreditCard.human_attribute_name(:number) %></th>
+          <td><%= @credit_card.full_card_no  %></td>
+        </tr>
+      </table>
+      <div class="mb50 text-center">
+        <%= link_to "変更", edit_credit_card_path, class: 'btn btn-dark-main' %>
+      </div>
+    </div>
+  </div>
+</div>

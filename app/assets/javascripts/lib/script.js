@@ -277,6 +277,10 @@
 		startDate: "dateToday",
 		autoclose: true
 	});
+	$('.input-group.mg-check-in-time').wickedpicker({
+    twentyFour: true,
+    minutesInterval: 60
+  });
 
 	$('.input-group.mg-check-in').on('hide', function (e) {
 

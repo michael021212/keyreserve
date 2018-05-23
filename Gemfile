@@ -40,6 +40,10 @@ gem 'dotenv-rails'
 gem 'config'
 gem 'enum_help'
 
+# Notification
+gem 'exception_notification'
+gem 'slack-notifier'
+
 # Search/Pagination
 gem 'kaminari'
 gem 'ransack'
@@ -65,6 +69,9 @@ gem 'carrierwave'
 gem 'carrierwave-aws'
 gem 'carrierwave-data-uri'
 gem 'rmagick'
+
+# Credit Card
+gem 'stripe'
 
 gem 'nested_form'
 gem 'geocoder'

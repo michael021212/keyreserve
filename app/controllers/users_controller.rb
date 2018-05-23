@@ -19,7 +19,9 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html do
           auto_login(@user)
-          redirect_to root_path, notice: "#{User.model_name.human}を作成しました。"
+          target = session[:return_to_url].present? ? session[:return_to_url] : root_url
+          session[:return_to_url] = nil
+          redirect_to target, notice: "#{User.model_name.human}を作成しました。"
         end
       end
     else
@@ -46,7 +48,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :email, :password, :password_confirmation, :name, :tel, :state, :payway, :user_type, :parent_id,
-      :advertise_notice_flag
+      :advertise_notice_flag, :stripe_customer_id
     )
   end
 end
