@@ -46,3 +46,6 @@ $ ->
        $('#spot_checkin').val(date)
        $('#spot_checkin_time').val(time)
        alert("ご利用日: " + date + "\n" + "ご利用時刻: " + time + "\n" + "上記の内容を上方のご予約フォームに入力しました")
+
+  $('#calendar-tab').on 'click', ->
+    $('#user_reservation_calendar').fullCalendar('refetchEvents')
