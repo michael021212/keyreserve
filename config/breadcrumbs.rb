@@ -70,7 +70,10 @@ crumb :new_admin_reservation do |reservation|
   link '予約新規登録', new_admin_reservation_path
   parent :admin_reservations
 end
-
+crumb :payment_admin_reservations do
+  link '支払い詳細', payment_admin_reservations_path
+  parent :new_admin_reservation
+end
 # admin_corporation_user_contracts
 crumb :admin_corporation_user_contracts do |corporation|
   link '契約一覧', admin_corporation_user_contracts_path
