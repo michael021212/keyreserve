@@ -49,7 +49,7 @@ class Reservation < ApplicationRecord
   def self.to_csv(options)
     csv_data = CSV.generate(options) do |csv|
       csv << csv_column_names
-      all.find_each do |row|
+      all.each do |row|
         csv << row.csv_column_values
       end
     end
@@ -62,7 +62,7 @@ class Reservation < ApplicationRecord
       facility.shop.corporation.name,
       facility.shop.name,
       facility.name,
-      user.name,
+      user.try(:name),
       checkin.strftime('%Y/%m/%d %H:%M'),
       checkout.strftime('%Y/%m/%d %H:%M'),
       "#{usage_period}時間",
