@@ -52,7 +52,6 @@ class Reservation < ApplicationRecord
       ids = all.order('created_at DESC').pluck(:id)
       # 予約は1000筆ずつに読み込みします
       ids.each_slice(1000) do |id|
-        binding.pry
         find(id).each do |row|
           csv << row.csv_column_values
         end
