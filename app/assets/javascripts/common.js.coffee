@@ -30,7 +30,7 @@ $ ->
     downArrow: 'arrow-font angle-down'
     twentyFour: true
     title: 'ご利用時刻'
-    minutesInterval: 60
+    minutesInterval: 30
     afterShow: ->
       if $(el).hasClass('js-calc-price')
         calc_price()
