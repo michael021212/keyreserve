@@ -61,6 +61,7 @@ class FacilityTemporaryPlan < ApplicationRecord
 
   def selectable_keys
     ks_room_key_ids = FacilityTemporaryPlan.exclude_ks_room_key_ids(facility.id)
+    ks_room_key_ids.delete(ks_room_key_id) if ks_room_key_id.present?
     facility.facility_keys.where.not(ks_room_key_id: ks_room_key_ids)
   end
 end
