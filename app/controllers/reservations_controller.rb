@@ -50,7 +50,7 @@ class ReservationsController <  ApplicationController
     cond = params[:spot]
     if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank? || cond[:checkin_time].blank?
       return render json: {price: ''}
-    end 
+    end
     checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
     price = @facility.calc_price(@user, checkin, cond[:use_hour].to_i)
     render json: {price: number_with_delimiter(price)}
@@ -95,11 +95,12 @@ class ReservationsController <  ApplicationController
   end
 
   def create
-    @reservation = Reservation.new_from_spot(session[:spot], @user)
+    @reservation = Reservation.new_from_spot(session[:spot], @user, current_user)
     if @reservation.save
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
-      NotificationMailer.reserved(@reservation).deliver_now
+      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now
+      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
       redirect_to thanks_reservations_url
     else

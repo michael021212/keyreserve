@@ -12,9 +12,11 @@ class NotificationMailer < ApplicationMailer
     mail(to: email, subject: "【#{Settings.sitename}】#{user.name}様からのご招待")
   end
 
-  def reserved(reservation)
+  def reserved(reservation, user_id)
+    user = User.find(user_id)
+    return if user.email.blank?
     @reservation = reservation
-    mail(to: reservation.user.email, subject: "【KeyStation Office】施設のご予約を承りました")
+    mail(to: user.email, subject: "【KeyStation Office】施設のご予約を承りました")
   end
 
   def reserved_to_admin(reservation)
