@@ -114,6 +114,8 @@ ja:
       facility_temporary_plan:
         plan_id: プラン名
         ks_room_key_id: 鍵
+        guide_mail: 案内メール
+        guide_file: 案内ファイル
         standard_price_per_hour: 標準価格（時間課金）
         standard_price_per_day: 標準価格（1日課金）
       facility_temporary_plan_price:
@@ -317,6 +319,17 @@ ja:
       on_or_before: "%{attribute}は %{restriction} 以前を指定してください。"
       after: "%{attribute}は %{restriction} より後を指定してください。"
       on_or_after: "%{attribute}は %{restriction} 以降を指定してください。"
+      carrierwave_processing_error: 処理できませんでした
+      carrierwave_integrity_error: は許可されていないファイルタイプです
+      carrierwave_download_error: はダウンロードできません
+      extension_whitelist_error: "%{extension}ファイルのアップロードは許可されていません。アップロードできるファイルタイプ: %{allowed_types}"
+      extension_blacklist_error: "%{extension}ファイルのアップロードは許可されていません。アップロードできないファイルタイプ: %{prohibited_types}"
+      content_type_whitelist_error: "%{content_type}ファイルのアップロードは許可されていません"
+      content_type_blacklist_error: "%{content_type}ファイルのアップロードは許可されていません"
+      rmagick_processing_error: "rmagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
+      mini_magick_processing_error: "MiniMagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
+      min_size_error: "ファイルを%{min_size}バイト以上のサイズにしてください"
+      max_size_error: "ファイルを%{max_size}バイト以下のサイズにしてください"
     template:
       body: 次の項目を確認してください。
       header:
