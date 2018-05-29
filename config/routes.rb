@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       resources :user_contracts
       resources :plans
       resources :facilities, only: [] do
+        member do
+          get :events
+        end
         resources :facility_plans, only: [:new, :create, :destroy]
         resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
           collection do
