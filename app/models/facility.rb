@@ -21,6 +21,12 @@ class Facility < ApplicationRecord
 
   scope(:belongs_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
 
+  scope :order_by_min_price, -> (facilities, user) {
+    @facilities = facilities.sort_by { |f| f.min_hourly_price(user) }
+    sanitized_id_string = @facilities.map {|f| f[:id]}.join(",")
+    where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
+  }
+
   def min_hourly_price(user, target_time=nil)
     plan_ids = user.present? ? user.user_contracts.map(&:plan_id) : []
     ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
@@ -51,5 +57,4 @@ class Facility < ApplicationRecord
     end
     sum
   end
-
 end
