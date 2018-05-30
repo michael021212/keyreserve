@@ -106,7 +106,8 @@ ActiveRecord::Schema.define(version: 20180529075109) do
     t.bigint "facility_id", null: false
     t.bigint "plan_id"
     t.integer "ks_room_key_id", null: false
-    t.text "guide_mail"
+    t.string "guide_mail_title"
+    t.text "guide_mail_content"
     t.string "guide_file"
     t.integer "standard_price_per_hour", null: false
     t.integer "standard_price_per_day", null: false

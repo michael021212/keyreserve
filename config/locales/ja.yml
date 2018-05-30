@@ -114,7 +114,8 @@ ja:
       facility_temporary_plan:
         plan_id: プラン名
         ks_room_key_id: 鍵
-        guide_mail: 案内メール
+        guide_mail_title: 案内メールタイトル
+        guide_mail_content: 案内メール内容
         guide_file: 案内ファイル
         standard_price_per_hour: 標準価格（時間課金）
         standard_price_per_day: 標準価格（1日課金）
