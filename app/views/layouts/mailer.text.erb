@@ -1,4 +1,2 @@
 <%= yield %>
-<%# 都度課金対象プランで添付ファイル情報 %>
-<%= render 'shared/mailer_attach_guide_file' if @ftp.try(:guide_file).present? %>
 <%= render 'shared/mailer_footer' %>
