@@ -8,6 +8,6 @@ every 5.minutes do
 end
 
 # TODO プランごとに鍵の設定が対応出来たら
-# every 5.minutes do
-#   rake 'reservation:notice_password_mail'
-# end
+every 5.minutes do
+  rake 'reservation:notice_password_mail'
+end

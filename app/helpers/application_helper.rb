@@ -95,4 +95,8 @@ module ApplicationHelper
   def csv_datetime
     Time.zone.now.strftime('%Y%m%d%H%M')
   end
+
+  def default_guide_mail
+    "ご利用につきましては、当オフィス営業時間外のため、まずファミリーマート新橋駅西店2階にて会議室の鍵の受け渡しが必要になります。詳しくは、添付ファイルよりご確認ください。\nなお、鍵のピックアップに必要なパスワード（ご利用ガイド中のKEY STATIごONで入力いただくパスワード）は、こちらになります..."
+  end
 end

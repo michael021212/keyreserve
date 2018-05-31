@@ -1,13 +1,13 @@
 <%= bootstrap_nested_form_for([:admin, corporation, facility, facility_temporary_plan]) do |f| %>
   <%= f.collection_select :plan_id, @corporation.plans.all, :id, :name, {include_blank: '非会員' } %>
   <%= f.select :ks_room_key_id, options_for_select(f.object.selectable_keys.map {|f| [f.name, f.ks_room_key_id]}, selected: f.object.ks_room_key_id), include_blank: true, help: '鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください' %>
-  <%= f.text_field :guide_mail_title %>
-  <%= f.text_area :guide_mail_content, rows: 10, id: 'guide-mail-content' %>
+  <%= f.text_field :guide_mail_title, help: '「空」の場合はデフォルトのタイトル【この度は、KEY STATION OFFICE会議室のご予約誠にありがとうございます】になります' %>
+  <%= f.text_area :guide_mail_content, rows: 10, id: 'guide-mail-content', help: '「空」の場合はデフォルトの案内メール文書になります', placeholder: default_guide_mail %>
   <div class='form-group'>
     <%= link_to 'パスワード挿入', '#', class: 'btn btn-xs btn-info', id: 'insert-pwd' %>
     <span class="help-block">
       パスワードを表示されたい箇所に、【パスワード挿入】ボタンを押してください
-    </span> 
+    </span>
   </div>
   <%= f.file_field :guide_file, help: '新しいファイルをアップロードすると元のファイルが上書きされるので、ご注意ください' %>
   <div class='form-group'>
