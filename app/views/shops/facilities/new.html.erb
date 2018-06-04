@@ -1,0 +1,98 @@
+<% content_for :middle_title do %>
+  <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row mt20">
+      <div class="col-md-6 mb20">
+        <div class="text-center">
+          <%= image_tag @facility.image.main.url, class: 'img-responsive' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mg-booking-form">
+          <%= form_for :spot, url: shop_facilities_path(@shop, id: @facility.id), authenticity_token: true, html: {class: 'form-horizontal js-calc-price-form'} do |f| %>
+            <%= f.hidden_field :facility_id, value: @facility.id %>
+            <div class="mg-saerch-room">
+              <div class="mg-book-now">
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用日</label>
+                  <div class="input-group date mg-check-in col-sm-6">
+                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                    <%= f.text_field :checkin, class: 'js-calc-price form-control', placeholder: 'ご利用日' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用時刻</label>
+                  <div class="input-group col-sm-6">
+                    <%= f.text_field :checkin_time, class: 'js-calc-price form-control timepicker', placeholder: 'ご利用時刻' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用時間</label>
+                  <div class="input-group col-sm-6 col-xs-12">
+                    <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, { include_blank: 'ご利用時間' }, class: 'cs-select cs-skin-elastic js-calc-price' %>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-4 control-label">ご利用人数</label>
+                  <div class="input-group col-sm-6 col-xs-12">
+                    <%= f.select :use_num, (1..20).map{|i| [i.to_s + '名', i]}, { include_blank: 'ご利用人数' }, class: 'cs-select cs-skin-elastic js-calc-price' %>
+                  </div>
+                </div>
+                <div class="price-area form-group">
+                  <label class="col-sm-4 control-label">料金</label>
+                  <div class="input-group col-sm-6 text-right">
+                    <span id="js-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-offset-4 col-md-4">
+                    <button type="submit" class="btn btn-main btn-block">予約する</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item active">
+          <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true">詳細</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="calendar-tab" data-toggle="tab" href="#calendar" role="tab" aria-controls="calendar" aria-selected="false">予約状況カレンダー</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane active" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+          <div class="panel panel-warning">
+            <div class="panel-heading"><h4>詳細説明</h4></div>
+            <div class="panel-body"><%= simple_format(@facility.description) %></div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="calendar" role="tabpanel" aria-labelledby="calendar-tab">
+          <div class="col-md-12 mt15">
+            <span class='cal-reminder-text'>
+              ※ カレンダーの<span class='cal-reminder-green'>緑色の箇所</span>を押すと、ご予約フォームが自動的に日付を入力する事ができます
+            </span>
+          </div>
+          <div class="col-md-12">
+            <span class='rect-shape rect-today'></span><span class='rect-text'>今日</span>
+            <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
+            <span class='rect-shape rect-full-booking'></span><span class='rect-text'>満室</span>
+            <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
+          </div>
+          <div id="user_reservation_calendar"
+            data-opening=<%="#{@facility.shop.opening_time}"%>
+            data-closing=<%="#{@facility.shop.closing_time}"%>
+            data-shop=<%="#{@facility.shop.id}"%>
+            data-facility=<%="#{@facility.id}"%>>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 class Facility < ApplicationRecord
+
   acts_as_paranoid
   belongs_to :shop
   has_many :facility_plans, dependent: :destroy
@@ -28,7 +29,7 @@ class Facility < ApplicationRecord
   }
 
   def min_hourly_price(user, target_time=nil)
-    plan_ids = user.present? ? user.user_contracts.map(&:plan_id) : []
+    plan_ids = user.present? ? user.user_contracts.pluck(:plan_id) : []
     ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
       where(plan_id: nil).or(self.facility_temporary_plans.where(plan_id: plan_ids))
     options = FacilityTemporaryPlanPrice.where.not(price: 0).where(facility_temporary_plan_id: ftps.pluck(:id).push(nil))
@@ -72,5 +73,31 @@ class Facility < ApplicationRecord
   def self.logout_spots
     facility_ids = FacilityTemporaryPlan.where(plan_id: nil).map(&:facility_id)
     Facility.where(id: facility_ids)
+  end
+
+  def available_reservation_area(date)
+    y, m, d = date.split('-')
+    next_date = (DateTime.parse(date) + 1.day).to_s(:date)
+    reservation = reservations.in_range(date..next_date)
+    total = reservation.size
+    opening_date_and_time = shop.assign_date_for_opening(y, m, d).to_s(:datetime)
+    closing_date_and_time = shop.assign_date_for_closing(y, m, d).to_s(:datetime)
+
+    arr = []
+    return [[opening_date_and_time, closing_date_and_time]] if total == 0
+    reservation.order(:checkin).each_with_index do |r, i|
+      if i == 0
+        if shop.opening_time.to_s(:time) != r.checkin.to_s(:time)
+          arr << opening_date_and_time
+          arr << r.checkin.to_s(:datetime)
+        end
+        arr << r.checkout.to_s(:datetime) if shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
+      else
+        arr << r.checkin.to_s(:datetime)
+        arr << r.checkout.to_s(:datetime) if shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
+      end
+      arr << closing_date_and_time if i == total - 1 && shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
+    end
+    arr.each_slice(2).to_a
   end
 end
