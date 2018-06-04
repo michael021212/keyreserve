@@ -65,7 +65,7 @@ gem 'seed-fu'
 gem 'faraday'
 
 # Upload
-gem 'carrierwave'
+gem 'carrierwave', '~> 1.0'
 gem 'carrierwave-aws'
 gem 'carrierwave-data-uri'
 gem 'rmagick'

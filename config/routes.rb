@@ -74,6 +74,7 @@ Rails.application.routes.draw do
       get :thanks
     end
   end
+  resource :personal_identification
   resources :plans
   resource :credit_card, only: [:new, :create, :show, :edit, :update]
   resources :invitations, only: [:index, :new, :create]

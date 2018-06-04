@@ -4,6 +4,9 @@
 <div class="container sp-center">
   <div class="panel panel-default">
     <div class="panel-body mt40">
+      <div class="mg-sec-title">
+        <h3>アカウント情報</h3>
+      </div>
       <%= bootstrap_form_for @user, url: user_path, layout: :horizontal, label_col: 'col-md-5', control_col: 'col-md-7' do |f| %>
         <%= f.static_control :name %>
         <%= f.static_control :tel %>
@@ -18,6 +21,12 @@
           </div>
         </div>
       <% end %>
+      <div class="mg-sec-title mt80">
+        <h3>本人確認</h3>
+      </div>
+      <%= current_user.personal_identification.verified? ? '認証' : '未認証' %>
+    </div>
+    <div class="panel-body mt40">
     </div>
   </div>
 </div>

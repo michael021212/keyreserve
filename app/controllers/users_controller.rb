@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_personal_identification, only: [:edit]
 
   def new
     logout if logged_in?
@@ -43,6 +44,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = current_user
+  end
+
+  def set_personal_identification
+    @personal_identification = current_user.build_personal_identification
   end
 
   def user_params
