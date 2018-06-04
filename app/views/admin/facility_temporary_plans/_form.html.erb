@@ -6,9 +6,9 @@
   <%= f.form_group :facility_temporary_plan_prices, label: {text: "施設利用都度課金プラン時間帯価格（標準価格以外の価格）"} do %>
     <%= f.fields_for :facility_temporary_plan_prices do |pp| %>
       <div class="form-inline mb20">
-        <%= pp.time_select :starting_time, { discard_minute: true, default: { minute: '00' }, include_blank: true, hide_label: true } %>時〜
-        <%= pp.time_select :ending_time, { discard_minute: true, default: { minute: '00' }, include_blank: true, hide_label: true } %>時
-        <span class='price-text-field mr50'>
+        <%= pp.time_select :starting_time, { minute_step: 30, include_blank: true, hide_label: true } %> 〜
+        <%= pp.time_select :ending_time, { minute_step: 30, include_blank: true, hide_label: true } %>
+        <span class='price-text-field mr50 ml20'>
           <%= pp.text_field :price, hide_label: true %>円
         </span>
         <%= pp.link_to_remove "削除", :confirm => t('cargo_iem.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>

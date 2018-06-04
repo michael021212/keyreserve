@@ -77,8 +77,12 @@ class Admin::ReservationsController < AdminController
     end
     if @reservation.save
       session[:reservation] = nil
+<<<<<<< HEAD
       NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now unless @reservation.user_id == @reservation.reservation_user_id
+=======
+      NotificationMailer.reserved(@reservation).deliver_now
+>>>>>>> feature/ISSUE-130
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
       redirect_to admin_reservations_path, notice: "#{Reservation.model_name.human}を作成しました。"
     else
@@ -95,7 +99,11 @@ class Admin::ReservationsController < AdminController
 
   def reservation_params
     params.require(:reservation).permit(
+<<<<<<< HEAD
       :facility_id, :user_id, :reservation_user_id, :num, :checkin, :usage_period, :state, :block_flag
+=======
+      :facility_id, :user_id, :num, :checkin, :usage_period, :state, :block_flag
+>>>>>>> feature/ISSUE-130
     )
   end
 end

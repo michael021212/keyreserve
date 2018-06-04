@@ -40,6 +40,31 @@ class Facility < ApplicationRecord
     min_price ||= 0
   end
 
+  def min_half_hourly_price(user, target_time=nil)
+    plan_ids = user.present? ? user.user_contracts.map(&:plan_id) : []
+    ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
+      where(plan_id: nil).or(self.facility_temporary_plans.where(plan_id: plan_ids))
+    options = FacilityTemporaryPlanPrice.where.not(price: 0).where(facility_temporary_plan_id: ftps.pluck(:id).push(nil))
+    al = FacilityTemporaryPlanPrice.arel_table
+    options = options.where(al[:starting_time].lteq(target_time.to_s(:time))).where(al[:ending_time].gt(target_time.to_s(:time))) if target_time.present?
+    option_min_price = options.minimum(:price)
+    min_price = ftps.minimum(:standard_price_per_hour)
+    min_price = option_min_price if option_min_price.present? && option_min_price < min_price
+    min_price ||= 0
+    (min_price / 2) unless min_price.zero?
+  end
+
+  def calc_price(user, start, usage_hour)
+    sum = 0
+    while(usage_hour > 0) do
+      min = self.min_half_hourly_price(user, start)
+      sum = sum + min
+      start = start + 0.5.hours
+      usage_hour -= 0.5
+    end
+    sum
+  end
+
   def self.sync_from_api(ks_corporation_id)
     KeystationService.sync_rooms(ks_corporation_id)
   end
@@ -47,14 +72,5 @@ class Facility < ApplicationRecord
   def self.logout_spots
     facility_ids = FacilityTemporaryPlan.where(plan_id: nil).map(&:facility_id)
     Facility.where(id: facility_ids)
-  end
-
-  def calc_price(user, start, hour)
-    sum = 0
-    (1..hour).each do |i|
-      min = self.min_hourly_price(user, start + (i - 1).hours)
-      sum = sum + min
-    end
-    sum
   end
 end
