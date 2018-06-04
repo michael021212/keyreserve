@@ -3,7 +3,9 @@ class Admin::UserContractsController < AdminController
   before_action :set_user_contract, only: [:show, :edit, :update, :destroy]
 
   def index
-    @user_contracts = @corporation.user_contracts.order(id: :desc).page(params[:page])
+    @q = @corporation.user_contracts.ransack(params[:q])
+    @user_contracts = @q.result.includes(:user)
+    @user_contracts = @user_contracts.order(id: :desc).page(params[:page])
   end
 
   def new

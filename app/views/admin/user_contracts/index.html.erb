@@ -8,6 +8,13 @@
       <%= link_to '戻る', admin_corporation_path(@corporation), class: 'btn btn-default' %>
     </div>
   </div>
+  <div class="box-header with-border">
+    <%= search_form_for @q, url: admin_corporation_user_contracts_path(@corporation), class: "form-inline" do |f| %>
+      <%= f.search_field :user_name_cont, placeholder: "ユーザ名", class: "form-control" %>
+      <%= f.search_field :plan_name_cont, placeholder: "プラン名", class: "form-control" %>
+      <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
+    <% end %>
+  </div>
   <div class="box-body">
     <table class="table table-striped">
       <thead>
