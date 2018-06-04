@@ -35,7 +35,7 @@ class ReservationsController <  ApplicationController
       where(Shop.arel_table[:opening_time].lteq(checkin)).
       where(Shop.arel_table[:closing_time].gteq(checkout))
     @facilities = @facilities.where(max_num: cond[:use_num].to_i .. Float::INFINITY) if cond[:use_num].present?
-    @facilities = @facilities.order(id: :desc).page(params[:page])
+    @facilities = Facility.order_by_min_price(@facilities, current_user).page(params[:page])
     session[:spot] = cond
   end
 
