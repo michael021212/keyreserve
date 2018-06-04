@@ -31,6 +31,10 @@ class Admin::ReservationsController < AdminController
   def create
     @reservation = Reservation.new(reservation_params)
     @reservation.user_id = nil if  @reservation.block_flag?
+    if @reservation.usage_period.blank?
+      flash[:error] = '利用時間を入力してください'
+      return render :new
+    end
     @reservation.checkout = @reservation.checkin + @reservation.usage_period.hours
     if @reservation.facility.reservations.in_range(@reservation.checkin .. @reservation.checkout).present?
       flash[:error] = 'この時間帯の予約が既にあるので、重複の予約はできません'
@@ -38,8 +42,10 @@ class Admin::ReservationsController < AdminController
     end
     if  @reservation.block_flag == 'true' || reservation_params[:user_id].nil?
       @reservation.user_id = nil
+      @reservation.reservation_user_id = nil
     else
-      user = User.find(reservation_params[:user_id])
+      @reservation.reservation_user_id = @reservation.user_id
+      user = User.find(@reservation.user_id)
       user = user.user_corp.present? ? user.user_corp : user
       @reservation.user_id = user.id
     end
@@ -71,7 +77,8 @@ class Admin::ReservationsController < AdminController
     end
     if @reservation.save
       session[:reservation] = nil
-      NotificationMailer.reserved(@reservation).deliver_now
+      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now
+      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now unless @reservation.user_id == @reservation.reservation_user_id
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
       redirect_to admin_reservations_path, notice: "#{Reservation.model_name.human}を作成しました。"
     else
@@ -88,7 +95,7 @@ class Admin::ReservationsController < AdminController
 
   def reservation_params
     params.require(:reservation).permit(
-      :facility_id, :user_id, :num, :checkin, :usage_period, :state, :block_flag
+      :facility_id, :user_id, :reservation_user_id, :num, :checkin, :usage_period, :state, :block_flag
     )
   end
 end
