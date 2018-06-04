@@ -3,10 +3,9 @@ class Admin::ReservationsController < AdminController
   before_action :set_reservation, only: [:payment, :confirm]
 
   def index
-    @reservations = Reservation.all.order(id: :desc).page(params[:page])
     q = params[:q] || {}
     @q = Reservation.ransack(q)
-    @reservations = @q.result
+    @reservations = @q.result.order(id: :desc)
     respond_to do |format|
       format.html do
         @reservations = @reservations.page(params[:page]).per(30)
