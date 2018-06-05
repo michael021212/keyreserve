@@ -43,7 +43,7 @@ class Reservation < ApplicationRecord
       state: :confirmed,
       price: price,
       num: spot['use_num'],
-      mail_send_flag: false
+      mail_send_flag: true # TODO 暫定 
     )
   end
 
