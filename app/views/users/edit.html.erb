@@ -25,19 +25,5 @@
         </div>
       </div>
     <% end %>
-  <div class="panel-body mt50">
-    <div class="mg-sec-title">
-      <h3>本人確認</h3>
-    </div>
-    <%= bootstrap_form_for @personal_identification, url: personal_identification_path, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f| %>
-      <div class='notify-personal-identification-block'>
-        <div class='notify-personal-identification'>※ 本人確認書類は初回のみ提示すれば済みます。</div>
-        <div class='notify-personal-identification'>※ 本人確認審査の結果は約1週間ほどかかります。審査結果はメールでも通知されます。</div> 
-        <div class='notify-personal-identification'>※ 裏面に住所変更や氏名変更などの記載事項がある場合は、裏面にも提出をお願いします。</div>
-      </div>
-      <%= f.file_field :files, multiple: true, label: '正面の写真' %>
-      <%= f.file_field :files, multiple: true, label: '背面の写真' %>
-      <%= f.button 'アップロード', class: 'btn btn-dark-main center-block' %>
-    <% end %>
   </div>
 </div>

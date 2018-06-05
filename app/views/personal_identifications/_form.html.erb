@@ -1,0 +1,9 @@
+<%= bootstrap_form_for personal_identification, url: personal_identification_path, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f| %>
+  <div class='notify-personal-identification-block'>
+  </div>
+  <%= f.select :card_type, PersonalIdentification.card_types_i18n.invert, include_blank: true %>
+  <%= f.file_field :front_img %>
+  <%= f.file_field :back_img %>
+  <%= f.hidden_field :verified, value: :applying %>
+  <%= f.button 'アップロード', class: 'btn btn-dark-main center-block' %>
+<% end %>

@@ -159,9 +159,10 @@ ActiveRecord::Schema.define(version: 20180604073013) do
 
   create_table "personal_identifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id", null: false
-    t.string "files", null: false
-    t.integer "type"
-    t.boolean "verified", default: false
+    t.string "front_img", null: false
+    t.string "back_img"
+    t.integer "card_type"
+    t.integer "verified", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
