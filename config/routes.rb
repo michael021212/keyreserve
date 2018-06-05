@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       resources :user_contracts
       resources :plans
       resources :facilities, only: [] do
+        member do
+          get :events
+        end
         resources :facility_plans, only: [:new, :create, :destroy]
         resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
           collection do
@@ -32,7 +35,12 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :reservations
+    resources :reservations do
+      collection do
+        get :payment
+        get :confirm
+      end
+    end
   end
 
   resource :user do
@@ -51,7 +59,10 @@ Rails.application.routes.draw do
       patch 'update_password/:token', to: 'sessions#update_password', as: 'update_password'
     end
   end
-  resources :shops, only: [:index, :show]
+  resources :shops, only: [:index, :show] do
+    resources :facilities, only: [:new, :create], controller: 'shops/facilities'
+  end
+  get '/shops/:shop_id/facilities/:id/events' => 'shops/facilities#events'
   resources :facilities, only: [:index, :show]
   resources :reservations, only: [:index, :show, :new, :create] do
     collection do

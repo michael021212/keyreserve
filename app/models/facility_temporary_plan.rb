@@ -4,7 +4,7 @@ class FacilityTemporaryPlan < ApplicationRecord
   belongs_to :plan, optional: true
   has_many :facility_temporary_plan_prices, index_errors: true, dependent: :destroy
 
-  validates :standard_price_per_hour, :standard_price_per_day,  presence: true
+  validates :ks_room_key_id, :standard_price_per_hour, :standard_price_per_day,  presence: true
   validate :overlap_facility_temporary_plan_prices
 
   accepts_nested_attributes_for :facility_temporary_plan_prices, reject_if: lambda { |attributes| attributes['price'].blank? }, allow_destroy: true
@@ -12,6 +12,7 @@ class FacilityTemporaryPlan < ApplicationRecord
   delegate :name, to: :plan, prefix: true, allow_nil: true
 
   scope(:belongs_to_corporation, ->(corporation) { includes(facility: { shop: :corporation }).where(facilities: { shops: { corporation_id: corporation.id }}) })
+  scope(:exclude_ks_room_key_ids, ->(facility_id) { includes(:facility).where(facilities: { id: facility_id }).pluck(:ks_room_key_id) })
 
   def overlap_facility_temporary_plan_prices
     time_period_with_indices = []
@@ -56,5 +57,28 @@ class FacilityTemporaryPlan < ApplicationRecord
     end
     arr << opening_time << closing_time if facility_temporary_plan_prices.blank?
     arr.each_slice(2).to_a
+  end
+
+  def selectable_keys
+    ks_room_key_ids = FacilityTemporaryPlan.exclude_ks_room_key_ids(facility.id)
+    ks_room_key_ids.delete(ks_room_key_id) if ks_room_key_id.present?
+    facility.facility_keys.where.not(ks_room_key_id: ks_room_key_ids)
+  end
+
+  def self.unit_price(user, facility, start_t, end_t)
+    plan_ids = [nil]
+    plan_ids.push(user.user_contracts.pluck(:plan_id)) if user.present? && user.user_contracts.present?
+    includes(:plan, :facility).where(plans: {id: plan_ids}, facilities: {id: facility.id})
+    arr = []
+    while start_t < end_t do
+      i = 1
+      while (facility.min_hourly_price(user, start_t)) == (facility.min_hourly_price(user, start_t + i.hours)) do
+        break if (start_t + i.hours) >= end_t
+        i += 1
+      end
+      arr << [start_t, start_t + i.hours, facility.min_hourly_price(user, start_t)]
+      start_t += i.hours
+    end
+    arr
   end
 end
