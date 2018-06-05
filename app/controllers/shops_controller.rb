@@ -1,4 +1,5 @@
 class ShopsController <  ApplicationController
+  before_action :set_user
   before_action :set_shop, only: [:show]
 
   def index
@@ -10,6 +11,10 @@ class ShopsController <  ApplicationController
   end
 
   private
+
+  def set_user
+    @user = current_user_corp.present? ? current_user_corp : current_user if logged_in?
+  end
 
   def set_shop
     @shop = Shop.find(params[:id])

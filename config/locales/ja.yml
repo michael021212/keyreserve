@@ -5,12 +5,13 @@ ja:
       corporation: 運営会社
       user: 利用者
       user_corp: 法人
+      payment: 支払い
       plan: プラン
       reservation: 予約
       shop: 店舗
       facility: 施設
       facility_key: 施設鍵
-      facility_plan: 月額対象プラン 
+      facility_plan: 月額対象プラン
       facility_temporary_plan: 施設利用都度課金プラン
       user_contract: 契約
       corporation_user: 施設管理者

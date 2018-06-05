@@ -63,6 +63,24 @@ class FacilityTemporaryPlan < ApplicationRecord
 
   def selectable_keys
     ks_room_key_ids = FacilityTemporaryPlan.exclude_ks_room_key_ids(facility.id)
+    ks_room_key_ids.delete(ks_room_key_id) if ks_room_key_id.present?
     facility.facility_keys.where.not(ks_room_key_id: ks_room_key_ids)
+  end
+
+  def self.unit_price(user, facility, start_t, end_t)
+    plan_ids = [nil]
+    plan_ids.push(user.user_contracts.pluck(:plan_id)) if user.present? && user.user_contracts.present?
+    includes(:plan, :facility).where(plans: {id: plan_ids}, facilities: {id: facility.id})
+    arr = []
+    while start_t < end_t do
+      i = 1
+      while (facility.min_hourly_price(user, start_t)) == (facility.min_hourly_price(user, start_t + i.hours)) do
+        break if (start_t + i.hours) >= end_t
+        i += 1
+      end
+      arr << [start_t, start_t + i.hours, facility.min_hourly_price(user, start_t)]
+      start_t += i.hours
+    end
+    arr
   end
 end

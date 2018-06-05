@@ -23,7 +23,8 @@ $(document).ready(function() {
     header: false,
     height: 'auto',
     lang: 'ja',
-    slotDuration: '01:00:00',
+    slotDuration: '00:30:00',
+    slotLabelInterval: '00:30:00',
     resourceRender: function(resource, el) {
       link = "/admin/corporations/" + corporation + "/facilities/" + facility + "/facility_temporary_plans/" + resource.id + "/edit";
       el.append("<p><a href=" + link + '>編集</a></p>');

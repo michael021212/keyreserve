@@ -1,6 +1,6 @@
 class Admin::FacilitiesController < AdminController
   before_action :set_corporation
-  before_action :set_shop
+  before_action :set_shop, except: [:events]
   before_action :set_facility, only: [:show, :edit, :update, :destroy]
 
   def new
@@ -32,6 +32,11 @@ class Admin::FacilitiesController < AdminController
   def destroy
     @facility.destroy
     redirect_to admin_corporation_shop_path(@corporation, @shop), notice: "#{Facility.model_name.human}を削除しました"
+  end
+
+  def events
+    @facility = Facility.find(params[:id])
+    @reservations = @facility.reservations
   end
 
   private

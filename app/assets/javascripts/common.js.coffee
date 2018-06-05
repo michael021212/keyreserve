@@ -25,12 +25,12 @@ $ ->
     return
 
   $('.timepicker').wickedpicker({
-    now: $('#spot_checkin_time').val()
+    now: if $('#spot_checkin_time').val() then $('#spot_checkin_time').val() else '12:00'
     upArrow: 'arrow-font angle-up'
     downArrow: 'arrow-font angle-down'
     twentyFour: true
     title: 'ご利用時刻'
-    minutesInterval: 60
+    minutesInterval: 30
     afterShow: ->
       if $(el).hasClass('js-calc-price')
         calc_price()

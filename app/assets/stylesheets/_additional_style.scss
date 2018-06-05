@@ -303,3 +303,41 @@ select.form-control {
   font-size: 18px;
   margin-top: 6px;
 }
+
+.rect-shape {
+  width: 20px;
+  height: 20px;
+  margin: 10px 5px 20px 0px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}
+
+.rect-available {
+  background: #c6e2b3;
+}
+
+.rect-full-booking {
+  background: #fff;
+}
+
+.rect-out-of-business-hours {
+  background: #d7d7d7;
+}
+
+.rect-today {
+  background: #fcf8e3;
+}
+
+.rect-text {
+  margin-right: 10px;
+}
+
+.cal-reminder-text {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cal-reminder-green {
+  color: #507f30;
+}

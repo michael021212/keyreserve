@@ -29,13 +29,14 @@ class Reservation < ApplicationRecord
     )
   end
 
-  def self.new_from_spot(spot, user)
+  def self.new_from_spot(spot, user, current_user)
     checkin = Time.zone.parse(spot['checkin'] + " " + spot['checkin_time'])
     facility = Facility.find(spot['facility_id'].to_i)
     price = facility.calc_price(user, checkin, spot['use_hour'].to_i)
     Reservation.new(
       facility_id: spot['facility_id'],
       user_id: user.id,
+      reservation_user_id: current_user.id,
       checkin: checkin,
       checkout: checkin + spot['use_hour'].to_i.hours,
       usage_period: spot['use_hour'],
@@ -49,8 +50,12 @@ class Reservation < ApplicationRecord
   def self.to_csv(options)
     csv_data = CSV.generate(options) do |csv|
       csv << csv_column_names
-      all.find_each do |row|
-        csv << row.csv_column_values
+      ids = all.order('created_at DESC').pluck(:id)
+      # 予約は1000筆ずつに読み込みします
+      ids.each_slice(1000) do |id|
+        find(id).each do |row|
+          csv << row.csv_column_values
+        end
       end
     end
     bom = "\xFF\xFE".dup.force_encoding('UTF-16LE')
@@ -62,7 +67,7 @@ class Reservation < ApplicationRecord
       facility.shop.corporation.name,
       facility.shop.name,
       facility.name,
-      user.name,
+      user.try(:name),
       checkin.strftime('%Y/%m/%d %H:%M'),
       checkout.strftime('%Y/%m/%d %H:%M'),
       "#{usage_period}時間",
