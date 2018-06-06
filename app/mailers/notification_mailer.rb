@@ -34,6 +34,10 @@ class NotificationMailer < ApplicationMailer
     @password = KeystationService.sync_room_key_name(@ftp.ks_room_key_id)
     attachments[@ftp.guide_file.file.filename] = @ftp.guide_file.read if @ftp.guide_file.present?
     return if @ftp.guide_mail_title.blank?
-    mail(to: reservation.user.email, subject: @ftp_title)
+    if reservation.send_cc_mail?
+      mail(to: reservation.reservation_user.email, cc: reservation.user.email, subject: @ftp_title)
+    else
+      mail(to: reservation.reservation_user.email, subject: @ftp_title)
+    end
   end
 end
