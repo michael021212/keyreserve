@@ -31,7 +31,7 @@ class NotificationMailer < ApplicationMailer
     @not_member_ftp = reservation.facility.facility_temporary_plans.where.not(standard_price_per_hour: 0).where(plan_id: nil)
     @ftp = @member_ftps.present? ? @member_ftps.first : @not_member_ftp.first
     @ftp_title = @ftp.guide_mail_title
-    @password = KeystationService.sync_room_key_name(@ftp.ks_room_key_id)
+    @password = KeystationService.sync_room_key_password(@ftp.ks_room_key_id)
     attachments[@ftp.guide_file.file.filename] = @ftp.guide_file.read if @ftp.guide_file.present?
     return if @ftp.guide_mail_title.blank?
     if reservation.send_cc_mail?
