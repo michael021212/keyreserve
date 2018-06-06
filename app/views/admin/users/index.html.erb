@@ -28,6 +28,7 @@
           <th><%= User.human_attribute_name(:name) %></th>
           <th><%= User.human_attribute_name(:email) %></th>
           <th><%= User.human_attribute_name(:tel) %></th>
+          <th><%= PersonalIdentification.model_name.human %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
@@ -39,6 +40,7 @@
               <td><%= user.name %></td>
               <td><%= user.email %></td>
               <td><%= user.tel %></td>
+              <td><%= user.personal_identification.try(:verified_i18n) %></td>
               <td>
                 <%= link_to '詳細', admin_user_path(user), class: 'btn btn-default' %>
                 <%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary' %>

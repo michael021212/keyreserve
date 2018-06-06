@@ -333,16 +333,27 @@ select.form-control {
   margin-right: 10px;
 }
 
-.notify-personal-identification, .cal-reminder-text {
+.notify-personal-identification, .reminder-text {
   font-size: 12px;
   font-weight: bold;
 }
 
-.cal-reminder-green {
+.reminder-green {
   color: #507f30;
+}
+
+.reminder-red {
+  color: #dd4b39;
 }
 
 .notify-personal-identification-block {
   padding-left: 150px;
   margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+  .reminder-block {
+    margin-left: 135px;
+    margin-bottom: 50px;
+  }
 }

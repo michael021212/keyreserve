@@ -255,7 +255,6 @@ ActiveRecord::Schema.define(version: 20180604073013) do
     t.string "parent_token"
     t.integer "max_user_num"
     t.boolean "advertise_notice_flag", default: true
-    t.string "personal_identifications"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
