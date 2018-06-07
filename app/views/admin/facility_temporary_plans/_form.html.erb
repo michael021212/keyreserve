@@ -1,6 +1,6 @@
 <%= bootstrap_nested_form_for([:admin, corporation, facility, facility_temporary_plan]) do |f| %>
   <%= f.collection_select :plan_id, @corporation.plans.all, :id, :name, {include_blank: '非会員' } %>
-  <%= f.select :ks_room_key_id, options_for_select(f.object.selectable_keys.map {|f| [f.name, f.ks_room_key_id]}, selected: f.object.ks_room_key_id), include_blank: true, help: '鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください' %>
+  <%= f.select :ks_room_key_id, options_for_select(@facility.facility_keys.map {|f| [f.name, f.ks_room_key_id]}, selected: f.object.ks_room_key_id), include_blank: true, help: '鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください' %>
   <%= f.text_field :standard_price_per_day, help: "\'0\'の場合未対応" %>
   <%= f.text_field :standard_price_per_hour, help: "\'0\'の場合未対応" %>
   <%= f.form_group :facility_temporary_plan_prices, label: {text: "施設利用都度課金プラン時間帯価格（標準価格以外の価格）"} do %>
