@@ -195,7 +195,7 @@ ja:
         others: その他
       verified:
         unconfirmed: 未認証
-        applying: 審査中
+        applying: 申請中
         confirmed: 認証済み
   date:
     abbr_day_names:
