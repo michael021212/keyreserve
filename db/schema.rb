@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(version: 20180604073013) do
     t.string "front_img", null: false
     t.string "back_img"
     t.integer "card_type"
-    t.integer "verified", default: 0
+    t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

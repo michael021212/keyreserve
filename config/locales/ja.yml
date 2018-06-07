@@ -80,7 +80,7 @@ ja:
       personal_identification:
         front_img: 表面
         back_img: 裏面
-        verified: 認証
+        status: 認証状態
         card_type: 種別
       reservation:
         id: 予約ID
@@ -193,7 +193,7 @@ ja:
         passport: パスポート
         residence_card: 在留カード
         others: その他
-      verified:
+      status:
         unconfirmed: 未認証
         applying: 申請中
         confirmed: 認証済み

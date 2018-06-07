@@ -5,15 +5,15 @@ class PersonalIdentification < ApplicationRecord
 
   belongs_to :user
 
-  validates :verified, :card_type, :front_img, presence: true
+  validates :status, :card_type, :front_img, presence: true
 
   enum card_type: { driver_license: 1, insurance_card: 2, my_number: 3, passport: 4, residence_card: 5, others: 9 }
-  enum verified: { unconfirmed: 0, applying: 1, confirmed: 2 }
+  enum status: { unconfirmed: 0, applying: 1, confirmed: 2 }
 
   after_update :notify_confirmed_mail, if: :verification_is_confirmed?
 
   def verification_is_confirmed?
-    saved_change_to_attribute?(:verified) && confirmed?
+    saved_change_to_attribute?(:status) && confirmed?
   end
 
   def notify_confirmed_mail

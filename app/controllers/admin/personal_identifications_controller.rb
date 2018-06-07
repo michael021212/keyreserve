@@ -24,7 +24,7 @@ class Admin::PersonalIdentificationsController < AdminController
 
   def personal_identification_params
     params.require(:personal_identification).permit(
-      :front_img, :back_img, :card_type, :verified
+      :front_img, :back_img, :card_type, :status
     )
   end
 end
