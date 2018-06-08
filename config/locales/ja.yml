@@ -3,6 +3,7 @@ ja:
     models:
       admin_user: 管理者
       corporation: 運営会社
+      dropin_key: ドロップイ鍵
       user: 利用者
       user_corp: 法人
       payment: 支払い
@@ -11,6 +12,8 @@ ja:
       reservation: 予約
       shop: 店舗
       facility: 施設
+      facility_dropin_plan: 施設利用ドロップインプラン
+      facility_dropin_sub_plan: 施設利用ドロップイン時間帯プラン
       facility_key: 施設鍵
       facility_plan: 月額対象プラン
       facility_temporary_plan: 施設利用都度課金プラン
@@ -112,6 +115,18 @@ ja:
         description: 施設説明
         max_num: 最大利用人数
         facility_type: 施設タイプ（スポット利用時）
+      facility_dropin_plan:
+        plan_id: プラン
+        ks_room_key_id: ドロップイ鍵
+        guide_mail_title: 案内メールタイトル
+        guide_mail_content: 案内メール内容
+        guide_file: 案内ファイル
+        usage_fee_per_hour: 利用料金(一時間単位）
+      facility_dropin_sub_plan:
+        name: プラン名
+        starting_time: 開始時間
+        ending_time: 終了時間
+        price: 価格
       facility_key:
         ks_room_key_id: 鍵
         name: 鍵名称

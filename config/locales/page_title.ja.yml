@@ -57,6 +57,11 @@ ja:
         title: 施設編集
       show:
         title: 施設詳細
+    facility_dropin_plans:
+      new:
+        title: 施設利用ドロップインプラン登録
+      edit:
+        title: 施設利用ドロップインプラン編集
     facility_keys:
       index:
         title: 施設鍵一覧

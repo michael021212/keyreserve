@@ -31,3 +31,4 @@
 //= require admin/common
 //= require datetimepicker_fmt
 //= require admin/reservation_calendar
+//= require admin/dropin_calendar
