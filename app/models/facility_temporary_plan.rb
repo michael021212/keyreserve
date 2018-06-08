@@ -61,12 +61,6 @@ class FacilityTemporaryPlan < ApplicationRecord
     arr.each_slice(2).to_a
   end
 
-  def selectable_keys
-    ks_room_key_ids = FacilityTemporaryPlan.exclude_ks_room_key_ids(facility.id)
-    ks_room_key_ids.delete(ks_room_key_id) if ks_room_key_id.present?
-    facility.facility_keys.where.not(ks_room_key_id: ks_room_key_ids)
-  end
-
   def self.unit_price(user, facility, start_t, end_t)
     plan_ids = [nil]
     plan_ids.push(user.user_contracts.pluck(:plan_id)) if user.present? && user.user_contracts.present?
