@@ -29,13 +29,12 @@ class Admin::FacilityDropinPlansController < AdminController
 
   def destroy
     @facility_dropin_plan.destroy
-    redirect_to admin_corporation_shop_facility_path(@corporation, @facility.shop, @facility), notice: "#{FacilityTemporaryPlan.model_name.human}を削除しました。"
+    redirect_to admin_corporation_shop_facility_path(@corporation, @facility.shop, @facility), notice: "#{FacilityDropinPlan.model_name.human}を削除しました。"
   end
 
   def resources; end
 
-  def events
-  end
+  def events; end
 
   private
 

@@ -13,6 +13,5 @@ end
     json.title("#{sp.name}\n #{delimiter_price(sp.price)}")
     json.start(current_date(sp.starting_time))
     json.end(current_date(sp.ending_time))
-    json.color('#4d93b5')
   end
 end

@@ -24,11 +24,5 @@ $(document).ready ->
     resourceRender: (resource, el) ->
       link = '/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_dropin_plans/' + resource.id + '/edit'
       el.append '<p><a href=' + link + '>編集</a></p>'
-
-    resources: (callback) ->
-      ajaxRequest('/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_dropin_plans/resources').then (resources) ->
-        callback resources
-    eventSources: [ { events: (start, end, timezone, callback) ->
-      ajaxRequest('/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_dropin_plans/events').then (events) ->
-        callback events
-    } ]
+    resources: '/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_dropin_plans/resources'
+    events: '/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_dropin_plans/events'
