@@ -20,7 +20,7 @@ $(document).ready ->
     slotDuration: '00:30:00'
     slotLabelInterval: '00:30:00'
     slotEventOverlap: false
-    allDayText: '一時間'
+    allDayText: '時間\n単位'
     resourceRender: (resource, el) ->
       link = '/admin/corporations/' + corporation + '/facilities/' + facility + '/facility_dropin_plans/' + resource.id + '/edit'
       el.append '<p><a href=' + link + '>編集</a></p>'

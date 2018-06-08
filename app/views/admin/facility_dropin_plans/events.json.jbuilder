@@ -8,7 +8,6 @@ end
 
 # 時間帯プラン
 @facility.facility_dropin_plans.each do |facility_dropin_plan|
-  # 施設利用都度課金プラン時間帯価格
   json.array! facility_dropin_plan.facility_dropin_sub_plans do |sp|
     json.resourceId(facility_dropin_plan.id.to_s)
     json.title("#{sp.name}\n #{delimiter_price(sp.price)}")
