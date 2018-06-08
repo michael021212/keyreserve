@@ -3,6 +3,7 @@ ja:
     models:
       admin_user: 管理者
       corporation: 運営会社
+      dropin_key: ドロップイ鍵
       user: 利用者
       user_corp: 法人
       payment: 支払い
