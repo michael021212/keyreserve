@@ -56,7 +56,7 @@ class Admin::FacilityDropinPlansController < AdminController
 
   def facility_dropin_plan_params
     params.require(:facility_dropin_plan).permit(
-      :plan_id, :ks_room_key_id, :guide_mail_title, :guide_mail_content, :guide_file, :usage_fee_per_hour,
+      :plan_id, :ks_room_key_id, :guide_mail_title, :guide_mail_content, :guide_file,
       facility_dropin_sub_plans_attributes: [
         :id, :facility_dropin_plan_id, :name, :starting_time, :ending_time, :price, :_destroy],
       dropin_keys_attributes: [

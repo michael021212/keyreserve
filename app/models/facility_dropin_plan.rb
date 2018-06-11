@@ -8,6 +8,4 @@ class FacilityDropinPlan < ApplicationRecord
 
   accepts_nested_attributes_for :facility_dropin_sub_plans, reject_if: lambda { |attributes| attributes['price'].blank? || attributes['name'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :dropin_keys, reject_if: lambda { |attributes| attributes['ks_room_key_id'].blank? }, allow_destroy: true
-
-  validates :usage_fee_per_hour, presence: true
 end

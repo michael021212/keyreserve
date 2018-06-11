@@ -121,7 +121,6 @@ ja:
         guide_mail_title: 案内メールタイトル
         guide_mail_content: 案内メール内容
         guide_file: 案内ファイル
-        usage_fee_per_hour: 利用料金(一時間単位）
       facility_dropin_sub_plan:
         name: プラン名
         starting_time: 開始時間

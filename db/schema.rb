@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(version: 20180608024037) do
     t.string "guide_mail_title"
     t.text "guide_mail_content"
     t.string "guide_file"
-    t.integer "usage_fee_per_hour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"

@@ -6,7 +6,6 @@ class CreateFacilityDropinPlans < ActiveRecord::Migration[5.1]
       t.string :guide_mail_title
       t.text :guide_mail_content
       t.string :guide_file
-      t.integer :usage_fee_per_hour
       t.timestamps
       t.datetime :deleted_at
     end

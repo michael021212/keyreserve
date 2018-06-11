@@ -1,6 +1,5 @@
 <%= bootstrap_nested_form_for([:admin, corporation, facility, facility_dropin_plan]) do |f| %>
   <%= f.collection_select :plan_id, @corporation.plans.all, :id, :name, {include_blank: '非会員' } %>
-  <%= f.text_field :usage_fee_per_hour, help: "\'0\'の場合未対応" %>
   <%= f.form_group :facility_temporary_plan_prices, label: {text: 'ドロップイン用鍵'} do %>
     <%= f.fields_for :dropin_keys do |key| %>
       <div class="form-inline mb20">

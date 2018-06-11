@@ -7,8 +7,10 @@
     </div>
   </div>
   <div id="dropin-calendar"
-    data-corporation=<%="#{params[:corporation_id]}"%>
-    data-shop=<%="#{params[:shop_id]}"%>
-    data-facility=<%="#{params[:id]}"%>>
+    data-corporation=<%= @corporation.id %>
+    data-shop=<%= @shop.id %>
+    data-facility=<%= @facility.id %>
+    data-opening=<%= @shop.opening_time.strftime('%H:%M') %>
+    data-closing=<%= @shop.closing_time.strftime('%H:%M') %>>
   </div>
 </div>
