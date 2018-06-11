@@ -1,6 +1,6 @@
 class ReservationsController <  ApplicationController
   before_action :set_user
-  before_action :require_login, except: [:spot]
+  before_action :require_login, except: [:spot, :dropin_spot]
   include ActionView::Helpers::NumberHelper
 
   def index
@@ -30,9 +30,8 @@ class ReservationsController <  ApplicationController
       return render :spot
     end
 
-    @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
-
     @facilities = logged_in? ? @user.login_spots : Facility.logout_spots
+    @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
     @facilities = @facilities.where.not(id: @exclude_facility_ids)
     @facilities = @facilities.conference_room
     @facilities = @facilities.joins(:shop).
@@ -44,10 +43,36 @@ class ReservationsController <  ApplicationController
     session[:spot] = cond
   end
 
+  def dropin_spot
+    params[:dropin_spot] ||= {}
+    params[:dropin_spot][:checkin_time] ||= '12:00'
+    cond = params[:dropin_spot]
+    if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
+      return render :dropin_spot
+    end
+    cond[:checkin] = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
+    cond[:checkout] = cond[:checkin] + cond[:use_hour].to_i.hours
+
+
+    if cond[:checkin] < Time.zone.now - 30.minutes
+      flash[:error] = 'ご予約はご利用の30分前までとなります'
+      return render :spot
+    end
+
+    @facilities = logged_in? ? @user.login_dropin_spots : Facility.logout_dropin_spots
+    @facilities = @facilities.page(params[:page])
+    session[:spot] = cond
+  end
+
   def new
     params[:spot] ||= session[:spot]
     session[:reservation_id] = nil
-    @facility = @user.login_spots.find(params[:facility_id]) if params[:facility_id].present?
+    if params[:facility_id].present?
+      @facility = params[:facility_type] == "dropin" ? @user.login_dropin_spots : @user.login_spots
+      @facility = @facility.find(params[:facility_id])
+    end
+
+    FacilityDropinSubPlan.recommended_plan(@facility, @user, params[:spot][:checkin], params[:spot][:checkout])
   end
 
   def price

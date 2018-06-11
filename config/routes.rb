@@ -75,6 +75,7 @@ Rails.application.routes.draw do
   resources :reservations, only: [:index, :show, :new, :create] do
     collection do
       get :price
+      get :dropin_spot
       get :spot
       post :confirm
       get :confirm

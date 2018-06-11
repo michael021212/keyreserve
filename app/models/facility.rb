@@ -76,6 +76,11 @@ class Facility < ApplicationRecord
     Facility.where(id: facility_ids)
   end
 
+  def self.logout_dropin_spots
+    facility_ids = FacilityDropinPlan.where(plan_id: nil).map(&:facility_id)
+    Facility.where(id: facility_ids)
+  end
+
   def available_reservation_area(date)
     y, m, d = date.split('-')
     next_date = (DateTime.parse(date) + 1.day).to_s(:date)
@@ -100,5 +105,10 @@ class Facility < ApplicationRecord
       arr << closing_date_and_time if i == total - 1 && shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
     end
     arr.each_slice(2).to_a
+  end
+
+  def facility_dropin_plans_in_contract(user)
+    p_ids = user.user_contracts.pluck(:plan_id)
+    facility_dropin_plans.where(plan_id: p_ids)
   end
 end

@@ -18,4 +18,15 @@ class FacilityDropinSubPlan < ApplicationRecord
       errors.add(:ending_time, '営業時間内の時間を選択してください') if time_today(ending_time) > closing_time
     end
   end
+
+  def self.recommended_plan(facility, user, checkin, checkout)
+    sub_plans = FacilityDropinSubPlan.selectable(facility, user)
+    binding.pry
+  end
+
+  def self.selectable(facility, user)
+    fdp_ids = facility.facility_dropin_plans_in_contract(user).pluck(:id)
+    fdp_ids.push(nil)
+    FacilityDropinSubPlan.where(facility_dropin_plan_id: fdp_ids)
+  end
 end
