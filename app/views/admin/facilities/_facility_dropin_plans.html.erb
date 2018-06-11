@@ -10,7 +10,7 @@
     data-corporation=<%= @corporation.id %>
     data-shop=<%= @shop.id %>
     data-facility=<%= @facility.id %>
-    data-opening=<%= @shop.opening_time.strftime('%H:%M') %>
-    data-closing=<%= @shop.closing_time.strftime('%H:%M') %>>
+    data-opening=<%= time_fmt(@shop.opening_time) %>
+    data-closing=<%= time_fmt(@shop.closing_time) %>>
   </div>
 </div>
