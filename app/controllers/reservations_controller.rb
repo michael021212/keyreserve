@@ -1,6 +1,6 @@
 class ReservationsController <  ApplicationController
   before_action :set_user
-  before_action :require_login, except: [:spot, :dropin_spot]
+  before_action :require_login, except: [:spot]
   include ActionView::Helpers::NumberHelper
 
   def index
@@ -40,27 +40,6 @@ class ReservationsController <  ApplicationController
     @facilities = @facilities.where(max_num: cond[:use_num].to_i .. Float::INFINITY) if cond[:use_num].present?
     return render :spot if @facilities.blank?
     @facilities = Facility.order_by_min_price(@facilities, current_user).page(params[:page])
-    session[:spot] = cond
-  end
-
-  def dropin_spot
-    params[:dropin_spot] ||= {}
-    params[:dropin_spot][:checkin_time] ||= '12:00'
-    cond = params[:dropin_spot]
-    if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
-      return render :dropin_spot
-    end
-    cond[:checkin] = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
-    cond[:checkout] = cond[:checkin] + cond[:use_hour].to_i.hours
-
-
-    if cond[:checkin] < Time.zone.now - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります'
-      return render :spot
-    end
-
-    @facilities = logged_in? ? @user.login_dropin_spots : Facility.logout_dropin_spots
-    @facilities = @facilities.page(params[:page])
     session[:spot] = cond
   end
 
@@ -119,7 +98,7 @@ class ReservationsController <  ApplicationController
     end
 
     @price = @facility.calc_price(@user, checkin, session[:spot]['use_hour'].to_i)
-      if @user.credit_card.blank? && @user.creditcard?
+    if @user.credit_card.blank? && @user.creditcard?
       @credit_card = current_user.build_credit_card
       return render :credit_card
     end

@@ -21,12 +21,16 @@ class FacilityDropinSubPlan < ApplicationRecord
 
   def self.recommended_plan(facility, user, checkin, checkout)
     sub_plans = FacilityDropinSubPlan.selectable(facility, user)
-    binding.pry
   end
 
   def self.selectable(facility, user)
     fdp_ids = facility.facility_dropin_plans_in_contract(user).pluck(:id)
     fdp_ids.push(nil)
     FacilityDropinSubPlan.where(facility_dropin_plan_id: fdp_ids)
+  end
+
+  def self.belongs_to_facility(f_id)
+    sub_plans = includes(facility_dropin_plan: :facility).where(facility_dropin_plans: { facilities: { id: f_id }})
+    sub_plans.collect { |sp| ["#{sp.facility_dropin_plan.plan_name}-#{sp.name}", sp.id] }
   end
 end

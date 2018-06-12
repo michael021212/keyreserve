@@ -108,7 +108,10 @@ class Facility < ApplicationRecord
   end
 
   def facility_dropin_plans_in_contract(user)
-    p_ids = user.user_contracts.pluck(:plan_id)
+    p_ids = []
+    p_ids << user.user_contracts.pluck(:plan_id) if user.present?
+    p_ids << nil
+    p_ids.flatten!
     facility_dropin_plans.where(plan_id: p_ids)
   end
 end

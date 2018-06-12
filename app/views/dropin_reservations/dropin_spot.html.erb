@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-9">
                       <div class="mg-bn-forms">
-                        <%= form_for :dropin_spot, url: dropin_spot_reservations_path(anchor: :searchbox), method: :get do |f| %>
+                        <%= form_for :dropin_spot, url: dropin_spot_dropin_reservations_path(anchor: :searchbox), method: :get do |f| %>
                           <div class="row">
                             <div class="col-md-3 col-xs-6">
                               <div class="input-group date mg-check-in">
@@ -89,7 +89,7 @@
                               </ul>
                             </div>
                           </div>
-                          <%= link_to '予約する', new_reservation_path(facility_id: facility.id, facility_type: facility.facility_type), class: 'btn btn-main' %>
+                          <%= link_to '予約する', new_dropin_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
                         </div>
                       </div>
                     </div>
