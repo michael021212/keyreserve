@@ -50,8 +50,6 @@ class ReservationsController <  ApplicationController
       @facility = params[:facility_type] == "dropin" ? @user.login_dropin_spots : @user.login_spots
       @facility = @facility.find(params[:facility_id])
     end
-
-    FacilityDropinSubPlan.recommended_plan(@facility, @user, params[:spot][:checkin], params[:spot][:checkout])
   end
 
   def price

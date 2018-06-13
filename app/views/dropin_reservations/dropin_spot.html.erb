@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-md-3 col-xs-6">
                               <div class="input-group">
-                                <%= f.text_field :checkin_time, value: params[:dropin_spot][:checkin_time], class: 'form-control timepicker', placeholder: 'ご利用時刻' %>
+                                <%= f.text_field :checkin_time, value: params[:dropin_spot][:checkin_time], class: 'form-control', id: 'dropin_timepicker', placeholder: 'ご利用時刻' %>
                               </div>
                             </div>
                             <div class="col-md-3 col-xs-12">
@@ -63,11 +63,11 @@
                     <div class="mg-available-rooms">
                       <div class="row">
                         <div class="col-sm-4">
-                          <%= link_to new_reservation_path(facility_id: facility.id) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
+                          <%= link_to new_dropin_reservation_path(facility_id: facility.id) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
                         </div>
                         <div class="col-sm-8">
                           <h3 class="mg-avl-room-title">
-                            <%= link_to new_reservation_path(facility_id: facility.id) do %>
+                            <%= link_to new_dropin_reservation_path(facility_id: facility.id) do %>
                               <%= facility.name %> - <%= facility.shop.name %>
                             <% end %>
                           </h3>

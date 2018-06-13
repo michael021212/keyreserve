@@ -15,9 +15,13 @@ class DropinReservationsController <  ApplicationController
       flash[:error] = 'ご予約はご利用の30分前までとなります'
       return render :dropin_spot
     end
+    checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
+    checkout = checkin + cond[:use_hour].to_i.hours
 
+    fullbooked_facility_ids = DropinReservation.unavailable_dropin_facilities_arr(checkin, checkout)
+    in_range_facility_ids = FacilityDropinSubPlan.in_range_return_facilities(checkin, checkout)
     @facilities = logged_in? ? @user.login_dropin_spots : Facility.logout_dropin_spots
-    @facilities = @facilities.page(params[:page])
+    @facilities = @facilities.where.not(id: fullbooked_facility_ids).where(id: in_range_facility_ids).page(params[:page])
     session[:dropin_spot] = cond
   end
 
@@ -25,8 +29,7 @@ class DropinReservationsController <  ApplicationController
     params[:dropin_spot] ||= session[:dropin_spot]
     session[:reservation_id] = nil
     @facility = @user.login_dropin_spots.find(params[:facility_id])
-
-    # Facility.recommended_facility_dropin_sub_plan(@facility, @user, params[:dropin_spot][:checkin_time], params[:dropin_spot][:use_hour])
+    @facility_dropin_sub_plan = Facility.recommended_dropin_plan(params[:facility_id], params[:dropin_spot], @user)
   end
 
   def confirm
@@ -79,13 +82,11 @@ class DropinReservationsController <  ApplicationController
   end
 
   def create
+    # TODO 管理者と利用者のメール通知(【施設利用都度課金プランで案内ガイドを追加】のマージを待つ)
     @dropin_reservation = DropinReservation.new_from_dropin_spot(session[:dropin_spot], @user, current_user)
     if @dropin_reservation.save
       session[:dropin_spot] = nil
       session[:reservation_id] = @dropin_reservation.id
-      # NotificationMailer.reserved(@dropin_reservation, @dropin_reservation.user_id).deliver_now
-      # NotificationMailer.reserved(@dropin_reservation, @dropin_reservation.reservation_user_id).deliver_now
-      # NotificationMailer.reserved_to_admin(@dropin_reservation).deliver_now
       redirect_to thanks_dropin_reservations_path
     else
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'

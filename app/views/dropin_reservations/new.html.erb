@@ -41,7 +41,7 @@
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用プラン</label>
                   <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.select :sub_plan, FacilityDropinSubPlan.belongs_to_facility(@facility.id), include_blank: 'ご利用プラン', class: 'cs-select cs-skin-elastic' %>
+                    <%= f.select :sub_plan, options_for_select(FacilityDropinSubPlan.selections_with_plan_name(@facility.id, @user), @facility_dropin_sub_plan.try(:id)), { include_blank: 'ご利用プラン'}, { class: 'form-control' } %>
                   </div>
                 </div>
                 <div class="price-area form-group">
