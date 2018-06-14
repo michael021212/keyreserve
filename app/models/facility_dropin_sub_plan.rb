@@ -12,6 +12,8 @@ class FacilityDropinSubPlan < ApplicationRecord
 
   scope(:belongs_to_facility, ->(f_id) { includes(facility_dropin_plan: :facility).where(facility_dropin_plans: { facilities: { id: f_id }}) })
 
+  validate :within_business_hours
+
   def within_business_hours
     opening_time = time_today(facility_dropin_plan.facility.shop.opening_time)
     closing_time = time_today(facility_dropin_plan.facility.shop.closing_time)
@@ -24,7 +26,6 @@ class FacilityDropinSubPlan < ApplicationRecord
       errors.add(:ending_time, '営業時間内の時間を選択してください') if time_today(ending_time) > closing_time
     end
   end
-
 
   def self.selectable(facility, user)
     fdp_ids = facility.facility_dropin_plans_in_contract(user).pluck(:id)
