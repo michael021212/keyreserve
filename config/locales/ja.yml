@@ -9,8 +9,9 @@ ja:
       payment: 支払い
       personal_identification: 本人確認
       plan: プラン
-      reservation: 予約
+      reservation: 会議室予約
       shop: 店舗
+      dropin_reservation: スペース予約
       facility: 施設
       facility_dropin_plan: 施設利用ドロップインプラン
       facility_dropin_sub_plan: 施設利用ドロップイン時間帯プラン

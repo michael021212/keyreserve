@@ -43,4 +43,12 @@ class FacilityDropinSubPlan < ApplicationRecord
     sub_plans = belongs_to_facility(f_id).where(facility_dropin_plan_id: facility_dropin_plan_ids)
     sub_plans.collect { |sp| ["#{sp.facility_dropin_plan.plan_name} - #{sp.name}", sp.id] }
   end
+
+  def with_plan_name
+    "#{facility_dropin_plan.plan.name}ー#{name}"
+  end
+
+  def using_period
+    "#{starting_time.strftime('%H:%M')} - #{ending_time.strftime('%H:%M')}"
+  end
 end

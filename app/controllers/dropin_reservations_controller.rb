@@ -3,11 +3,19 @@ class DropinReservationsController <  ApplicationController
   before_action :require_login, except: [:dropin_spot]
   include ActionView::Helpers::NumberHelper
 
+  def index
+    @dropin_reservations = @user.dropin_reservations.order(checkin: :desc)
+  end
+
+  def show
+    @dropin_reservation = @user.dropin_reservations.find(params[:id])
+  end
+
   def dropin_spot
     params[:dropin_spot] ||= {}
     params[:dropin_spot][:checkin_time] ||= '12:00'
     cond = params[:dropin_spot]
-    if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
+    if cond.blank? || cond[:checkin].blank? || cond[:checkin_time].blank? || cond[:use_hour].blank?
       return render :dropin_spot
     end
 
@@ -30,6 +38,7 @@ class DropinReservationsController <  ApplicationController
     session[:reservation_id] = nil
     @facility = @user.login_dropin_spots.find(params[:facility_id])
     @facility_dropin_sub_plan = Facility.recommended_dropin_plan(params[:facility_id], params[:dropin_spot], @user)
+    cond = params[:dropin_spot]
   end
 
   def confirm
@@ -52,6 +61,12 @@ class DropinReservationsController <  ApplicationController
     if @user.credit_card.blank? && @user.creditcard?
        @credit_card = @user.build_credit_card
       return render :credit_card
+    end
+    reserved_key_num = DropinReservation.in_range(@checkin..@checkout).count
+    total_key_num =  @facility.facility_keys.count
+    if reserved_key_num >= total_key_num
+      flash[:error] = 'この時間帯のご予約はできません'
+      return render :new
     end
   end
 
