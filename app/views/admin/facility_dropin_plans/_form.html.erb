@@ -1,6 +1,7 @@
 <%= bootstrap_nested_form_for([:admin, corporation, facility, facility_dropin_plan]) do |f| %>
   <%= f.collection_select :plan_id, @corporation.plans.all, :id, :name, {include_blank: '非会員' } %>
   <%= f.form_group :facility_temporary_plan_prices, label: {text: "施設利用ドロップイン時間帯プラン"} do %>
+    <p class='help-block'>既存プランを削除したい場合は「金額」及び「プラン名」を空にしてください</p>
     <%= f.fields_for :facility_dropin_sub_plans do |sp| %>
       <div class="form-inline mb20">
         <%= sp.time_select :starting_time, { minute_step: 30, include_blank: true, hide_label: true } %> 〜
