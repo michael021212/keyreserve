@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :user_contracts, dependent: :destroy
   has_many :reservations, dependent: :destroy
   has_many :dropin_reservations, dependent: :destroy
+  has_many :payments, dependent: :destroy
   has_one :credit_card, dependent: :destroy
   has_one :personal_identification, dependent: :destroy
 
@@ -58,6 +59,12 @@ class User < ApplicationRecord
     plan_ids = self.user_contracts.map(&:plan_id)
     facility_ids = FacilityDropinPlan.where(plan_id: plan_ids).map(&:facility_id)
     Facility.where(id: facility_ids).or(Facility.logout_dropin_spots)
+  end
+
+  def member_facility_dropin_sub_plan
+    plan_ids = [nil]
+    plan_ids << self.user_contracts.map(&:plan_id)
+    FacilityDropinSubPlan.includes(:facility_dropin_plan).where(facility_dropin_plans: { plan_id: plan_ids })
   end
 
   def set_stripe_customer

@@ -19,51 +19,54 @@ class DropinReservationsController <  ApplicationController
       return render :dropin_spot
     end
 
-    if cond[:checkin] < Time.zone.now - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります'
-      return render :dropin_spot
-    end
     checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
     checkout = checkin + cond[:use_hour].to_i.hours
 
-    fullbooked_facility_ids = DropinReservation.unavailable_dropin_facilities_arr(checkin, checkout)
-    in_range_facility_ids = FacilityDropinSubPlan.in_range_return_facilities(checkin, checkout)
+    if checkin < Time.zone.now - 30.minutes
+      flash[:error] = 'ご予約はご利用の30分前までとなります'
+      return render :dropin_spot
+    end
+
+    fullbooked_facility_ids = DropinReservation.unavailable_dropin_facilities_arr(checkin, checkout).uniq
     @facilities = logged_in? ? @user.login_dropin_spots : Facility.logout_dropin_spots
-    @facilities = @facilities.where.not(id: fullbooked_facility_ids).where(id: in_range_facility_ids).page(params[:page])
+    @facilities = @facilities.where.not(id: fullbooked_facility_ids).where(id: @user.member_facility_dropin_sub_plan.in_range_return_facilities(checkin, checkout)).page(params[:page])
     session[:dropin_spot] = cond
   end
 
   def new
     params[:dropin_spot] ||= session[:dropin_spot]
-    session[:reservation_id] = nil
-    @facility = @user.login_dropin_spots.find(params[:facility_id])
-    @facility_dropin_sub_plan = Facility.recommended_dropin_plan(params[:facility_id], params[:dropin_spot], @user)
+    f_id = params.dig(:dropin_spot, :facility_id).present? ? params[:dropin_spot]['facility_id'] : params[:facility_id]
+    @facility = @user.login_dropin_spots.find(f_id)
+    @facility_dropin_sub_plan = Facility.recommended_sub_plan(params[:facility_id], params[:dropin_spot], @user)
     cond = params[:dropin_spot]
   end
 
   def confirm
     session[:dropin_spot] = params[:dropin_spot] if params[:dropin_spot].present?
-    @facility = Facility.find(session[:dropin_spot]['facility_id'].to_i)
-    @sub_plan = FacilityDropinSubPlan.find(session[:dropin_spot]['sub_plan'].to_i)
+    @facility = Facility.find(session[:dropin_spot]['facility_id'])
+
+    if session[:dropin_spot]['sub_plan'].blank?
+      flash[:error] = 'ご利用プランを入力してください'
+      return render :new
+    end
+
+    @sub_plan = FacilityDropinSubPlan.find(session[:dropin_spot]['sub_plan'])
     y, m, d = session[:dropin_spot]['checkin'].split('/')
     @checkin = @sub_plan.starting_time.change(year: y, month: m, day: d)
     @checkout = @sub_plan.ending_time.change(year: y, month: m, day: d)
+
     if @checkin < Time.zone.now - 30.minutes
       flash[:error] = 'ご予約はご利用の30分前までとなります'
       return render :new
     end
-    if @checkin.to_s(:time) < @facility.shop.opening_time.to_s(:time) ||
-        @checkout.to_s(:time) > @facility.shop.closing_time.to_time.to_s(:time)
-      flash[:error] = 'ご予約時間が営業時間外となります'
-      return render :new
-    end
 
     if @user.credit_card.blank? && @user.creditcard?
-       @credit_card = @user.build_credit_card
+      @credit_card = @user.build_credit_card
       return render :credit_card
     end
-    reserved_key_num = DropinReservation.in_range(@checkin..@checkout).count
-    total_key_num =  @facility.facility_keys.count
+
+    reserved_key_num = @facility.dropin_reservations.in_range(@checkin..@checkout).count
+    total_key_num = @facility.facility_keys.count
     if reserved_key_num >= total_key_num
       flash[:error] = 'この時間帯のご予約はできません'
       return render :new
@@ -71,23 +74,22 @@ class DropinReservationsController <  ApplicationController
   end
 
   def price
-    @facility = @user.login_dropin_spots.find(params[:facility_id]) if params[:facility_id].present?
     cond = params[:dropin_spot]
     if cond.blank? || cond[:sub_plan].blank?
       return render json: {price: ''}
     end
-    sub_plan = FacilityDropinSubPlan.find(cond[:sub_plan].to_i)
-    render json: {price: number_with_delimiter(sub_plan.price)}
+    sub_plan = FacilityDropinSubPlan.find(cond[:sub_plan])
+    render json: { price: number_with_delimiter(sub_plan.price) }
   end
 
   def credit_card
-    @facility = Facility.find(session[:dropin_spot]['facility_id'].to_i)
+    @facility = Facility.find(session[:dropin_spot]['facility_id'])
     return redirect_to confirm_dropin_reservations_path if @user.credit_card.present?
     @credit_card = @user.build_credit_card(credit_card_params)
     return(render :credit_card) unless @credit_card.valid?
     begin
       @credit_card.save!
-      current_user.activated!
+      @user.activated!
       redirect_to confirm_dropin_reservations_path
     rescue => e
       logger.warn("#{e.class.name} #{e.message}")

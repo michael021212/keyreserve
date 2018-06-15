@@ -28,9 +28,9 @@
       <div class="col-md-6">
         <div class="mg-booking-form">
           <%= form_for :dropin_spot, url: confirm_dropin_reservations_path, html: {class: 'form-horizontal js-dropin-price-form'} do |f| %>
-            <%= f.hidden_field :facility_id, value: @facility.id %>
             <div class="mg-saerch-room">
               <div class="mg-book-now">
+                <%= f.hidden_field :facility_id, value: @facility.id %>
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用日</label>
                   <div class="input-group date mg-check-in col-sm-6">
@@ -85,7 +85,7 @@
                 <table class="table mt30">
                   <thead>
                     <tr>
-                      <th colspan='4' class="dropin-plan-title"><%= fdp.plan_name %></th>
+                      <th colspan='4' style="text-align:center"><%= fdp.plan_name %></th>
                     </tr>
                   </thead>
                   <tbody>

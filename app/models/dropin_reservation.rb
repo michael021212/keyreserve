@@ -7,10 +7,22 @@ class DropinReservation < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
 
+  before_save :create_payment, if: Proc.new { |r| r.user_id? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   scope :in_range, ->(range) do
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
+  end
+
+  def create_payment
+    return unless self.user.creditcard?
+    self.payment = Payment.create!(
+      user_id: self.reservation_user_id,
+      corporation_id: self.user_id,
+      facility_id: self.facility_id,
+      credit_card_id: self.user.credit_card.id,
+      price: self.price,
+    )
   end
 
   def self.new_from_dropin_spot(dropin_spot, user, current_user)
@@ -36,8 +48,8 @@ class DropinReservation < ApplicationRecord
     f_ids = in_range(checkin .. checkout).pluck(:facility_id).uniq
     Facility.where(id: f_ids).each do |f|
       dropin_reservation_num = f.dropin_reservations.in_range(checkin..checkout).count
-      key_num = f.facility_keys.count
-      exclude_facility_ids << f.id if dropin_reservation_num >= key_num
+      key_total_num = f.facility_keys.count
+      exclude_facility_ids << f.id if dropin_reservation_num >= key_total_num
     end
     exclude_facility_ids
   end

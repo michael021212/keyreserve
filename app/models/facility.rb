@@ -116,7 +116,8 @@ class Facility < ApplicationRecord
     facility_dropin_plans.where(plan_id: p_ids)
   end
 
-  def self.recommended_dropin_plan(facility_id, dropin_spot_params, user)
+  def self.recommended_sub_plan(facility_id, dropin_spot_params, user)
+    return if dropin_spot_params['checkin_time'].blank?
     facility = Facility.find(facility_id)
     checkin = Time.zone.parse(dropin_spot_params[:checkin] + " " + dropin_spot_params[:checkin_time])
     checkout = checkin + dropin_spot_params[:use_hour].to_i.hours

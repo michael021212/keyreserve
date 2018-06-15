@@ -34,7 +34,7 @@ class FacilityDropinSubPlan < ApplicationRecord
   end
 
   def self.in_range_return_facilities(checkin, checkout)
-    fdps = in_range(checkin..checkout).pluck(:facility_dropin_plan_id)
+    fdps = in_range(checkin..checkout).pluck(:facility_dropin_plan_id).uniq
     f_ids = FacilityDropinPlan.where(id: fdps).pluck(:facility_id)
   end
 
@@ -46,7 +46,7 @@ class FacilityDropinSubPlan < ApplicationRecord
   end
 
   def with_plan_name
-    "#{facility_dropin_plan.plan.name}ー#{name}"
+    "#{facility_dropin_plan.plan_name} - #{name}"
   end
 
   def using_period
