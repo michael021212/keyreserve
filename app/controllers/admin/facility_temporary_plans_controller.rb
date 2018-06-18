@@ -58,7 +58,7 @@ class Admin::FacilityTemporaryPlansController < AdminController
 
   def facility_temporary_plan_params
     params.require(:facility_temporary_plan).permit(
-      :plan_id, :ks_room_key_id, :standard_price_per_hour, :standard_price_per_day,
+      :plan_id, :ks_room_key_id, :guide_mail_title, :guide_mail_content, :guide_file, :standard_price_per_hour, :standard_price_per_day,
       facility_temporary_plan_prices_attributes: [
         :id, :facility_temporary_plan_id, :starting_time, :ending_time, :price, :_destroy
       ]

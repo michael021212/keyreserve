@@ -1,5 +1,7 @@
 class FacilityTemporaryPlan < ApplicationRecord
   acts_as_paranoid
+  mount_uploader :guide_file, FileUploader
+
   belongs_to :facility
   belongs_to :plan, optional: true
   has_many :facility_temporary_plan_prices, index_errors: true, dependent: :destroy

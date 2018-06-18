@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528085656) do
+ActiveRecord::Schema.define(version: 20180529075109) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -106,6 +106,9 @@ ActiveRecord::Schema.define(version: 20180528085656) do
     t.bigint "facility_id", null: false
     t.bigint "plan_id"
     t.integer "ks_room_key_id", null: false
+    t.string "guide_mail_title"
+    t.text "guide_mail_content"
+    t.string "guide_file"
     t.integer "standard_price_per_hour", null: false
     t.integer "standard_price_per_day", null: false
     t.datetime "created_at", null: false
