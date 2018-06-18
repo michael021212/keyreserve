@@ -29,6 +29,15 @@ class NotificationMailer < ApplicationMailer
     plan_ids = @reservation.user.user_contracts.pluck(:plan_id)
     @member_ftps = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
     @not_member_ftp = reservation.facility.facility_temporary_plans.where.not(standard_price_per_hour: 0).where(plan_id: nil)
-    mail(to: reservation.user.email, subject: "【KeyStation Office】ご予約30分前になりました")
+    @ftp = @member_ftps.present? ? @member_ftps.first : @not_member_ftp.first
+    @ftp_title = @ftp.guide_mail_title
+    @password = KeystationService.sync_room_key_password(@ftp.ks_room_key_id)
+    attachments[@ftp.guide_file.file.filename] = @ftp.guide_file.read if @ftp.guide_file.present?
+    return if @ftp.guide_mail_title.blank?
+    if reservation.send_cc_mail?
+      mail(to: reservation.reservation_user.email, cc: reservation.user.email, subject: @ftp_title)
+    else
+      mail(to: reservation.reservation_user.email, subject: @ftp_title)
+    end
   end
 end

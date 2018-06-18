@@ -19,3 +19,10 @@ $ ->
       $('#reservation_user_id').attr('disabled', 'true')
     else
       $('#reservation_user_id').removeAttr('disabled')
+
+  # 施設利用都度課金
+  $('#insert-pwd').on 'click', (event) ->
+    event.preventDefault()
+    currentPosition = $('#guide-mail-content')[0].selectionStart
+    textAreaTxt = $('#guide-mail-content').val()
+    $('#guide-mail-content').val(textAreaTxt.substring(0, currentPosition) + '[[password]]' + textAreaTxt.substring(currentPosition))

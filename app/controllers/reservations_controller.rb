@@ -99,7 +99,7 @@ class ReservationsController <  ApplicationController
     if @reservation.save
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
-      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now
+      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
       redirect_to thanks_reservations_url

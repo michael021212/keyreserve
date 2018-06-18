@@ -77,8 +77,8 @@ class Admin::ReservationsController < AdminController
     end
     if @reservation.save
       session[:reservation] = nil
-      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now
-      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now unless @reservation.user_id == @reservation.reservation_user_id
+      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
+      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
       redirect_to admin_reservations_path, notice: "#{Reservation.model_name.human}を作成しました。"
     else
