@@ -50,12 +50,10 @@ class Reservation < ApplicationRecord
   def self.to_csv(options)
     csv_data = CSV.generate(options) do |csv|
       csv << csv_column_names
-      ids = all.order('created_at DESC').pluck(:id)
+      ids = all.sort_by{ |row| row['checkin']}.pluck(:id).reverse!
       # 予約は1000筆ずつに読み込みします
       ids.each_slice(1000) do |id|
-        find(id).each do |row|
-          csv << row.csv_column_values
-        end
+        id.map { |id| csv << find(id).csv_column_values }
       end
     end
     bom = "\xFF\xFE".dup.force_encoding('UTF-16LE')
@@ -68,17 +66,18 @@ class Reservation < ApplicationRecord
       facility.shop.name,
       facility.name,
       user.try(:name),
+      checkin.strftime('%Y/%m/%d'),
       checkin.strftime('%Y/%m/%d %H:%M'),
       checkout.strftime('%Y/%m/%d %H:%M'),
-      "#{usage_period}時間",
+      usage_period,
       num,
       state_i18n,
-      "#{number_with_delimiter(price)}円"
+      price
     ]
   end
 
   def self.csv_column_names
-    %w[運営会社名 店舗名 施設名 お名前 利用開始時間 利用終了時間 利用時間 利用人数 状態 利用料金]
+    %w[運営会社名 店舗名 施設名 お名前 利用日 利用開始時間 利用終了時間 利用時間 利用人数 状態 利用料金]
   end
 
   def reservation_user
