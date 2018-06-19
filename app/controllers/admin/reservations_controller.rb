@@ -5,7 +5,7 @@ class Admin::ReservationsController < AdminController
   def index
     q = params[:q] || {}
     @q = Reservation.ransack(q)
-    @reservations = @q.result.order(id: :desc)
+    @reservations = @q.result.order(checkin: :desc)
     respond_to do |format|
       format.html do
         @reservations = @reservations.page(params[:page]).per(30)
