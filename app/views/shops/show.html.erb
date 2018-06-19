@@ -52,12 +52,6 @@
                           <i class="fa fa-user"></i>
                           <span class="mg-desc-text"><%= facility.max_num %>人まで</span>
                         </li>
-                        <li>
-                          <i class="fa fa-folder"></i>
-                          <% facility.facility_temporary_plans.each do |ftp| %>
-                            <span class="mg-desc-text"><%= ftp.plan.present? ? ftp.plan.try(:name) : '非会員' %></span>
-                          <% end %>
-                        </li>
                       </ul>
                     </div>
                   </div>
