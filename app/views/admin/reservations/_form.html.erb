@@ -3,7 +3,7 @@
     <%= f.check_box :block_flag, { id: 'reservation_block_flag' } %>
   <% end %>
   <%= f.select :facility_id, Facility.conference_room.collect { |f| [f.name, f.id] } %>
-  <%= f.select :user_id, User.all.collect { |u| [u.name, u.id] }, include_blank: true %>
+  <%= f.select :user_id, User.personal.collect { |u| [u.name, u.id] }, include_blank: true %>
   <%= f.number_field :num %>
   <%= f.datetime_select :checkin, { use_month_numbers: true, minute_step: 30 }, { class: 'form-control bootstrap-date' } %>
   <%= f.select :usage_period, (1..10).map{|i| [i.to_s + '時間', i]}, include_blank: true %>
