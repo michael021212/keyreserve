@@ -44,6 +44,12 @@
                     <%= f.select :sub_plan, options_for_select(FacilityDropinSubPlan.selections_with_plan_name(@facility.id, @user), @facility_dropin_sub_plan.try(:id)), { include_blank: 'ご利用プラン'}, { class: 'form-control' } %>
                   </div>
                 </div>
+                <div class="time-area form-group">
+                  <label class="col-sm-4 control-label">時間</label>
+                  <div class="input-group col-sm-6 text-right">
+                    <span id="js-dropin-time"></span>
+                  </div>
+                </div>
                 <div class="price-area form-group">
                   <label class="col-sm-4 control-label">料金</label>
                   <div class="input-group col-sm-6 text-right">

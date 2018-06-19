@@ -86,7 +86,7 @@ Rails.application.routes.draw do
   resource :personal_identification
   resources :dropin_reservations, only: [:index, :show, :new, :create] do
     collection do
-      get :price
+      get :plan
       get :dropin_spot
       post :confirm
       get :confirm

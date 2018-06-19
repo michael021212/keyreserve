@@ -26,7 +26,6 @@ class DropinReservationsController <  ApplicationController
       flash[:error] = 'ご予約はご利用の30分前までとなります'
       return render :dropin_spot
     end
-
     fullbooked_facility_ids = DropinReservation.unavailable_dropin_facilities_arr(checkin, checkout).uniq
     @facilities = logged_in? ? @user.login_dropin_spots : Facility.logout_dropin_spots
     @facilities = @facilities.where.not(id: fullbooked_facility_ids).where(id: @user.member_facility_dropin_sub_plan.in_range_return_facilities(checkin, checkout)).page(params[:page])
@@ -73,13 +72,13 @@ class DropinReservationsController <  ApplicationController
     end
   end
 
-  def price
+  def plan
     cond = params[:dropin_spot]
     if cond.blank? || cond[:sub_plan].blank?
-      return render json: {price: ''}
+      return render json: { price: '', time: '' }
     end
     sub_plan = FacilityDropinSubPlan.find(cond[:sub_plan])
-    render json: { price: number_with_delimiter(sub_plan.price) }
+    render json: { price: number_with_delimiter(sub_plan.price), time: sub_plan.using_period }
   end
 
   def credit_card

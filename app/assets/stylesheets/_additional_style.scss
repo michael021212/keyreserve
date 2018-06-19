@@ -277,7 +277,13 @@ select.form-control {
     font-size: 32px;
   }
 }
-
+.time-area {
+  padding-top: 15px;
+  color: #fff;
+  span {
+    font-size: 32px;
+  }
+}
 .arrow-font {
   display: block;
   font: normal normal normal 14px/1 FontAwesome;

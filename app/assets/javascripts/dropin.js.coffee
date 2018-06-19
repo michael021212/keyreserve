@@ -2,7 +2,7 @@ dropin_price = ->
   fid = $('#js-dropin-price').data('fid')
   sub_plan = $('#js-dropin-price').data('sub-plan')
   return unless fid
-  url = "/dropin_reservations/price"
+  url = "/dropin_reservations/plan"
   $.ajax({
     url: url,
     type:      "GET"
@@ -11,6 +11,7 @@ dropin_price = ->
     data: $('.js-dropin-price-form').serialize() + '&facility_id=' + fid
   }).done((data) ->
     $('#js-dropin-price').text(data.price)
+    $('#js-dropin-time').text(data.time)
   )
 
 dropin_price()
