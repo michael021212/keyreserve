@@ -64,7 +64,7 @@ class User < ApplicationRecord
   def member_facility_dropin_sub_plan
     plan_ids = [nil]
     plan_ids << self.user_contracts.map(&:plan_id)
-    FacilityDropinSubPlan.includes(:facility_dropin_plan).where(facility_dropin_plans: { plan_id: plan_ids })
+    FacilityDropinPlan.where(plan_id: plan_ids).pluck(:facility_id)
   end
 
   def set_stripe_customer

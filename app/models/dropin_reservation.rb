@@ -53,4 +53,15 @@ class DropinReservation < ApplicationRecord
     end
     exclude_facility_ids
   end
+
+  def self.available_dropin_reservations_ids(checkin, checkout)
+    ids = []
+    y, m, d = checkin.strftime('%Y %m %d').split(' ')
+    FacilityDropinSubPlan.in_range(checkin..checkout).each do |sp|
+      dropin_reservation_num = sp.facility_dropin_plan.facility.dropin_reservations.in_range(sp.starting_time.change(year: y, month: m, day: d)..sp.ending_time.change(year: y, month: m, day: d)).count
+      key_total_num = sp.facility_dropin_plan.facility.facility_keys.count
+      ids << sp.id if key_total_num > dropin_reservation_num
+    end
+    ids
+  end
 end

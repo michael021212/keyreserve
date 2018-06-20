@@ -26,9 +26,10 @@ class DropinReservationsController <  ApplicationController
       flash[:error] = 'ご予約はご利用の30分前までとなります'
       return render :dropin_spot
     end
-    fullbooked_facility_ids = DropinReservation.unavailable_dropin_facilities_arr(checkin, checkout).uniq
-    @facilities = logged_in? ? @user.login_dropin_spots : Facility.logout_dropin_spots
-    @facilities = @facilities.where.not(id: fullbooked_facility_ids).where(id: @user.member_facility_dropin_sub_plan.in_range_return_facilities(checkin, checkout)).page(params[:page])
+    sub_plan_ids = DropinReservation.available_dropin_reservations_ids(checkin, checkout)
+    @facilities = Facility.logout_dropin_spots
+    @facilities = @facilities.where(id: @user.member_facility_dropin_sub_plan).includes(facility_dropin_plans: :facility_dropin_sub_plans).where(facility_dropin_plans: {facility_dropin_sub_plans: {id: sub_plan_ids}}) if @user.present?
+    @facilities = @facilities.page(params[:page])
     session[:dropin_spot] = cond
   end
 

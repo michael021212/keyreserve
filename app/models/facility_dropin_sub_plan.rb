@@ -3,6 +3,7 @@ class FacilityDropinSubPlan < ApplicationRecord
   acts_as_paranoid
 
   belongs_to :facility_dropin_plan
+  has_many :dropin_reservations
 
   validate :within_business_hours
 
