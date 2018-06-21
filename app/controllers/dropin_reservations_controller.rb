@@ -4,7 +4,7 @@ class DropinReservationsController <  ApplicationController
   include ActionView::Helpers::NumberHelper
 
   def index
-    @dropin_reservations = @user.dropin_reservations.order(checkin: :desc)
+    @dropin_reservations = @user.dropin_reservations.order(checkin: :desc).page(params[:page])
   end
 
   def show
