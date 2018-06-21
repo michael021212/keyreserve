@@ -1,4 +1,5 @@
 class DropinReservation < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
   acts_as_paranoid
 
   belongs_to :facility
@@ -14,6 +15,7 @@ class DropinReservation < ApplicationRecord
   scope :in_range, ->(range) do
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
   end
+  scope(:confirmed_to_i, -> { states[:confirmed] })
 
   scope :ready_to_send, -> do
     target = Time.zone.now + 30.minutes
@@ -68,5 +70,38 @@ class DropinReservation < ApplicationRecord
 
   def send_cc_mail?
     user_id != reservation_user_id
+  end
+
+  def self.to_csv(options)
+    csv_data = CSV.generate(options) do |csv|
+      csv << csv_column_names
+      ids = all.sort_by{ |row| row['checkin'] }.pluck(:id).reverse!
+      # 予約は1000筆ずつに読み込みします
+      ids.each_slice(1000) do |id|
+        id.map { |id| csv << find(id).csv_column_values }
+      end
+    end
+    bom = "\xFF\xFE".dup.force_encoding('UTF-16LE')
+    bom + csv_data.encode('UTF-16LE', undef: :replace, invalid: :replace, replace: '?', cr_newline: true)
+  end
+
+  def csv_column_values
+    [
+      facility.shop.corporation.name,
+      facility.shop.name,
+      facility.name,
+      user.try(:name),
+      facility_dropin_sub_plan.with_plan_name,
+      checkin.strftime('%Y/%m/%d'),
+      checkin.strftime('%Y/%m/%d %H:%M'),
+      checkout.strftime('%Y/%m/%d %H:%M'),
+      facility_dropin_sub_plan.using_hours,
+      state_i18n,
+      price
+    ]
+  end
+
+  def self.csv_column_names
+    %w[運営会社名 店舗名 施設名 お名前 ご利用プラン 利用日 利用開始時間 利用終了時間 利用時間 状態 利用料金]
   end
 end

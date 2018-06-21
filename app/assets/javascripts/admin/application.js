@@ -19,7 +19,7 @@
 //= require moment/ja.js
 //= require bootstrap-datetimepicker
 //= require app
-//= require jquery.slimscroll.min
+//= require jquery.slimscroll
 //= require jquery_nested_form
 //= require map
 //= require moment

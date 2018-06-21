@@ -39,6 +39,11 @@ ja:
         title: 施設管理者編集
       show:
         title: 施設管理者詳細
+    dropin_reservations:
+      index:
+        title: 予約一覧
+      show:
+        title: 予約詳細
     shops:
       index:
         title: 店舗一覧

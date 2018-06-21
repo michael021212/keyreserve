@@ -3,6 +3,7 @@ ja:
     models:
       admin_user: 管理者
       corporation: 運営会社
+      dropin_reservation: スペース予約
       user: 利用者
       user_corp: 法人
       payment: 支払い
@@ -46,6 +47,15 @@ ja:
         holder_name: カード名義人
         exp: 有効期限
         cvc: セキュリティコード
+      dropin_reservation:
+        id: 予約ID
+        user_id: 利用者名
+        checkin: 利用開始時間
+        checkout: 利用終了時間
+        state: 状態
+        price: 利用料金
+        block_flag: ブロック
+        mail_send_flag: 予約案内メール送信フラグ
       user:
         id: ID
         email: メールアドレス
