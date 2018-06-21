@@ -2,61 +2,62 @@
 <h2>スペースのご予約履歴</h2>
 <% end %>
 <div class="mg-page">
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <% @dropin_reservations.each do |dropin_reservation| %>
-        <% facility = dropin_reservation.facility %>
-        <div class="mg-booking-form">
-          <div class="row">
-            <div class="col-sm-4">
-              <%= link_to dropin_reservation_path(dropin_reservation) do %>
-                <%= image_tag facility.image.main.url, class: 'img-responsive' %>
-            <% end %>
-            </div>
-            <div class="col-sm-8">
-              <div class="mg-booking-form">
-                <div class="mg-saerch-room">
-                  <div class="mg-book-now">
-                    <div class="form-group">
-                      <label class="col-sm-6 control-label">ご予約ID</label>
-                      <div class="input-group col-sm-6 static-text">
-                        <%= dropin_reservation.id %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <% @dropin_reservations.each do |dropin_reservation| %>
+          <% facility = dropin_reservation.facility %>
+          <div class="mg-booking-form">
+            <div class="row">
+              <div class="col-sm-4">
+                <%= link_to dropin_reservation_path(dropin_reservation) do %>
+                  <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                <% end %>
+              </div>
+              <div class="col-sm-8">
+                <div class="mg-booking-form">
+                  <div class="mg-saerch-room">
+                    <div class="mg-book-now">
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご予約ID</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= dropin_reservation.id %>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-6 control-label">施設名</label>
-                      <div class="input-group col-sm-6 static-text">
-                        <%= facility.name %>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">施設名</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= facility.name %>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-6 control-label">ご利用プラン</label>
-                      <div class="input-group col-sm-6 static-text">
-                        <%= dropin_reservation.facility_dropin_sub_plan.with_plan_name %>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご利用プラン</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= dropin_reservation.facility_dropin_sub_plan.with_plan_name %>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-6 control-label">ご利用開始日時</label>
-                      <div class="input-group col-sm-6 static-text">
-                        <%= datetime_ja dropin_reservation.checkin %>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご利用開始日時</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= datetime_ja dropin_reservation.checkin %>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-6 control-label">ご利用終了日時</label>
-                      <div class="input-group col-sm-6 static-text">
-                        <%= datetime_ja dropin_reservation.checkout %>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">ご利用終了日時</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <%= datetime_ja dropin_reservation.checkout %>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-6 control-label">料金</label>
-                      <div class="input-group col-sm-6 static-text">
-                        <span><%= number_with_delimiter dropin_reservation.price %></span><span>円</span>
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label">料金</label>
+                        <div class="input-group col-sm-6 static-text">
+                          <span><%= number_with_delimiter dropin_reservation.price %></span><span>円</span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-offset-4 col-md-4">
-                        <%= link_to "詳細", dropin_reservation_path(dropin_reservation), class: 'btn btn-main btn-block' %>
+                      <div class="row">
+                        <div class="col-md-offset-4 col-md-4">
+                          <%= link_to "詳細", dropin_reservation_path(dropin_reservation), class: 'btn btn-main btn-block' %>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -64,9 +65,9 @@
               </div>
             </div>
           </div>
-        </div>
-        <hr>
-      <% end %>
+          <hr>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

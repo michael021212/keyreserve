@@ -2,84 +2,84 @@
 <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
 <% end %>
 <div class="mg-page">
-<div class="container">
-  <div class="mg-booking-form">
-    <ul class="nav nav-tabs">
-      <li role="presentation">
-        <a href="#select-room" aria-controls="select-room" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>ご利用情報入力</a>
-      </li>
-      <li role="presentation">
-        <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>カード情報入力</a>
-      </li>
-      <li role="presentation" class="active">
-        <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>確認画面</a>
-      </li>
-      <li role="presentation">
-        <a href="#thank-you" aria-controls="thank-you" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">4</span>完了</a>
-      </li>
-    </ul>
-  </div>
-  <div class="row mt20">
-    <div class="col-md-6 mb20">
-      <div class="text-center">
-        <%= image_tag @facility.image.main.url, class: 'img-responsive' %>
-      </div>
+  <div class="container">
+    <div class="mg-booking-form">
+      <ul class="nav nav-tabs">
+        <li role="presentation">
+          <a href="#select-room" aria-controls="select-room" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>ご利用情報入力</a>
+        </li>
+        <li role="presentation">
+          <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>カード情報入力</a>
+        </li>
+        <li role="presentation" class="active">
+          <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>確認画面</a>
+        </li>
+        <li role="presentation">
+          <a href="#thank-you" aria-controls="thank-you" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">4</span>完了</a>
+        </li>
+      </ul>
     </div>
-    <div class="col-md-6">
-      <div class="mg-booking-form">
-        <%= form_for :dropin_spot, url: dropin_reservations_path, method: :post, html: {class: 'form-horizontal js-dropin-price-form'} do |f| %>
-          <%= f.hidden_field :facility_id, value: @facility.id %>
-          <div class="mg-saerch-room">
-            <div class="mg-book-now">
-              <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用プラン</label>
-                <div class="input-group col-sm-6 static-text">
-                  <%= "#{@sub_plan.facility_dropin_plan.plan_name}-#{@sub_plan.name}" %>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用開始時刻</label>
-                <div class="input-group col-sm-6 static-text">
-                  <%= datetime_ja(@checkin) %>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用終了時間</label>
-                <div class="input-group col-sm-6 col-xs-12 static-text">
-                  <%= datetime_ja(@checkout) %>
-                </div>
-              </div>
-              <% if @user.creditcard? %>
+    <div class="row mt20">
+      <div class="col-md-6 mb20">
+        <div class="text-center">
+          <%= image_tag @facility.image.main.url, class: 'img-responsive' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mg-booking-form">
+          <%= form_for :dropin_spot, url: dropin_reservations_path, method: :post, html: {class: 'form-horizontal js-dropin-price-form'} do |f| %>
+            <%= f.hidden_field :facility_id, value: @facility.id %>
+            <div class="mg-saerch-room">
+              <div class="mg-book-now">
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">ご利用クレジットカード</label>
-                  <div class="input-group col-sm-6 col-xs-12 static-text">
-                    ************<%= @user.credit_card.card_no %>
+                  <label class="col-sm-6 control-label">ご利用プラン</label>
+                  <div class="input-group col-sm-6 static-text">
+                    <%= "#{@sub_plan.facility_dropin_plan.plan_name}-#{@sub_plan.name}" %>
                   </div>
                 </div>
-              <% else %>
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">お支払い方法</label>
-                  <div class="input-group col-sm-6 col-xs-12 static-text">
-                    ご請求書
+                  <label class="col-sm-6 control-label">ご利用開始時刻</label>
+                  <div class="input-group col-sm-6 static-text">
+                    <%= datetime_ja(@checkin) %>
                   </div>
                 </div>
-              <% end %>
-              <div class="form-group">
-                <label class="col-sm-6 control-label">料金</label>
-                <div class="input-group col-sm-6 static-text">
-                  <span><%= number_with_delimiter @sub_plan.price %></span><span>円</span>
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">ご利用終了時間</label>
+                  <div class="input-group col-sm-6 col-xs-12 static-text">
+                    <%= datetime_ja(@checkout) %>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-offset-4 col-md-4">
-                  <button type="submit" class="btn btn-main btn-block">予約する</button>
+                <% if @user.creditcard? %>
+                  <div class="form-group">
+                    <label class="col-sm-6 control-label">ご利用クレジットカード</label>
+                    <div class="input-group col-sm-6 col-xs-12 static-text">
+                      ************<%= @user.credit_card.card_no %>
+                    </div>
+                  </div>
+                <% else %>
+                  <div class="form-group">
+                    <label class="col-sm-6 control-label">お支払い方法</label>
+                    <div class="input-group col-sm-6 col-xs-12 static-text">
+                      ご請求書
+                    </div>
+                  </div>
+                <% end %>
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">料金</label>
+                  <div class="input-group col-sm-6 static-text">
+                    <span><%= number_with_delimiter @sub_plan.price %></span><span>円</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-offset-4 col-md-4">
+                    <button type="submit" class="btn btn-main btn-block">予約する</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

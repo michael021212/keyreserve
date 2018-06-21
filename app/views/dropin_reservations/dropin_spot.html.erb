@@ -72,22 +72,6 @@
                             <% end %>
                           </h3>
                           <div class='row mg-room-fecilities'>
-                            <div class='col-sm-12'>
-                              <ul>
-                                <li>
-                                  <span class="mg-desc-text">ご利用可能なプラン</span>
-                                </li>
-                                <li>
-                                  <span class="mg-desc-text">
-                                    <% facility.facility_dropin_plans_in_contract(@user).each do |fdp| %>
-                                      <% fdp.facility_dropin_sub_plans.each do |p| %>
-                                        <%= p.name%>
-                                      <% end %>
-                                    <% end %>
-                                  </span>
-                                </li>
-                              </ul>
-                            </div>
                           </div>
                           <%= link_to '予約する', new_dropin_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
                         </div>

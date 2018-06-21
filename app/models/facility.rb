@@ -22,6 +22,8 @@ class Facility < ApplicationRecord
 
   validates :name, presence: true
 
+  scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) { includes(facility_dropin_plans: :facility_dropin_sub_plans).where(facility_dropin_plans: {facility_dropin_sub_plans: { id: sub_plan_ids } }) })
+
   scope(:belongs_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
 
   scope :order_by_min_price, -> (facilities, user) {

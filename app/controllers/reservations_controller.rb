@@ -46,10 +46,7 @@ class ReservationsController <  ApplicationController
   def new
     params[:spot] ||= session[:spot]
     session[:reservation_id] = nil
-    if params[:facility_id].present?
-      @facility = params[:facility_type] == "dropin" ? @user.login_dropin_spots : @user.login_spots
-      @facility = @facility.find(params[:facility_id])
-    end
+    @facility = @user.login_spots.find(params[:facility_id]) if params[:facility_id].present?
   end
 
   def price

@@ -28,17 +28,6 @@ class FacilityDropinSubPlan < ApplicationRecord
     end
   end
 
-  def self.selectable(facility, user)
-    fdp_ids = facility.facility_dropin_plans_in_contract(user).pluck(:id)
-    fdp_ids.push(nil)
-    FacilityDropinSubPlan.where(facility_dropin_plan_id: fdp_ids)
-  end
-
-  def self.in_range_return_facilities(checkin, checkout)
-    fdps = in_range(checkin..checkout).pluck(:facility_dropin_plan_id).uniq
-    f_ids = FacilityDropinPlan.where(id: fdps).pluck(:facility_id)
-  end
-
   def self.selections_with_plan_name(f_id, user)
     facility = Facility.find(f_id)
     facility_dropin_plan_ids = facility.facility_dropin_plans_in_contract(user).pluck(:id)
@@ -52,5 +41,16 @@ class FacilityDropinSubPlan < ApplicationRecord
 
   def using_period
     "#{starting_time.strftime('%H:%M')} - #{ending_time.strftime('%H:%M')}"
+  end
+
+  def self.available_ids(checkin, checkout)
+    ids = []
+    y, m, d = checkin.strftime('%Y %m %d').split(' ')
+    in_range(checkin..checkout).each do |sp|
+      dropin_reservation_num = sp.facility_dropin_plan.facility.dropin_reservations.in_range(sp.starting_time.change(year: y, month: m, day: d)..sp.ending_time.change(year: y, month: m, day: d)).count
+      key_total_num = sp.facility_dropin_plan.facility.facility_keys.count
+      ids << sp.id if key_total_num > dropin_reservation_num
+    end
+    ids
   end
 end
