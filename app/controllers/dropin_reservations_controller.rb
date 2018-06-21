@@ -99,11 +99,11 @@ class DropinReservationsController <  ApplicationController
   end
 
   def create
-    # TODO 管理者と利用者のメール通知(【施設利用都度課金プランで案内ガイドを追加】のマージを待つ)
     @dropin_reservation = DropinReservation.new_from_dropin_spot(session[:dropin_spot], @user, current_user)
     if @dropin_reservation.save
       session[:dropin_spot] = nil
       session[:reservation_id] = @dropin_reservation.id
+      @dropin_reservation.send_dropin_reserved_mails
       redirect_to thanks_dropin_reservations_path
     else
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'

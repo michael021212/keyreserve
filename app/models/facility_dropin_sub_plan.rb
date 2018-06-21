@@ -6,14 +6,13 @@ class FacilityDropinSubPlan < ApplicationRecord
   has_many :dropin_reservations
 
   validate :within_business_hours
+  validate :within_business_hours
 
   scope :in_range, ->(range) do
     where(arel_table[:starting_time].lteq(range.first)).where(arel_table[:ending_time].gteq(range.last))
   end
 
   scope(:belongs_to_facility, ->(f_id) { includes(facility_dropin_plan: :facility).where(facility_dropin_plans: { facilities: { id: f_id }}) })
-
-  validate :within_business_hours
 
   def within_business_hours
     opening_time = time_today(facility_dropin_plan.facility.shop.opening_time)

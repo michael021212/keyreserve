@@ -14,6 +14,10 @@ class DropinReservation < ApplicationRecord
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
   end
 
+  delegate :name, to: :user, prefix: true, allow_nil: true
+  delegate :email, to: :user, prefix: true, allow_nil: true
+  delegate :name, to: :facility, prefix: true, allow_nil: true
+
   def create_payment
     return unless self.user.creditcard?
     self.payment = Payment.create!(
@@ -41,5 +45,16 @@ class DropinReservation < ApplicationRecord
       block_flag: false,
       mail_send_flag: true # TODO 暫定
     )
+  end
+
+  def reservation_user
+    return if reservation_user_id.nil?
+    User.find(reservation_user_id)
+  end
+
+  def send_dropin_reserved_mails
+    NotificationMailer.dropin_reserved(self, user_id).deliver_now
+    NotificationMailer.dropin_reserved(self, reservation_user_id).deliver_now if reservation_user_id != user_id
+    NotificationMailer.dropin_reserved_to_admin(self).deliver_now
   end
 end

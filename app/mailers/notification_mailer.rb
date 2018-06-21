@@ -24,6 +24,18 @@ class NotificationMailer < ApplicationMailer
     mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】会議室の予約が入りました")
   end
 
+  def dropin_reserved(dropin_reservation, user_id)
+    user = User.find(user_id)
+    return if user.email.blank?
+    @dropin_reservation = dropin_reservation
+    mail(to: user.email, subject: "【KeyStation Office】施設のご予約を承りました")
+  end
+
+  def dropin_reserved_to_admin(dropin_reservation)
+    @dropin_reservation = dropin_reservation
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】ドロップインの予約が入りました")
+  end
+
   def notice_password(reservation)
     @reservation = reservation
     plan_ids = @reservation.user.user_contracts.pluck(:plan_id)
