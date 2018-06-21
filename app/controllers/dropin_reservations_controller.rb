@@ -22,6 +22,10 @@ class DropinReservationsController <  ApplicationController
     checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
     checkout = checkin + cond[:use_hour].to_i.hours
 
+    unless checkin.strftime('%Y/%m/%d') == checkout.strftime('%Y/%m/%d')
+      return render :dropin_spot
+    end
+
     if checkin < Time.zone.now - 30.minutes
       flash[:error] = 'ご予約はご利用の30分前までとなります'
       return render :dropin_spot
