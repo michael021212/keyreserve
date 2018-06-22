@@ -77,11 +77,11 @@
           </tr>
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:front_img) %></th>
-            <td><%= link_to @user.personal_identification.front_img.file.filename, @user.personal_identification.front_img.url %></td>
+            <td><%= link_to @user.personal_identification.front_img.file.filename, @user.personal_identification.front_img.url, target: '_blank' %></td>
           </tr>
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:back_img) %></th>
-            <td><%= link_to @user.personal_identification.back_img.file.filename, @user.personal_identification.back_img.url if @user.personal_identification.back_img.present? %></td>
+            <td><%= link_to @user.personal_identification.back_img.file.filename, @user.personal_identification.back_img.url, target: '_blank' if @user.personal_identification.back_img.present? %></td>
           </tr>
         </table>
       </div>

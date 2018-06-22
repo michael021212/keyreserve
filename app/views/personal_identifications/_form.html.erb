@@ -1,10 +1,10 @@
 <div class='reminder-block'>
-  <div class='reminder-text'>※ <span class='reminder-green'>運転免許証</span>、<span class='reminder-green'>健康保険証</span>、<span class='reminder-green'>在留カード</span>の場合は表・裏両面が必要でございます。</div>
-  <div class='reminder-text'>※ <span class='reminder-green'>マイナンバーカード</span>の場合は表面を提出するだけで済みでございます。</div>
-  <div class='reminder-text'>※ <span class='reminder-green'>パスポート</span>の場合は顔写真入りページ及び所持人記入欄（住所の記載があるもの）が必要でございます。</div>
-  <div class='reminder-text'>※ 提出書類は種別以外のものの場合は<span class='reminder-green'>その他</span>を選択してください。</div>
+  <div class='reminder-text'>※ <span class='reminder-green'>運転免許証</span>、<span class='reminder-green'>健康保険証</span>、<span class='reminder-green'>在留カード</span>の場合は表・裏両面のご提出をお願いします。</div>
+  <div class='reminder-text'>※ <span class='reminder-green'>マイナンバーカード</span>の場合は表面のみご提出をお願いします。</div>
+  <div class='reminder-text'>※ <span class='reminder-green'>パスポート</span>の場合は顔写真入りページ及び所持人記入欄（住所の記載があるもの）のご提出をお願いします。</div>
+  <div class='reminder-text'>※ 提出書類種別以外のものの場合は<span class='reminder-green'>その他</span>を選択してください。</div>
   <div class='reminder-text'>※ 提出書類は氏名、住所、生年月日、顔写真が確認できるものをご用意ください。</div>
-  <div class='reminder-text'>※ 裏面に住所変更や氏名変更などの記載事項がある場合は、裏面にも提出をお願いします。</div>
+  <div class='reminder-text'>※ 裏面に住所変更や氏名変更などの記載事項がある場合は、裏面もご提出をお願いします。</div>
 </div>
 
 <%= bootstrap_form_for personal_identification, url: personal_identification_path, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f| %>
@@ -14,5 +14,5 @@
   <%= f.file_field :front_img %>
   <%= f.file_field :back_img %>
   <%= f.hidden_field :status, value: :applying %>
-  <%= f.button 'アップロード', class: 'btn btn-dark-main center-block', data: { confirm: "本人確認済みの場合、再アップロードすると上書きされますので、本人確認はもう一度行います。ご注意ください。"} %>
+  <%= f.button 'アップロード', class: 'btn btn-dark-main center-block', data: { confirm: "本人確認済みの場合、再アップロードすると確認書類が上書きされ、再度本人確認を行いますのでご注意ください。"} %>
 <% end %>
