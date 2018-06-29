@@ -63,4 +63,7 @@ class User < ApplicationRecord
     Stripe::Customer.retrieve(stripe_customer_id)
   end
 
+  def name_with_corp
+    user_corp.present? ? "(#{user_corp.name}) #{name}" : name
+  end
 end
