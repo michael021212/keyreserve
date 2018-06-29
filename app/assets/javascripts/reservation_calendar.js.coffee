@@ -28,24 +28,18 @@ $ ->
     height: 'auto'
     lang: 'ja'
     aspectRatio: 10
-    businessHours: [
-      {
-        dow: [0, 1, 2, 3, 4, 5, 6]
-        start: '09:00'
-        end: '21:00'
-      }
-    ]
+    displayEventTime: false
     events: (start, end, timezone, callback) ->
       start = moment(start._d).format('YYYY-MM-DD')
       end = moment(end._d).format('YYYY-MM-DD')
       ajaxRequest(url + '?start=' + start + '&end=' + end).then (events) ->
         callback events
-     eventClick: (event, jsEvent, view) ->
-       date = moment(event.start).format('YYYY/MM/DD')
-       time = moment(event.start).format('H:mm')
-       $('#spot_checkin').val(date)
-       $('#spot_checkin_time').val(time)
-       alert("ご利用日: " + date + "\n" + "ご利用時刻: " + time + "\n" + "上記の内容を上方のご予約フォームに入力しました")
+    eventClick: (event, jsEvent, view) ->
+      date = moment(event.start).format('YYYY/MM/DD')
+      time = moment(event.start).format('H:mm')
+      $('#spot_checkin').val(date)
+      $('#spot_checkin_time').val(time)
+      alert("ご利用日: " + date + "\n" + "ご利用時刻: " + time + "\n" + "上記の内容を上方のご予約フォームに入力しました")
 
   $('a[data-toggle="tab"]').on 'shown.bs.tab', (e)->
     if $(e.target).attr('id') == 'calendar-tab'
