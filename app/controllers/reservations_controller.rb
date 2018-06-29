@@ -21,6 +21,10 @@ class ReservationsController <  ApplicationController
     checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
     checkout = checkin + cond[:use_hour].to_i.hours
 
+    unless checkin.strftime('%Y/%m/%d') == checkout.strftime('%Y/%m/%d')
+      return render :spot
+    end
+
     if checkin < Time.zone.now - 30.minutes
       flash[:error] = 'ご予約はご利用の30分前までとなります'
       return render :spot
@@ -35,6 +39,7 @@ class ReservationsController <  ApplicationController
       where(Shop.arel_table[:opening_time].lteq(checkin)).
       where(Shop.arel_table[:closing_time].gteq(checkout))
     @facilities = @facilities.where(max_num: cond[:use_num].to_i .. Float::INFINITY) if cond[:use_num].present?
+    return render :spot if @facilities.blank?
     @facilities = Facility.order_by_min_price(@facilities, current_user).page(params[:page])
     session[:spot] = cond
   end
@@ -77,12 +82,13 @@ class ReservationsController <  ApplicationController
     @facility = Facility.find(session[:spot]['facility_id'].to_i)
     checkin = Time.zone.parse(session[:spot]['checkin'] + " " + session[:spot]['checkin_time'])
     checkout = checkin + session[:spot]['use_hour'].to_i.hours
+    y, m, d = checkin.strftime('%Y %m %d').split(' ')
     if checkin < Time.zone.now - 30.minutes
       flash[:error] = 'ご予約はご利用の30分前までとなります'
       return render :new
     end
-    if checkin.to_s(:time) < @facility.shop.opening_time.to_s(:time) ||
-        checkout.to_s(:time) > @facility.shop.closing_time.to_time.to_s(:time)
+    if checkin < @facility.shop.opening_time.change(year: y, month: m, day: d) ||
+        checkout > @facility.shop.closing_time.to_time.change(year: y, month: m, day: d)
       flash[:error] = 'ご予約時間が営業時間外となります'
       return render :new
     end
