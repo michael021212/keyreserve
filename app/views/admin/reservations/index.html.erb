@@ -37,6 +37,7 @@
           <th><%= Reservation.human_attribute_name(:usage_period) %></th>
           <th><%= Reservation.human_attribute_name(:state) %></th>
           <th><%= Reservation.human_attribute_name(:price) %></th>
+          <th>決済方法</th>
           <th></th>
         </tr>
       </thead>
@@ -52,6 +53,7 @@
               <td><%= "#{reservation.usage_period}時間" %></td>
               <td><%= reservation.state_i18n %></td>
               <td><%= delimiter_price(reservation.price) %></td>
+              <td><%= reservation.payment_method %></td>
               <td><%= link_to '詳細', admin_reservation_path(reservation), class: 'btn btn-default' %></td>
             </tr>
           <% end %>

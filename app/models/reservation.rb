@@ -72,12 +72,13 @@ class Reservation < ApplicationRecord
       usage_period,
       num,
       state_i18n,
-      price
+      price,
+      payment_method
     ]
   end
 
   def self.csv_column_names
-    %w[運営会社名 店舗名 施設名 お名前 利用日 利用開始時間 利用終了時間 利用時間 利用人数 状態 利用料金]
+    %w[運営会社名 店舗名 施設名 お名前 利用日 利用開始時間 利用終了時間 利用時間 利用人数 状態 利用料金 決済方法]
   end
 
   def reservation_user
@@ -86,5 +87,9 @@ class Reservation < ApplicationRecord
 
   def send_cc_mail?
     user_id != reservation_user_id
+  end
+
+  def payment_method
+    payment_id.present? ? 'クレジットカード' : '請求書'
   end
 end
