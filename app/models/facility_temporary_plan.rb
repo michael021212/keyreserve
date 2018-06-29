@@ -62,9 +62,6 @@ class FacilityTemporaryPlan < ApplicationRecord
   end
 
   def self.unit_price(user, facility, start_t, end_t)
-    plan_ids = [nil]
-    plan_ids.push(user.user_contracts.pluck(:plan_id)) if user.present? && user.user_contracts.present?
-    includes(:plan, :facility).where(plans: {id: plan_ids}, facilities: {id: facility.id})
     arr = []
     while start_t < end_t do
       i = 1
