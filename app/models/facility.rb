@@ -57,6 +57,7 @@ class Facility < ApplicationRecord
 
   def calc_price(user, start, usage_hour)
     sum = 0
+    return if user.nil?
     while(usage_hour > 0) do
       min = self.min_half_hourly_price(user, start)
       sum = sum + min
