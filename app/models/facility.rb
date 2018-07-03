@@ -52,7 +52,7 @@ class Facility < ApplicationRecord
     min_price = ftps.minimum(:standard_price_per_hour)
     min_price = option_min_price if option_min_price.present? && option_min_price < min_price
     min_price ||= 0
-    (min_price / 2) unless min_price.zero?
+    (min_price / 2) unless min_price.zero? && min_price.nil?
   end
 
   def calc_price(user, start, usage_hour)
