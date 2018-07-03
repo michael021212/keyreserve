@@ -1,6 +1,7 @@
 class Admin::ReservationsController < AdminController
   include ApplicationHelper
-  before_action :set_reservation, only: [:payment, :confirm]
+  before_action :set_reservation, only: [:show, :destroy]
+  before_action :set_reservation_from_session, only: [:payment, :confirm]
 
   def index
     q = params[:q] || {}
@@ -16,9 +17,7 @@ class Admin::ReservationsController < AdminController
     end
   end
 
-  def show
-    @reservation = Reservation.find(params[:id])
-  end
+  def show; end
 
   def new
     @reservation = if session[:reservation].present?
@@ -87,9 +86,18 @@ class Admin::ReservationsController < AdminController
     end
   end
 
+  def destroy
+    @reservation.destroy
+    redirect_to admin_reservations_path, notice: '予約を削除しました'
+  end
+
   private
 
   def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
+
+  def set_reservation_from_session
     @reservation = Reservation.new(session[:reservation])
   end
 

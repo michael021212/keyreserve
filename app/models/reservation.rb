@@ -90,6 +90,11 @@ class Reservation < ApplicationRecord
   end
 
   def payment_method
+    return '' if block_flag?
     payment_id.present? ? 'クレジットカード' : '請求書'
+  end
+
+  def deletable?
+    payment_id.nil? && (checkin > Time.zone.now)
   end
 end
