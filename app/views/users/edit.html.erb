@@ -3,6 +3,9 @@
 <% end %>
 <div class="panel panel-default">
   <div class="panel-body edit-user-panel mt40">
+    <div class="mg-sec-title">
+      <h3>アカウント情報</h3>
+    </div>
     <%= bootstrap_form_for @user, url: user_path, layout: :horizontal, label_col: 'col-md-4', control_col: 'col-md-8' do |f| %>
       <%= f.text_field :name %>
       <%= f.text_field :tel %>

@@ -4,6 +4,9 @@
 <div class="container sp-center">
   <div class="panel panel-default">
     <div class="panel-body mt40">
+      <div class="mg-sec-title">
+        <h3>アカウント情報</h3>
+      </div>
       <%= bootstrap_form_for @user, url: user_path, layout: :horizontal, label_col: 'col-md-5', control_col: 'col-md-7' do |f| %>
         <%= f.static_control :name %>
         <%= f.static_control :tel %>
@@ -18,6 +21,31 @@
           </div>
         </div>
       <% end %>
+      <div class="mg-sec-title mt150">
+        <h3>本人確認</h3>
+      </div>
+        <div class='notify-personal-identification'>※ 本人確認書類は初回のみの提示となります。</div>
+        <div class='notify-personal-identification'>※ 本人確認審査の結果は約1週間ほどかかります。審査結果はメールでも通知されます。</div>
+        <div class='notify-personal-identification'>※ 本人確認済みの場合は再アップロードすると、再度本人確認を行います。</div>
+      <table class="table mt20">
+        <tbody>
+          <tr>
+            <th>状態</th>
+            <td><%= @personal_identification.try(:status_i18n) %></td>
+          </tr>
+          <tr>
+            <th>種別</th>
+            <td><%= @personal_identification.try(:card_type_i18n) %></td>
+          </tr>
+          <tr>
+            <th>更新日時</th>
+            <td><%= datetime_ja(@personal_identification.try(:updated_at)) %></td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center"><%= link_to '登録', new_or_edit_personal_identification_path(@personal_identification), class: 'btn btn-dark' %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

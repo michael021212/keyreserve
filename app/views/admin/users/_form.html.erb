@@ -13,9 +13,8 @@
     <%= f.password_field :password, help: '変更したくない場合は空にしてください' %>
     <%= f.password_field :password_confirmation, help: '変更したくない場合は空にしてください' %>
   <% end %>
-
   <%= f.form_group :advertise_notice_flag, label: {} do %>
     <%= f.check_box :advertise_notice_flag %>
   <% end %>
-  <%= f.submit class: 'btn btn-primary' %>
+  <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

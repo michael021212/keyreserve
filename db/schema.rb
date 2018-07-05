@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180529075109) do
+ActiveRecord::Schema.define(version: 20180604073013) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -155,6 +155,18 @@ ActiveRecord::Schema.define(version: 20180529075109) do
     t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
     t.index ["facility_id"], name: "index_payments_on_facility_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
+  create_table "personal_identifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id", null: false
+    t.string "front_img", null: false
+    t.string "back_img"
+    t.integer "card_type"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["user_id"], name: "index_personal_identifications_on_user_id"
   end
 
   create_table "plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

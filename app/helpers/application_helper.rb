@@ -95,4 +95,12 @@ module ApplicationHelper
   def csv_datetime
     Time.zone.now.strftime('%Y%m%d%H%M')
   end
+
+  def new_or_edit_personal_identification_path(personal_identification)
+    if personal_identification.present?
+      edit_personal_identification_path
+    else
+      new_personal_identification_path
+    end
+  end
 end

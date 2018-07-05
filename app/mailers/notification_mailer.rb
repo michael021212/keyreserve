@@ -40,4 +40,9 @@ class NotificationMailer < ApplicationMailer
       mail(to: reservation.reservation_user.email, subject: @ftp_title)
     end
   end
+
+  def verification_confirmed(personal_identification)
+    @personal_identification = personal_identification
+    mail(to: personal_identification.user.email, subject: "【KeyStation Office】本人確認の申請は認証されました")
+  end
 end

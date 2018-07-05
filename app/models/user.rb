@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :user_contracts, dependent: :destroy
   has_many :reservations, dependent: :destroy
   has_one :credit_card, dependent: :destroy
+  has_one :personal_identification, dependent: :destroy
 
   belongs_to :user_corp, foreign_key: :parent_id, optional: true
   delegate :name, to: :user_corp, prefix: true, allow_nil: true

@@ -6,6 +6,7 @@ ja:
       user: 利用者
       user_corp: 法人
       payment: 支払い
+      personal_identification: 本人確認
       plan: プラン
       reservation: 予約
       shop: 店舗
@@ -76,6 +77,11 @@ ja:
         price: 月額
         description: 説明
         default_flag: 申し込み時選択可能プラン
+      personal_identification:
+        front_img: 表面
+        back_img: 裏面
+        status: 認証状態
+        card_type: 種別
       reservation:
         id: 予約ID
         facility_id: 施設
@@ -179,6 +185,18 @@ ja:
         unconfirmed: 未確定
         confirmed: 確定
         canceled: キャンセル
+    personal_identification:
+      card_type:
+        driver_license: 運転免許証
+        insurance_card: 健康保険証
+        my_number: マイナンバーカード
+        passport: パスポート
+        residence_card: 在留カード
+        others: その他
+      status:
+        unconfirmed: 未認証
+        applying: 申請中
+        confirmed: 認証済み
   date:
     abbr_day_names:
     - 日

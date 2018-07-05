@@ -1,0 +1,5 @@
+<%= bootstrap_form_for([:admin, user, personal_identification], layout: :horizontal) do |f| %>
+  <%= f.select :status, PersonalIdentification.statuses_i18n.invert, include_blank: true %>
+  <%= f.select :card_type, PersonalIdentification.card_types_i18n.invert, include_blank: true %>
+  <%= f.submit class: 'btn btn-primary center-block' %>
+<% end %>

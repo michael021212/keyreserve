@@ -39,6 +39,12 @@ crumb :edit_admin_corporation_corporation_user do |corporation, corporation_user
   parent :admin_corporation_corporation_user, corporation, corporation_user
 end
 
+# admin_personal_identifications
+crumb :edit_admin_user_personal_identification do |user, personal_identification|
+  link '本人確認編集', edit_admin_user_personal_identification_path(user, personal_identification)
+  parent :admin_user, user
+end
+
 # admin_plans
 crumb :admin_corporation_plans do |corporation|
   link 'プラン一覧', admin_corporation_plans_path
