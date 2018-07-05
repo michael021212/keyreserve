@@ -101,6 +101,11 @@ class ReservationsController <  ApplicationController
   end
 
   def create
+    if session[:spot].nil?
+      flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
+      redirect_to spot_reservations_url
+      return
+    end
     @reservation = Reservation.new_from_spot(session[:spot], @user, current_user)
     if @reservation.save
       session[:spot] = nil
