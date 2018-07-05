@@ -1,5 +1,14 @@
 <%= bootstrap_nested_form_for([:admin, corporation, facility, facility_dropin_plan]) do |f| %>
   <%= f.collection_select :plan_id, @corporation.plans.all, :id, :name, {include_blank: '非会員' } %>
+  <%= f.text_field :guide_mail_title, help: '「空」の場合は案内メールの通知機能は「オフ」になります' %>
+  <%= f.text_area :guide_mail_content, rows: 10, id: 'guide-mail-content' %>
+  <div class='form-group'>
+    <%= link_to 'パスワード挿入', '#', class: 'btn btn-xs btn-info', id: 'insert-pwd' %>
+    <span class="help-block">
+      パスワードを表示されたい箇所に、【パスワード挿入】ボタンを押してください
+    </span>
+  </div>
+  <%= f.file_field :guide_file, help: '新しいファイルをアップロードすると既存の案内ファイルが上書きされます' %>
   <%= f.form_group :facility_temporary_plan_prices, label: {text: "施設利用ドロップイン時間帯プラン"} do %>
     <p class='help-block'>既存プランを削除したい場合は「金額」及び「プラン名」を空にしてください</p>
     <%= f.fields_for :facility_dropin_sub_plans do |sp| %>
