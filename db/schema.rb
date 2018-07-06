@@ -58,15 +58,6 @@ ActiveRecord::Schema.define(version: 20180706021722) do
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
-  create_table "dropin_keys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "facility_dropin_plan_id", null: false
-    t.integer "ks_room_key_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
-    t.index ["facility_dropin_plan_id"], name: "index_dropin_keys_on_facility_dropin_plan_id"
-  end
-
   create_table "dropin_reservations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "facility_id", null: false
     t.bigint "facility_dropin_plan_id", null: false
