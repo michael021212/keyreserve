@@ -6,7 +6,6 @@ class FacilityDropinSubPlan < ApplicationRecord
   has_many :dropin_reservations
 
   validate :within_business_hours
-  validate :within_business_hours
 
   scope :in_range, ->(range) do
     where(arel_table[:starting_time].lteq(range.first)).where(arel_table[:ending_time].gteq(range.last))
@@ -51,5 +50,11 @@ class FacilityDropinSubPlan < ApplicationRecord
       ids << sp.id if key_total_num > dropin_reservation_num
     end
     ids
+  end
+
+  def assign_facility_key(checkin, checkout)
+    fks = facility_dropin_plan.facility.facility_keys
+    used_fks = DropinReservation.in_range(checkin..checkout).pluck(:facility_key_id)
+    fks.where.not(id: used_fks).first.id
   end
 end

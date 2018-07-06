@@ -36,7 +36,7 @@ class NotificationMailer < ApplicationMailer
     mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】ドロップインの予約が入りました")
   end
 
-  def notice_password(reservation)
+  def send_reservation_password(reservation)
     @reservation = reservation
     plan_ids = @reservation.user.user_contracts.pluck(:plan_id)
     @member_ftps = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
@@ -50,6 +50,19 @@ class NotificationMailer < ApplicationMailer
       mail(to: reservation.reservation_user.email, cc: reservation.user.email, subject: @ftp_title)
     else
       mail(to: reservation.reservation_user.email, subject: @ftp_title)
+    end
+  end
+
+  def send_dropin_reservation_password(dropin_reservation)
+    @dropin_reservation = dropin_reservation
+    @password = KeystationService.sync_room_key_password(@dropin_reservation.facility_key.ks_room_key_id)
+    @fdp = @dropin_reservation.facility_dropin_plan
+    attachments[@fdp.guide_file.file.filename] = @fdp.guide_file.read if @fdp.guide_file.present?
+    return if @fdp.guide_mail_title.blank?
+    if @dropin_reservation.send_cc_mail?
+      mail(to: @dropin_reservation.reservation_user.email, cc: @dropin_reservation.user.email, subject: @fdp.guide_mail_title)
+    else
+      mail(to: @dropin_reservation.reservation_user.email, subject: @fdp.guide_mail_title)
     end
   end
 
