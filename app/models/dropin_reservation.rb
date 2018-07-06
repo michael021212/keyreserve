@@ -51,7 +51,6 @@ class DropinReservation < ApplicationRecord
       checkout: checkout,
       state: :confirmed,
       price: sub_plan.price,
-      block_flag: false,
       mail_send_flag: false
     )
   end
