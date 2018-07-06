@@ -49,7 +49,7 @@ class DropinReservationsController <  ApplicationController
     session[:dropin_spot] = params[:dropin_spot] if params[:dropin_spot].present?
     @facility = Facility.find(session[:dropin_spot]['facility_id'])
     if current_user.personal_identification.nil?
-      flash[:error] = "こちらの施設は本人確認済みの利用者のみご利用できます。本人確認の登録は#{view_context.link_to('こちら', user_path)}です".html_safe
+      flash[:error] = "こちらの施設は本人確認済みの利用者のみご利用できます。本人確認の登録は#{view_context.link_to('こちら', user_path,  {style: 'color: #ebc243;'})}です".html_safe
       return render :new
     end
 
