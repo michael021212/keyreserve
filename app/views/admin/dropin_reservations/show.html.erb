@@ -13,10 +13,6 @@
         <td><%= @dropin_reservation.id %></td>
       </tr>
       <tr>
-        <th><%= DropinReservation.human_attribute_name(:block_flag) %></th>
-        <td><%= @dropin_reservation.block_flag? ? '◯' : '' %></td>
-      </tr>
-      <tr>
         <th><%= DropinReservation.human_attribute_name(:state) %></th>
         <td><%= @dropin_reservation.state_i18n %></td>
       </tr>
