@@ -16,13 +16,13 @@
       <li class="<%= active_parent('user_corps') %>">
         <%= link_to admin_user_corps_path do %><i class='fa fa-users'></i><span><%= UserCorp.model_name.human %>管理</span><% end %>
       </li>
-      <li class="<%= active_class('reservations') %> treeview menu-open">
+      <li class="<%= active_parent('reservations') %> <%= active_parent('dropin_reservations') %> treeview menu-open">
         <a href="#"><i class="fa fa-calendar"></i><span>予約管理</span></a>
         <ul class="treeview-menu">
-          <li class="<%= active_class('reservations') %>">
+          <li>
             <%= link_to admin_reservations_path do %><i class='fa fa-calendar'></i><span><%= Reservation.model_name.human %></span><% end %>
           </li>
-          <li class="<%= active_class('dropin_reservations') %>">
+          <li>
             <%= link_to admin_dropin_reservations_path do %><i class='fa fa-calendar'></i><span><%= DropinReservation.model_name.human %></span><% end %>
           </li>
         </ul>
