@@ -28,7 +28,6 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th><%= DropinReservation.human_attribute_name(:block_flag) %></th>
           <th><%= Shop.human_attribute_name(:name) %></th>
           <th><%= Facility.human_attribute_name(:name) %></th>
           <th>名前</th>
@@ -44,7 +43,6 @@
         <% if @dropin_reservations.present? %>
           <% @dropin_reservations.each do |dropin_reservation| %>
             <tr>
-              <td><%= dropin_reservation.block_flag? ? '◯' : '' %></td>
               <td><%= dropin_reservation.facility.shop.name %></td>
               <td><%= dropin_reservation.facility.name %></td>
               <td><%= dropin_reservation.user.try(:name) %></td>
