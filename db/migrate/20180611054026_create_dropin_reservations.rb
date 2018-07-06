@@ -11,7 +11,6 @@ class CreateDropinReservations < ActiveRecord::Migration[5.1]
       t.datetime :checkout
       t.integer :state, default: 0
       t.integer :price, default: 0
-      t.boolean :block_flag, default: false
       t.boolean :mail_send_flag, default: false
       t.timestamps
       t.datetime :deleted_at

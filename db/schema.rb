@@ -70,7 +70,6 @@ ActiveRecord::Schema.define(version: 20180706021722) do
     t.datetime "checkout"
     t.integer "state", default: 0
     t.integer "price", default: 0
-    t.boolean "block_flag", default: false
     t.boolean "mail_send_flag", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
