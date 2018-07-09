@@ -15,6 +15,7 @@ class UserContract < ApplicationRecord
   validate :contract_period
 
   def contract_period
+    return if finished_on.blank?
     errors.add(:started_on, '契約開始日は契約終了日より早めにしてください') if started_on > finished_on
   end
 end
