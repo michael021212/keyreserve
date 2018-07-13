@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180604073013) do
+ActiveRecord::Schema.define(version: 20180608024037) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -58,6 +58,15 @@ ActiveRecord::Schema.define(version: 20180604073013) do
     t.index ["user_id"], name: "index_credit_cards_on_user_id"
   end
 
+  create_table "dropin_keys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_dropin_plan_id", null: false
+    t.integer "ks_room_key_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_dropin_plan_id"], name: "index_dropin_keys_on_facility_dropin_plan_id"
+  end
+
   create_table "facilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "shop_id", null: false
     t.string "name", null: false
@@ -69,6 +78,30 @@ ActiveRecord::Schema.define(version: 20180604073013) do
     t.integer "max_num", default: 0
     t.integer "facility_type", default: 0
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
+  end
+
+  create_table "facility_dropin_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id", null: false
+    t.integer "plan_id"
+    t.string "guide_mail_title"
+    t.text "guide_mail_content"
+    t.string "guide_file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_id"], name: "index_facility_dropin_plans_on_facility_id"
+  end
+
+  create_table "facility_dropin_sub_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_dropin_plan_id", null: false
+    t.string "name", null: false
+    t.time "starting_time", null: false
+    t.time "ending_time", null: false
+    t.integer "price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_dropin_plan_id"], name: "index_facility_dropin_sub_plans_on_facility_dropin_plan_id"
   end
 
   create_table "facility_keys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -6,6 +6,7 @@ class Facility < ApplicationRecord
   has_many :plans, through: :facility_plans
   has_many :facility_keys, dependent: :destroy
   has_many :facility_temporary_plans, dependent: :destroy
+  has_many :facility_dropin_plans, dependent: :destroy
   has_many :reservations, dependent: :destroy
 
   enum facility_type: {conference_room: 1, dropin: 2}

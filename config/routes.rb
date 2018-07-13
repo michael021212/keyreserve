@@ -24,6 +24,12 @@ Rails.application.routes.draw do
           get :events
         end
         resources :facility_plans, only: [:new, :create, :destroy]
+        resources :facility_dropin_plans, only: [:new, :edit, :create, :update, :destroy] do
+          collection do
+            get :resources, format: 'json'
+            get :events, format: 'json'
+          end
+        end
         resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
           collection do
             get :resources

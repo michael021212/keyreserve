@@ -189,6 +189,17 @@ crumb :edit_admin_corporation_shop_facility do |corporation, shop, facility|
   parent :admin_corporation_shop_facility, corporation, shop, facility
 end
 
+# admin_corporation_facility_facility_dropin_plans
+crumb :new_admin_corporation_facility_facility_dropin_plans do |corporation, facility|
+  link '施設利用ドロップインプラン追加', new_admin_corporation_facility_facility_dropin_plan_path(corporation, facility)
+  parent :admin_corporation_shop_facility, corporation, facility.shop, facility
+end
+
+crumb :edit_admin_corporation_facility_facility_dropin_plans do |corporation, facility|
+  link '施設利用ドロップインプラン編集', edit_admin_corporation_facility_facility_dropin_plan_path(corporation, facility)
+  parent :admin_corporation_shop_facility, corporation, facility.shop, facility
+end
+
 # admin_corporation_facility_facility_temporary_plans
 crumb :new_admin_corporation_facility_facility_temporary_plan do |corporation, facility|
   link '施設利用都度課金プラン追加', new_admin_corporation_facility_facility_temporary_plan_path(corporation, facility)

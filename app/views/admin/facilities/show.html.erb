@@ -73,30 +73,8 @@
   </div>
 </div>
 
-<!-- 予約状況カレンダー -->
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title">予約状況カレンダー</h4>
-  </div>
-  <div id="reservation_calendar"
-    data-closing=<%="#{time_fmt(@shop.closing_time)}"%>
-    data-opening=<%="#{time_fmt(@shop.opening_time)}"%>
-    data-corporation=<%="#{@corporation.id}"%>
-    data-facility=<%="#{@facility.id}"%>>
-  </div>
-</div>
-
-<!-- 都度課金対象プラン -->
-<div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title">都度課金対象プラン</h4>
-    <div class="box-tools">
-      <%= link_to "新規追加", new_admin_corporation_facility_facility_temporary_plan_path(@corporation, @facility), class: 'btn btn-primary' %>
-    </div>
-  </div>
-  <div id="plan_price_table"
-    data-corporation=<%="#{params[:corporation_id]}"%>
-    data-shop=<%="#{params[:shop_id]}"%>
-    data-facility=<%="#{params[:id]}"%>>
-  </div>
-</div>
+<% if @facility.conference_room? %>
+  <%= render 'facility_temporary_plan', corporation: @corporation, shop: @shop, facility: @facility %>
+<% else %>
+  <%= render 'facility_dropin_plans', corporation: @corporation, shop: @shop, facility: @facility %>
+<% end %>
