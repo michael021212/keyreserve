@@ -1,0 +1,88 @@
+<% content_for :middle_title do %>
+  <h2>ご予約履歴</h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="row mt30">
+      <div class="col-md-6 mb20">
+        <div class="text-center">
+          <%= image_tag @dropin_reservation.facility.image.main.url, class: 'img-responsive' %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mg-booking-form">
+          <div class="mg-saerch-room">
+            <div class="mg-book-now">
+              <div class="form-group">
+                <label class="col-sm-6 control-label">施設名</label>
+                <div class="input-group col-sm-6 static-text">
+                  <%= @dropin_reservation.facility.name %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-6 control-label">ご利用プラン</label>
+                <div class="input-group col-sm-6 static-text">
+                  <%= @dropin_reservation.facility_dropin_sub_plan.with_plan_name %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-6 control-label">ご利用開始日時</label>
+                <div class="input-group col-sm-6 static-text">
+                  <%= datetime_ja @dropin_reservation.checkin %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-6 control-label">ご利用終了日時</label>
+                <div class="input-group col-sm-6 static-text">
+                  <%= datetime_ja @dropin_reservation.checkout %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-6 control-label">お支払方法</label>
+                <div class="input-group col-sm-6 col-xs-12 static-text">
+                  <%= @dropin_reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-6 control-label">料金</label>
+                <div class="input-group col-sm-6 static-text">
+                  <span><%= number_with_delimiter @dropin_reservation.price %></span><span>円</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if Time.zone.now > @dropin_reservation.checkin - 30.minutes && Time.zone.now < @reservation.checkout + 1.hour %>
+      <div class="row">
+        <div class="col-md-12 col-xs-12">
+          <div class="mg-single-room-txt">
+            <h2 class="mg-sec-left-title">鍵一覧</h2>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>鍵名称</th>
+                  <th>パスワード</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @dropin_reservation.facility.facility_keys.each do |key| %>
+                  <tr>
+                    <td><%= key.name %></td>
+                    <td><%= key.password %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="row mt20">
+      <div class="col-md-offset-4 col-md-4">
+        <div class="text-center"><%= link_to "戻る", dropin_reservations_path, class: 'btn btn-main btn-block' %></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,8 +8,9 @@ ja:
       payment: 支払い
       personal_identification: 本人確認
       plan: プラン
-      reservation: 予約
+      reservation: 会議室予約
       shop: 店舗
+      dropin_reservation: スペース予約
       facility: 施設
       facility_dropin_plan: 施設利用ドロップインプラン
       facility_dropin_sub_plan: 施設利用ドロップイン時間帯プラン
@@ -115,12 +116,13 @@ ja:
         max_num: 最大利用人数
         facility_type: 施設タイプ（スポット利用時）
       facility_dropin_plan:
+        facility_id: ドロップイン施設
         plan_id: プラン
-        ks_room_key_id: ドロップイ鍵
         guide_mail_title: 案内メールタイトル
         guide_mail_content: 案内メール内容
         guide_file: 案内ファイル
       facility_dropin_sub_plan:
+        facility_dropin_plan_id: 施設利用ドロップインプラン
         name: プラン名
         starting_time: 開始時間
         ending_time: 終了時間
@@ -167,6 +169,11 @@ ja:
       payway:
         creditcard: クレジットカード
         invoice: 請求書
+    dropin_reservation:
+      state:
+        unconfirmed: 未確定
+        confirmed: 確定
+        canceled: キャンセル
     user:
       state:
         registered: 登録済み

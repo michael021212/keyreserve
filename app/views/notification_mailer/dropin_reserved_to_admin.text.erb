@@ -1,0 +1,18 @@
+ドロップインの予約が入りました。
+詳細は以下となります。
+
+店舗名: <%= @dropin_reservation.facility.shop_name %>
+施設名: <%= @dropin_reservation.facility_name %>
+ご法人名: <%= @dropin_reservation.user_name if @dropin_reservation.user.parent_corporation? %>
+ご法人のメールアドレス: <%= @dropin_reservation.user_email if @dropin_reservation.user.parent_corporation? %>
+ご予約者名: <%= @dropin_reservation.reservation_user.name %>
+ご予約者のメールアドレス: <%= @dropin_reservation.reservation_user.email %>
+ご利用プラン名: <%= @dropin_reservation.facility_dropin_sub_plan.with_plan_name %>
+ご利用時間: <%= @dropin_reservation.facility_dropin_sub_plan.using_period %>
+お支払方法: <%= @dropin_reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
+ご利用料金: <%= number_with_delimiter @dropin_reservation.price %>円
+
+<% if false %>
+  TODO 次のタスクでパスができたら、表示します
+  <%= admin_dropin_reservation_url(@dropin_reservation) %>
+<% end %>

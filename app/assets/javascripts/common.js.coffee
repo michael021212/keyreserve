@@ -1,5 +1,5 @@
 $ ->
-  calc_price = -> 
+  calc_price = ->
     fid = $('#js-price').data('fid')
     return unless fid
     url = "/reservations/price"
@@ -38,5 +38,3 @@ $ ->
 
   $('.js-calc-price').on 'change', ->
     calc_price()
-
-
