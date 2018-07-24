@@ -1,0 +1,98 @@
+<% content_for :middle_title do %>
+  <h2>スペース予約</h2>
+<% end %>
+<a id="searchbox"></a>
+<div class="mg-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-booking-form">
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="select-room">
+              <div class="mg-saerch-room">
+                <div class="mg-book-now mt20">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <h2 class="mg-bn-title">Search space <span class="mg-bn-big">検索条件を入力してください</span></h2>
+                    </div>
+                    <div class="col-md-9">
+                      <div class="mg-bn-forms">
+                        <%= form_for :dropin_spot, url: dropin_spot_dropin_reservations_path(anchor: :searchbox), method: :get do |f| %>
+                          <div class="row">
+                            <div class="col-md-3 col-xs-6">
+                              <div class="input-group date mg-check-in">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <%= f.text_field :checkin, value: params[:dropin_spot][:checkin], class: 'form-control', placeholder: 'ご利用日' %>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-xs-6">
+                              <div class="input-group">
+                                <%= f.text_field :checkin_time, value: params[:dropin_spot][:checkin_time], class: 'form-control', id: 'dropin_timepicker', placeholder: 'ご利用時刻' %>
+                              </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12">
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, {selected: params[:dropin_spot][:use_hour].to_i, include_blank: 'ご利用時間'}, class: 'cs-select cs-skin-elastic' %>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row mt20">
+                            <div class="col-md-offset-9 col-md-3">
+                              <button type="submit" class="btn btn-main btn-block">探す</button>
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% if @facilities.nil? %>
+                <div class="mg-available-rooms">
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      上記から検索してください
+                    </div>
+                  </div>
+                </div>
+              <% else %>
+                <% if @facilities.count > 0 %>
+                  <% @facilities.each do |facility| %>
+                    <div class="mg-available-rooms">
+                      <div class="row">
+                        <div class="col-sm-4">
+                          <%= link_to new_dropin_reservation_path(facility_id: facility.id) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
+                        </div>
+                        <div class="col-sm-8">
+                          <h3 class="mg-avl-room-title">
+                            <%= link_to new_dropin_reservation_path(facility_id: facility.id) do %>
+                              <%= facility.name %> - <%= facility.shop.name %>
+                            <% end %>
+                          </h3>
+                          <div class='row mg-room-fecilities'>
+                          </div>
+                          <%= link_to '予約する', new_dropin_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                  <%= paginate @facilities %>
+                <% else %>
+                  <div class="mg-available-rooms">
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        該当する施設はございません。
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

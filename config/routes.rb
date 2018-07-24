@@ -49,6 +49,12 @@ Rails.application.routes.draw do
         get :confirm
       end
     end
+    resources :dropin_reservations do
+      collection do
+        get :payment
+        get :confirm
+      end
+    end
   end
 
   resource :user do
@@ -75,6 +81,7 @@ Rails.application.routes.draw do
   resources :reservations, only: [:index, :show, :new, :create] do
     collection do
       get :price
+      get :dropin_spot
       get :spot
       post :confirm
       get :confirm
@@ -83,6 +90,16 @@ Rails.application.routes.draw do
     end
   end
   resource :personal_identification
+  resources :dropin_reservations, only: [:index, :show, :new, :create] do
+    collection do
+      get :plan
+      get :dropin_spot
+      post :confirm
+      get :confirm
+      post :credit_card
+      get :thanks
+    end
+  end
   resources :plans
   resource :credit_card, only: [:new, :create, :show, :edit, :update]
   resources :invitations, only: [:index, :new, :create]

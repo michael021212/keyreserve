@@ -8,5 +8,9 @@ every 5.minutes do
 end
 
 every 5.minutes do
-  rake 'reservation:notice_password_mail'
+  rake 'reservation:reservation_password_mail'
+end
+
+every 5.minutes do
+  rake 'dropin_reservation:dropin_reservation_password_mail'
 end

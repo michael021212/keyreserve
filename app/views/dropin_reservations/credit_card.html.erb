@@ -1,0 +1,28 @@
+<% content_for :middle_title do %>
+  <h2><%= @facility.name %> - <%= @facility.shop_name %></h2>
+<% end %>
+<div class="mg-page">
+  <div class="container">
+    <div class="mg-booking-form">
+      <ul class="nav nav-tabs">
+        <li role="presentation">
+          <a href="#select-room" aria-controls="select-room" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>ご利用情報入力</a>
+        </li>
+        <li role="presentation" class="active">
+          <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>カード情報入力</a>
+        </li>
+        <li role="presentation">
+          <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>確認画面</a>
+        </li>
+        <li role="presentation">
+          <a href="#thank-you" aria-controls="thank-you" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">4</span>完了</a>
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mb20 mt20">
+        <%= render 'credit_cards/form', credit_card: @credit_card, form_url: credit_card_dropin_reservations_path %>
+      </div>
+    </div>
+  </div>
+</div>

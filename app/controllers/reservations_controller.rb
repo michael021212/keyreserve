@@ -30,9 +30,8 @@ class ReservationsController <  ApplicationController
       return render :spot
     end
 
-    @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
-
     @facilities = logged_in? ? @user.login_spots : Facility.logout_spots
+    @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
     @facilities = @facilities.where.not(id: @exclude_facility_ids)
     @facilities = @facilities.conference_room
     @facilities = @facilities.joins(:shop).
@@ -94,7 +93,7 @@ class ReservationsController <  ApplicationController
     end
 
     @price = @facility.calc_price(@user, checkin, session[:spot]['use_hour'].to_i)
-      if @user.credit_card.blank? && @user.creditcard?
+    if @user.credit_card.blank? && @user.creditcard?
       @credit_card = current_user.build_credit_card
       return render :credit_card
     end

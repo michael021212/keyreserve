@@ -65,20 +65,30 @@ end
 
 #admin_reservations
 crumb :admin_reservations do
-  link '予約管理', admin_reservations_path
+  link '会議室予約管理', admin_reservations_path
   parent :admin_root
 end
 crumb :admin_reservation do |reservation|
-  link '予約詳細', admin_reservation_path(reservation)
+  link '会議室予約詳細', admin_reservation_path(reservation)
   parent :admin_reservations
 end
 crumb :new_admin_reservation do |reservation|
-  link '予約新規登録', new_admin_reservation_path
+  link '会議室予約新規登録', new_admin_reservation_path
   parent :admin_reservations
 end
 crumb :payment_admin_reservations do
   link '支払い詳細', payment_admin_reservations_path
   parent :new_admin_reservation
+end
+
+#admin_dropin_reservations
+crumb :admin_dropin_reservations do
+  link 'スペース予約管理', admin_reservations_path
+  parent :admin_root
+end
+crumb :admin_dropin_reservation do |reservation|
+  link 'スペース予約詳細', admin_reservation_path(reservation)
+  parent :admin_reservations
 end
 
 # admin_corporation_user_contracts

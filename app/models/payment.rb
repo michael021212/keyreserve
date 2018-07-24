@@ -1,4 +1,5 @@
 class Payment < ApplicationRecord
+  include Target
   belongs_to :user
   belongs_to :facility
   belongs_to :credit_card
@@ -10,7 +11,7 @@ class Payment < ApplicationRecord
       ch = Stripe::Charge.create(
         amount: price,
         currency: 'jpy',
-        customer: user.stripe_customer_id,
+        customer: target.stripe_customer_id,
         capture: true
       )
     rescue StandardError => e

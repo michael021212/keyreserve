@@ -40,3 +40,4 @@
 //= require fullcalendar_ja.js
 //= require common
 //= require reservation_calendar
+//= require dropin
