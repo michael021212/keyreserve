@@ -46,9 +46,9 @@
               <td><%= dropin_reservation.facility.shop.name %></td>
               <td><%= dropin_reservation.facility.name %></td>
               <td><%= dropin_reservation.user.try(:name) %></td>
-              <td><%= dropin_reservation.facility_dropin_sub_plan.with_plan_name %></td>
+              <td><%= dropin_reservation.facility_dropin_sub_plan.try(:with_plan_name) %></td>
               <td><%= dropin_reservation.checkin %></td>
-              <td><%= dropin_reservation.facility_dropin_sub_plan.using_hours %>時間</td>
+              <td><%= dropin_reservation.facility_dropin_sub_plan.try(:using_hours) %>時間</td>
               <td><%= dropin_reservation.state_i18n %></td>
               <td><%= delimiter_price(dropin_reservation.price) %></td>
               <td><%= link_to '詳細', admin_dropin_reservation_path(dropin_reservation), class: 'btn btn-default' %></td>
