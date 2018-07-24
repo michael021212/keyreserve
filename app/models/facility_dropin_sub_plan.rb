@@ -41,6 +41,10 @@ class FacilityDropinSubPlan < ApplicationRecord
     "#{starting_time.strftime('%H:%M')} - #{ending_time.strftime('%H:%M')}"
   end
 
+  def using_hours
+    ((ending_time - starting_time) / 3600).to_i
+  end
+
   def self.available_ids(checkin, checkout)
     ids = []
     y, m, d = checkin.strftime('%Y %m %d').split(' ')

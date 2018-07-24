@@ -49,6 +49,12 @@ Rails.application.routes.draw do
         get :confirm
       end
     end
+    resources :dropin_reservations do
+      collection do
+        get :payment
+        get :confirm
+      end
+    end
   end
 
   resource :user do
