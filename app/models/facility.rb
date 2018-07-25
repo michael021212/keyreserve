@@ -8,6 +8,7 @@ class Facility < ApplicationRecord
   has_many :facility_temporary_plans, dependent: :destroy
   has_many :facility_dropin_plans, dependent: :destroy
   has_many :reservations, dependent: :destroy
+  has_many :dropin_reservations, dependent: :destroy
 
   enum facility_type: {conference_room: 1, dropin: 2}
 
@@ -20,6 +21,8 @@ class Facility < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   validates :name, presence: true
+
+  scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) { includes(facility_dropin_plans: :facility_dropin_sub_plans).where(facility_dropin_plans: {facility_dropin_sub_plans: { id: sub_plan_ids } }) })
 
   scope(:belongs_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
 
@@ -77,6 +80,11 @@ class Facility < ApplicationRecord
     Facility.where(id: facility_ids)
   end
 
+  def self.logout_dropin_spots
+    facility_ids = FacilityDropinPlan.where(plan_id: nil).map(&:facility_id)
+    Facility.where(id: facility_ids)
+  end
+
   def available_reservation_area(date)
     y, m, d = date.split('-')
     next_date = (DateTime.parse(date) + 1.day).to_s(:date)
@@ -101,5 +109,23 @@ class Facility < ApplicationRecord
       arr << closing_date_and_time if i == total - 1 && shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
     end
     arr.each_slice(2).to_a
+  end
+
+  def facility_dropin_plans_in_contract(user)
+    p_ids = []
+    p_ids << user.user_contracts.pluck(:plan_id) if user.present?
+    p_ids << nil
+    p_ids.flatten!
+    facility_dropin_plans.where(plan_id: p_ids)
+  end
+
+  def self.recommended_sub_plan(facility_id, dropin_spot_params, user)
+    return if dropin_spot_params['checkin_time'].blank?
+    facility = Facility.find(facility_id)
+    checkin = Time.zone.parse(dropin_spot_params[:checkin] + " " + dropin_spot_params[:checkin_time])
+    checkout = checkin + dropin_spot_params[:use_hour].to_i.hours
+    facility_dropin_plan_ids = facility.facility_dropin_plans_in_contract(user).pluck(:id)
+    sub_plan_ids = FacilityDropinSubPlan.belongs_to_facility(facility_id).pluck(:id)
+    FacilityDropinSubPlan.in_range(checkin..checkout).where(id: sub_plan_ids).where(facility_dropin_plan_id: facility_dropin_plan_ids).order('price ASC').first
   end
 end
