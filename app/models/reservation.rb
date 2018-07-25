@@ -5,7 +5,7 @@ class Reservation < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
 
-  before_save :create_payment, if: Proc.new { |reservation| reservation.user_id? }
+  before_create :create_payment, if: Proc.new { |reservation| reservation.user_id? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   scope :in_range, ->(range) do
@@ -20,6 +20,7 @@ class Reservation < ApplicationRecord
 
   def create_payment
     return unless self.user.creditcard?
+    return if self.payment.present?
     self.payment = Payment.create!(
       user_id: self.user_id,
       corporation_id: self.facility.shop.corporation_id,
