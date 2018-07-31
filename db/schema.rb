@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180529075109) do
+ActiveRecord::Schema.define(version: 20180731112614) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -71,6 +71,30 @@ ActiveRecord::Schema.define(version: 20180529075109) do
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 
+  create_table "facility_dropin_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id", null: false
+    t.integer "plan_id"
+    t.string "guide_mail_title"
+    t.text "guide_mail_content"
+    t.string "guide_file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_id"], name: "index_facility_dropin_plans_on_facility_id"
+  end
+
+  create_table "facility_dropin_sub_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_dropin_plan_id", null: false
+    t.string "name", null: false
+    t.time "starting_time", null: false
+    t.time "ending_time", null: false
+    t.integer "price", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["facility_dropin_plan_id"], name: "index_facility_dropin_sub_plans_on_facility_dropin_plan_id"
+  end
+
   create_table "facility_keys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "facility_id", null: false
     t.integer "ks_room_key_id", null: false
@@ -121,7 +145,7 @@ ActiveRecord::Schema.define(version: 20180529075109) do
   create_table "information", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "shop_id"
     t.string "title", null: false
-    t.text "description", null: false
+    t.text "description", limit: 4294967295, null: false
     t.datetime "publish_time", default: "2018-01-01 00:00:00", null: false
     t.boolean "mail_send_flag", default: false
     t.integer "info_type", default: 1, null: false
@@ -155,6 +179,18 @@ ActiveRecord::Schema.define(version: 20180529075109) do
     t.index ["credit_card_id"], name: "index_payments_on_credit_card_id"
     t.index ["facility_id"], name: "index_payments_on_facility_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
+  create_table "personal_identifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id", null: false
+    t.string "front_img", null: false
+    t.string "back_img"
+    t.integer "card_type"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["user_id"], name: "index_personal_identifications_on_user_id"
   end
 
   create_table "plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
