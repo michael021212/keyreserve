@@ -9,8 +9,8 @@ namespace :information do
         users = User.has_contract_with_shops(information.shops.pluck(:id))
       end
       users.each do |user|
-        next if information.event? && !user.advertise_notice_flag?
         if user.personal?
+          next if information.event? && !user.advertise_notice_flag?
           UserMailer.event_informing_mail(information, user).deliver_now
         elsif user.parent_corporation?
           user.belongs_users.each do |u|
