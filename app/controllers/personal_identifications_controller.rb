@@ -9,6 +9,7 @@ class PersonalIdentificationsController < ApplicationController
     @personal_identification = current_user.build_personal_identification
     @personal_identification = current_user.build_personal_identification(personal_identification_params)
     if @personal_identification.save
+      NotificationMailer.upload_identification(@personal_identification).deliver_now
       redirect_to user_path, notice: "#{PersonalIdentification.model_name.human}書類のアップロードが完了しました。"
     else
       render :new
@@ -19,6 +20,7 @@ class PersonalIdentificationsController < ApplicationController
 
   def update
     if @personal_identification.update(personal_identification_params)
+      NotificationMailer.upload_identification(@personal_identification).deliver_now
       redirect_to user_path, notice: "#{PersonalIdentification.model_name.human}書類のアップロードが完了しました。"
     else
       render :edit

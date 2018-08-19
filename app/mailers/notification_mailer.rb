@@ -66,6 +66,11 @@ class NotificationMailer < ApplicationMailer
     end
   end
 
+  def upload_identification(personal_identification)
+    @personal_identification = personal_identification
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】本人確認の資料がアップされました")
+  end
+
   def verification_confirmed(personal_identification)
     @personal_identification = personal_identification
     mail(to: personal_identification.user.email, subject: "【KeyStation Office】本人確認の申請は認証されました")
