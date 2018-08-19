@@ -26,8 +26,8 @@ class DropinReservationsController <  ApplicationController
       return render :dropin_spot
     end
 
-    if checkin < Time.zone.now - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります'
+    if Date.parse(cond[:checkin]) < Time.zone.today
+      flash[:error] = 'ご予約は本日以降となります'
       return render :dropin_spot
     end
     sub_plan_ids = FacilityDropinSubPlan.available_ids(checkin, checkout)
@@ -63,8 +63,8 @@ class DropinReservationsController <  ApplicationController
     @checkin = @sub_plan.starting_time.change(year: y, month: m, day: d)
     @checkout = @sub_plan.ending_time.change(year: y, month: m, day: d)
 
-    if @checkin < Time.zone.now - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります'
+    if @checkin < Time.zone.today
+      flash[:error] = 'ご予約は本日以降となります'
       return render :new
     end
 
@@ -112,6 +112,10 @@ class DropinReservationsController <  ApplicationController
       session[:dropin_spot] = nil
       session[:reservation_id] = @dropin_reservation.id
       @dropin_reservation.send_dropin_reserved_mails
+      if @dropin_reservation.checkin < Time.zone.now
+        NotificationMailer.send_dropin_reservation_password(@dropin_reservation).deliver_now
+        @dropin_reservation.update!(mail_send_flag: true)
+      end
       redirect_to thanks_dropin_reservations_path
     else
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
