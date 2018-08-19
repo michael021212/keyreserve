@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :dropin_reservations, dependent: :destroy
   has_many :payments, dependent: :destroy
+  has_many :belongs_users, foreign_key: :parent_id, class_name: 'User'
   has_one :credit_card, dependent: :destroy
   has_one :personal_identification, dependent: :destroy
 

@@ -10,7 +10,14 @@ namespace :information do
       end
       users.each do |user|
         next if information.event? && !user.advertise_notice_flag?
-        UserMailer.event_informing_mail(information, user).deliver_now
+        if user.personal?
+          UserMailer.event_informing_mail(information, user).deliver_now
+        elsif user.parent_corporation?
+          user.belongs_users.each do |u|
+            next if information.event? && !u.advertise_notice_flag?
+            UserMailer.event_informing_mail(information, u).deliver_now
+          end
+        end
       end
       information.update(mail_send_flag: true)
     end
