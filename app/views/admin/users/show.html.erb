@@ -82,11 +82,23 @@
           </tr>
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:front_img) %></th>
-            <td><%= link_to @user.personal_identification.front_img.file.filename, @user.personal_identification.front_img.url, target: '_blank' if @user.personal_identification.present? %></td>
+            <td>
+              <% if @user.personal_identification.try(:front_img).present? %>
+                <%= link_to @user.personal_identification.front_img.url, target: '_blank' do %>
+                  <%= image_tag @user.personal_identification.front_img.url, width: '300px' %>
+                <% end %>
+              <% end %>
+            </td>
           </tr>
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:back_img) %></th>
-            <td><%= link_to @user.personal_identification.back_img.file.filename, @user.personal_identification.back_img.url, target: '_blank' if @user.personal_identification.try(:back_img).present? %></td>
+            <td>
+              <% if @user.personal_identification.try(:back_img).present? %>
+                <%= link_to @user.personal_identification.back_img.url, target: '_blank' do %>
+                  <%= image_tag @user.personal_identification.back_img.url, width: '300px' %>
+                <% end %>
+              <% end %>
+            </td>
           </tr>
         </table>
       </div>
