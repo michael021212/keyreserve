@@ -83,11 +83,11 @@ end
 
 #admin_dropin_reservations
 crumb :admin_dropin_reservations do
-  link 'スペース予約管理', admin_reservations_path
+  link 'ドロップイン利用管理', admin_reservations_path
   parent :admin_root
 end
 crumb :admin_dropin_reservation do |reservation|
-  link 'スペース予約詳細', admin_reservation_path(reservation)
+  link 'ドロップイン利用詳細', admin_reservation_path(reservation)
   parent :admin_reservations
 end
 

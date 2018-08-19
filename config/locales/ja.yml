@@ -3,7 +3,7 @@ ja:
     models:
       admin_user: 管理者
       corporation: 運営会社
-      dropin_reservation: スペース予約
+      dropin_reservation: ドロップイン利用
       user: 利用者
       user_corp: 法人
       payment: 支払い
@@ -11,7 +11,6 @@ ja:
       plan: プラン
       reservation: 会議室予約
       shop: 店舗
-      dropin_reservation: スペース予約
       facility: 施設
       facility_dropin_plan: 施設利用ドロップインプラン
       facility_dropin_sub_plan: 施設利用ドロップイン時間帯プラン
