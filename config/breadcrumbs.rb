@@ -40,6 +40,10 @@ crumb :edit_admin_corporation_corporation_user do |corporation, corporation_user
 end
 
 # admin_personal_identifications
+crumb :new_admin_user_personal_identification do |user|
+  link '本人確認登録', new_admin_user_personal_identification_path(user)
+  parent :admin_user, user
+end
 crumb :edit_admin_user_personal_identification do |user, personal_identification|
   link '本人確認編集', edit_admin_user_personal_identification_path(user, personal_identification)
   parent :admin_user, user

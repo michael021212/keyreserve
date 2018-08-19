@@ -59,33 +59,37 @@
       </tr>
     </table>
   </div>
-  <% if @user.personal_identification.present? %>
-    <div class="box-header with-border">
-      <h4 class="box-title"><%= PersonalIdentification.model_name.human %>詳細</h4>
-      <div class="box-tools">
+</div>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= PersonalIdentification.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <% if @user.personal_identification.present? %>
         <%= link_to "編集", edit_admin_user_personal_identification_path(@user, @user.personal_identification), class: 'btn btn-primary' %>
-      </div>
+      <% else %>
+        <%= link_to "登録", new_admin_user_personal_identification_path(@user), class: 'btn btn-primary' %>
+      <% end %>
+    </div>
       <div class="box-body">
         <table class="table table-striped">
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:status) %></th>
-            <td><%= @user.personal_identification.status_i18n %></td>
+            <td><%= @user.personal_identification.try(:status_i18n) %></td>
           </tr>
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:card_type) %></th>
-            <td><%= @user.personal_identification.card_type_i18n %></td>
+            <td><%= @user.personal_identification.try(:card_type_i18n) %></td>
           </tr>
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:front_img) %></th>
-            <td><%= link_to @user.personal_identification.front_img.file.filename, @user.personal_identification.front_img.url, target: '_blank' %></td>
+            <td><%= link_to @user.personal_identification.front_img.file.filename, @user.personal_identification.front_img.url, target: '_blank' if @user.personal_identification.present? %></td>
           </tr>
           <tr>
             <th><%= PersonalIdentification.human_attribute_name(:back_img) %></th>
-            <td><%= link_to @user.personal_identification.back_img.file.filename, @user.personal_identification.back_img.url, target: '_blank' if @user.personal_identification.back_img.present? %></td>
+            <td><%= link_to @user.personal_identification.back_img.file.filename, @user.personal_identification.back_img.url, target: '_blank' if @user.personal_identification.try(:back_img).present? %></td>
           </tr>
         </table>
       </div>
-    </div>
-  <% end %>
+  </div>
 </div>
 

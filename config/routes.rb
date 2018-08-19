@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index]
     resources :admin_users, except: [:show]
     resources :users do
-      resources :personal_identifications, only: [:edit, :update]
+      resources :personal_identifications
     end
     resources :user_corps do
       resources :users, controller: 'users'
