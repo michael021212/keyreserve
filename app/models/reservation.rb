@@ -6,6 +6,7 @@ class Reservation < ApplicationRecord
   belongs_to :payment, optional: true
 
   before_create :create_payment, if: Proc.new { |reservation| reservation.user_id? }
+  before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   scope :in_range, ->(range) do
@@ -28,6 +29,10 @@ class Reservation < ApplicationRecord
       credit_card_id: self.user.credit_card.id,
       price: self.price,
     )
+  end
+
+  def cancel_payment
+    payment.destroy!
   end
 
   def self.new_from_spot(spot, user, current_user)
@@ -96,6 +101,6 @@ class Reservation < ApplicationRecord
   end
 
   def deletable?
-    payment_id.nil? && (checkin > Time.zone.now)
+    checkin > Time.zone.now
   end
 end
