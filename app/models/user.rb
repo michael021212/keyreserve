@@ -5,9 +5,9 @@ class User < ApplicationRecord
   has_many :corporation_users, dependent: :destroy
   has_many :corporations, through: :corporation_users
   has_many :user_contracts, dependent: :destroy
-  has_many :reservations, dependent: :destroy
-  has_many :dropin_reservations, dependent: :destroy
-  has_many :payments, dependent: :destroy
+  has_many :reservations
+  has_many :dropin_reservations
+  has_many :payments
   has_many :belongs_users, foreign_key: :parent_id, class_name: 'User'
   has_one :credit_card, dependent: :destroy
   has_one :personal_identification, dependent: :destroy
