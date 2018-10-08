@@ -4,7 +4,7 @@ class Plan < ApplicationRecord
   has_many :facility_plans, dependent: :destroy
   has_many :facilities, through: :facility_plans
   has_many :facility_temporary_plans, dependent: :destroy
-  has_many :user_contracts, dependent: :destroy
+  has_many :user_contracts
 
   validates :name, :description, presence: true
   validates :price, presence: true, numericality: {only_integer: true}

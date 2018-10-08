@@ -5,7 +5,7 @@ class Shop < ApplicationRecord
   belongs_to :corporation
   has_many :facilities, dependent: :destroy
   has_many :information
-  has_many :user_contracts, dependent: :destroy
+  has_many :user_contracts
 
   geocoded_by :address, latitude: :lat, longitude: :lon
   before_validation :geocode
