@@ -18,14 +18,23 @@
             <%= link_to '店舗情報', shops_path  %>
           </li>
           <li>
-            <%= link_to 'ドロップイン利用', dropin_spot_dropin_reservations_path %>
+            <%= link_to dropin_spot_dropin_reservations_path do %>
+              ドロップイン利用<br />
+              Drop in
+            <% end %>
           </li>
           <li>
-            <%= link_to '会議室予約', spot_reservations_path %>
+            <%= link_to spot_reservations_path do %>
+              会議室予約<br />
+              Reservation
+            <% end %>
           </li>
           <% if logged_in? %>
             <li>
-              <%= link_to 'ご利用可能な施設', facilities_path  %>
+              <%= link_to facilities_path do  %>
+                ご利用可能な施設<br />
+                Available facilities
+              <% end %>
             </li>
             <!-- 施設管理者面メニュー -->
             <% if current_corporation? %>
@@ -52,7 +61,10 @@
             </li>
           <% else %>
             <li>
-              <%= link_to 'ログイン', sign_in_path %>
+              <%= link_to sign_in_path do %>
+                ログイン<br />
+                Login
+              <% end %>
             </li>
           <% end %>
         </ul>
