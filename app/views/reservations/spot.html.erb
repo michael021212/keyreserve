@@ -22,32 +22,32 @@
                             <div class="col-md-3 col-xs-6">
                               <div class="input-group date mg-check-in">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <%= f.text_field :checkin, value: params[:spot][:checkin], class: 'form-control', placeholder: 'ご利用日' %>
+                                <%= f.text_field :checkin, value: params[:spot][:checkin], class: 'form-control', placeholder: 'Date' %>
                               </div>
                             </div>
                             <div class="col-md-3 col-xs-6">
                               <div class="input-group">
-                                <%= f.text_field :checkin_time, value: params[:spot][:checkin_time], class: 'form-control timepicker', placeholder: 'ご利用時刻' %>
+                                <%= f.text_field :checkin_time, value: params[:spot][:checkin_time], class: 'form-control timepicker', placeholder: 'Time' %>
                               </div>
                             </div>
                             <div class="col-md-3 col-xs-12">
                               <div class="row">
                                 <div class="col-xs-12">
-                                  <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, {selected: params[:spot][:use_hour].to_i, include_blank: 'ご利用時間'}, class: 'cs-select cs-skin-elastic' %>
+                                  <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, {selected: params[:spot][:use_hour].to_i, include_blank: 'Term'}, class: 'cs-select cs-skin-elastic' %>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-3 col-xs-12">
                               <div class="row">
                                 <div class="col-xs-12">
-                                  <%= f.select :use_num, (1..20).map{|i| [i.to_s + '名', i]}, {selected: params[:spot][:use_num].to_i, include_blank: 'ご利用人数'}, class: 'cs-select cs-skin-elastic' %>
+                                  <%= f.select :use_num, (1..20).map{|i| [i.to_s + '名', i]}, {selected: params[:spot][:use_num].to_i, include_blank: 'Person'}, class: 'cs-select cs-skin-elastic' %>
                                 </div>
                               </div>
                             </div>
                           </div>
                           <div class="row mt20">
                             <div class="col-md-offset-9 col-md-3">
-                              <button type="submit" class="btn btn-main btn-block">探す</button>
+                              <button type="submit" class="btn btn-main btn-block">Search</button>
                             </div>
                           </div>
                         <% end %>
