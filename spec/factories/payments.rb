@@ -1,11 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :payment do
-    user nil
-    corporation nil
-    facility nil
-    credit_card nil
-    price "MyString"
-    token "MyString"
-    deleted_at "2017-09-23 16:18:12"
+    user
+    corporation
+    facility
+    credit_card
+    price{ 9999 }
+    token { SecureRandom.hex(8) }
   end
 end

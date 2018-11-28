@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :information_shop do
-    information nil
-    shop nil
+    information
+    shop
   end
 end

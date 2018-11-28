@@ -1,11 +1,16 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :reservation do
-    facility nil
-    user nil
-    checkin "2017-09-23 16:18:55"
-    checkout "2017-09-23 16:18:55"
-    state 1
-    state 1
-    deleted_at "2017-09-23 16:18:55"
+    facility
+    user
+    payment
+    checkin { Time.zone.now - 2.days }
+    checkout { Time.zone.now - 1.days }
+    usage_period { [*1..10].sample }
+    num { [*1..5].sample }
+    state { [:unconfirmed, :confirmed, :canceled].sample }
+    block_flag { true }
+    price{ 2000 }
+    mail_send_flag { [true, false].sample }
+    reservation_user_id { nil }
   end
 end

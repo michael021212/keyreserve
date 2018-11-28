@@ -1,8 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :admin_user do
-    name "MyString"
-    email "MyString"
-    password_digest "MyString"
-    deleted_at "2017-09-23 16:14:29"
+    sequence(:name) { |n| "管理者#{n}"}
+    sequence(:email) { |n| "test#{n}@example.com" }
+    password { "password" }
   end
 end

@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :corporation_user do
-    corporation ""
-    user nil
+    corporation
+    user
   end
 end
