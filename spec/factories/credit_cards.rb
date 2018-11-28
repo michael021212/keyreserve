@@ -1,11 +1,13 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :credit_card do
-    user nil
-    card_no "MyString"
+    user
+    card_no { "1234" }
     sequence 1
-    kind 1
-    holder_name "MyString"
-    stripe_card_id "MyString"
-    deleted_at "2017-09-23 16:16:37"
+    kind { [:visa, :master].sample }
+    sequence(:name) { |n| "TEST TARO#{n}" }
+
+    trait 'with_stripe' do
+      stripe_card_id { "card_#{SecureRandom.hex(8)}" }
+    end
   end
 end

@@ -1,14 +1,13 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :shop do
-    corporation nil
-    name "MyString"
-    postal_code "MyString"
-    address "MyString"
-    lat "9.99"
-    lon "9.99"
-    tel "MyString"
-    opening_time "2017-09-23 16:20:18"
-    closing_time "2017-09-23 16:20:18"
-    deleted_at "2017-09-23 16:20:18"
+    corporation
+    sequence(:name) { |n| "店舗#{n}" }
+    postal_code { "1234567" }
+    address { "渋谷区渋谷1-1-1" }
+    lat { "35.66641170" }
+    lon { "139.75746240" }
+    tel { "09012345678" }
+    opening_time { "00:00:00" }
+    closing_time { "23:59:59" }
   end
 end

@@ -1,9 +1,17 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
-    email "MyString"
-    password_digest "MyString"
-    name "MyString"
-    state 1
-    deleted_at "2017-09-23 16:20:52"
+    sequence(:email) { |n| "sample#{n}@example.com" }
+    sequence(:name) { |n| "ユーザ#{n}" }
+    password { 'password' }
+    tel { "09012345678" }
+    state { [:registered, :activated].sample }
+    payway { [:creditcard, :invoice].sample }
+    user_type { :personal }
+
+    trait :with_corporation do
+      state { :parent_corporation }
+      corporation
+      parent_id { corporation.id }
+    end
   end
 end
