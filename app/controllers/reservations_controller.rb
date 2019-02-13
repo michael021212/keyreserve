@@ -2,6 +2,7 @@ class ReservationsController <  ApplicationController
   before_action :set_user
   before_action :require_login, except: [:spot]
   include ActionView::Helpers::NumberHelper
+  include SearchParams
 
   def index
     @reservations = @user.reservations.order(checkin: :desc)
@@ -11,36 +12,16 @@ class ReservationsController <  ApplicationController
     @reservation = @user.reservations.find(params[:id])
   end
 
+  # 検索ページ
   def spot
-    params[:spot] ||= {}
-    params[:spot][:checkin_time] ||= '12:00'
-    cond = params[:spot]
-    if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
-      return render :spot
-    end
-    checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
-    checkout = checkin + cond[:use_hour].to_i.hours
-
-    unless checkin.strftime('%Y/%m/%d') == checkout.strftime('%Y/%m/%d')
-      return render :spot
-    end
-
-    if checkin < Time.zone.now - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります'
-      return render :spot
-    end
-
-    @facilities = logged_in? ? @user.login_spots : Facility.logout_spots
-    @exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
-    @facilities = @facilities.where.not(id: @exclude_facility_ids)
-    @facilities = @facilities.conference_room
-    @facilities = @facilities.joins(:shop).
-      where(Shop.arel_table[:opening_time].lteq(checkin)).
-      where(Shop.arel_table[:closing_time].gteq(checkout))
-    @facilities = @facilities.where(max_num: cond[:use_num].to_i .. Float::INFINITY) if cond[:use_num].present?
+    condition = params[:spot] ||= {}
+    return render :spot if condition.blank? #@checkinと@checkoutはメソッド内でset
+    # valid_search_params?の中で@checkinと@checkoutをsetしてる
+    return render :spot unless valid_search_params?(condition)
+    @facilities = Facility.reservable_facilities(@checkin, @checkout, condition, current_user)
     return render :spot if @facilities.blank?
     @facilities = Facility.order_by_min_price(@facilities, current_user).page(params[:page])
-    session[:spot] = cond
+    session[:spot] = condition
   end
 
   def new
