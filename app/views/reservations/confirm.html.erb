@@ -3,22 +3,7 @@
 <% end %>
 <div class="mg-page">
   <div class="container">
-    <div class="mg-booking-form">
-      <ul class="nav nav-tabs">
-        <li role="presentation">
-          <a href="#select-room" aria-controls="select-room" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>ご利用情報入力</a>
-        </li>
-        <li role="presentation">
-          <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>カード情報入力</a>
-        </li>
-        <li role="presentation" class="active">
-          <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>確認画面</a>
-        </li>
-        <li role="presentation">
-          <a href="#thank-you" aria-controls="thank-you" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">4</span>完了</a>
-        </li>
-      </ul>
-    </div>
+    <%= render 'step', active_tab: 'payment' %>
     <div class="row mt20">
       <div class="col-md-6 mb20">
         <div class="text-center">
@@ -31,7 +16,6 @@
             <%= f.hidden_field :facility_id, value: @facility.id %>
             <div class="mg-saerch-room">
               <div class="mg-book-now">
-                
                 <div class="form-group">
                   <label class="col-sm-6 control-label">ご利用日</label>
                   <div class="input-group col-sm-6 static-text">
