@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reservations::Spot', type: :system do
+RSpec.feature 'Reservations::Spot', type: :feature do
 
   feature '次のページへの遷移異常' do
     context '日付が空の場合' do
@@ -41,4 +41,5 @@ RSpec.feature 'Reservations::Spot', type: :system do
     end
   end
 end
+
 

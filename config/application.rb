@@ -24,12 +24,20 @@ module Keyreserve
     # autoloadのpathを追加
     config.autoload_paths << "#{Rails.root}/app/services"
 
-    config.generators do |generator|
-      generator.assets false
-      generator.helper false
-      generator.decorator false
-      generator.template_engine = :erb
-      generator.test_framework :rspec, view_specs: false, helper_specs: false
+
+    config.generators do |g|
+      g.assets false
+      g.helper false
+      g.decorator false
+      g.template_engine = :erb
+      g.test_framework :rspec,
+        fixtures: true,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false,
+        controller_specs: false,
+        request_specs: false
+      g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
 
     def inspect

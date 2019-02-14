@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reservations::Comfirm', type: :system do
+RSpec.feature 'Reservations::Comfirm', type: :feature do
   feature '正常な画面表示' do
     scenario "処理結果が正しく引き継がれている" do
     end
@@ -29,4 +29,5 @@ RSpec.feature 'Reservations::Comfirm', type: :system do
     end
   end
 end
+
 

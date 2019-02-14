@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reservations::New', type: :system do
+RSpec.feature 'Reservations::New', type: :feature do
 
   feature 'このページへの遷移異常' do
     context '施設のIDが渡されなかった場合' do
@@ -77,4 +77,5 @@ RSpec.feature 'Reservations::New', type: :system do
     end
   end
 end
+
 

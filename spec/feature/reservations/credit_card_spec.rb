@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Reservations::CreditCard', type: :system do
+RSpec.feature 'Reservations::CreditCard', type: :feature do
   feature 'カード登録画面' do
     context '入力異常がある場合' do
       scenario "エラーが発生して、クレカ登録画面に遷移" do
@@ -17,3 +17,4 @@ RSpec.feature 'Reservations::CreditCard', type: :system do
     end
   end
 end
+
