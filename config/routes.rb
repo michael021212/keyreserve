@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  unless Rails.env.production?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
   root 'top#index'
 
   namespace :admin do

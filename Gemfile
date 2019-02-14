@@ -76,13 +76,13 @@ gem 'stripe'
 gem 'nested_form'
 gem 'geocoder'
 gem 'whenever', require: false
+gem 'letter_opener_web'
 
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'selenium-webdriver'
 
   # Email
-  gem 'letter_opener'
 
   # Geocoding
 
