@@ -60,7 +60,7 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "keyreserve_#{Rails.env}"
-  config.action_mailer.default_url_options = { host: 'staging.office.key-stations.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'office.key-stations.com', protocol: 'https' }
   config.action_mailer.delivery_method = :letter_opener_web
   config.action_mailer.perform_caching = false
 
@@ -83,7 +83,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
   #ログの日別集計設定
-  config.logger = Logger.new("log/production.log", 'daily')
+  config.logger = Logger.new("log/staging.log", 'daily')
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
