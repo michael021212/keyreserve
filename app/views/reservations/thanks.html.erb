@@ -3,22 +3,7 @@
 <% end %>
 <div class="mg-page">
   <div class="container">
-    <div class="mg-booking-form">
-      <ul class="nav nav-tabs">
-        <li role="presentation">
-          <a href="#select-room" aria-controls="select-room" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">1</span><span class="mg-bs-bar"></span>ご利用情報入力</a>
-        </li>
-        <li role="presentation">
-          <a href="#personal-info" aria-controls="personal-info" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">2</span><span class="mg-bs-bar"></span>カード情報入力</a>
-        </li>
-        <li role="presentation">
-          <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">3</span><span class="mg-bs-bar"></span>確認画面</a>
-        </li>
-        <li role="presentation" class="active">
-          <a href="#thank-you" aria-controls="thank-you" role="tab" data-toggle="tab"><span class="mg-bs-tab-num">4</span>完了</a>
-        </li>
-      </ul>
-    </div>
+    <%= render 'step', active_tab: 'thank-you' %>
     <div class="alert alert-success alert-dismissible clearfix mt20">
       <div class="mg-alert-icon"><i class="fa fa-check"></i></div>
       <h3 class="mg-alert-payment">

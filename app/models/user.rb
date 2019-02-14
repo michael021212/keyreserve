@@ -30,6 +30,8 @@ class User < ApplicationRecord
   scope(:user_corp_token, ->(token) { find_by(parent_token: token) })
   scope(:parent_is_nil, -> { where(parent_id: nil) })
 
+  # 利用可能な施設一覧
+  # ユーザが契約中のプランに紐付いてる施設一覧
   def available_facilities
     Facility.joins(:facility_plans)
             .where(facility_plans: {plan_id: user_contracts.under_contract.pluck(:plan_id)})
@@ -50,6 +52,7 @@ class User < ApplicationRecord
      User.personal.parent_is_nil.or(User.parent_corporation)
   end
 
+  # 利用者の契約で都度課金が可能な施設の一覧
   def login_spots
     plan_ids = self.user_contracts.map(&:plan_id)
     facility_ids = FacilityTemporaryPlan.where(plan_id: plan_ids).map(&:facility_id)

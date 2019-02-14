@@ -41,3 +41,4 @@
 //= require common
 //= require reservation_calendar
 //= require dropin
+//= require reservation

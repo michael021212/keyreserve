@@ -76,14 +76,13 @@ gem 'stripe'
 gem 'nested_form'
 gem 'geocoder'
 gem 'whenever', require: false
+gem 'letter_opener_web'
 
 group :development, :test do
   # gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  # gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
 
   # Email
-  gem 'letter_opener'
 
   # Geocoding
 
@@ -91,15 +90,20 @@ group :development, :test do
 
   # CLI
   gem 'spring'
-  gem 'spring-commands-rspec'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   # Test
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem 'simplecov', require: false
-  gem 'chromedriver-helper'
+  gem 'capybara'
   gem 'spring-commands-rspec'
+  gem 'simplecov', require: false
+  gem 'launchy'
+  gem 'chromedriver-helper'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'database_cleaner'
 
   # Code analyze
   gem 'rubocop'
@@ -130,9 +134,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'rails-erd'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

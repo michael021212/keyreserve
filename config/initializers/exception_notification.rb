@@ -14,15 +14,15 @@ ExceptionNotification.configure do |config|
   # Notifiers =================================================================
 
   # Email notifier sends notifications by email.
-  config.add_notifier :email, {
-    email_prefix: "[ERROR] ",
-    sender_address: %{"alert-keyreserve" <alert@key-stations.com>},
-    exception_recipients: %w{keystation-alert@startup-technology.com}
-  }
+  # config.add_notifier :email, {
+  #   email_prefix: "[ERROR] ",
+  #   sender_address: %{"alert-keyreserve" <alert@key-stations.com>},
+  #   exception_recipients: %w{keystation-alert@startup-technology.com}
+  # }
 
   config.add_notifier :slack, {
-    webhook_url: 'https://hooks.slack.com/services/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',
-    channel: '#keystation-alert'
+    webhook_url: 'https://hooks.slack.com/services/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',
+    channel: '#office_exception'
   }
 
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.

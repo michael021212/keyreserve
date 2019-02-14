@@ -9,9 +9,11 @@ class Reservation < ApplicationRecord
   before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
+  # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
   end
+
   scope(:confirmed_to_i, -> { Reservation.states[:confirmed] })
 
   scope :ready_to_send, -> do

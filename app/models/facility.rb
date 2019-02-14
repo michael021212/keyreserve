@@ -32,6 +32,21 @@ class Facility < ApplicationRecord
     where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
   }
 
+  # 現在予約可能な施設一覧
+  def self.reservable_facilities(checkin, checkout, condition, user)
+    # 都度課金可能な施設を一覧で取得
+    facilities = user.try(:logged_in?) ? user.login_spots : Facility.logout_spots
+    # 指定時間に予約済の施設は削除
+    exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
+    facilities = facilities.conference_room.where.not(id: exclude_facility_ids)
+    # 店舗の運営時間外の施設は削除
+    facilities = facilities.joins(:shop)
+      .where(Shop.arel_table[:opening_time].lteq(checkin))
+      .where(Shop.arel_table[:closing_time].gteq(checkout))
+    # 最大収容人数が予約人数を下回る施設は削除
+    facilities = facilities.where('max_num > ?',  condition[:use_num].to_i)
+  end
+
   def min_hourly_price(user, target_time=nil)
     plan_ids = user.present? ? user.user_contracts.pluck(:plan_id) : []
     ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
