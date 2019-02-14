@@ -1,18 +1,21 @@
 require 'rails_helper'
 
 RSpec.feature 'Reservations::CreditCard', type: :feature do
-  feature 'カード登録画面' do
-    context '入力異常がある場合' do
-      scenario "エラーが発生して、クレカ登録画面に遷移" do
-        # 全項目必須なので、それぞれ書く
+  feature '登録ボタンを押した際の挙動' do
+    context '入力不備がある場合' do
+      it "バリデーションエラーが発生" do
+      end
+      it 'クレカ情報入力画面に遷移' do
       end
     end
-    context '正常入力後、stripeとの通信がうまくいかない場合' do
-      scenario "「クレジットカードの登録に失敗しました」と表示され、クレカ登録画面に遷移" do
+    context 'stripeに登録拒否された場合' do
+      it "クレジットカードの登録に失敗しました。入力情報が正しいか、今一度ご確認ください。と表示" do
+      end
+      it 'クレカ情報入力画面に遷移' do
       end
     end
-    context '正常入力後、stripeとの通信がうまくいった場合' do
-      scenario "確認画面に遷移" do
+    context 'stripeに登録出来た場合' do
+      it "確認画面に遷移" do
       end
     end
   end
