@@ -16,7 +16,6 @@ class ReservationsController <  ApplicationController
   def spot
     condition = params[:spot] ||= {}
     return render :spot if condition.blank? #@checkinと@checkoutはメソッド内でset
-    # valid_search_params?の中で@checkinと@checkoutをsetしてる
     return render :spot unless valid_search_params?(condition)
     @facilities = Facility.reservable_facilities(@checkin, @checkout, condition, current_user)
     return render :spot if @facilities.blank?
@@ -24,56 +23,69 @@ class ReservationsController <  ApplicationController
     session[:spot] = condition
   end
 
+  # 1.ご利用情報入力
   def new
     params[:spot] ||= session[:spot]
     session[:reservation_id] = nil
-    @facility = @user.login_spots.find(params[:facility_id]) if params[:facility_id].present?
-  end
-
-  def price
-    @facility = @user.login_spots.find(params[:facility_id]) if params[:facility_id].present?
-    cond = params[:spot]
-    if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank? || cond[:checkin_time].blank?
-      return render json: {price: ''}
+    @facility = @user.login_spots.find_by(id: params[:facility_id])
+    if @facility.blank?
+      flash[:error] = '検索条件を入力してください'
+      redirect_to spot_reservations_path
     end
-    checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
-    price = @facility.calc_price(@user, checkin, cond[:use_hour].to_i)
-    render json: {price: number_with_delimiter(price)}
   end
 
+  # 利用料金の計算用
+  def price
+    condition = params[:spot]
+    @facility = @user.login_spots.find_by(id: condition[:facility_id]) if condition[:facility_id].present?
+    return render json: { price: '' } if empty_params?(condition)
+    set_checkin(condition)
+    price = @facility.calc_price(@user, @checkin, condition[:use_hour].to_i)
+    render json: { price: number_with_delimiter(price) }
+  end
+
+  # クレカ情報登録処理
   def credit_card
-    @facility = Facility.find(session[:spot]['facility_id'].to_i)
+    condition = session[:spot]
+    set_selected_facility(condition)
     return redirect_to confirm_reservations_url if current_user.credit_card.present?
     @credit_card = @user.build_credit_card(credit_card_params)
-    return(render :credit_card) unless @credit_card.valid?
+    return render :credit_card unless @credit_card.valid?
     begin
       @credit_card.save!
       current_user.activated!
       redirect_to confirm_reservations_url
     rescue => e
       logger.warn("#{e.class.name} #{e.message}")
-      flash[:alert] = 'クレジットカードの登録に失敗しました'
+      flash[:error] = 'クレジットカードの登録に失敗しました。入力情報が正しいか、今一度ご確認ください。'
       render :credit_card
     end
   end
 
+  # 2.カード情報入力
+  # 3.確認画面
   def confirm
-    session[:spot] = params[:spot] if params[:spot].present?
-    @facility = Facility.find(session[:spot]['facility_id'].to_i)
-    checkin = Time.zone.parse(session[:spot]['checkin'] + " " + session[:spot]['checkin_time'])
-    checkout = checkin + session[:spot]['use_hour'].to_i.hours
-    y, m, d = checkin.strftime('%Y %m %d').split(' ')
-    if checkin < Time.zone.now - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります'
-      return render :new
+    condition = params[:spot] ||= {}
+    session[:spot] = condition if condition.present?
+    set_selected_facility(condition)
+
+    # 施設未選択なら検索フォームにリダイレクト
+    if @facility.blank?
+      flash[:error] = '施設を選択してください'
+      redirect_to spot_reservations_path and return
     end
-    if checkin < @facility.shop.opening_time.change(year: y, month: m, day: d) ||
-        checkout > @facility.shop.closing_time.to_time.change(year: y, month: m, day: d)
+
+    # 検索クエリが正常かどうかチェック
+    return render :new unless valid_search_params?(condition)
+
+    # 店舗の運営時間外の予約ならエラー
+    if @facility.shop.out_of_business_time?(@checkin, @checkout)
       flash[:error] = 'ご予約時間が営業時間外となります'
       return render :new
     end
 
-    @price = @facility.calc_price(@user, checkin, session[:spot]['use_hour'].to_i)
+    @price = @facility.calc_price(@user, @checkin, condition['use_hour'].to_i)
+    # クレカ払い & クレカの登録がない場合は登録画面に遷移
     if @user.credit_card.blank? && @user.creditcard?
       @credit_card = current_user.build_credit_card
       return render :credit_card
@@ -81,23 +93,25 @@ class ReservationsController <  ApplicationController
   end
 
   def create
-    if session[:spot].nil?
+    condition = session[:spot] ||= {}
+    if condition.blank?
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
-      redirect_to spot_reservations_url
-      return
+      redirect_to spot_reservations_url and return
     end
-    @reservation = Reservation.new_from_spot(session[:spot], @user, current_user)
-    if @reservation.save
+    @reservation = Reservation.new_from_spot(condition, @user, current_user)
+    ActiveRecord::Base.transaction do
+      @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
       NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
-      redirect_to thanks_reservations_url
-    else
-      flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
-      redirect_to spot_reservations_url
     end
+      redirect_to thanks_reservations_url
+  rescue => e
+    logger.debug(e)
+    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
+    redirect_to spot_reservations_url
   end
 
   def thanks
@@ -109,6 +123,11 @@ class ReservationsController <  ApplicationController
 
   def set_user
     @user = current_user_corp.present? ? current_user_corp : current_user if logged_in?
+  end
+
+  # 選択された施設を@facilityに格納
+  def set_selected_facility(condition)
+    @facility = Facility.find_by(id: condition['facility_id'].to_i)
   end
 
   def credit_card_params

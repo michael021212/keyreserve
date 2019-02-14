@@ -30,4 +30,10 @@ class Shop < ApplicationRecord
   def assign_date_for_closing(y, m, d)
     closing_time.change(year: y, month: m, day: d)
   end
+
+  # 日付範囲が店舗の営業時間内かどうか
+  def out_of_business_time?(from, to)
+    from < assign_date_for_opening(from.year, from.month, from.day) ||
+      to > assign_date_for_closing(to.year, to.month, to.day)
+  end
 end
