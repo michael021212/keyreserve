@@ -176,8 +176,9 @@ ja:
         information_shops: 配信対象店舗
       billing:
         user_id: 請求先
-        corporation_id: 支払先
+        shop_id: 支払先店舗
         state: 状態
+        billing_type: 請求項目
         price: 金額
         month: 月
   enums:
@@ -237,6 +238,9 @@ ja:
       state:
         unclaimed: 未請求
         claimed: 請求済
+      billing_type:
+        reservation: 施設予約
+        dropin_reservation: ドロップイン
   date:
     abbr_day_names:
     - 日

@@ -1,9 +1,10 @@
 class CreateBillings < ActiveRecord::Migration[5.1]
   def change
     create_table :billings do |t|
-      t.references :corporation
+      t.references :shop
       t.references :user
       t.integer :state, default: 1
+      t.integer :billing_type
       t.integer :price
       t.integer :month
       t.integer :year

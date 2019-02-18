@@ -22,16 +22,17 @@ ActiveRecord::Schema.define(version: 20190218042705) do
   end
 
   create_table "billings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "corporation_id"
+    t.bigint "shop_id"
     t.bigint "user_id"
     t.integer "state", default: 1
+    t.integer "billing_type"
     t.integer "price"
     t.integer "month"
     t.integer "year"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["corporation_id"], name: "index_billings_on_corporation_id"
+    t.index ["shop_id"], name: "index_billings_on_shop_id"
     t.index ["user_id"], name: "index_billings_on_user_id"
   end
 

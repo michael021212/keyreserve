@@ -16,8 +16,8 @@
         <td><%= @billing.user.name %></td>
       </tr>
       <tr>
-        <th><%= Billing.human_attribute_name(:corporation_id) %></th>
-        <td><%= @billing.corporation.name %></td>
+        <th><%= Billing.human_attribute_name(:shop_id) %></th>
+        <td><%= @billing.shop.name %></td>
       </tr>
       <tr>
         <th>支払月</th>
@@ -25,7 +25,7 @@
       </tr>
       <tr>
         <th><%= Billing.human_attribute_name(:price) %></th>
-        <td><%= @billing.price %></td>
+        <td>¥<%= @billing.price.to_s(:delimited, delimiter: ',') %></td>
       </tr>
       <tr>
         <th><%= Billing.human_attribute_name(:state) %></th>
@@ -44,8 +44,8 @@
         <tr>
           <td><%= detail.created_at.strftime('%Y/%m/%d') %></td>
           <td><%= detail.facility.name %></td>
-          <td><%= detail.usage_period %>時間</td>
-          <td><%= detail.price %></td>
+          <td><%= detail.class.name == 'Reservation' ? "#{ detail.usage_period}時間" : 'ドロップイン' %></td>
+          <td>¥<%= detail.price.to_s(:delimited, delimiter: ',') %></td>
         </tr>
       <% end %>
     </table>
