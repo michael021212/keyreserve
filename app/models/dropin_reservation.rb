@@ -8,6 +8,7 @@ class DropinReservation < ApplicationRecord
   belongs_to :facility_dropin_sub_plan
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
+  belongs_to :billing, optional: true
 
   before_save :create_payment, if: Proc.new { |r| r.user_id? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }

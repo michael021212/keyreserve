@@ -16,6 +16,9 @@
       <li class="<%= active_parent('user_corps') %>">
         <%= link_to admin_user_corps_path do %><i class='fa fa-users'></i><span><%= UserCorp.model_name.human %>管理</span><% end %>
       </li>
+      <li class="<%= active_parent('billings') %>">
+        <%= link_to admin_billings_path do %><i class='fa fa-users'></i><span><%= Billing.model_name.human %>管理</span><% end %>
+      </li>
       <li class="<%= active_parent('reservations') %> <%= active_parent('dropin_reservations') %> treeview menu-open">
         <a href="#"><i class="fa fa-calendar"></i><span>予約管理</span></a>
         <ul class="treeview-menu">

@@ -1,0 +1,55 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Billing.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to "戻る", admin_billings_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Billing.human_attribute_name(:id) %></th>
+        <td><%= @billing.id %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:user_id) %></th>
+        <td><%= @billing.user.name %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:corporation_id) %></th>
+        <td><%= @billing.corporation.name %></td>
+      </tr>
+      <tr>
+        <th>支払月</th>
+        <td><%= "#{ @billing.year }年#{ @billing.month }月" %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:price) %></th>
+        <td><%= @billing.price %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:state) %></th>
+        <td><%= @billing.state_i18n %></td>
+      </tr>
+    </table>
+
+    <table class="table table-striped mt60">
+      <tr>
+        <th>利用日</th>
+        <th>利用施設</th>
+        <th>利用時間</th>
+        <th>金額</th>
+      </tr>
+      <% @billing_details.each do |detail| %>
+        <tr>
+          <td><%= detail.created_at.strftime('%Y/%m/%d') %></td>
+          <td><%= detail.facility.name %></td>
+          <td><%= detail.usage_period %>時間</td>
+          <td><%= detail.price %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+

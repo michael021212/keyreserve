@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180731112614) do
+ActiveRecord::Schema.define(version: 20190218042705) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -19,6 +19,20 @@ ActiveRecord::Schema.define(version: 20180731112614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+  end
+
+  create_table "billings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "corporation_id"
+    t.bigint "user_id"
+    t.integer "state", default: 1
+    t.integer "price"
+    t.integer "month"
+    t.integer "year"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["corporation_id"], name: "index_billings_on_corporation_id"
+    t.index ["user_id"], name: "index_billings_on_user_id"
   end
 
   create_table "corporation_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -74,6 +88,8 @@ ActiveRecord::Schema.define(version: 20180731112614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.bigint "billing_id"
+    t.index ["billing_id"], name: "index_dropin_reservations_on_billing_id"
     t.index ["facility_dropin_plan_id"], name: "index_dropin_reservations_on_facility_dropin_plan_id"
     t.index ["facility_dropin_sub_plan_id"], name: "index_dropin_reservations_on_facility_dropin_sub_plan_id"
     t.index ["facility_id"], name: "index_dropin_reservations_on_facility_id"
@@ -243,6 +259,8 @@ ActiveRecord::Schema.define(version: 20180731112614) do
     t.integer "num", default: 0
     t.integer "payment_id"
     t.boolean "mail_send_flag", default: false
+    t.bigint "billing_id"
+    t.index ["billing_id"], name: "index_reservations_on_billing_id"
     t.index ["facility_id"], name: "index_reservations_on_facility_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end

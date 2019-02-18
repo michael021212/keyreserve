@@ -4,6 +4,7 @@ class Reservation < ApplicationRecord
   belongs_to :facility
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
+  belongs_to :billing, optional: true
 
   before_create :create_payment, if: Proc.new { |reservation| reservation.user_id? }
   before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
