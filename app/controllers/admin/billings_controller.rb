@@ -16,10 +16,14 @@ class Admin::BillingsController < AdminController
   end
 
   def searched_billings
-    billings = Billing.where('year = ? && month = ?', params[:month].to_date.year, params[:month].to_date.month)
-    return billings if params[:search].blank? || (params[:credit_card_include].present? && params[:invoice_include].present?)
-    billings = billings.joins(:user).where.not(payment_way: Billing.payment_ways[:credit_card]) if params[:credit_card_include].blank?
-    billings = billings.joins(:user).where.not(payment_way: Billing.payment_ways[:invoice]) if params[:invoice_include].blank?
+    billings = Billing.in_month(params[:month].to_date.year, params[:month].to_date.month)
+    return billings if search_all
+    billings = billings.execlude_credit_card if params[:credit_card_include].blank?
+    billings = billings.execlude_invoice if params[:invoice_include].blank?
     billings
+  end
+
+  def search_all
+    params[:search].blank? || (params[:credit_card_include].present? && params[:invoice_include].present?)
   end
 end

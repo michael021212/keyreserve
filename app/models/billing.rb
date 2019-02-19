@@ -21,6 +21,16 @@ class Billing < ApplicationRecord
     card_and_invoice: 3 # クレカと請求書
   }
 
+  scope :in_month, -> (year, month) do
+    where('year = ? && month = ?', year, month)
+  end
+  scope :execlude_credit_card, -> do
+    where.not(payment_way: Billing.payment_ways[:credit_card])
+  end
+  scope :execlude_invoice, -> do
+    where.not(payment_way: Billing.payment_ways[:invoice])
+  end
+
   # 渡されたデータを元に月々の請求書データを作成するメソッド
   def self.create_monthly_billing!(year, month, price, shop_id, user_id, type, billing_details)
     ActiveRecord::Base.transaction do
