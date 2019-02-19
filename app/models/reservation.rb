@@ -22,6 +22,10 @@ class Reservation < ApplicationRecord
     where(mail_send_flag: false).where(arel_table[:checkin].lteq(target))
   end
 
+  def paid_by_credit_card?
+    payment.present? && payment.credit_card_id.present?
+  end
+
   def create_payment
     return unless self.user.creditcard?
     return if self.payment.present?

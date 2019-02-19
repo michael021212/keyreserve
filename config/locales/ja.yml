@@ -175,12 +175,14 @@ ja:
         created_at: 登録日時
         information_shops: 配信対象店舗
       billing:
+        id: ID
         user_id: 請求先
         shop_id: 支払先店舗
         state: 状態
         billing_type: 請求項目
+        payment_way: 支払い方法
         price: 金額
-        month: 月
+        month: 支払い月
   enums:
     corporation:
       payway:
@@ -241,6 +243,10 @@ ja:
       billing_type:
         reservation: 施設予約
         dropin_reservation: ドロップイン
+      payment_way:
+        credit_card: クレジットカード
+        invoice: 請求書
+        card_and_invoice: カード&請求書
   date:
     abbr_day_names:
     - 日

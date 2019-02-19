@@ -10,6 +10,7 @@
           <th><%= Billing.human_attribute_name(:user_id) %></th>
           <th><%= Billing.human_attribute_name(:billing_type) %></th>
           <th><%= Billing.human_attribute_name(:shop_id) %></th>
+          <th><%= Billing.human_attribute_name(:payment_way) %></th>
           <th><%= Billing.human_attribute_name(:price) %></th>
           <th style="width: 200px;"></th>
         </tr>
@@ -21,8 +22,8 @@
               <td><%= billing.user.name %></td>
               <td><%= billing.billing_type_i18n %></td>
               <td><%= billing.shop.name %></td>
-              <%# TODO: 支払い方法が混ざっている場合に再算出する処理を書く %>
-              <td>¥<%= billing.price.to_s(:delimited, delimiter: ',') %></td>
+              <td><%= billing.payment_way_i18n %></td>
+              <td><%= billing.decorate.price_with_delimiter %></td>
               <td>
                 <%= link_to '詳細', admin_billing_path(billing), class: 'btn btn-default' %>
               </td>

@@ -22,7 +22,7 @@ class Billing < ApplicationRecord
   }
 
   # 渡されたデータを元に月々の請求書データを作成するメソッド
-  def self.create_monthly_billing!(year, month, price, shop_id, user_id, type, reservations)
+  def self.create_monthly_billing!(year, month, price, shop_id, user_id, type, billing_details)
     ActiveRecord::Base.transaction do
       payment_way = Billing.set_payment_way(reservations)
       billing = Billing.find_or_create_by!(shop_id: shop_id,
@@ -32,13 +32,14 @@ class Billing < ApplicationRecord
                                            payment_way: payment_way,
                                            billing_type: type,
                                            year: year)
-      reservations.where(user_id: user_id).each{ |r| r.update!(billing_id: billing.id) }
+      billing_details.where(user_id: user_id).each{ |r| r.update!(billing_id: billing.id) }
     end
   end
 
-  def self.set_payment_way(reservations, way=0, default_value=0)
-    reservations.each do |r|
-      if r.payment.present? && r.payment.credit_card_id.present?
+  # 請求に対する支払い方法を取得
+  def self.set_payment_way(billing_details, way=0, default_value=0)
+    billing_details.each do |d|
+      if d.payment.present? && d.payment.credit_card_id.present?
         case way
         when default_value then way = Billing.payment_ways[:credit_card]
         when Billing.payment_ways[:invoice] then way = Billing.payment_ways[:card_and_invoice]

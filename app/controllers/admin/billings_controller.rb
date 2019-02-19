@@ -18,8 +18,8 @@ class Admin::BillingsController < AdminController
   def searched_billings
     billings = Billing.where('year = ? && month = ?', params[:month].to_date.year, params[:month].to_date.month)
     return billings if params[:search].blank? || (params[:credit_card_include].present? && params[:invoice_include].present?)
-    billings = billings.joins(:user).where.not(payment_way: User.payways[:creditcard]) if params[:credit_card_include].blank?
-    billings = billings.joins(:user).where.not(payment_way: User.payways[:invoice]) if params[:invoice_include].blank?
+    billings = billings.joins(:user).where.not(payment_way: Billing.payment_ways[:credit_card]) if params[:credit_card_include].blank?
+    billings = billings.joins(:user).where.not(payment_way: Billing.payment_ways[:invoice]) if params[:invoice_include].blank?
     billings
   end
 end

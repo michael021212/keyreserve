@@ -27,6 +27,10 @@ class DropinReservation < ApplicationRecord
   delegate :email, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :facility, prefix: true, allow_nil: true
 
+  def paid_by_credit_card?
+    payment.present? && payment.credit_card_id.present?
+  end
+
   def create_payment
     return unless self.user.creditcard?
     self.payment = Payment.create!(
