@@ -24,6 +24,7 @@
         <td><%= "#{ @billing.year }年#{ @billing.month }月" %></td>
       </tr>
       <tr>
+        <%# TODO: 支払い方法が混ざっている場合に検索項目によって再計算される処理を書く %>
         <th><%= Billing.human_attribute_name(:price) %></th>
         <td>¥<%= @billing.price.to_s(:delimited, delimiter: ',') %></td>
       </tr>
@@ -40,9 +41,10 @@
         <th>利用時間</th>
         <th>金額</th>
       </tr>
+      <%# TODO: 支払い方法が混ざっている場合に検索されたものだけ掲示する処理を書く %>
       <% @billing_details.each do |detail| %>
         <tr>
-          <td><%= detail.created_at.strftime('%Y/%m/%d') %></td>
+          <td><%= detail.checkin.strftime('%Y/%m/%d') %></td>
           <td><%= detail.facility.name %></td>
           <td><%= detail.class.name == 'Reservation' ? "#{ detail.usage_period}時間" : 'ドロップイン' %></td>
           <td>¥<%= detail.price.to_s(:delimited, delimiter: ',') %></td>

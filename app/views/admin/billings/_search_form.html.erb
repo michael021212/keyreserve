@@ -22,7 +22,8 @@
     </div>
 
     <div class='col-md-2'>
-      <%= submit_tag "検索", class: "btn btn-info w40 mr10" %>
+      <%= hidden_field_tag :search, true %>
+      <%= submit_tag "検索",  class: "btn btn-info w40 mr10" %>
     </div>
   </div>
 <% end %>

@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20190218042705) do
     t.bigint "user_id"
     t.integer "state", default: 1
     t.integer "billing_type"
+    t.integer "payment_way"
     t.integer "price"
     t.integer "month"
     t.integer "year"
