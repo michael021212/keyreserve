@@ -45,14 +45,14 @@ class Reservation < ApplicationRecord
   def self.new_from_spot(spot, user, current_user)
     checkin = Time.zone.parse(spot['checkin'] + " " + spot['checkin_time'])
     facility = Facility.find(spot['facility_id'].to_i)
-    price = facility.calc_price(user, checkin, spot['use_hour'].to_i)
+    price = facility.calc_price(user, checkin, spot['use_hour'].to_f)
     Reservation.new(
       facility_id: spot['facility_id'],
       user_id: user.id,
       reservation_user_id: current_user.id,
       checkin: checkin,
-      checkout: checkin + spot['use_hour'].to_i.hours,
-      usage_period: spot['use_hour'],
+      checkout: checkin + spot['use_hour'].to_f.hours,
+      usage_period: spot['use_hour'].to_f,
       state: :confirmed,
       price: price,
       num: spot['use_num'],

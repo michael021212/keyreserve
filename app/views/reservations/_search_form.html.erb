@@ -22,8 +22,8 @@
       <div class="row">
         <div class="col-xs-12">
           <%= f.select :use_hour,
-            (1..10).map{ |i| [i.to_s + '時間', i] },
-            { selected: params[:spot][:use_hour].to_i, include_blank: 'Term' },
+            reservable_usage,
+            { selected: params[:spot][:use_hour].to_f, include_blank: 'Term' },
             class: 'cs-select cs-skin-elastic' %>
         </div>
       </div>
@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-xs-12">
           <%= f.select :use_num,
-            (1..20).map{ |i| [i.to_s + '名', i] },
+            selectable_num,
             { selected: params[:spot][:use_num].to_i, include_blank: 'Person' },
             class: 'cs-select cs-skin-elastic' %>
         </div>

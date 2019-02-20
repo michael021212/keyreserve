@@ -12,7 +12,6 @@ class Facility < ApplicationRecord
 
   enum facility_type: {conference_room: 1, dropin: 2}
 
-
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank
 
@@ -22,7 +21,9 @@ class Facility < ApplicationRecord
 
   validates :name, presence: true
 
-  scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) { includes(facility_dropin_plans: :facility_dropin_sub_plans).where(facility_dropin_plans: {facility_dropin_sub_plans: { id: sub_plan_ids } }) })
+  scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
+    includes(facility_dropin_plans: :facility_dropin_sub_plans)
+    .where(facility_dropin_plans: { facility_dropin_sub_plans: { id: sub_plan_ids } }) })
 
   scope(:belongs_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
 
@@ -47,6 +48,7 @@ class Facility < ApplicationRecord
     facilities = facilities.where('max_num > ?',  condition[:use_num].to_i)
   end
 
+  # userに表示し得る施設の最小利用料金(1時間)
   def min_hourly_price(user, target_time=nil)
     plan_ids = user.present? ? user.user_contracts.pluck(:plan_id) : []
     ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
@@ -60,6 +62,7 @@ class Facility < ApplicationRecord
     min_price ||= 0
   end
 
+  # userに表示し得る施設の最小利用料金(30分)
   def min_half_hourly_price(user, target_time=nil)
     plan_ids = user.present? ? user.user_contracts.map(&:plan_id) : []
     ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
@@ -78,7 +81,7 @@ class Facility < ApplicationRecord
     sum = 0
     return if user.nil?
     while(usage_hour > 0) do
-      min = self.min_half_hourly_price(user, start)
+      min = min_half_hourly_price(user, start)
       sum = sum + min
       start = start + 0.5.hours
       usage_hour -= 0.5
