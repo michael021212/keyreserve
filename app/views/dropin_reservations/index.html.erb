@@ -55,8 +55,21 @@
                         </div>
                       </div>
                       <div class="row">
+                        <div class="col-md-4 text-left">
+                          <%= link_to "詳細",
+                            dropin_reservation_path(dropin_reservation),
+                            class: 'btn btn-main btn-block' %>
+                        </div>
+                        <div class="col-md-offset-4 col-md-4 text-right">
+                          <%= link_to 'キャンセル', dropin_reservation_path(dropin_reservation),
+                            method: :delete,
+                            data: { confirm: 'キャンセルしますか?' },
+                            class: 'btn btn-danger' if dropin_reservation.deletable? %>
+                        </div>
+                      </div>
+
+                      <div class="row">
                         <div class="col-md-offset-4 col-md-4">
-                          <%= link_to "詳細", dropin_reservation_path(dropin_reservation), class: 'btn btn-main btn-block' %>
                         </div>
                       </div>
                     </div>

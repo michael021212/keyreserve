@@ -119,6 +119,11 @@ class ReservationsController <  ApplicationController
     @facility = @reservation.facility
   end
 
+  def destroy
+    @reservation = Reservation.find(params[:id])
+    @reservation.destroy
+    redirect_to reservations_path, notice: '予約をキャンセルしました'
+  end
   private
 
   def set_user

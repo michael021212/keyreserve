@@ -128,6 +128,12 @@ class DropinReservationsController <  ApplicationController
     @facility = @dropin_reservation.facility
   end
 
+  def destroy
+    @dropin_reservation = DropinReservation.find(params[:id])
+    @dropin_reservation.destroy
+    redirect_to dropin_reservations_path, notice: '予約をキャンセルしました'
+  end
+
   private
 
   def set_user
