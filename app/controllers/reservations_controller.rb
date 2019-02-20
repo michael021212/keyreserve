@@ -121,8 +121,14 @@ class ReservationsController <  ApplicationController
 
   def destroy
     @reservation = Reservation.find(params[:id])
-    @reservation.destroy
+    ActiveRecord::Base.transaction do
+      @reservation.destroy!
+      NotificationMailer.reservation_canceled_to_admin(@reservation).deliver_now
+    end
     redirect_to reservations_path, notice: '予約をキャンセルしました'
+  rescue => e
+    logger.debug(e)
+    redirect_to reservations_path, alert: '処理中にエラーが発生しました。'
   end
   private
 

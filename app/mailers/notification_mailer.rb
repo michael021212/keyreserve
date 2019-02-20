@@ -36,6 +36,34 @@ class NotificationMailer < ApplicationMailer
     mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】ドロップインの予約が入りました")
   end
 
+  # TODO: キャンセル時もユーザにメールするか確認
+  def reservation_canceled(reservation, user_id)
+    user = User.find(user_id)
+    return if user.email.blank?
+    @reservation = reservation
+    mail(to: user.email, subject: "【KeyStation Office】施設のご予約を承りました")
+  end
+
+  # 施設利用予約がキャンセルされた際のメール
+  def reservation_canceled_to_admin(reservation)
+    @reservation = reservation
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】会議室の予約がキャンセルされました")
+  end
+
+  # TODO: キャンセル時もユーザにメールするか確認
+  def dropin_reservation_canceled(dropin_reservation, user_id)
+    user = User.find(user_id)
+    return if user.email.blank?
+    @dropin_reservation = dropin_reservation
+    mail(to: user.email, subject: "【KeyStation Office】施設のご予約がキャンセルされました")
+  end
+
+  # ドロップイン予約がキャンセルされた際のメール
+  def dropin_reservation_canceled_to_admin(dropin_reservation)
+    @dropin_reservation = dropin_reservation
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】ドロップインの予約がキャンセルされました")
+  end
+
   def send_reservation_password(reservation)
     @reservation = reservation
     plan_ids = @reservation.user.user_contracts.pluck(:plan_id)
