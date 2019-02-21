@@ -4,7 +4,6 @@ class CreateBillings < ActiveRecord::Migration[5.1]
       t.references :shop
       t.references :user
       t.integer :state, default: 1
-      t.integer :billing_type
       t.integer :payment_way
       t.integer :price
       t.integer :month

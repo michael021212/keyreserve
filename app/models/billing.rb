@@ -10,11 +10,6 @@ class Billing < ApplicationRecord
     claimed: 2    # 請求済
   }
 
-  enum billing_type: {
-    reservation: 1,       # 施設予約
-    dropin_reservation: 2 # ドロップイン利用
-  }
-
   enum payment_way: {
     credit_card: 1,     # クレカのみ
     invoice: 2,         # 請求書のみ
@@ -32,17 +27,16 @@ class Billing < ApplicationRecord
   end
 
   # 渡されたデータを元に月々の請求書データを作成するメソッド
-  def self.create_monthly_billing!(year, month, price, shop_id, user_id, type, billing_details)
+  def self.create_monthly_billing!(year, month, price, shop_id, user_id, billing_details)
     ActiveRecord::Base.transaction do
-      payment_way = Billing.set_payment_way(reservations)
+      payment_way = Billing.set_payment_way(billing_details)
       billing = Billing.find_or_create_by!(shop_id: shop_id,
                                            user_id: user_id,
                                            price: price,
                                            month: month,
                                            payment_way: payment_way,
-                                           billing_type: type,
                                            year: year)
-      billing_details.where(user_id: user_id).each{ |r| r.update!(billing_id: billing.id) }
+      billing_details.each{ |b| b.update!(billing_id: billing.id) }
     end
   end
 
