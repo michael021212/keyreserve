@@ -2,8 +2,9 @@ class Billing < ApplicationRecord
   has_many :reservations
   has_many :dropin_reservations
   has_many :billings
-  belongs_to :user
-  belongs_to :shop
+  # 請求時に削除されている可能性もあるので、optional: trueを設定
+  belongs_to :user, optional: true
+  belongs_to :shop, optional: true
 
   enum state: {
     unclaimed: 1, # 未請求
@@ -24,6 +25,11 @@ class Billing < ApplicationRecord
   end
   scope :execlude_invoice, -> do
     where.not(payment_way: Billing.payment_ways[:invoice])
+  end
+
+  # 請求時に削除済の施設も参照できる必要があったので上書き
+  def user
+    User.unscoped { super }
   end
 
   # 渡されたデータを元に月々の請求書データを作成するメソッド

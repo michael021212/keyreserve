@@ -27,6 +27,11 @@ class DropinReservation < ApplicationRecord
   delegate :email, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :facility, prefix: true, allow_nil: true
 
+  # 請求時に削除済の施設も参照できる必要があったので上書き
+  def facility
+    Facility.unscoped { super }
+  end
+
   def paid_by_credit_card?
     payment.present? && payment.credit_card_id.present?
   end
