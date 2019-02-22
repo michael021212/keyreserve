@@ -10,6 +10,7 @@ class DropinReservation < ApplicationRecord
   belongs_to :payment, optional: true
 
   before_save :create_payment, if: Proc.new { |r| r.user_id? }
+  before_destroy :cancel_payment, if: Proc.new { |r| r.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   scope :in_range, ->(range) do
@@ -35,6 +36,10 @@ class DropinReservation < ApplicationRecord
       credit_card_id: self.user.credit_card.id,
       price: self.price,
     )
+  end
+
+  def cancel_payment
+    payment.destroy!
   end
 
   def self.new_from_dropin_spot(dropin_spot, user, current_user)
@@ -104,4 +109,9 @@ class DropinReservation < ApplicationRecord
   def self.csv_column_names
     %w[運営会社名 店舗名 施設名 お名前 ご利用プラン 利用日 利用開始時間 利用終了時間 利用時間 状態 利用料金]
   end
+
+  def deletable?
+    checkin > Time.zone.now
+  end
+
 end
