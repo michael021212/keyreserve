@@ -18,7 +18,4 @@ class Admin::DropinReservationsController < AdminController
   def show
     @dropin_reservation = DropinReservation.find(params[:id])
   end
-
-  private
-
 end

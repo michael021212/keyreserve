@@ -119,6 +119,19 @@ class ReservationsController <  ApplicationController
     @facility = @reservation.facility
   end
 
+  def destroy
+    @reservation = Reservation.find(params[:id])
+    ActiveRecord::Base.transaction do
+      @reservation.destroy!
+      NotificationMailer.reservation_canceled(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
+      NotificationMailer.reservation_canceled(@reservation, @reservation.reservation_user_id).deliver_now
+      NotificationMailer.reservation_canceled_to_admin(@reservation).deliver_now
+    end
+    redirect_to reservations_path, notice: '予約をキャンセルしました'
+  rescue => e
+    logger.debug(e)
+    redirect_to reservations_path, alert: '処理中にエラーが発生しました。'
+  end
   private
 
   def set_user
