@@ -83,7 +83,7 @@ Rails.application.routes.draw do
   end
   get '/shops/:shop_id/facilities/:id/events' => 'shops/facilities#events'
   resources :facilities, only: [:index, :show]
-  resources :reservations, only: [:index, :show, :new, :create] do
+  resources :reservations, only: [:index, :show, :new, :create, :destroy] do
     collection do
       get :price
       get :dropin_spot
@@ -95,7 +95,7 @@ Rails.application.routes.draw do
     end
   end
   resource :personal_identification
-  resources :dropin_reservations, only: [:index, :show, :new, :create] do
+  resources :dropin_reservations, only: [:index, :show, :new, :create, :destroy] do
     collection do
       get :plan
       get :dropin_spot
