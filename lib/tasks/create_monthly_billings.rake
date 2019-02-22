@@ -3,12 +3,12 @@ namespace :billing do
   task :create_monthly_billings => :environment do
 
     # テストデータ作る用にbaseの日付ずらしてタスク実行
-    base =  Time.zone.parse('2018-06-01 15:30:45')
-    from = base.beginning_of_month
-    to = base.end_of_month
+    #base =  Time.zone.parse('2018-06-01 15:30:45')
+    #from = base.beginning_of_month
+    #to = base.end_of_month
 
-    #from = Time.zone.now.last_month.beginning_of_month
-    #to = Time.zone.now.last_month.end_of_month
+    from = Time.zone.now.last_month.beginning_of_month
+    to = Time.zone.now.last_month.end_of_month
     reservations_by_user = Reservation
                            .in_range(from .. to)
                            .group_by{ |r| r.user_id }
