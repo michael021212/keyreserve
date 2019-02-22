@@ -132,6 +132,8 @@ class DropinReservationsController <  ApplicationController
     @dropin_reservation = DropinReservation.find(params[:id])
     ActiveRecord::Base.transaction do
       @dropin_reservation.destroy!
+      NotificationMailer.dropin_reservation_canceled(@dropin_reservation, @dropin_reservation.user_id).deliver_now if @dropin_reservation.send_cc_mail?
+      NotificationMailer.dropin_reservation_canceled(@dropin_reservation, @dropin_reservation.reservation_user_id).deliver_now
       NotificationMailer.dropin_reservation_canceled_to_admin(@dropin_reservation).deliver_now
     end
     redirect_to dropin_reservations_path, notice: '予約をキャンセルしました'

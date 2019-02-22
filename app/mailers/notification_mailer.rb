@@ -41,13 +41,13 @@ class NotificationMailer < ApplicationMailer
     user = User.find(user_id)
     return if user.email.blank?
     @reservation = reservation
-    mail(to: user.email, subject: "【KeyStation Office】施設のご予約を承りました")
+    mail(to: user.email, subject: "【KeyStation Office】施設のご予約をキャンセル致しました")
   end
 
   # 施設利用予約がキャンセルされた際のメール
   def reservation_canceled_to_admin(reservation)
     @reservation = reservation
-    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】会議室の予約がキャンセルされました")
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】施設の予約がキャンセルされました")
   end
 
   # TODO: キャンセル時もユーザにメールするか確認
@@ -55,7 +55,7 @@ class NotificationMailer < ApplicationMailer
     user = User.find(user_id)
     return if user.email.blank?
     @dropin_reservation = dropin_reservation
-    mail(to: user.email, subject: "【KeyStation Office】施設のご予約がキャンセルされました")
+    mail(to: user.email, subject: "【KeyStation Office】ドロップインのご予約をキャンセル致しました")
   end
 
   # ドロップイン予約がキャンセルされた際のメール
