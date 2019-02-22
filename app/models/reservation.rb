@@ -1,7 +1,7 @@
 class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
   acts_as_paranoid
-  belongs_to :facility
+  belongs_to :facility, optional: true
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
   belongs_to :billing, optional: true
@@ -9,6 +9,9 @@ class Reservation < ApplicationRecord
   before_create :create_payment, if: Proc.new { |reservation| reservation.user_id? }
   before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
+
+  # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
+  validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
 
   # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
@@ -23,8 +26,8 @@ class Reservation < ApplicationRecord
   end
 
   # 請求時に削除済の施設も参照できる必要があったので上書き
-  def facility
-    Facility.unscoped { super }
+  def facility_with_deleted
+    Facility.unscope(where: :deleted_at).find_by(id: facility_id)
   end
 
   def paid_by_credit_card?

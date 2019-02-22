@@ -3,12 +3,12 @@ namespace :billing do
   task :create_monthly_billings => :environment do
 
     # テストデータ作る用にbaseの日付ずらしてタスク実行
-    #base =  Time.zone.parse('2019-01-01 15:30:45')
-    #from = base.beginning_of_month
-    #to = base.end_of_month
+    base =  Time.zone.parse('2018-06-01 15:30:45')
+    from = base.beginning_of_month
+    to = base.end_of_month
 
-    from = Time.zone.now.last_month.beginning_of_month
-    to = Time.zone.now.last_month.end_of_month
+    #from = Time.zone.now.last_month.beginning_of_month
+    #to = Time.zone.now.last_month.end_of_month
     reservations_by_user = Reservation
                            .in_range(from .. to)
                            .group_by{ |r| r.user_id }
@@ -21,10 +21,10 @@ namespace :billing do
 
     objects_by_user.each do |user_id, objects|
       # 支払い先が一箇所の場合
-      if objects.map{ |o| o.facility.shop.id }.uniq.count == 1
+      if objects.map{ |o| o.facility_with_deleted.shop.id }.uniq.count == 1
         price = 0
         objects.each{ |o| price += o.price }
-        shop_id = objects.first.facility.shop.id
+        shop_id = objects.first.facility_with_deleted.shop.id
         begin
           Billing.create_monthly_billing!(from.year,
                                           from.month,
@@ -37,7 +37,7 @@ namespace :billing do
         end
       # 支払先が複数店舗ある場合
       else
-        objects_by_shop = objects.group_by{ |o| o.facility.shop.id }
+        objects_by_shop = objects.group_by{ |o| o.facility_with_deleted.shop.id }
         objects_by_shop.each do |shop_id, objects_by_user_and_shop|
           price = 0
           objects_by_user_and_shop.each{ |o| price += o.price }
