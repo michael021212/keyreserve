@@ -133,7 +133,6 @@ class DropinReservationsController <  ApplicationController
     ActiveRecord::Base.transaction do
       @dropin_reservation.destroy!
       NotificationMailer.dropin_reservation_canceled_to_admin(@dropin_reservation).deliver_now
-
     end
     redirect_to dropin_reservations_path, notice: '予約をキャンセルしました'
   rescue => e
