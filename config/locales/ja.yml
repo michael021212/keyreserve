@@ -21,6 +21,7 @@ ja:
       corporation_user: 施設管理者
       credit_card: クレジットカード
       information: お知らせ
+      billing: 請求
     attributes:
       admin_user:
         id: ID
@@ -173,6 +174,15 @@ ja:
         info_target_type: 配信対象
         created_at: 登録日時
         information_shops: 配信対象店舗
+      billing:
+        id: ID
+        user_id: 請求先
+        shop_id: 支払先店舗
+        state: 状態
+        billing_type: 請求項目
+        payment_way: 支払い方法
+        price: 金額
+        month: 支払い月
   enums:
     corporation:
       payway:
@@ -226,6 +236,17 @@ ja:
         unconfirmed: 未認証
         applying: 申請中
         confirmed: 認証済み
+    billing:
+      state:
+        unclaimed: 未請求
+        claimed: 請求済
+      billing_type:
+        reservation: 施設予約
+        dropin_reservation: ドロップイン
+      payment_way:
+        credit_card: クレジットカード
+        invoice: 請求書
+        card_and_invoice: カード&請求書
   date:
     abbr_day_names:
     - 日

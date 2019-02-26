@@ -1,0 +1,42 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Billing.model_name.human %>一覧</h4>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <%= render 'search_form' %>
+      <thead>
+        <tr>
+          <th><%= Billing.human_attribute_name(:user_id) %></th>
+          <th><%= Billing.human_attribute_name(:shop_id) %></th>
+          <th><%= Billing.human_attribute_name(:payment_way) %></th>
+          <th><%= Billing.human_attribute_name(:price) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @billings.present? %>
+          <% @billings.each do |billing| %>
+            <tr>
+              <td><%= billing.user.name %></td>
+              <td><%= billing.shop.name %></td>
+              <td><%= billing.payment_way_i18n %></td>
+              <td><%= billing.decorate.price_with_delimiter %></td>
+              <td>
+                <%= link_to '詳細', admin_billing_path(billing), class: 'btn btn-default' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              <%= Billing.model_name.human %>がありません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @billings %>
+  </div>
+</div>
+

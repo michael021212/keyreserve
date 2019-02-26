@@ -1,0 +1,30 @@
+<%= form_tag admin_billings_path, class: "form-inline", method: :get do |f| %>
+  <div class='row mb15'>
+
+    <div class='col-md-2'>
+      <%= text_field_tag :month, '',
+        { data: { :date_format => 'YYYY/MM' },
+          class: 'form-control monthPicker',
+          value: params[:month] ||= "#{ Date.current.year }/#{ Date.current.month }",
+          placeholder: '月を指定',
+          autocomplete: 'off' } %>
+    </div>
+
+    <div class='col-md-3'>
+      <%= check_box_tag :credit_card_include, true, false,
+        checked: credit_card_include?(params)  %>
+      <%= label_tag :credit_card_include, "クレジットカード" %>
+
+      <%= check_box_tag :invoice_include, true, false,
+        checked: invoice_include?(params),
+        class: 'ml15' %>
+      <%= label_tag :invoice_include, "請求書" %>
+    </div>
+
+    <div class='col-md-2'>
+      <%= hidden_field_tag :search, true %>
+      <%= submit_tag "検索",  class: "btn btn-info w40 mr10" %>
+    </div>
+  </div>
+<% end %>
+

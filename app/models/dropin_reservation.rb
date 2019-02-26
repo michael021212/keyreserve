@@ -2,16 +2,20 @@ class DropinReservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
   acts_as_paranoid
 
-  belongs_to :facility
+  belongs_to :facility, optional: true
   belongs_to :facility_key
   belongs_to :facility_dropin_plan
   belongs_to :facility_dropin_sub_plan
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
+  belongs_to :billing, optional: true
 
   before_save :create_payment, if: Proc.new { |r| r.user_id? }
   before_destroy :cancel_payment, if: Proc.new { |r| r.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
+
+  # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
+  validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
 
   scope :in_range, ->(range) do
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
@@ -26,6 +30,15 @@ class DropinReservation < ApplicationRecord
   delegate :name, to: :user, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :facility, prefix: true, allow_nil: true
+
+  # 請求時に削除済の施設も参照できる必要があったので上書き
+  def facility_with_deleted
+    Facility.unscope(where: :deleted_at).find_by(id: facility_id)
+  end
+
+  def paid_by_credit_card?
+    payment.present? && payment.credit_card_id.present?
+  end
 
   def create_payment
     return unless self.user.creditcard?

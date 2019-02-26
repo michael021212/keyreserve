@@ -15,8 +15,8 @@ class ReservationsController <  ApplicationController
   # 検索ページ
   def spot
     condition = params[:spot] ||= {}
-    return render :spot if condition.blank? #@checkinと@checkoutはメソッド内でset
-    return render :spot unless valid_search_params?(condition)
+    return render :spot if condition.blank?
+    return render :spot unless valid_search_params?(condition) #@checkinと@checkoutもset
     @facilities = Facility.reservable_facilities(@checkin, @checkout, condition, current_user)
     return render :spot if @facilities.blank?
     @facilities = Facility.order_by_min_price(@facilities, current_user).page(params[:page])
@@ -40,7 +40,7 @@ class ReservationsController <  ApplicationController
     @facility = @user.login_spots.find_by(id: condition[:facility_id]) if condition[:facility_id].present?
     return render json: { price: '' } if empty_params?(condition)
     set_checkin(condition)
-    price = @facility.calc_price(@user, @checkin, condition[:use_hour].to_i)
+    price = @facility.calc_price(@user, @checkin, condition[:use_hour].to_f)
     render json: { price: number_with_delimiter(price) }
   end
 
@@ -84,7 +84,7 @@ class ReservationsController <  ApplicationController
       return render :new
     end
 
-    @price = @facility.calc_price(@user, @checkin, condition['use_hour'].to_i)
+    @price = @facility.calc_price(@user, @checkin, condition['use_hour'].to_f)
     # クレカ払い & クレカの登録がない場合は登録画面に遷移
     if @user.credit_card.blank? && @user.creditcard?
       @credit_card = current_user.build_credit_card
