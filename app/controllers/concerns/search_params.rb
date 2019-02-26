@@ -43,7 +43,7 @@ module SearchParams
 
   # 検索クエリから利用終了日時の設定
   def set_checkout(params, checkin)
-    @checkout = checkin + params[:use_hour].to_i.hours
+    @checkout = checkin + params[:use_hour].to_f.hours
   rescue => e
     legger.debug(e)
     flash[:error] = '不正な検索クエリです' and return false

@@ -60,6 +60,7 @@ Rails.application.routes.draw do
         get :confirm
       end
     end
+    resources :billings, only: [:index, :show]
   end
 
   resource :user do

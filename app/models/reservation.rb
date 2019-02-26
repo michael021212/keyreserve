@@ -1,13 +1,17 @@
 class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
   acts_as_paranoid
-  belongs_to :facility
+  belongs_to :facility, optional: true
   belongs_to :user, optional: true
   belongs_to :payment, optional: true
+  belongs_to :billing, optional: true
 
   before_create :create_payment, if: Proc.new { |reservation| reservation.user_id? }
   before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
+
+  # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
+  validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
 
   # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
@@ -19,6 +23,15 @@ class Reservation < ApplicationRecord
   scope :ready_to_send, -> do
     target = Time.zone.now + 30.minutes
     where(mail_send_flag: false).where(arel_table[:checkin].lteq(target))
+  end
+
+  # 請求時に削除済の施設も参照できる必要があったので上書き
+  def facility_with_deleted
+    Facility.unscope(where: :deleted_at).find_by(id: facility_id)
+  end
+
+  def paid_by_credit_card?
+    payment.present? && payment.credit_card_id.present?
   end
 
   def create_payment
@@ -40,14 +53,14 @@ class Reservation < ApplicationRecord
   def self.new_from_spot(spot, user, current_user)
     checkin = Time.zone.parse(spot['checkin'] + " " + spot['checkin_time'])
     facility = Facility.find(spot['facility_id'].to_i)
-    price = facility.calc_price(user, checkin, spot['use_hour'].to_i)
+    price = facility.calc_price(user, checkin, spot['use_hour'].to_f)
     Reservation.new(
       facility_id: spot['facility_id'],
       user_id: user.id,
       reservation_user_id: current_user.id,
       checkin: checkin,
-      checkout: checkin + spot['use_hour'].to_i.hours,
-      usage_period: spot['use_hour'],
+      checkout: checkin + spot['use_hour'].to_f.hours,
+      usage_period: spot['use_hour'].to_f,
       state: :confirmed,
       price: price,
       num: spot['use_num'],

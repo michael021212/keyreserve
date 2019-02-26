@@ -135,6 +135,11 @@ ja:
         title: 法人編集
       show:
         title: 法人詳細
+    billings:
+      index:
+        title: 請求一覧
+      show:
+        title: 請求詳細
   users:
     dashboards:
       index:

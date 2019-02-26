@@ -14,3 +14,7 @@ end
 every 5.minutes do
   rake 'dropin_reservation:dropin_reservation_password_mail'
 end
+
+every 1.month, at: 'start of the month at 1am' do
+  rake 'billing:create_monthly_billings'
+end

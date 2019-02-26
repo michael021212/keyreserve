@@ -29,6 +29,7 @@ gem 'bootstrap_form'
 gem 'adminlte2-rails'
 gem 'jquery-slimscroll-rails'
 gem 'rails_autolink'
+gem 'draper'
 
 # Authentication
 gem 'sorcery'
