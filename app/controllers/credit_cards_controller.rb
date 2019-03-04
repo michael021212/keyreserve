@@ -32,7 +32,6 @@ class CreditCardsController <  ApplicationController
       @credit_card.update!(credit_card_params)
       redirect_to credit_card_path, notice: 'クレジットカードを更新しました。'
     rescue
-      @credit_card.sent_stripe_request = false
       flash[:alert] = 'クレジットカードの登録に失敗しました'
       render :edit
     end
