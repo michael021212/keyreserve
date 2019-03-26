@@ -69,6 +69,7 @@ ja:
         user_type: 法人/個人
         parent_id: 法人
         advertise_notice_flag: お知らせメールを受け取る
+        campaign_id: キャンペーンID
       user_corp:
         id: ID
         email: メールアドレス
