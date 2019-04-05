@@ -124,7 +124,7 @@ class DropinReservation < ApplicationRecord
   end
 
   def deletable?
-    checkin > Time.zone.now - 24.hours
+    checkin > Time.zone.now + 24.hours
   end
 
 end
