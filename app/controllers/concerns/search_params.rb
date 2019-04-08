@@ -11,7 +11,7 @@ module SearchParams
 
   # 検索クエリが空かどうか
   def empty_params?(params)
-    if params[:checkin].blank? || params[:checkin_time].blank? || params[:use_hour].blank? || params[:use_num].blank?
+    if params[:checkin].blank? || params[:checkin_time].blank? || params[:use_hour].blank? || params[:use_num].blank? || params[:facility_type].blank?
       flash[:error] = '検索条件を適切に入力してください' and return true
     end
     false
@@ -37,7 +37,7 @@ module SearchParams
   def set_checkin(params)
     @checkin = Time.zone.parse(params[:checkin] + " " + params[:checkin_time])
   rescue => e
-    legger.debug(e)
+    logger.debug(e)
     flash[:error] = '不正な検索クエリです' and return false
   end
 

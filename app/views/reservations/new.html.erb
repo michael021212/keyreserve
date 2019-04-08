@@ -23,7 +23,7 @@
                   <div class="input-group date mg-check-in col-sm-6">
                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                     <%= f.text_field :checkin,
-                      value: params[:spot][:checkin],
+                      value: @condition[:checkin],
                       class: 'js-calc-price form-control',
                       placeholder: 'ご利用日' %>
                   </div>
@@ -32,7 +32,7 @@
                   <label class="col-sm-4 control-label">ご利用時刻</label>
                   <div class="input-group col-sm-6">
                     <%= f.text_field :checkin_time,
-                      value: params[:spot][:checkin_time],
+                      value: @condition[:checkin_time],
                       class: 'js-calc-price form-control timepicker',
                       placeholder: 'ご利用時刻' %>
                   </div>
@@ -41,7 +41,7 @@
                   <label class="col-sm-4 control-label">ご利用時間</label>
                   <div class="input-group col-sm-6 col-xs-12">
                     <%= f.select :use_hour, reservable_usage,
-                      { selected: params[:spot][:use_hour].to_f, include_blank: 'ご利用時間' },
+                      { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
                       class: 'cs-select cs-skin-elastic js-calc-price' %>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
                   <label class="col-sm-4 control-label">ご利用人数</label>
                   <div class="input-group col-sm-6 col-xs-12">
                     <%= f.select :use_num, selectable_num,
-                      { selected: params[:spot][:use_num].to_i, include_blank: 'ご利用人数' },
+                      { selected: @condition[:use_num].to_i, include_blank: 'ご利用人数' },
                       class: 'cs-select cs-skin-elastic js-calc-price' %>
                   </div>
                 </div>
