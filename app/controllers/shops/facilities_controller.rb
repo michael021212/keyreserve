@@ -6,10 +6,12 @@ class Shops::FacilitiesController <  ApplicationController
   before_action :set_facility
   before_action :set_shop
 
-  def new; end
+  def new
+    @condition = params[:spot] ||= {}
+  end
 
   def create
-    @condition = params[:spot]
+    @condition = params[:spot] ||= {}
     return render :new if @condition.blank?
     return render :new unless valid_search_params?(@condition) #@checkinと@checkoutもset
     if Reservation.where(facility_id: @facility.id).in_range(@checkin .. @checkout).blank?
