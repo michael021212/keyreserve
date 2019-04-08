@@ -219,6 +219,8 @@ ja:
       facility_type:
         conference_room: 会議室
         dropin: ドロップイン
+        rent: 賃貸物件
+        car: 車
     reservation:
       state:
         unconfirmed: 未確定
