@@ -9,11 +9,16 @@ class Shops::FacilitiesController <  ApplicationController
   def new; end
 
   def create
-    condition = params[:spot]
-    return render :new if condition.blank?
-    return render :new unless valid_search_params?(condition) #@checkinと@checkoutもset
-    session[:spot] = condition
-    redirect_to confirm_reservations_url(page: :shop)
+    @condition = params[:spot]
+    return render :new if @condition.blank?
+    return render :new unless valid_search_params?(@condition) #@checkinと@checkoutもset
+    if Reservation.where(facility_id: @facility.id).in_range(@checkin .. @checkout).blank?
+      session[:spot] = @condition
+      redirect_to confirm_reservations_url(page: :shop)
+    else
+      flash.now[:alert] = 'ご指定の時間は既に予約されています'
+      render :new
+    end
   end
 
   def events

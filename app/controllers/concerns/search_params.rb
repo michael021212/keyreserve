@@ -12,7 +12,7 @@ module SearchParams
   # 検索クエリが空かどうか
   def empty_params?(params)
     if params[:checkin].blank? || params[:checkin_time].blank? || params[:use_hour].blank? || params[:use_num].blank? || params[:facility_type].blank?
-      flash[:error] = '検索条件を適切に入力してください' and return true
+      flash.now[:error] = '検索条件を適切に入力してください' and return true
     end
     false
   end
@@ -20,7 +20,7 @@ module SearchParams
   # 近すぎる予約かどうか
   def sudden_reservation?(params, checkin)
     if Time.zone.now >= checkin - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります' and return true
+      flash.now[:error] = 'ご予約はご利用の30分前までとなります' and return true
     end
     false
   end
@@ -28,7 +28,7 @@ module SearchParams
   # 日をまたぐ予約かどうか
   def across_day?(params, checkin, checkout)
     if checkin.strftime('%Y/%m/%d') != checkout.strftime('%Y/%m/%d')
-      flash[:error] = '日をまたいだ予約は出来ません' and return true
+      flash.now[:error] = '日をまたいだ予約は出来ません' and return true
     end
     false
   end
@@ -38,7 +38,7 @@ module SearchParams
     @checkin = Time.zone.parse(params[:checkin] + " " + params[:checkin_time])
   rescue => e
     logger.debug(e)
-    flash[:error] = '不正な検索クエリです' and return false
+    flash.now[:error] = '不正な検索クエリです' and return false
   end
 
   # 検索クエリから利用終了日時の設定
@@ -46,7 +46,7 @@ module SearchParams
     @checkout = checkin + params[:use_hour].to_f.hours
   rescue => e
     legger.debug(e)
-    flash[:error] = '不正な検索クエリです' and return false
+    flash.now[:error] = '不正な検索クエリです' and return false
   end
 
 end
