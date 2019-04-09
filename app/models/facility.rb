@@ -10,6 +10,8 @@ class Facility < ApplicationRecord
   has_many :reservations
   has_many :dropin_reservations
 
+  before_validation :geocode
+
   enum facility_type: {conference_room: 1, dropin: 2, rent: 3, car: 4}
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
@@ -146,4 +148,14 @@ class Facility < ApplicationRecord
     sub_plan_ids = FacilityDropinSubPlan.belongs_to_facility(facility_id).pluck(:id)
     FacilityDropinSubPlan.in_range(checkin..checkout).where(id: sub_plan_ids).where(facility_dropin_plan_id: facility_dropin_plan_ids).order('price ASC').first
   end
+
+  private
+  def geocode
+    uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
+    res = HTTP.get(uri).to_s
+    response = JSON.parse(res)
+    self.lat = response["results"][0]["geometry"]["location"]["lat"]
+    self.lon = response["results"][0]["geometry"]["location"]["lng"]
+  end
+
 end

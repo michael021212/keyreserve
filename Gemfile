@@ -76,6 +76,8 @@ gem 'stripe'
 
 gem 'nested_form'
 gem 'geocoder'
+gem 'http'
+
 gem 'whenever', require: false
 gem 'letter_opener_web'
 

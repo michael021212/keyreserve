@@ -7,7 +7,6 @@ class Shop < ApplicationRecord
   has_many :information
   has_many :user_contracts
 
-  geocoded_by :address, latitude: :lat, longitude: :lon
   before_validation :geocode
   validates :name, :opening_time, :closing_time, presence: true
   validates :tel,
@@ -35,5 +34,14 @@ class Shop < ApplicationRecord
   def out_of_business_time?(from, to)
     from < assign_date_for_opening(from.year, from.month, from.day) ||
       to > assign_date_for_closing(to.year, to.month, to.day)
+  end
+
+  private
+  def geocode
+    uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
+    res = HTTP.get(uri).to_s
+    response = JSON.parse(res)
+    self.lat = response["results"][0]["geometry"]["location"]["lat"]
+    self.lon = response["results"][0]["geometry"]["location"]["lng"]
   end
 end
