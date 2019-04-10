@@ -15,19 +15,26 @@ class UsersController < ApplicationController
       user_corp ||= UserCorp.find_by(parent_token: session[:parent_token])
       @user.parent_id = user_corp.id if user_corp.present?
     end
-    if @user.save
-      session[:parent_token] = nil
-      respond_to do |format|
-        format.html do
-          auto_login(@user)
-          target = session[:return_to_url].present? ? session[:return_to_url] : root_url
-          session[:return_to_url] = nil
-          redirect_to target, notice: "#{User.model_name.human}を作成しました。"
-        end
+    ActiveRecord::Base.transaction do
+      @user.save!
+      @user.invoice! if @user.campaign_id.present?
+      if @user.campaign_id.present?
+        NotificationMailer.campaign_user_registration(@user).deliver_now
+        NotificationMailer.campaign_user_registration_to_admin(@user).deliver_now
       end
-    else
-      render :new
     end
+    session[:parent_token] = nil
+    respond_to do |format|
+      format.html do
+        auto_login(@user)
+        target = session[:return_to_url].present? ? session[:return_to_url] : root_url
+        session[:return_to_url] = nil
+        redirect_to target, notice: "#{User.model_name.human}を作成しました。"
+      end
+    end
+  rescue => e
+    logger.debug(e)
+    render :new
   end
 
   def edit; end
@@ -53,7 +60,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :email, :password, :password_confirmation, :name, :tel, :state, :payway, :user_type, :parent_id,
-      :advertise_notice_flag, :stripe_customer_id
+      :advertise_notice_flag, :stripe_customer_id, :campaign_id
     )
   end
 end
