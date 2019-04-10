@@ -12,6 +12,26 @@ class NotificationMailer < ApplicationMailer
     mail(to: email, subject: "【#{Settings.sitename}】#{user.name}様からのご招待")
   end
 
+  def campaign_user_registration(user)
+    @user = user
+    mail(to: @user.email, subject: "【KeyStation Office】ご登録ありがとうございます")
+  end
+
+  def campaign_user_registration_to_admin(user)
+    @user = user
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】新しいユーザが登録されました")
+  end
+
+  def campaign_finished(user)
+    @user = user
+    mail(to: user.email, subject: "【KeyStation Office】キャンペーン期間が終了致しました")
+  end
+
+  def campaign_finished_to_admin(user)
+    @user = user
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】キャンペーン期間が終了したユーザがいます")
+  end
+
   def reserved(reservation, user_id)
     user = User.find(user_id)
     return if user.email.blank?

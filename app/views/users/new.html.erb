@@ -16,6 +16,7 @@
           <%= f.text_field :name, placeholder: "例)山田太郎" %>
           <%= f.text_field :email, placeholder: "例)keystation@gmail.com" %>
           <%= f.text_field :tel , placeholder: "例)08012345678"  %>
+          <%= f.text_field :campaign_id , placeholder: "※キャンペーンIDをお持ちの方のみご入力ください" %>
           <%= f.password_field :password, placeholder: "4文字以上" %>
           <%= f.password_field :password_confirmation, placeholder: "4文字以上" %>
           <%= f.hidden_field :corporation_token, value: params[:token] %>
