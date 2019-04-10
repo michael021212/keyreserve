@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190326075000) do
+ActiveRecord::Schema.define(version: 20190408103236) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -107,6 +107,9 @@ ActiveRecord::Schema.define(version: 20190326075000) do
     t.text "description"
     t.integer "max_num", default: 0
     t.integer "facility_type", default: 0
+    t.string "address"
+    t.float "lat", limit: 24
+    t.float "lon", limit: 24
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 

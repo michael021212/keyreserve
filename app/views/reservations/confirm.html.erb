@@ -19,25 +19,25 @@
                 <div class="form-group">
                   <label class="col-sm-6 control-label">ご利用日</label>
                   <div class="input-group col-sm-6 static-text">
-                    <%= session[:spot]['checkin'] %>
+                    <%= @condition[:checkin] %>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-6 control-label">ご利用時刻</label>
                   <div class="input-group col-sm-6 static-text">
-                    <%= session[:spot]['checkin_time'] %>
+                    <%= @condition[:checkin_time] %>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-6 control-label">ご利用時間</label>
                   <div class="input-group col-sm-6 col-xs-12 static-text">
-                    <%= session[:spot]['use_hour'] %>時間
+                    <%= @condition[:use_hour] %>時間
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-6 control-label">ご利用人数</label>
                   <div class="input-group col-sm-6 col-xs-12 static-text">
-                    <%= session[:spot]['use_num'] %>名
+                    <%= @condition[:use_num] %>名
                   </div>
                 </div>
                 <% if @user.creditcard? %>

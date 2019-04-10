@@ -13,31 +13,42 @@
         <div class="mg-booking-form">
           <%= form_for :spot, url: shop_facilities_path(@shop, id: @facility.id), authenticity_token: true, html: {class: 'form-horizontal js-calc-price-form'} do |f| %>
             <%= f.hidden_field :facility_id, value: @facility.id %>
+            <%= f.hidden_field :facility_type, value: @facility.facility_type %>
             <div class="mg-saerch-room">
               <div class="mg-book-now">
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用日</label>
                   <div class="input-group date mg-check-in col-sm-6">
                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                    <%= f.text_field :checkin, class: 'js-calc-price form-control', placeholder: 'ご利用日' %>
+                    <%= f.text_field :checkin,
+                      value: @condition[:checkin],
+                      class: 'js-calc-price form-control',
+                      placeholder: 'ご利用日' %>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用時刻</label>
                   <div class="input-group col-sm-6">
-                    <%= f.text_field :checkin_time, class: 'js-calc-price form-control timepicker', placeholder: 'ご利用時刻' %>
+                    <%= f.text_field :checkin_time,
+                      value: @condition[:checkin_time],
+                      class: 'js-calc-price form-control timepicker',
+                      placeholder: 'ご利用時刻' %>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用時間</label>
                   <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.select :use_hour, (1..10).map{|i| [i.to_s + '時間', i]}, { include_blank: 'ご利用時間' }, class: 'cs-select cs-skin-elastic js-calc-price' %>
+                    <%= f.select :use_hour, reservable_usage,
+                      { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
+                      class: 'cs-select cs-skin-elastic js-calc-price' %>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用人数</label>
                   <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.select :use_num, (1..20).map{|i| [i.to_s + '名', i]}, { include_blank: 'ご利用人数' }, class: 'cs-select cs-skin-elastic js-calc-price' %>
+                    <%= f.select :use_num, selectable_num,
+                      { selected: @condition[:use_num].to_i, include_blank: 'ご利用人数' },
+                      class: 'cs-select cs-skin-elastic js-calc-price' %>
                   </div>
                 </div>
                 <div class="price-area form-group">

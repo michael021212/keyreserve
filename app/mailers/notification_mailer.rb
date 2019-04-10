@@ -41,7 +41,7 @@ class NotificationMailer < ApplicationMailer
 
   def reserved_to_admin(reservation)
     @reservation = reservation
-    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】会議室の予約が入りました")
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】#{ reservation.facility.rent? ? '内見' : '会議室' }の予約が入りました")
   end
 
   def dropin_reserved(dropin_reservation, user_id)

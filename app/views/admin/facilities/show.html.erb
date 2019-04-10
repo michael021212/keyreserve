@@ -73,7 +73,7 @@
   </div>
 </div>
 
-<% if @facility.conference_room? %>
+<% unless @facility.dropin? %>
   <%= render 'facility_temporary_plan', corporation: @corporation, shop: @shop, facility: @facility %>
 <% else %>
   <%= render 'facility_dropin_plans', corporation: @corporation, shop: @shop, facility: @facility %>
