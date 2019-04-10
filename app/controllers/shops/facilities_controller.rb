@@ -1,38 +1,26 @@
 class Shops::FacilitiesController <  ApplicationController
+  include SearchParams
+
   before_action :require_login, only: [:new, :create]
   before_action :set_user
   before_action :set_facility
   before_action :set_shop
 
-  def new; end
+  def new
+    @condition = params[:spot] ||= {}
+  end
 
   def create
-    cond = params[:spot]
-    if cond.blank? || cond[:checkin].blank? || cond[:use_hour].blank?
-      return render :new
+    @condition = params[:spot] ||= {}
+    return render :new if @condition.blank?
+    return render :new unless valid_search_params?(@condition) #@checkinと@checkoutもset
+    if Reservation.where(facility_id: @facility.id).in_range(@checkin .. @checkout).blank?
+      session[:spot] = @condition
+      redirect_to confirm_reservations_url(page: :shop)
+    else
+      flash.now[:alert] = 'ご指定の時間は既に予約されています'
+      render :new
     end
-    checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
-    checkout = checkin + cond[:use_hour].to_i.hours
-    opening = Time.zone.parse(cond[:checkin] + " " +  @shop.opening_time.to_time.to_s(:time))
-    closing = Time.zone.parse(cond[:checkin] + " " +  @shop.closing_time.to_time.to_s(:time))
-
-    if checkin < Time.zone.now - 30.minutes
-      flash[:error] = 'ご予約はご利用の30分前までとなります'
-      return render :new
-    end
-
-    if @facility.reservations.in_range(checkin..checkout).present?
-      flash[:error] = 'このお時間帯は満室でございます'
-      return render :new
-    end
-
-    if checkin < opening || checkout > closing
-      flash[:error] = 'ご予約時間が営業時間外となります'
-      return render :new
-    end
-
-    session[:spot] = params[:spot]
-    redirect_to confirm_reservations_url
   end
 
   def events

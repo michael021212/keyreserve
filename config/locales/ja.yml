@@ -122,6 +122,7 @@ ja:
         calendar_url: イベントカレンダーURL
       facility:
         name: 施設名
+        address: 住所
         image: 施設画像
         description: 施設説明
         max_num: 最大利用人数
@@ -220,6 +221,8 @@ ja:
       facility_type:
         conference_room: 会議室
         dropin: ドロップイン
+        rent: 賃貸物件
+        car: 車
     reservation:
       state:
         unconfirmed: 未確定

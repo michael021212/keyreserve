@@ -1,5 +1,5 @@
 <% content_for :middle_title do %>
-  <h2>会議室予約</h2>
+  <h2>施設予約</h2>
 <% end %>
 <a id="searchbox"></a>
 <div class="mg-page">
@@ -49,7 +49,14 @@
                           <div class='mg-avl-room-desc'>
                             <%= simple_format facility.description %>
                           </div>
-                          <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
+                          <div class='col-sm-9'>
+                            <% if facility.lat? && facility.lon? %>
+                              <div class="google-map" style="height: 300px;" data-lat="<%= facility.lat %>" data-lon="<%= facility.lon %>"></div>
+                            <% end %>
+                          </div>
+                          <div class='col-sm-3 text-right'>
+                            <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
+                          </div>
                         </div>
                       </div>
                     </div>

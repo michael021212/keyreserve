@@ -1,3 +1,16 @@
+<% if @reservation.facility.rent? %>
+以下の物件の内見予約を承りました。
+
+鍵の取り出しパスワードに関しましては、
+ご利用の30分前に別途メールにてお送りいたします。
+
+物件名: <%= @reservation.facility.name %>
+住所: <%= @reservation.facility.address %>
+内見日時: <%= datetime_ja @reservation.checkin %>
+内見時間: <%= @reservation.usage_period %>時間
+人数: <%= @reservation.num %>名
+
+<% else %>
 以下の施設のご予約を承りました。
 
 施設ご利用方法につきましては、
@@ -10,3 +23,4 @@
 ご利用人数: <%= @reservation.num %>名
 お支払方法: <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
 ご利用料金: <%= number_with_delimiter @reservation.price %>円
+<% end %>
