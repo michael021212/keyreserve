@@ -22,6 +22,7 @@ class Facility < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   validates :name, presence: true
+  validates :address, presence: true, if: proc { |f| f.rent? }
 
   scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
     includes(facility_dropin_plans: :facility_dropin_sub_plans)
@@ -154,8 +155,10 @@ class Facility < ApplicationRecord
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s
     response = JSON.parse(res)
-    self.lat = response["results"][0]["geometry"]["location"]["lat"]
-    self.lon = response["results"][0]["geometry"]["location"]["lng"]
+    if response['results'].present?
+      self.lat = response["results"][0]["geometry"]["location"]["lat"]
+      self.lon = response["results"][0]["geometry"]["location"]["lng"]
+    end
   end
 
 end

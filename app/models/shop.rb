@@ -41,7 +41,9 @@ class Shop < ApplicationRecord
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s
     response = JSON.parse(res)
-    self.lat = response["results"][0]["geometry"]["location"]["lat"]
-    self.lon = response["results"][0]["geometry"]["location"]["lng"]
+    if response['results'].present?
+      self.lat = response["results"][0]["geometry"]["location"]["lat"]
+      self.lon = response["results"][0]["geometry"]["location"]["lng"]
+    end
   end
 end
