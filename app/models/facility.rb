@@ -7,7 +7,7 @@ class Facility < ApplicationRecord
   has_many :facility_keys, dependent: :destroy
   has_many :facility_temporary_plans, dependent: :destroy
   has_many :facility_dropin_plans, dependent: :destroy
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
   has_many :dropin_reservations
 
   before_validation :geocode
