@@ -7,5 +7,8 @@
   <%= f.time_select :closing_time, { include_blank: true }, { class: 'bootstrap-date'} %>
   <%= f.text_field :calendar_url %>
   <%= f.file_field :image %>
+  <div class='col-sm-offset-2'>
+    <%= f.check_box :is_rent %>
+  </div>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

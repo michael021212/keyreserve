@@ -12,6 +12,8 @@ class Facility < ApplicationRecord
 
   before_validation :geocode
 
+  RENT_SHOP_ID= 6
+
   enum facility_type: {conference_room: 1, dropin: 2, rent: 3, car: 4}
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
@@ -20,9 +22,11 @@ class Facility < ApplicationRecord
   delegate :name, to: :shop, prefix: true, allow_nil: true
 
   mount_uploader :image, ImageUploader
+  mount_uploader :detail_document, PdfUploader
 
   validates :name, presence: true
   validates :address, presence: true, if: proc { |f| f.rent? }
+  validates :detail_document, presence: true, if: proc { |f| f.rent? }
 
   scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
     includes(facility_dropin_plans: :facility_dropin_sub_plans)

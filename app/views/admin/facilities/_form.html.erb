@@ -4,6 +4,9 @@
   <%= f.text_field :address %>
   <%= f.select :facility_type, Facility.facility_types_i18n.invert, include_blank: true %>
   <%= f.file_field :image %>
+  <%= f.hidden_field :image_cache %>
+  <%= f.file_field :detail_document %>
+  <%= f.hidden_field :detail_document_cache %>
   <%= f.text_area :description, rows: 6 %>
   <%= f.form_group :facility_plans, label: {text: "月額対象プラン"} do %>
     <%= f.fields_for :facility_plans do |fp| %>

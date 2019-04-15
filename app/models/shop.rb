@@ -14,6 +14,8 @@ class Shop < ApplicationRecord
             numericality: { only_integer: true, allow_blank: true }
   validate :business_time
 
+  RENT_SHOP_ID = 6
+
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
   end
@@ -34,6 +36,11 @@ class Shop < ApplicationRecord
   def out_of_business_time?(from, to)
     from < assign_date_for_opening(from.year, from.month, from.day) ||
       to > assign_date_for_closing(to.year, to.month, to.day)
+  end
+
+  # 賃貸物件掲載用の店舗かどうか
+  def for_rent?
+    id == Shop::RENT_SHOP_ID
   end
 
   private

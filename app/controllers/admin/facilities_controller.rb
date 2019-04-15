@@ -55,7 +55,8 @@ class Admin::FacilitiesController < AdminController
 
   def facility_params
     params.require(:facility).permit(
-      :shop_id, :name, :image, :description, :max_num, :facility_type, :address, :lat, :lon,
+      :shop_id, :name, :image, :image_cache, :detail_document, :detail_document_cache,
+      :description, :max_num, :facility_type, :address, :lat, :lon,
       facility_plans_attributes: [:id, :plan_id, '_destroy']
     )
   end
