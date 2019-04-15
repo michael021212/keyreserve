@@ -39,6 +39,7 @@ ja:
         note: 備考
         state: 状態
         ks_corporation_id: Keystation法人
+        ksc_token: KS Checkin JWTトークン
       corporation_user:
         corporation_id: 運営会社
         user_id: 施設管理者
