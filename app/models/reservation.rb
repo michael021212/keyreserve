@@ -121,7 +121,7 @@ class Reservation < ApplicationRecord
     checkin > Time.zone.now + 24.hours
   end
 
-  def sync_with_ks_checkin
-    binding.pry
+  def sync_with_ks_checkin!
+    regist_ksc_reservation!
   end
 end
