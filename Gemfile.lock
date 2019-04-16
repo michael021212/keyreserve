@@ -318,6 +318,7 @@ GEM
       activerecord (>= 5.1.0, < 5.2)
     parser (2.5.1.0)
       ast (~> 2.4.0)
+    patron (0.13.1)
     polyamorous (1.3.3)
       activerecord (>= 3.0)
     powerpack (0.1.1)
@@ -546,6 +547,7 @@ DEPENDENCIES
   page_title_helper
   paranoia
   paranoia_uniqueness_validator (= 3.0.0)
+  patron
   pry
   pry-byebug
   pry-doc

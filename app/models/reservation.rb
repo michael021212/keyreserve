@@ -120,8 +120,4 @@ class Reservation < ApplicationRecord
   def deletable?
     checkin > Time.zone.now + 24.hours
   end
-
-  def sync_with_ks_checkin!
-    regist_ksc_reservation!
-  end
 end

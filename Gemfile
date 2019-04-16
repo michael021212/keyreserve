@@ -64,6 +64,7 @@ gem 'seed-fu'
 
 # HTTP client lib
 gem 'faraday'
+gem 'patron'
 
 # Upload
 gem 'carrierwave', '~> 1.0'
