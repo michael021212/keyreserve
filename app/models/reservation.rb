@@ -1,5 +1,7 @@
 class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
+  include KsCheckinApi
+
   acts_as_paranoid
   belongs_to :facility, optional: true
   belongs_to :user, optional: true
@@ -117,5 +119,9 @@ class Reservation < ApplicationRecord
 
   def deletable?
     checkin > Time.zone.now + 24.hours
+  end
+
+  def sync_with_ks_checkin
+    binding.pry
   end
 end

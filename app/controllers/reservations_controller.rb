@@ -103,6 +103,7 @@ class ReservationsController <  ApplicationController
       @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
+      @reservation.sync_with_ks_checkin
       NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
