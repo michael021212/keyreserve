@@ -27,7 +27,7 @@ class ReservationsController <  ApplicationController
   def new
     @condition = params[:spot] ||= session[:spot].map{|k,v| [k.to_sym,v]}.to_h
     session[:reservation_id] = nil
-    @facility = @user.login_spots.find_by(id: params[:facility_id])
+    @facility = @condition[:facility_type] == 'rent' ? Facility.find_by(id: params[:facility_id]) : @user.login_spots.find_by(id: params[:facility_id])
     if @facility.blank?
       flash[:error] = '検索条件を入力してください'
       redirect_to spot_reservations_path
@@ -103,6 +103,7 @@ class ReservationsController <  ApplicationController
       @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
+      # 予約成功したらKSCのreservation_no返ってくるので、必要なら内見時のパスワードとして使う
       @reservation.regist_ksc_reservation! if @reservation.facility.rent?
       NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
