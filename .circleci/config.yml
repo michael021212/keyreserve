@@ -67,4 +67,3 @@ jobs:
           destination: test-results
       - store_artifacts:
           path: ~/startup-technology/keyreserve/tmp/screenshots
-
