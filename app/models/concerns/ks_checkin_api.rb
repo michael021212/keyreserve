@@ -1,7 +1,7 @@
 module KsCheckinApi
   extend ActiveSupport::Concern
 
-  KS_CHECKIN_API_CLIENT = 'https://identity.key-stations.com'
+  KS_CHECKIN_API_CLIENT = 'https://staging_identity.key-stations.com'
 
   def self.set_client(url)
     Faraday.new(url: url) do |faraday|
@@ -32,7 +32,7 @@ module KsCheckinApi
                   checkout: checkout.strftime('%Y-%m-%d %H:%M'),
                   remarks: facility.address,
                   ks_room_key_id: key.try(:ks_room_key_id),
-                  is_rent: true
+                  is_rent: '1'
                  }]
               }
       req.body = body.to_json
