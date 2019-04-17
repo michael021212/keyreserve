@@ -28,7 +28,6 @@ jobs:
             - *bundle_cache_key
             - v2-dependencies-
 
-
       # bundle installを実行
       - run:
           name: install dependencies
