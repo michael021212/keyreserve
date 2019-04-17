@@ -1,4 +1,5 @@
-<header class="header transp sticky"> <!-- available class for header: .sticky .center-content .transp --> 
+<header class="header transp sticky">
+  <%= render "shared/flash" %>
   <nav class="navbar navbar-inverse">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -39,11 +40,7 @@
             <!-- 施設管理者面メニュー -->
             <% if current_corporation? %>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">施設管理者メニュー<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to '法人設定', corporation_path %></li>
-                  <li><%= link_to 'プラン管理', plans_path %></li>
-                </ul>
+                <%= link_to '施設管理', corporation_root_path %>
               </li>
             <% end %>
             <li class="dropdown">

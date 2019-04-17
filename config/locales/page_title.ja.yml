@@ -196,3 +196,7 @@ ja:
         title: クレジットカード詳細
       edit:
         title: クレジットカード編集
+  corporation:
+    dashboards:
+      index:
+        title: 法人詳細
