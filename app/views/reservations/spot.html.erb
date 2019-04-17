@@ -32,7 +32,7 @@
                   </div>
                 </div>
               <% else %>
-                <% if @facilities.count > 0 %>
+                <% if @facilities.present? %>
                   <% @facilities.each do |facility| %>
                     <div class="mg-available-rooms">
                       <div class="row">
@@ -42,7 +42,7 @@
                         <div class="col-sm-8">
                           <h3 class="mg-avl-room-title">
                             <%= link_to new_reservation_path(facility_id: facility.id) do %>
-                              <%= facility.name %> - <%= facility.shop.name %>
+                              <%= facility.decorate.display_name %>
                             <% end %>
                             <span>&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</span>
                           </h3>
