@@ -1,0 +1,70 @@
+ruby_image: &ruby_image
+  circleci/ruby:2.4.2-node-browsers
+bundle_cache_key: &bundle_cache_key
+  v2-dependencies-{{ checksum "Gemfile.lock" }}
+version: 2
+jobs:
+  build:
+    docker:
+      - image: *ruby_image
+        environment:
+          TZ: /usr/share/zoneinfo/Asia/Tokyo
+          DB_HOST: 127.0.0.1
+      - image: redis:2.8.19
+      - image: circleci/mysql:5.7
+        environment:
+          TZ: /usr/share/zoneinfo/Asia/Tokyo
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+
+    working_directory: ~/startup-technology/keyreserve
+
+    steps:
+      - checkout
+
+      # 使用するキャッシュを指定
+      - restore_cache:
+          keys:
+            - *bundle_cache_key
+            - v2-dependencies-
+
+      # bundle installを実行
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      # 保存するキャッシュを指定
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: *bundle_cache_key
+
+      - run: yarn install
+
+      # データベースのセットアップ
+      - run: mv config/database.ci.yml config/database.yml
+      - run: RAILS_ENV=test bundle exec rake db:create db:migrate db:schema:load
+
+      # テストを実行
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+
+            bundle exec rspec --format progress \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $TEST_FILES
+
+      # テスト結果を保存
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+      - store_artifacts:
+          path: ~/startup-technology/keyreserve/tmp/screenshots
+
