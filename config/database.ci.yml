@@ -11,4 +11,3 @@ default: &default
 test:
   <<: *default
   database: circle_test
-
