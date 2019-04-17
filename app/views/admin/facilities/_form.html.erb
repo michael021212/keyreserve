@@ -2,7 +2,9 @@
   <%= f.text_field :name %>
   <%= f.number_field :max_num %>
   <%= f.text_field :address %>
-  <%= f.select :facility_type, Facility.facility_types_i18n.invert, include_blank: true %>
+  <%= f.select :facility_type,
+    options_for_select(Facility.facility_types_i18n.invert, selected: "#{'rent' if shop.is_rent? }"),
+    { include_blank: true }, { readonly: shop.is_rent? } %>
   <%= f.file_field :image %>
   <%= f.hidden_field :image_cache %>
   <%= f.file_field :detail_document %>
