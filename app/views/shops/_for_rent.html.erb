@@ -25,7 +25,7 @@
       <div class="col-md-12">
         <div class="mg-single-room-txt">
           <h3 class="mg-shop-facility-title">内見可能物件一覧</h3>
-          <% (Facility.joins(:shop).rent.where('shops.is_rent = ?', true) + Facility.where(shop_id: Shop::RENT_SHOP_ID)).each do |facility| %>
+          <% @rent_facilities.each do |facility| %>
             <div class="mg-available-rooms">
               <div class="row">
                 <div class="col-sm-4">
