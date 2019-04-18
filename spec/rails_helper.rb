@@ -20,8 +20,8 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 # support/config配下のファイルを読み込み
+Dir[Rails.root.join("spec/support/helpers/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/support/config/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/support/helper/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   # ロードするfixtureのパスを指定
