@@ -1,10 +1,17 @@
 class Corporation::Base < ApplicationController
+  class AuthenticateCoroporationError < StandardError; end
   layout 'corporation/layouts/application'
+  before_action :authenticate_corporation!
 
-  # private
-  #
-  # def authenticate_corporation
-  #   return if current_coporation.present?
-  #   redirect_to corporation_sign_in_path, danger: 'Hoge'
-  # end
+  rescue_from AuthenticateCoroporationError, with: :corporation_not_authorized
+
+  private
+
+  def authenticate_corporation!
+    raise AuthenticateCoroporationError unless current_corporation?
+  end
+
+  def corporation_not_authorized
+    redirect_to root_path, notice: 'アクセスできません'
+  end
 end
