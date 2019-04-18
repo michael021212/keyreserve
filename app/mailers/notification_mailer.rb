@@ -32,10 +32,11 @@ class NotificationMailer < ApplicationMailer
     mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】キャンペーン期間が終了したユーザがいます")
   end
 
-  def reserved(reservation, user_id)
+  def reserved(reservation, user_id, ksc_reservation_no)
     user = User.find(user_id)
     return if user.email.blank?
     @reservation = reservation
+    @ksc_reservation_no = ksc_reservation_no
     mail(to: user.email, subject: "【KeyStation Office】施設のご予約を承りました")
   end
 

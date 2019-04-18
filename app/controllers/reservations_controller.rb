@@ -104,9 +104,9 @@ class ReservationsController <  ApplicationController
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
       # 予約成功したらKSCのreservation_no返ってくるので、必要なら内見時のパスワードとして使う
-      @reservation.regist_ksc_reservation! if @reservation.facility.rent?
-      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
-      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
+      ksc_reservation_no = @reservation.regist_ksc_reservation! if @reservation.facility.rent?
+      NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no).deliver_now if @reservation.send_cc_mail?
+      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
     end
       redirect_to thanks_reservations_url
