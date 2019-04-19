@@ -58,6 +58,7 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
                             $TEST_FILES
+
       - run:
           name: Check spec diff
           command: |
@@ -75,7 +76,6 @@ jobs:
              if test -z "$diff" -o `echo "50.0 > $COVERAGE" | bc` -eq 1 ; then error=true; fi
              if $error; then; exit 1; fi
              exit 0
-
 
       # テスト結果を保存
       - store_test_results:
