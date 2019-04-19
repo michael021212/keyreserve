@@ -74,7 +74,7 @@ jobs:
              echo 'BASE_BRANCH: ' ${BASE_BRANCH}
              diff=$(git diff --name-only origin/$HEAD_BRANCH origin/$BASE_BRANCH | grep -E 'spec/')
              error=false
-             if test -n "$diff" -o `echo "50.0 > $COVERAGE" | bc` -eq 1 ; then error=true; fi
+             if test -n "$diff" -a `echo "50.0 > $COVERAGE" | bc` -eq 1 ; then error=false; else error=true; fi
              if $error; then exit 1; fi
              exit 0
 
