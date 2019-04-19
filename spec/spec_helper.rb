@@ -4,6 +4,7 @@ if ENV['circle_artifacts']
   dir = file.join(env['circle_artifacts'], 'coverage')
   simplecov.coverage_dir(dir)
 end
+SimpleCov.minimum_coverage(11)
 SimpleCov.start 'rails'
 
 RSpec.configure do |config|
