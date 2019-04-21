@@ -55,7 +55,7 @@ RSpec.feature 'corporation/dashboards', type: :feature do
       end
 
       scenario 'URL直打ちでもアクセスできない' do
-        visit corporation_root_path
+        visit corporation_manage_root_path
         expect(find('.alert-warning')).to have_content('アクセスできません')
         expect(URI.parse(current_url).path).to eq(root_path)
       end

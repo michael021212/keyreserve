@@ -113,7 +113,7 @@ Rails.application.routes.draw do
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー
-  namespace :corporation do
+  namespace :corporation_manage do
     root 'dashboards#index'
   end
   # resources :users, only: [:index, :new, :create, :show]

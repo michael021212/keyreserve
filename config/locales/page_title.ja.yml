@@ -196,7 +196,7 @@ ja:
         title: クレジットカード詳細
       edit:
         title: クレジットカード編集
-  corporation:
+  corporation_manage:
     dashboards:
       index:
         title: 運営会社詳細
