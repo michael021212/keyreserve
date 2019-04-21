@@ -19,9 +19,8 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-# support/config配下のファイルを読み込み
-Dir[Rails.root.join("spec/support/helpers/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/support/config/*.rb")].each { |f| require f }
+# support/配下のファイルを読み込み
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 RSpec.configure do |config|
   config.include SessionMacros, type: :feature
