@@ -1,4 +1,5 @@
 class Corporation < ApplicationRecord
+  class AuthenticateError < StandardError; end
   acts_as_paranoid
 
   has_many :corporation_users, dependent: :destroy
