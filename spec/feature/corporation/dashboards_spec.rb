@@ -26,6 +26,7 @@ RSpec.feature 'corporation/dashboards', type: :feature do
       end
 
       scenario '運営会社のダッシュボードにアクセスできる' do
+        visit root_path
         within(find('.navbar-inverse')) do
           click_on('施設管理')
         end
