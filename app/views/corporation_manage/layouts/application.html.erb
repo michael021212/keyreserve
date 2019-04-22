@@ -3,10 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <title><%= current_corporation.name %>管理</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <%= stylesheet_link_tag 'corporation_manage/application', media: 'all' %>
-    <%= stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' %>
-    <%= stylesheet_link_tag 'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' %>
     <%= csrf_meta_tags %>
   </head>
   <body class="skin-black sidebar-mini fixed">
@@ -17,7 +15,7 @@
         <section class="content-header">
           <h1><%= page_title format: ':title' %></h1>
         </section>
-        <%= render "shared/flash" %>
+        <%= render 'shared/flash' %>
         <section class="content">
           <%= yield %>
         </section>
