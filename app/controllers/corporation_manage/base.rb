@@ -1,13 +1,14 @@
 class CorporationManage::Base < ApplicationController
+  class AuthenticateCorporationError < StandardError; end
   layout 'corporation_manage/layouts/application'
   before_action :authenticate_corporation!
 
-  rescue_from Corporation::AuthenticateError, with: :corporation_not_authorized
+  rescue_from AuthenticateCorporationError, with: :corporation_not_authorized
 
   private
 
   def authenticate_corporation!
-    raise Corporation::AuthenticateError unless current_corporation?
+    raise AuthenticateCorporationError unless current_corporation?
   end
 
   def corporation_not_authorized
