@@ -1,6 +1,12 @@
 <aside class="main-sidebar">
   <section class="sidebar">
     <ul class="sidebar-menu">
+      <li class="<%= active_parent('plans') %>">
+        <%= link_to corporation_manage_plans_path do %>
+          <i class='fa fa-university'></i>
+          <span><%= Plan.model_name.human %>管理</span>
+        <% end %>
+      </li>
     </ul>
   </section>
 </aside>
