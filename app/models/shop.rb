@@ -7,7 +7,6 @@ class Shop < ApplicationRecord
   has_many :information
   has_many :user_contracts
 
-  before_validation :geocode
   validates :name, :opening_time, :closing_time, presence: true
   validates :tel,
             length: { maximum: 13 },
@@ -36,8 +35,7 @@ class Shop < ApplicationRecord
       to > assign_date_for_closing(to.year, to.month, to.day)
   end
 
-  private
-  def geocode
+  def set_geocode
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s
     response = JSON.parse(res)
