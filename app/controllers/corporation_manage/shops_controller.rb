@@ -1,6 +1,6 @@
 class CorporationManage::ShopsController < CorporationManage::Base
-  before_action :set_shop, only: [:show, :edit, :update, :destroy]
-  
+  before_action :set_shop, only: %i[show edit update destroy]
+
   def new
     @shop = current_corporation.shops.build
   end
