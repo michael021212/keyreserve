@@ -3,3 +3,4 @@
 //= require jquery-ui
 //= require bootstrap-sprockets
 //= require app
+//= require map

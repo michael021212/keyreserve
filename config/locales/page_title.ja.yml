@@ -200,3 +200,12 @@ ja:
     dashboards:
       index:
         title: 運営会社詳細
+    shops:
+      index:
+        title: 店舗一覧
+      new:
+        title: 店舗登録
+      edit:
+        title: 店舗編集
+      show:
+        title: 店舗詳細

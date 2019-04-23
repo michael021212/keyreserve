@@ -1,7 +1,7 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-body mt40">
-      <table class="table table-striped">
+      <table class="table table-striped cy-corpoartion-table">
         <tr>
           <th><%= Corporation.human_attribute_name(:name) %></th>
           <td class="cy-corporation-name"><%= current_corporation.name %></td>
@@ -28,5 +28,40 @@
         </tr>
       </table>
     </div>
+  </div>
+</div>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= Shop.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to '新規追加', new_corporation_manage_shop_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped corporation-shops-table">
+      <thead>
+      <tr>
+        <th><%= Shop.human_attribute_name(:id) %></th>
+        <th><%= Shop.human_attribute_name(:name) %></th>
+        <th><%= Shop.human_attribute_name(:tel) %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @shops.each do |shop| %>
+        <tr class="cy-shop-<%= shop.id %>">
+          <td><%= shop.id %></td>
+          <td><%= shop.name %></td>
+          <td><%= shop.tel %></td>
+          <td>
+            <%= link_to '詳細', corporation_manage_shop_path(shop), class: 'btn btn-default' %>
+            <%= link_to '編集', edit_corporation_manage_shop_path(shop), class: 'btn btn-primary' %>
+            <%= link_to '削除', corporation_manage_shop_path(shop), method: :delete, data: { confirm: '本当に削除しますか?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @shops %>
   </div>
 </div>
