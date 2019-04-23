@@ -115,6 +115,7 @@ Rails.application.routes.draw do
   # 法人メニュー
   namespace :corporation_manage do
     root 'dashboards#index'
+    resources :shops, except: :index
   end
   # resources :users, only: [:index, :new, :create, :show]
   # resources :plans, except: [:show]

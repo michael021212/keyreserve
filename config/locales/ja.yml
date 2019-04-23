@@ -110,6 +110,7 @@ ja:
         mail_send_flag: 予約案内メール送信フラグ
         block_flag: ブロック
       shop:
+        id: 店舗ID
         name: 店舗名
         postal_code: 郵便番号
         address: 住所
