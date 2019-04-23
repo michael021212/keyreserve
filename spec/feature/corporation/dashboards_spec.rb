@@ -31,7 +31,7 @@ RSpec.feature 'corporation/dashboards', type: :feature do
           click_on('施設管理')
         end
         expect(find('.logo-lg')).to have_content('西尾会社')
-        within(find('.table-striped')) do
+        within(find('.cy-corpoartion-table')) do
           expect(find('.cy-corporation-name')).to have_content('西尾会社')
           expect(find('.cy-corporation-kana')).to have_content('サイオカイシャ')
           expect(find('.cy-corporation-tel')).to have_content('08012331233')
