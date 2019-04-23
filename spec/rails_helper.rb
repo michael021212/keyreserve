@@ -24,6 +24,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include SessionMacros, type: :feature
+  config.include JsHelper, type: :feature
   # ロードするfixtureのパスを指定
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
