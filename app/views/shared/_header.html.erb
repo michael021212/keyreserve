@@ -1,7 +1,7 @@
-<header class="header transp sticky"> <!-- available class for header: .sticky .center-content .transp --> 
+<header class="header transp sticky">
+  <%= render 'shared/flash' %>
   <nav class="navbar navbar-inverse">
     <div class="container">
-      <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
@@ -11,7 +11,6 @@
         </button>
         <%= link_to root_path, class: 'navbar navbar-light' do %><%= image_tag 'logo_final.png', class: 'mt5', width: '65' %><% end %>
       </div>
-      <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li>
@@ -39,11 +38,7 @@
             <!-- 施設管理者面メニュー -->
             <% if current_corporation? %>
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">施設管理者メニュー<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><%= link_to '法人設定', corporation_path %></li>
-                  <li><%= link_to 'プラン管理', plans_path %></li>
-                </ul>
+                <%= link_to '施設管理', corporation_manage_root_path %>
               </li>
             <% end %>
             <li class="dropdown">
@@ -68,7 +63,7 @@
             </li>
           <% end %>
         </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+      </div>
+    </div>
   </nav>
 </header>
