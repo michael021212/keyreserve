@@ -103,7 +103,7 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'simplecov', require: false
   gem 'launchy'
-  gem 'chromedriver-helper'
+  gem 'chromedriver-helper' unless ENV['CI']
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'vcr'
   gem 'webmock'
