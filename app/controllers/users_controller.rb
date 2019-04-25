@@ -28,16 +28,17 @@ class UsersController < ApplicationController
 
   # 認証コード送信画面
   def sms
-    tel = "+#{Phonelib.parse(params[:user][:tel], :jp).international(false)}"
+    tel = set_international_phone_number
     verify_code = SecureRandom.random_number(100000)
     res = TwilioApi.send_sms(tel, verify_code)
-    if res.present?
+    if tel.present? && res.present?
       @user.update(tel: tel, sms_verify_code: verify_code, sms_sent_at: Time.zone.now)
     else
-      flash.now[:alert] = '電話番号は小文字、ハイフン無しでご入力ください'
+      flash.now[:alert] = '電話番号が確認できませんでした。'
       render :tel
     end
   end
+
 
   # 認証コードの確認
   def sms_confirm
@@ -78,6 +79,11 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def set_international_phone_number
+    tel = Phonelib.parse(params[:user][:tel], :jp)
+    tel.valid? ? "+#{tel.international(false)}" : ''
+  end
 
   def set_user
     @user = current_user
