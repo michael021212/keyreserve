@@ -14,7 +14,7 @@ class CorporationManage::UserContractsController < CorporationManage::Base
     if @user_contract.save
       redirect_to corporation_manage_user_contract_path(@user_contract), notice: "#{UserContract.model_name.human}を作成しました。"
     else
-      render :new, status: 422
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class CorporationManage::UserContractsController < CorporationManage::Base
     if @user_contract.update(user_contract_params)
       redirect_to corporation_manage_user_contract_path(@user_contract), notice: "#{UserContract.model_name.human}を更新しました。"
     else
-      render :edit, status: 422
+      render :edit, status: :unprocessable_entity
     end
   end
 
