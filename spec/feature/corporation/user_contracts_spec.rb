@@ -33,16 +33,12 @@ RSpec.feature 'corporation_manage/user_contracts', type: :feature do
         click_on('新規追加')
       end
 
-      select shop.name, from: 'user_contract[shop_id]'
-      select target_user.name, from: 'user_contract[user_id]'
-      select plan.name, from: 'user_contract[plan_id]'
-      select '契約申し込み', from: 'user_contract[state]'
-      select '2019', from: 'user_contract[started_on(1i)]'
-      select '5月', from: 'user_contract[started_on(2i)]'
-      select '25', from: 'user_contract[started_on(3i)]'
-      select '2019', from: 'user_contract[finished_on(1i)]'
-      select '10月', from: 'user_contract[finished_on(2i)]'
-      select '25', from: 'user_contract[finished_on(3i)]'
+      select shop.name, from: '店舗'
+      select target_user.name, from: '契約利用者'
+      select plan.name, from: '契約プラン'
+      select '契約申し込み', from: 'ステータス'
+      select_date('user_contract', 'started_on', Date.new(2019, 05, 25))
+      select_date('user_contract', 'finished_on', Date.new(2019, 10, 25))
 
       click_on('登録')
 
@@ -96,15 +92,11 @@ RSpec.feature 'corporation_manage/user_contracts', type: :feature do
         click_on('編集')
       end
 
-      select shop_2.name, from: 'user_contract[shop_id]'
-      select plan_2.name, from: 'user_contract[plan_id]'
-      select '契約終了', from: 'user_contract[state]'
-      select '2019', from: 'user_contract[started_on(1i)]'
-      select '11月', from: 'user_contract[started_on(2i)]'
-      select '20', from: 'user_contract[started_on(3i)]'
-      select '2019', from: 'user_contract[finished_on(1i)]'
-      select '12月', from: 'user_contract[finished_on(2i)]'
-      select '25', from: 'user_contract[finished_on(3i)]'
+      select shop_2.name, from: '店舗'
+      select plan_2.name, from: '契約プラン'
+      select '契約終了', from: 'ステータス'
+      select_date('user_contract', 'started_on', Date.new(2019, 11, 20))
+      select_date('user_contract', 'finished_on', Date.new(2019, 12, 25))
 
       click_on('更新')
 
