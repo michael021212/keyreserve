@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190415104929) do
+ActiveRecord::Schema.define(version: 20190425073759) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -330,6 +330,9 @@ ActiveRecord::Schema.define(version: 20190415104929) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.string "campaign_id"
+    t.integer "sms_verify_code"
+    t.datetime "sms_sent_at"
+    t.boolean "sms_verified", default: false
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end

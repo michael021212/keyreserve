@@ -1,12 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :tel, :sms, :sms_confirm]
   before_action :set_personal_identification, only: [:show]
 
   def new
     logout if logged_in?
     @user = User.new
     session[:parent_token] = params[:parent_token]
-
   end
 
   def create
@@ -15,27 +14,58 @@ class UsersController < ApplicationController
       user_corp ||= UserCorp.find_by(parent_token: session[:parent_token])
       @user.parent_id = user_corp.id if user_corp.present?
     end
-    ActiveRecord::Base.transaction do
-      @user.save!
-      @user.invoice! if @user.campaign_id.present?
-      if @user.campaign_id.present?
-        NotificationMailer.campaign_user_registration(@user).deliver_now
-        NotificationMailer.campaign_user_registration_to_admin(@user).deliver_now
-      end
+    if @user.save
+      session[:parent_token] = nil
+      auto_login(@user)
+      redirect_to tel_user_path
+    else
+      render :new
     end
-    session[:parent_token] = nil
-    respond_to do |format|
-      format.html do
-        auto_login(@user)
-        target = session[:return_to_url].present? ? session[:return_to_url] : root_url
-        session[:return_to_url] = nil
-        redirect_to target, notice: "#{User.model_name.human}を作成しました。"
+  end
+
+  # 電話番号入力
+  def tel; end
+
+  # 認証コード送信画面
+  def sms
+    tel = "+#{Phonelib.parse(params[:user][:tel], :jp).international(false)}"
+    verify_code = SecureRandom.random_number(100000)
+    res = TwilioApi.send_sms(tel, verify_code)
+    if res.present?
+      @user.update(tel: tel, sms_verify_code: verify_code, sms_sent_at: Time.zone.now)
+    else
+      flash.now[:alert] = '電話番号は小文字、ハイフン無しでご入力ください'
+      render :tel
+    end
+  end
+
+  # 認証コードの確認
+  def sms_confirm
+    if @user.sms_verify_code == params[:sms_verify_code].to_i
+      ActiveRecord::Base.transaction do
+        @user.update!(sms_verified: true)
+        @user.invoice! if @user.campaign_id.present?
+        if @user.campaign_id.present?
+          NotificationMailer.campaign_user_registration(@user).deliver_now
+          NotificationMailer.campaign_user_registration_to_admin(@user).deliver_now
+        end
       end
+      respond_to do |format|
+        format.html do
+          target = session[:return_to_url].present? ? session[:return_to_url] : root_url
+          redirect_to target, notice: "#{User.model_name.human}登録が完了しました"
+        end
+      end
+    else
+      flash.now[:alert] = '認証コードが正しくありません'
+      render :sms
     end
   rescue => e
     logger.debug(e)
-    render :new
+    flash.now[:alert] = 'エラーが発生しました。お手数ですがもう一度お試しください。'
+    render :send_sms
   end
+
 
   def edit; end
 
@@ -55,6 +85,14 @@ class UsersController < ApplicationController
 
   def set_personal_identification
     @personal_identification = @user.personal_identification
+  end
+
+  def user_tel_params
+    params.require(:user).permit(:tel)
+  end
+
+  def user_verify_code_params
+    params.require(:user).permit(:verify_code)
   end
 
   def user_params

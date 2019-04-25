@@ -66,6 +66,9 @@ Rails.application.routes.draw do
   resource :user do
     collection do
       get 'new/:parent_token', to: 'users#new', as: 'new_parent_token'
+      get 'tel', to: 'users#tel'
+      post 'sms', to: 'users#sms'
+      post 'sms_confirm', to: 'users#sms_confirm'
     end
   end
   get '/sign_in' => 'sessions#new'
