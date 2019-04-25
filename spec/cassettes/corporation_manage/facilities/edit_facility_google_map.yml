@@ -1,0 +1,125 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=%E5%85%AD%E6%9C%AC%E6%9C%A8%E3%83%92%E3%83%AB%E3%82%BA&key=<GOOGLE_API_KEY>
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Connection:
+      - close
+      Host:
+      - maps.googleapis.com
+      User-Agent:
+      - http.rb/4.1.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 25 Apr 2019 09:03:25 GMT
+      Expires:
+      - Fri, 26 Apr 2019 09:03:25 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=270
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,44,43,39"
+      Accept-Ranges:
+      - none
+      Vary:
+      - Accept-Language,Accept-Encoding
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "1",
+                       "short_name" : "1",
+                       "types" : [ "premise" ]
+                    },
+                    {
+                       "long_name" : "11",
+                       "short_name" : "11",
+                       "types" : [ "political", "sublocality", "sublocality_level_4" ]
+                    },
+                    {
+                       "long_name" : "6 Chome",
+                       "short_name" : "6 Chome",
+                       "types" : [ "political", "sublocality", "sublocality_level_3" ]
+                    },
+                    {
+                       "long_name" : "Roppongi",
+                       "short_name" : "Roppongi",
+                       "types" : [ "political", "sublocality", "sublocality_level_2" ]
+                    },
+                    {
+                       "long_name" : "Minato City",
+                       "short_name" : "Minato City",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Tokyo",
+                       "short_name" : "Tokyo",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "Japan",
+                       "short_name" : "JP",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "106-6108",
+                       "short_name" : "106-6108",
+                       "types" : [ "postal_code" ]
+                    }
+                 ],
+                 "formatted_address" : "6 Chome-11-1 Roppongi, Minato City, Tokyo 106-6108, Japan",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 35.6604638,
+                       "lng" : 139.7292487
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 35.6618127802915,
+                          "lng" : 139.7305976802915
+                       },
+                       "southwest" : {
+                          "lat" : 35.6591148197085,
+                          "lng" : 139.7278997197085
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJM9xJEHeLGGARAshMWUgC_ls",
+                 "plus_code" : {
+                    "compound_code" : "MP6H+5M Tokyo, 東京都 Japan",
+                    "global_code" : "8Q7XMP6H+5M"
+                 },
+                 "types" : [ "establishment", "point_of_interest", "premise" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Thu, 25 Apr 2019 09:03:25 GMT
+recorded_with: VCR 4.0.0
