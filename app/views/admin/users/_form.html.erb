@@ -3,7 +3,6 @@
   <%= f.collection_select :parent_id, UserCorp.parent_corporation.all, :id, :name, include_blank: true %>
   <%= f.text_field :name %>
   <%= f.text_field :email %>
-  <%= f.text_field :tel %>
   <%= f.select :state, User.states_i18n.invert %>
   <%= f.select :payway, User.payways_i18n.invert %>
   <% if f.object.new_record? %>
