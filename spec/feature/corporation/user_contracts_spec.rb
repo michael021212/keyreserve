@@ -115,31 +115,67 @@ RSpec.feature 'corporation_manage/user_contracts', type: :feature do
     let(:target_user) { create(:user, name: 'ジョンレノン') }
     let(:shop) { create(:shop, corporation: corporation)}
     let(:plan) { create(:plan, corporation: corporation) }
-    let(:user_contract) { create(:user_contract,
-                                 user: target_user,
-                                 corporation: corporation,
-                                 shop: shop,
-                                 plan: plan) }
+    
+    context '契約のステータスが「契約終了」以外の場合' do
+      let(:user_contract_applying) { create(:user_contract,
+                                             user: target_user,
+                                             corporation: corporation,
+                                             shop: shop,
+                                             plan: plan,
+                                             state: :applying) }
 
-    before do
-      corporation_user
-      user_contract
-      login_user(user)
+      let(:user_contract_under_contract) { create(:user_contract,
+                                                  user: target_user,
+                                                  corporation: corporation,
+                                                  shop: shop,
+                                                  plan: plan,
+                                                  state: :applying) }
+
+      before do
+        corporation_user
+        user_contract_applying
+        user_contract_under_contract
+        login_user(user)
+      end
+      
+      scenario '削除ボタンが表示されない' do
+        visit corporation_manage_root_path
+
+        click_on('契約管理')
+
+        expect(find(".cy-user-contract-#{user_contract_applying.id}")).not_to have_content('削除')
+        expect(find(".cy-user-contract-#{user_contract_under_contract.id}")).not_to have_content('削除')
+      end
     end
-
-    scenario '契約を削除できる', js: true do
-      visit corporation_manage_root_path
-
-      click_on('契約管理')
-
-      within(find(".cy-user-contract-#{user_contract.id}")) do
-        click_on('削除')
+    
+    context '契約のステータスが「契約終了」の場合' do
+      let(:user_contract_finished) { create(:user_contract,
+                                            user: target_user,
+                                            corporation: corporation,
+                                            shop: shop,
+                                            plan: plan,
+                                            state: :finished) }
+      
+      before do
+        corporation_user
+        user_contract_finished
+        login_user(user)
       end
 
-      page.driver.browser.switch_to.alert.accept
+      scenario '契約を削除できる', js: true do
+        visit corporation_manage_root_path
 
-      expect(find('.alert-warning')).to have_content('契約を削除しました')
-      expect(find('.table-striped')).not_to have_css(".cy-user-contract-#{user_contract.id}")
+        click_on('契約管理')
+
+        within(find(".cy-user-contract-#{user_contract_finished.id}")) do
+          click_on('削除')
+        end
+
+        page.driver.browser.switch_to.alert.accept
+
+        expect(find('.alert-warning')).to have_content('契約を削除しました')
+        expect(find('.table-striped')).not_to have_css(".cy-user-contract-#{user_contract_finished.id}")
+      end
     end
   end
 end
