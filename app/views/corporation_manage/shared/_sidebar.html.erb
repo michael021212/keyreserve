@@ -7,6 +7,12 @@
           <span><%= UserContract.model_name.human %>管理</span>
         <% end %>
       </li>
+      <li class="<%= active_parent('information') %>">
+        <%= link_to corporation_manage_information_index_path do %>
+          <i class='fa fa-info'></i>
+          <span><%= Information.model_name.human %>管理</span>
+        <% end %>
+      </li>
     </ul>
   </section>
 </aside>

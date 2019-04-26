@@ -4,3 +4,4 @@
 //= require bootstrap-sprockets
 //= require app
 //= require map
+//= require corporation_manage/common
