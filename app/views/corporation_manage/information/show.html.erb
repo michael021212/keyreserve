@@ -39,9 +39,9 @@
         </td>
       </tr>
       <% if @information.shop_users? %>
-        <tr class="cy-information-shops">
+        <tr>
           <th><%= Information.human_attribute_name(:information_shops) %></th>
-          <td>
+          <td class="cy-information-shops">
             <% @information.shops.each do |shop| %>
               <%= shop.name %><br>
             <% end %>
