@@ -1,7 +1,7 @@
 <%= bootstrap_form_for([:corporation_manage, user_contract], layout: :horizontal) do |f| %>
-  <%= f.collection_select :shop_id, current_corporation.shops, :id, :name, :prompt => '選択してください' %>
-  <%= f.collection_select :user_id, User.selectable_user_contracts, :id, :name, :prompt => '選択してください' %>
-  <%= f.collection_select :plan_id, current_corporation.plans, :id, :name, :prompt => '選択してください' %>
+  <%= f.collection_select :shop_id, current_corporation.shops, :id, :name, prompt: '選択してください' %>
+  <%= f.collection_select :user_id, User.selectable_user_contracts, :id, :name, prompt: '選択してください' %>
+  <%= f.collection_select :plan_id, current_corporation.plans, :id, :name, prompt: '選択してください' %>
   <%= f.select :state, UserContract.states_i18n.invert %>
   <%= f.date_select :started_on, { include_blank: true }, class: 'bootstrap-date' %>
   <%= f.date_select :finished_on, { include_blank: true }, class: 'bootstrap-date' %>
