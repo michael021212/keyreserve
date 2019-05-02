@@ -1,0 +1,37 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= UserContract.model_name.human %>詳細</h4>
+    <div class="box-tools">
+      <%= link_to '戻る', corporation_manage_user_contracts_path, class: 'btn btn-default' %>
+      <%= link_to '編集', edit_corporation_manage_user_contract_path(@user_contract), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr class="cy-user-name">
+        <th><%= UserContract.human_attribute_name(:user_id) %></th>
+        <td><%= @user_contract.user_name %></td>
+      </tr>
+      <tr class="cy-shop-name">
+        <th><%= UserContract.human_attribute_name(:shop_id) %></th>
+        <td><%= @user_contract.shop_name %></td>
+      </tr>
+      <tr class="cy-plan-name">
+        <th><%= UserContract.human_attribute_name(:plan_id) %></th>
+        <td><%= @user_contract.plan_name %></td>
+      </tr>
+      <tr class="cy-user-contract-state">
+        <th><%= UserContract.human_attribute_name(:state) %></th>
+        <td><%= @user_contract.state_i18n %></td>
+      </tr>
+      <tr class="cy-user-contract-start-date">
+        <th><%= UserContract.human_attribute_name(:started_on) %></th>
+        <td><%= date_ja @user_contract.started_on %></td>
+      </tr>
+      <tr class="cy-user-contract-finish-date">
+        <th><%= UserContract.human_attribute_name(:finished_on) %></th>
+        <td><%= date_ja @user_contract.finished_on %></td>
+      </tr>
+    </table>
+  </div>
+</div>
