@@ -14,7 +14,7 @@ class CorporationManage::PlansController < CorporationManage::Base
     if @plan.save
       redirect_to corporation_manage_plan_path(@plan), notice: "#{Plan.model_name.human}を作成しました。"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +26,7 @@ class CorporationManage::PlansController < CorporationManage::Base
     if @plan.update(plan_params)
       redirect_to corporation_manage_plan_path(@plan), notice: "#{Plan.model_name.human}を更新しました。"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
