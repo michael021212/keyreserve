@@ -15,7 +15,7 @@ class CorporationManage::CorporationUsersController < CorporationManage::Base
     if @corporation_user.save
       redirect_to corporation_manage_corporation_user_path(@corporation_user), notice: "#{User.model_name.human}を作成しました。"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -29,7 +29,7 @@ class CorporationManage::CorporationUsersController < CorporationManage::Base
     if @corporation_user.update(corporation_user_params)
       redirect_to corporation_manage_corporation_user_path(@corporation_user), notice: "#{User.model_name.human}を更新しました。"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
