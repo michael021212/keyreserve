@@ -218,3 +218,12 @@ ja:
         title: プラン編集
       show:
         title: プラン詳細
+    user_contracts:
+      index:
+        title: 契約一覧
+      new:
+        title: 契約登録
+      edit:
+        title: 契約編集
+      show:
+        title: 契約詳細
