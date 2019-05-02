@@ -209,3 +209,12 @@ ja:
         title: 店舗編集
       show:
         title: 店舗詳細
+    corporation_users:
+      index:
+        title: 利用者一覧
+      new:
+        title: 利用者登録
+      edit:
+        title: 利用者編集
+      show:
+        title: 利用者詳細
