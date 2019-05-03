@@ -20,7 +20,7 @@ class CorporationManage::InformationController < CorporationManage::Base
     if @information.save
       redirect_to corporation_manage_information_path(@information), notice: "#{Information.model_name.human}を作成しました。"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class CorporationManage::InformationController < CorporationManage::Base
     if @information.update(information_params)
       redirect_to corporation_manage_information_path(@information), notice: "#{Information.model_name.human}を更新しました。"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
