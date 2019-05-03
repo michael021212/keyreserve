@@ -9,9 +9,9 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
   let(:shop) { create(:shop, corporation: corporation) }
 
   feature '施設作成' do
-    let (:plan) { create(:plan,
-                         name: 'お得プラン',
-                         corporation: corporation) }
+    let(:plan) { create(:plan,
+                        name: 'お得プラン',
+                        corporation: corporation) }
 
     before do
       corporation_user
@@ -52,9 +52,9 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
   end
 
   feature '施設編集' do
-    let (:plan) { create(:plan,
-                         name: '天才プラン',
-                         corporation: corporation) }
+    let(:plan) { create(:plan,
+                        name: '天才プラン',
+                        corporation: corporation) }
     let(:facility) { create(:facility,
                             shop: shop,
                             name: '西尾オフィス',
