@@ -159,6 +159,7 @@ ja:
         ending_time: 終了時間
         price: 価格
       user_contract:
+        id: 契約ID
         corporation_id: 運営者会社
         shop_id: 店舗
         user_id: 契約利用者
