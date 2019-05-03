@@ -10,6 +10,6 @@ module DateHelper
     select datetime.month, from: "#{target_model}[#{target_column}(2i)]"
     select datetime.day, from: "#{target_model}[#{target_column}(3i)]"
     select datetime.hour, from: "#{target_model}[#{target_column}(4i)]"
-    select datetime.minute, from: "#{target_model}[#{target_column}(5i)]"
+    select datetime.min, from: "#{target_model}[#{target_column}(5i)]"
   end
 end

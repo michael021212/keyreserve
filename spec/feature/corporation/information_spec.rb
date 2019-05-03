@@ -32,7 +32,7 @@ RSpec.feature 'corporation/information', type: :feature do
       select 'とりせん', from: '送信元店舗'
       fill_in 'タイトル', with: 'うちの店舗にきませんか？'
       fill_in '詳細', with: 'めちゃくちゃお肉が安いからみんなうちの店舗にきてね！！！'
-      select_datetime('information', 'publish_time', DateTime.new(2019, 10,25,10,30))
+      select_datetime('information', 'publish_time', Time.zone.local(2019, 10, 25, 10, 30))
       select 'イベントや告知', from: 'お知らせ種別'
       select '店舗契約者', from: '配信対象'
       find('#information_shop_ids_2').click
@@ -66,7 +66,7 @@ RSpec.feature 'corporation/information', type: :feature do
                                shop: shop,
                                title: 'うちの店舗にきてください',
                                description: 'なんでも安くするのできてください',
-                               publish_time: DateTime.new(2019, 10,25,10,30),
+                               publish_time: Time.zone.local(2019, 10, 25, 10, 30),
                                info_type: :event,
                                info_target_type: :shop_users)}
 
@@ -90,7 +90,7 @@ RSpec.feature 'corporation/information', type: :feature do
 
       fill_in 'タイトル', with: '蕎麦屋はじめました！！'
       fill_in '詳細', with: '蕎麦って美味しいですよね'
-      select_datetime('information', 'publish_time', DateTime.new(2019, 12,25,15,30))
+      select_datetime('information', 'publish_time', Time.zone.local(2019, 12, 25, 15, 30))
       select '重要なお知らせ', from: 'お知らせ種別'
       select '店舗契約者', from: '配信対象'
       find('#information_shop_ids_1').click
