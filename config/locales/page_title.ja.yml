@@ -227,3 +227,8 @@ ja:
         title: 契約編集
       show:
         title: 契約詳細
+    facility_temporary_plans:
+      new:
+        title: 施設利用都度課金プラン登録
+      edit:
+        title: 施設利用都度課金プラン編集
