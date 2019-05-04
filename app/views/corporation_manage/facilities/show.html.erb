@@ -45,4 +45,8 @@
   </div>
 </div>
 
-<%= render 'facility_temporary_plan', shop: @shop, facility: @facility %>
+<% if @facility.dropin? %>
+  <%= render 'facility_dropin_plans', shop: @shop, facility: @facility %>
+<% else %>
+  <%= render 'facility_temporary_plan', shop: @shop, facility: @facility %>
+<% end %>

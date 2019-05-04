@@ -6,7 +6,9 @@
 //= require app
 //= require map
 //= require moment
+//= require bootstrap-datetimepicker
 //= require fullcalendar.min.js
 //= require scheduler.min.js
 //= require fullcalendar_ja.js
 //= require corporation_manage/plan_price_table
+//= require corporation_manage/datetimepicker
