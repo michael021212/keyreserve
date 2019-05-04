@@ -124,6 +124,12 @@ Rails.application.routes.draw do
             get :events
           end
         end
+        resources :facility_dropin_plans, only: [:new, :edit, :create, :update, :destroy] do
+          collection do
+            get :resources
+            get :events
+          end
+        end
       end
     end
   end
