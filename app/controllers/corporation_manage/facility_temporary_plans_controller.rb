@@ -10,7 +10,7 @@ class CorporationManage::FacilityTemporaryPlansController < CorporationManage::B
   def create
     @facility_temporary_plan = @facility.facility_temporary_plans.build(facility_temporary_plan_params)
     if @facility_temporary_plan.save
-      redirect_to corporation_manage_shop_facility_path(@facility.shop, @facility), notice: "#{FacilityTemporaryPlan.model_name.human}を更新しました。"
+      redirect_to corporation_manage_shop_facility_path(@facility.shop, @facility), notice: "#{FacilityTemporaryPlan.model_name.human}を作成しました。"
     else
       render :new
     end
@@ -20,7 +20,7 @@ class CorporationManage::FacilityTemporaryPlansController < CorporationManage::B
   
   def update
     if @facility_temporary_plan.update(facility_temporary_plan_params)
-      redirect_to corporation_manage_shop_facility_path(@facility.shop, @facility), notice: "#{FacilityTemporaryPlan.model_name.human}を作成しました。"
+      redirect_to corporation_manage_shop_facility_path(@facility.shop, @facility), notice: "#{FacilityTemporaryPlan.model_name.human}を更新しました。"
     else
       render :edit
     end
