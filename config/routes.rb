@@ -115,10 +115,17 @@ Rails.application.routes.draw do
   # 法人メニュー
   namespace :corporation_manage do
     root 'dashboards#index'
-    resources :shops, except: :index do
-      resources :facilities, except: :index
-    end
     resources :user_contracts
+    resources :shops, except: :index do
+      resources :facilities, except: :index do
+        resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
+          collection do
+            get :resources
+            get :events
+          end
+        end
+      end
+    end
   end
   # resources :users, only: [:index, :new, :create, :show]
   # resources :plans, except: [:show]
