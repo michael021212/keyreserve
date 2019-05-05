@@ -5,11 +5,11 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
   def show; end
 
   def new
-    @facility = @shop.facilities.new
+    @facility = @shop.facilities.build
   end
 
   def create
-    @facility = @shop.facilities.new(facility_params)
+    @facility = @shop.facilities.build(facility_params)
     @facility.set_geocode
     if @facility.save
       redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: "#{Facility.model_name.human}を作成しました。"
