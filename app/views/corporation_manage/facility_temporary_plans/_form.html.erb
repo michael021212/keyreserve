@@ -1,4 +1,4 @@
-<%= bootstrap_nested_form_for([:corporation_manage, facility.shop, facility, facility_temporary_plan]) do |f| %>
+<%= bootstrap_nested_form_for([:corporation_manage, shop, facility, facility_temporary_plan]) do |f| %>
   <%= f.collection_select :plan_id, current_corporation.plans.all, :id, :name, { include_blank: '非会員' } %>
   <%= f.select :ks_room_key_id, options_for_select(@facility.facility_keys.map {|f| [f.name, f.ks_room_key_id]}, selected: f.object.ks_room_key_id), include_blank: true, help: '鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください' %>
   <%= f.text_field :guide_mail_title, help: '「空」の場合は案内メールの通知機能は「オフ」になります' %>
