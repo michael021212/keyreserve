@@ -115,7 +115,7 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
     scenario '施設を削除できる', js: true do
       visit corporation_manage_shop_facility_path(shop, facility)
 
-      within(find('.box-tools')) do
+      within(find('.cy-facility-box-tools')) do
         click_on('削除')
       end
 
