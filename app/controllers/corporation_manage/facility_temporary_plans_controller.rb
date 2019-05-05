@@ -1,13 +1,13 @@
 class CorporationManage::FacilityTemporaryPlansController < CorporationManage::Base
   before_action :set_shop
   before_action :set_facility
-  before_action :set_facility_temporary_plans, only: [:resources, :events]
-  before_action :set_facility_temporary_plan, only: [:edit, :update, :destroy]
-  
+  before_action :set_facility_temporary_plans, only: %i[resources events]
+  before_action :set_facility_temporary_plan, only: %i[edit update destroy]
+
   def new
     @facility_temporary_plan = @facility.facility_temporary_plans.build
   end
-  
+
   def create
     @facility_temporary_plan = @facility.facility_temporary_plans.build(facility_temporary_plan_params)
     if @facility_temporary_plan.save
