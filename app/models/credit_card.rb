@@ -2,7 +2,6 @@ class CreditCard < ApplicationRecord
   acts_as_paranoid
   attr_accessor :number, :exp, :cvc
   belongs_to :user
-  before_save :create_or_update_stripe_card
 
   validates :number, :holder_name, presence: true
   validates :exp,
