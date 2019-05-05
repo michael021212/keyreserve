@@ -6,7 +6,6 @@ class Payment < ApplicationRecord
   belongs_to :facility
   belongs_to :credit_card
 
-  before_create :stripe_charge
   before_destroy :stripe_cancel
 
   def stripe_charge
