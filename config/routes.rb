@@ -118,6 +118,9 @@ Rails.application.routes.draw do
     resources :user_contracts
     resources :shops, except: :index do
       resources :facilities, except: :index do
+        member do
+          get :events
+        end
         resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
           collection do
             get :resources

@@ -1,6 +1,6 @@
 class CorporationManage::FacilitiesController < CorporationManage::Base
   before_action :set_shop
-  before_action :set_facility, only: %i[show edit update destroy]
+  before_action :set_facility, only: %i[show edit update destroy events]
 
   def show
     gon.schedular_licence_key = ENV['SCHEDULER_LICENCE_KEY']
@@ -35,6 +35,10 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
   def destroy
     @facility.destroy!
     redirect_to corporation_manage_shop_path(@shop), notice: "#{Facility.model_name.human}を削除しました"
+  end
+
+  def events
+    @reservations = @facility.reservations
   end
 
   private
