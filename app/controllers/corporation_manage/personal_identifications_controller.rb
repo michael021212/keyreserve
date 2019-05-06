@@ -11,7 +11,7 @@ class CorporationManage::PersonalIdentificationsController < CorporationManage::
     if @personal_identification.save
       redirect_to corporation_manage_user_path(@user), notice: "#{PersonalIdentification.model_name.human}を登録しました。"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -21,7 +21,7 @@ class CorporationManage::PersonalIdentificationsController < CorporationManage::
     if @personal_identification.update(personal_identification_params)
       redirect_to corporation_manage_user_path(@user), notice: "#{PersonalIdentification.model_name.human}を更新しました。"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
