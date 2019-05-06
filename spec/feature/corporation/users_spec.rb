@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'corporation/corporation_users', type: :feature do
+RSpec.feature 'corporation/users', type: :feature do
   let(:corporation) { create(:corporation) }
   let(:user) { create(:user) }
   let(:corporation_user) { create(:corporation_user,
@@ -24,13 +24,13 @@ RSpec.feature 'corporation/corporation_users', type: :feature do
         click_on('新規追加')
       end
       
-      fill_in 'corporation_user[user_attributes][name]', with: '橋本環奈'
-      fill_in 'corporation_user[user_attributes][email]', with: 'hashimoto@example.com'
-      fill_in 'corporation_user[user_attributes][tel]', with: '08012311231'
-      select '登録済み', from: 'corporation_user[user_attributes][state]'
-      select 'クレジットカード', from: 'corporation_user[user_attributes][payway]'
-      fill_in 'corporation_user[user_attributes][password]', with: 'Password123'
-      fill_in 'corporation_user[user_attributes][password_confirmation]', with: 'Password123'
+      fill_in 'お名前', with: '橋本環奈'
+      fill_in 'メールアドレス', with: 'hashimoto@example.com'
+      fill_in '電話番号', with: '08012311231'
+      select '登録済み', from: 'user[state]'
+      select 'クレジットカード', from: 'user[payway]'
+      fill_in 'パスワード', with: 'Password123'
+      fill_in '確認用パスワード', with: 'Password123'
       
       click_on('登録')
       
@@ -72,13 +72,13 @@ RSpec.feature 'corporation/corporation_users', type: :feature do
         click_on('編集')
       end
       
-      fill_in 'corporation_user[user_attributes][name]', with: 'ジョンレノン'
-      fill_in 'corporation_user[user_attributes][email]', with: 'jon@example.com'
-      fill_in 'corporation_user[user_attributes][tel]', with: '07011111111'
-      select '課金登録済み', from: 'corporation_user[user_attributes][state]'
-      select '請求書', from: 'corporation_user[user_attributes][payway]'
-      fill_in 'corporation_user[user_attributes][password]', with: 'Password123'
-      fill_in 'corporation_user[user_attributes][password_confirmation]', with: 'Password123'
+      fill_in 'お名前', with: 'ジョンレノン'
+      fill_in 'メールアドレス', with: 'jon@example.com'
+      fill_in '電話番号', with: '07011111111'
+      select '課金登録済み', from: 'user[state]'
+      select '請求書', from: 'user[payway]'
+      fill_in 'パスワード', with: 'Password123'
+      fill_in '確認用パスワード', with: 'Password123'
       
       click_on('更新')
       
