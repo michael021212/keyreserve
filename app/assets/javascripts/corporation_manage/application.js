@@ -2,5 +2,9 @@
 //= require jquery
 //= require jquery-ui
 //= require bootstrap-sprockets
+//= require moment
+//= require moment/ja.js
+//= require bootstrap-datetimepicker
+//= require datetimepicker_fmt
 //= require app
 //= require map

@@ -7,6 +7,12 @@
           <span><%= UserContract.model_name.human %>管理</span>
         <% end %>
       </li>
+      <li class="<%= active_parent('billings') %>">
+        <%= link_to corporation_manage_billings_path do %>
+          <i class='fa fa-users'></i>
+          <span><%= Billing.model_name.human %>管理</span>
+        <% end %>
+      </li>
     </ul>
   </section>
 </aside>

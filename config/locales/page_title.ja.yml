@@ -218,3 +218,8 @@ ja:
         title: 契約編集
       show:
         title: 契約詳細
+    billings:
+      index:
+        title: 請求一覧
+      show:
+        title: 請求詳細
