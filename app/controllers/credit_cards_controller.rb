@@ -7,6 +7,7 @@ class CreditCardsController <  ApplicationController
 
   def create
     @credit_card = current_user.build_credit_card(credit_card_params)
+    @credit_card.create_or_update_stripe_card
     return(render :new) unless @credit_card.valid?
     begin
       @credit_card.save!
@@ -27,6 +28,7 @@ class CreditCardsController <  ApplicationController
 
   def update
     @credit_card.assign_attributes(credit_card_params)
+    @credit_card.create_or_update_stripe_card
     return(render :edit) unless @credit_card.valid?
     begin
       @credit_card.update!(credit_card_params)
