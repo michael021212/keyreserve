@@ -117,7 +117,7 @@ Rails.application.routes.draw do
     root 'dashboards#index'
     resources :shops, except: :index
     resources :users do
-      resources :personal_identifications
+      resources :personal_identifications, only: %i[new create edit update]
     end
     resources :user_contracts
   end
