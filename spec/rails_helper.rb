@@ -26,6 +26,7 @@ RSpec.configure do |config|
   config.include SessionMacros, type: :feature
   config.include JsHelper, type: :feature
   config.include DateHelper, type: :feature
+  config.include ActiveSupport::Testing::TimeHelpers
   # ロードするfixtureのパスを指定
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
