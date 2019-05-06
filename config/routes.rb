@@ -116,7 +116,7 @@ Rails.application.routes.draw do
   namespace :corporation_manage do
     root 'dashboards#index'
     resources :shops, except: :index
-    resources :corporation_users
+    resources :users
     resources :user_contracts
   end
   # resources :users, only: [:index, :new, :create, :show]

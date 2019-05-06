@@ -1,8 +1,8 @@
 <aside class="main-sidebar">
   <section class="sidebar">
     <ul class="sidebar-menu">
-      <li class="<%= active_parent('corporation_users') %>">
-        <%= link_to corporation_manage_corporation_users_path do %>
+      <li class="<%= active_parent('users') %>">
+        <%= link_to corporation_manage_users_path do %>
           <i class='fa fa-university'></i>
           <span><%= User.model_name.human %>管理</span>
         <% end %>
