@@ -20,7 +20,7 @@
       <% @plans.each do |plan| %>
         <tr class="cy-plan-<%= plan.id %>">
           <td><%= plan.id %></td>
-          <td><%= plan.default_flag? ? '◯' : '' %></td>
+          <td><%= plan.decorate.default_flag_to_string %></td>
           <td><%= plan.name %></td>
           <td><%= delimiter_price(plan.price) %></td>
           <td>

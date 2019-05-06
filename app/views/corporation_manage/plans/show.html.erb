@@ -14,7 +14,7 @@
       </tr>
       <tr class="cy-plan-flag">
         <th><%= Plan.human_attribute_name(:default_flag) %></th>
-        <td><%= @plan.default_flag? ? '◯' : '' %></td>
+        <td><%= @plan.decorate.default_flag_to_string %></td>
       </tr>
       <tr class="cy-plan-name">
         <th><%= Plan.human_attribute_name(:name) %></th>
