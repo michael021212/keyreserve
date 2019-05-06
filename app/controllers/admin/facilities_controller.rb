@@ -9,6 +9,7 @@ class Admin::FacilitiesController < AdminController
 
   def create
     @facility = @shop.facilities.new(facility_params)
+    @facility.set_geocode
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を作成しました。"
     else
@@ -20,7 +21,9 @@ class Admin::FacilitiesController < AdminController
   end
 
   def update
-    if @facility.update(facility_params)
+    @facility.assign_attribute(facility_params)
+    @facility.set_geocode
+    if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を更新しました。"
     else
       render :edit
