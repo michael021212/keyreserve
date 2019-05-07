@@ -12,7 +12,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
     @facility = @shop.facilities.build(facility_params)
     @facility.set_geocode
     if @facility.save
-      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: "#{Facility.model_name.human}を作成しました。"
+      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.created', name: Facility.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
     @facility.assign_attributes(facility_params)
     @facility.set_geocode
     if @facility.save
-      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: "#{Facility.model_name.human}を更新しました。"
+      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.updated', name: Facility.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
