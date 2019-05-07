@@ -13,6 +13,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <%= bootstrap_form_for @user, url: user_path do |f| %>
+          <%= f.select :parent_id, selectable_shops, include_blank: 'ご利用予定の店舗を選択してください' %>
           <%= f.text_field :name, placeholder: "例)山田太郎" %>
           <%= f.text_field :email, placeholder: "例)keystation@gmail.com" %>
           <%= f.text_field :tel , placeholder: "例)08012345678"  %>
