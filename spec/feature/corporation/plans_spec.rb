@@ -18,7 +18,7 @@ RSpec.feature 'corporation/plans', type: :feature do
 
       click_on('プラン管理')
 
-      within(find('.box-tools')) do
+      within('.box-tools') do
         click_on('新規追加')
       end
 
@@ -56,7 +56,7 @@ RSpec.feature 'corporation/plans', type: :feature do
 
       click_on('プラン管理')
 
-      within(find(".cy-plan-#{plan.id}")) do
+      within(".cy-plan-#{plan.id}") do
         click_on('編集')
       end
 
@@ -89,7 +89,7 @@ RSpec.feature 'corporation/plans', type: :feature do
 
       click_on('プラン管理')
 
-      within(find(".cy-plan-#{plan.id}")) do
+      within(".cy-plan-#{plan.id}") do
         click_on('削除')
       end
 
