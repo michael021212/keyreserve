@@ -212,7 +212,7 @@ ja:
     facilities:
       form:
         add_facility_type: 施設タイプを選択してください
-        add_adress: 住所を入力してください
+        add_address: 住所を入力してください
         add_name: 施設名を入力してください
         target_plan: 月額対象プラン
         select_plan: プランを選択してください
