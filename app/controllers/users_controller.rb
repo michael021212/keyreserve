@@ -16,6 +16,7 @@ class UsersController < ApplicationController
       @user.parent_id = user_corp.id if user_corp.present?
     end
     ActiveRecord::Base.transaction do
+      @user.corporation_users.build(corporation_id: user_params[:corporation_id]) if user_params[:corporation_id].present?
       @user.save!
       @user.invoice! if @user.campaign_id.present?
       if @user.campaign_id.present?
@@ -60,7 +61,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :email, :password, :password_confirmation, :name, :tel, :state, :payway, :user_type, :parent_id,
-      :advertise_notice_flag, :stripe_customer_id, :campaign_id
+      :advertise_notice_flag, :stripe_customer_id, :campaign_id, :corporation_id
     )
   end
 end

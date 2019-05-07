@@ -2,6 +2,8 @@ class User < ApplicationRecord
   acts_as_paranoid
   authenticates_with_sorcery!
 
+  attr_accessor :corporation_id
+
   has_many :corporation_users, dependent: :destroy
   has_many :corporations, through: :corporation_users
   has_many :user_contracts, dependent: :destroy
