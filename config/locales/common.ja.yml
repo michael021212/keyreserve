@@ -12,3 +12,5 @@ ja:
       deleted: "#{name}を削除しました。"
     confirms:
       really_to_delete: 本当に削除しますか？
+    sidebar:
+      manage: "%{name}管理"
