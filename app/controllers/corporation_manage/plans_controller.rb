@@ -12,7 +12,7 @@ class CorporationManage::PlansController < CorporationManage::Base
   def create
     @plan = current_corporation.plans.build(plan_params)
     if @plan.save
-      redirect_to corporation_manage_plan_path(@plan), notice: "#{Plan.model_name.human}を作成しました。"
+      redirect_to corporation_manage_plan_path(@plan), notice: t('common.messages.created', name: Plan.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class CorporationManage::PlansController < CorporationManage::Base
 
   def update
     if @plan.update(plan_params)
-      redirect_to corporation_manage_plan_path(@plan), notice: "#{Plan.model_name.human}を更新しました。"
+      redirect_to corporation_manage_plan_path(@plan), notice: t('common.messages.updated', name: Plan.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class CorporationManage::PlansController < CorporationManage::Base
 
   def destroy
     @plan.destroy!
-    redirect_to corporation_manage_plans_path, notice: "#{Plan.model_name.human}を削除しました。"
+    redirect_to corporation_manage_plans_path, notice: t('common.messages.deleted', name: Plan.model_name.human)
   end
 
   private
