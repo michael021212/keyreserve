@@ -32,7 +32,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def destroy
     @facility.destroy!
-    redirect_to corporation_manage_shop_path(@shop), notice: "#{Facility.model_name.human}を削除しました"
+    redirect_to corporation_manage_shop_path(@shop), notice: t('common.messages.deleted', name: Facility.model_name.human)
   end
 
   private
