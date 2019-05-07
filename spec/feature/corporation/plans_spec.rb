@@ -6,10 +6,12 @@ RSpec.feature 'corporation/plans', type: :feature do
   let(:corporation_user) { create(:corporation_user,
                                   user: user,
                                   corporation: corporation) }
+  let(:plan_attributes) { build(:plan) }
 
   feature 'プラン作成' do
     before do
       corporation_user
+      plan_attributes
       login_user(user)
     end
 
@@ -23,17 +25,16 @@ RSpec.feature 'corporation/plans', type: :feature do
       end
 
       find('#plan_default_flag').click
-      fill_in 'plan[name]', with: 'GODプラン'
-      fill_in 'plan[price]', with: '100000'
-      fill_in 'plan[description]', with: 'GODになれるプランだよ'
+      fill_in 'プラン名', with: plan_attributes.name
+      fill_in '月額', with: plan_attributes.price
+      fill_in '説明', with: plan_attributes.description
 
       click_on('登録')
 
-      expect(find('.alert-warning')).to have_content('プランを作成しました。')
-      expect(find('.cy-plan-flag')).to have_content('◯')
-      expect(find('.cy-plan-name')).to have_content('GODプラン')
-      expect(find('.cy-plan-price')).to have_content('月額 100,000 円')
-      expect(find('.cy-plan-description')).to have_content('GODになれるプランだよ')
+      expect(page).to have_css('.alert-warning')
+      expect(page).to have_css('.cy-plan-name', text: plan_attributes.name)
+      expect(page).to have_css('.cy-plan-price', text: plan_attributes.price)
+      expect(page).to have_css('.cy-plan-description', text: plan_attributes.description)
     end
   end
 
@@ -44,10 +45,12 @@ RSpec.feature 'corporation/plans', type: :feature do
                         name: 'GODプラン',
                         price: '100000',
                         description: 'GODになれるプランだよ') }
+    let(:plan_attributes) { build(:plan) }
 
     before do
       corporation_user
       plan
+      plan_attributes
       login_user(user)
     end
 
@@ -61,17 +64,16 @@ RSpec.feature 'corporation/plans', type: :feature do
       end
 
       find('#plan_default_flag').click
-      fill_in 'plan[name]', with: 'HELLプラン'
-      fill_in 'plan[price]', with: '500000'
-      fill_in 'plan[description]', with: '特に何もないプランだよ'
+      fill_in 'プラン名', with: plan_attributes.name
+      fill_in '月額', with: plan_attributes.price
+      fill_in '説明', with: plan_attributes.description
 
       click_on('更新')
 
-      expect(find('.alert-warning')).to have_content('プランを更新しました。')
-      expect(find('.cy-plan-flag')).not_to have_content('◯')
-      expect(find('.cy-plan-name')).to have_content('HELLプラン')
-      expect(find('.cy-plan-price')).to have_content('月額 500,000 円')
-      expect(find('.cy-plan-description')).to have_content('特に何もないプランだよ')
+      expect(page).to have_css('.alert-warning')
+      expect(page).to have_css('.cy-plan-name', text: plan_attributes.name)
+      expect(page).to have_css('.cy-plan-price', text: plan_attributes.price)
+      expect(page).to have_css('.cy-plan-description', text: plan_attributes.description)
     end
   end
 
@@ -95,8 +97,8 @@ RSpec.feature 'corporation/plans', type: :feature do
 
       page.driver.browser.switch_to.alert.accept
 
-      expect(find('.alert-warning')).to have_content('プランを削除しました。')
-      expect(find('.table-striped')).not_to have_css(".cy-plan-#{plan.id}")
+      expect(page).to have_css('.alert-warning')
+      expect(page).not_to have_css(".cy-plan-#{plan.id}")
     end
   end
 end
