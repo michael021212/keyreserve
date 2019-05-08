@@ -23,7 +23,7 @@ end
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
-  config.include SessionMacros, type: :feature
+  config.include SessionHelper, type: :feature
   config.include JsHelper, type: :feature
   config.include DateHelper, type: :feature
   # ロードするfixtureのパスを指定
