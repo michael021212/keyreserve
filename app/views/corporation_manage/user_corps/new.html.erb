@@ -1,0 +1,10 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= UserCorp.model_name.human %>新規登録</h4>
+  </div>
+  <div class="box-body">
+    <%= bootstrap_form_for(@user_corp, url: corporation_manage_user_corps_path, layout: :horizontal, method: :post) do |f| %>
+      <%= render 'form', f: f %>
+    <% end %>
+  </div>
+</div>

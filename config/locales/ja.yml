@@ -68,6 +68,7 @@ ja:
         created_at: 登録日時
         user_type: 法人/個人
         parent_id: 法人
+        max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
         campaign_id: キャンペーンID
       user_corp:

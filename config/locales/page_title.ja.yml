@@ -218,3 +218,12 @@ ja:
         title: 契約編集
       show:
         title: 契約詳細
+    user_corps:
+      index:
+        title: 法人一覧
+      new:
+        title: 法人登録
+      edit:
+        title: 法人編集
+      show:
+        title: 法人詳細
