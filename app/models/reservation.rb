@@ -11,6 +11,8 @@ class Reservation < ApplicationRecord
 
   # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
   validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
+  validates :checkin, :checkout, :usage_period, presence: true
+  validate :reservation_already_exists_in_range?
 
   # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
@@ -116,5 +118,18 @@ class Reservation < ApplicationRecord
 
   def deletable?
     checkin > Time.zone.now + 24.hours
+  end
+
+  def set_check_out
+    return nil if checkin.nil? || usage_period.nil?
+    self.checkout = checkin + usage_period.hours
+  end
+
+  private
+
+  def reservation_already_exists_in_range?
+    return false if checkin.nil? || checkout.nil?
+    return true if facility.reservations.in_range(checkin..checkout).blank?
+    errors.add(:checkin, :reservation_already_exists)
   end
 end

@@ -406,6 +406,7 @@ ja:
       mini_magick_processing_error: "MiniMagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
       min_size_error: "ファイルを%{min_size}バイト以上のサイズにしてください"
       max_size_error: "ファイルを%{max_size}バイト以下のサイズにしてください"
+      reservation_already_exists: その時間帯にはすでに予約が存在しています
     template:
       body: 次の項目を確認してください。
       header:
