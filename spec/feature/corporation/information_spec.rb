@@ -24,28 +24,30 @@ RSpec.feature 'corporation/information', type: :feature do
     end
 
     scenario 'お知らせを作成できる' do
+      information_attributes = build(:information, info_target_type: :shop_users)
+      
       visit corporation_manage_root_path
 
       click_on('お知らせ管理')
       click_on('新規追加')
 
       select 'とりせん', from: '送信元店舗'
-      fill_in 'タイトル', with: 'うちの店舗にきませんか？'
-      fill_in '詳細', with: 'めちゃくちゃお肉が安いからみんなうちの店舗にきてね！！！'
+      fill_in 'タイトル', with: information_attributes.title
+      fill_in '詳細', with: information_attributes.description
       select_datetime('information', 'publish_time', Time.zone.local(2019, 10, 25, 10, 30))
-      select 'イベントや告知', from: 'お知らせ種別'
-      select '店舗契約者', from: '配信対象'
+      select information_attributes.info_type_i18n, from: 'お知らせ種別'
+      select information_attributes.info_target_type_i18n, from: '配信対象'
       find('#information_shop_ids_2').click
 
       click_on('登録')
 
-      expect(find('.alert-warning')).to have_content('お知らせを作成しました')
-      expect(find('.cy-information-title')).to have_content('うちの店舗にきませんか？')
-      expect(find('.cy-information-description')).to have_content('めちゃくちゃお肉が安いからみんなうちの店舗にきてね！！！')
-      expect(find('.cy-information-publish-time')).to have_content('2019年10月25日(金) 10:30')
-      expect(find('.cy-information-type')).to have_content('イベントや告知')
-      expect(find('.cy-information-target-type')).to have_content('店舗契約者')
-      expect(find('.cy-information-shops')).to have_content('オータニ')
+      expect(page).to have_css('.alert-warning', text: 'お知らせを作成しました')
+      expect(page).to have_css('.cy-information-title', text: information_attributes.title)
+      expect(page).to have_css('.cy-information-description', text: information_attributes.description)
+      expect(page).to have_css('.cy-information-publish-time', text: '2019年10月25日(金) 10:30')
+      expect(page).to have_css('.cy-information-type', text: information_attributes.info_type_i18n)
+      expect(page).to have_css('.cy-information-target-type', text: information_attributes.info_target_type_i18n)
+      expect(page).to have_css('.cy-information-shops', text: 'オータニ')
     end
   end
 
@@ -80,6 +82,8 @@ RSpec.feature 'corporation/information', type: :feature do
     end
 
     scenario 'お知らせを編集できる' do
+      information_attributes = build(:information, info_target_type: :shop_users)
+      
       visit corporation_manage_root_path
 
       click_on('お知らせ管理')
@@ -88,24 +92,24 @@ RSpec.feature 'corporation/information', type: :feature do
         click_on('編集')
       end
 
-      fill_in 'タイトル', with: '蕎麦屋はじめました！！'
-      fill_in '詳細', with: '蕎麦って美味しいですよね'
+      fill_in 'タイトル', with: information_attributes.title
+      fill_in '詳細', with: information_attributes.description
       select_datetime('information', 'publish_time', Time.zone.local(2019, 12, 25, 15, 30))
-      select '重要なお知らせ', from: 'お知らせ種別'
-      select '店舗契約者', from: '配信対象'
+      select information_attributes.info_type_i18n, from: 'お知らせ種別'
+      select information_attributes.info_target_type_i18n, from: '配信対象'
       find('#information_shop_ids_1').click
       find('#information_shop_ids_2').click
       find('#information_shop_ids_3').click
 
       click_on('更新')
 
-      expect(find('.alert-warning')).to have_content('お知らせを更新しました')
-      expect(find('.cy-information-title')).to have_content('蕎麦屋はじめました！！')
-      expect(find('.cy-information-description')).to have_content('蕎麦って美味しいですよね')
-      expect(find('.cy-information-publish-time')).to have_content('2019年12月25日(水) 15:30')
-      expect(find('.cy-information-type')).to have_content('重要なお知らせ')
-      expect(find('.cy-information-target-type')).to have_content('店舗契約者')
-      expect(find('.cy-information-shops')).to have_content("とりせん オータニ イオン")
+      expect(page).to have_css('.alert-warning', text: 'お知らせを更新しました')
+      expect(page).to have_css('.cy-information-title', text: information_attributes.title)
+      expect(page).to have_css('.cy-information-description', text: information_attributes.description)
+      expect(page).to have_css('.cy-information-publish-time', text: '2019年12月25日(水) 15:30')
+      expect(page).to have_css('.cy-information-type', text: information_attributes.info_type_i18n)
+      expect(page).to have_css('.cy-information-target-type', text: information_attributes.info_target_type_i18n)
+      expect(page).to have_css('.cy-information-shops', text: 'とりせん オータニ イオン')
     end
   end
 
@@ -132,8 +136,8 @@ RSpec.feature 'corporation/information', type: :feature do
 
       page.driver.browser.switch_to.alert.accept
 
-      expect(find('.alert-warning')).to have_content('お知らせを削除しました')
-      expect(find('.table-striped')).not_to have_css(".cy-information-#{shop.id}")
+      expect(page).to have_css('.alert-warning', text: 'お知らせを削除しました')
+      expect(page).not_to have_css(".cy-information-#{shop.id}")
     end
   end
 end
