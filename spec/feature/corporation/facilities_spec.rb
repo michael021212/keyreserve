@@ -34,7 +34,7 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
 
         find('.cy-add-plan').click
 
-        within(find('.cy-facility-plans')) do
+        within('.cy-facility-plans') do
           all('.cy-select-plan option[value="1"]')[0].select_option
         end
 
@@ -73,7 +73,7 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
     scenario '施設を作成できる', js: true do
       visit corporation_manage_shop_path(shop)
 
-      within(find(".cy-facility-#{facility.id}")) do
+      within(".cy-facility-#{facility.id}") do
         click_on('編集')
       end
 
@@ -86,7 +86,7 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
 
         find('.cy-add-plan').click
 
-        within(find('.cy-facility-plans')) do
+        within('.cy-facility-plans') do
           all('.cy-select-plan option[value="1"]')[0].select_option
         end
 
@@ -115,7 +115,7 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
     scenario '施設を削除できる', js: true do
       visit corporation_manage_shop_facility_path(shop, facility)
 
-      within(find('.box-tools')) do
+      within('.box-tools') do
         click_on('削除')
       end
 
