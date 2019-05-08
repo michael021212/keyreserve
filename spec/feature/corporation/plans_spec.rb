@@ -6,16 +6,16 @@ RSpec.feature 'corporation/plans', type: :feature do
   let(:corporation_user) { create(:corporation_user,
                                   user: user,
                                   corporation: corporation) }
-  let(:plan_attributes) { build(:plan) }
 
   feature 'プラン作成' do
     before do
       corporation_user
-      plan_attributes
       login_user(user)
     end
 
     scenario 'プランを作成できる' do
+      plan_attributes = build(:plan)
+      
       visit corporation_manage_root_path
 
       click_on('プラン管理')
@@ -45,16 +45,16 @@ RSpec.feature 'corporation/plans', type: :feature do
                         name: 'GODプラン',
                         price: '100000',
                         description: 'GODになれるプランだよ') }
-    let(:plan_attributes) { build(:plan) }
 
     before do
       corporation_user
       plan
-      plan_attributes
       login_user(user)
     end
 
     scenario 'プランを編集できる' do
+      plan_attributes = build(:plan)
+      
       visit corporation_manage_root_path
 
       click_on('プラン管理')
