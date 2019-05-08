@@ -1,0 +1,17 @@
+ja:
+  common:
+    btn:
+      delete: 削除
+      show: 詳細
+      new: 新規追加
+      edit: 編集
+      back: 戻る
+    messages:
+      updated: "%{name}を更新しました。"
+      created: "%{name}を作成しました。"
+      deleted: "%{name}を削除しました。"
+      list_not_exist: "表示する%{name}はありません"
+    confirms:
+      really_to_delete: 本当に削除しますか？
+    sidebar:
+      manage: "%{name}管理"

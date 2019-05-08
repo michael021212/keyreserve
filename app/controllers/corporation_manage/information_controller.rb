@@ -18,7 +18,7 @@ class CorporationManage::InformationController < CorporationManage::Base
   def create
     @information = Information.new(information_params)
     if @information.save
-      redirect_to corporation_manage_information_path(@information), notice: "#{Information.model_name.human}を作成しました。"
+      redirect_to corporation_manage_information_path(@information), notice: t('common.messages.created', name: Information.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,7 +26,7 @@ class CorporationManage::InformationController < CorporationManage::Base
 
   def update
     if @information.update(information_params)
-      redirect_to corporation_manage_information_path(@information), notice: "#{Information.model_name.human}を更新しました。"
+      redirect_to corporation_manage_information_path(@information), notice: t('common.messages.updated', name: Information.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class CorporationManage::InformationController < CorporationManage::Base
 
   def destroy
     @information.destroy!
-    redirect_to corporation_manage_information_index_path, notice: "#{Information.model_name.human}を削除しました。"
+    redirect_to corporation_manage_information_index_path, notice: t('common.messages.deleted', name: Information.model_name.human)
   end
 
   private

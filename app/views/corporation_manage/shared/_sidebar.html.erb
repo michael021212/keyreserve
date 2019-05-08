@@ -10,7 +10,7 @@
       <li class="<%= active_parent('information') %>">
         <%= link_to corporation_manage_information_index_path do %>
           <i class='fa fa-info'></i>
-          <span><%= Information.model_name.human %>管理</span>
+          <span><%= t('common.sidebar.manage', name: Information.model_name.human) %></span>
         <% end %>
       </li>
     </ul>

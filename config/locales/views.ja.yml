@@ -219,6 +219,9 @@ ja:
       show:
         title: 契約詳細
     information:
+      form:
+        input_shop: 送信元店舗を選択して下さい
+        input_title: タイトルを入力して下さい
       index:
         title: お知らせ一覧
       new:
