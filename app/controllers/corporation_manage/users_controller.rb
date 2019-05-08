@@ -44,6 +44,7 @@ class CorporationManage::UsersController < CorporationManage::Base
   def user_params
     params.require(:user).permit(
       :email,
+      :parent_id,
       :password,
       :password_confirmation,
       :name,

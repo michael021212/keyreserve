@@ -1,4 +1,5 @@
 <%= bootstrap_form_for([:corporation_manage, user], layout: :horizontal) do |f| %>
+  <%= f.collection_select :parent_id, current_corporation.users.parent_corporation, :id, :name, prompt: '所属している法人を選択して下さい (法人に所属していない場合は空にして下さい)' %>
   <%= f.text_field :name %>
   <%= f.text_field :email %>
   <%= f.text_field :tel %>
