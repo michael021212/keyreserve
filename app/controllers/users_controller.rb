@@ -30,7 +30,6 @@ class UsersController < ApplicationController
   def sms
     tel = set_international_phone_number
     verify_code = SecureRandom.random_number(100000)
-    binding.pry
     res = TwilioApi.send_sms(tel, verify_code)
     if tel.present? && res.present?
       @user.update(tel: tel, sms_verify_code: verify_code, sms_sent_at: Time.zone.now)
