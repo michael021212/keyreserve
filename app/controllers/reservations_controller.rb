@@ -1,6 +1,7 @@
 class ReservationsController <  ApplicationController
   before_action :set_user
   before_action :require_login, except: [:spot]
+  before_action :require_sms_verification, except: [:spot]
   include ActionView::Helpers::NumberHelper
   include SearchParams
 

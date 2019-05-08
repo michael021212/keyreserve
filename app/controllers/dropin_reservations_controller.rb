@@ -1,6 +1,7 @@
 class DropinReservationsController <  ApplicationController
   before_action :set_user
   before_action :require_login, except: [:dropin_spot]
+  before_action :require_sms_verification, except: [:dropin_spot]
   include ActionView::Helpers::NumberHelper
 
   def index
