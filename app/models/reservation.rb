@@ -1,6 +1,7 @@
 class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
   include KsCheckinApi
+  include KeystationApi
 
   acts_as_paranoid
   belongs_to :facility, optional: true
