@@ -223,3 +223,8 @@ ja:
         title: 請求一覧
       show:
         title: 請求詳細
+    dropin_reservations:
+      index:
+        title: ドロップイン一覧
+      show:
+        title: ドロップイン詳細

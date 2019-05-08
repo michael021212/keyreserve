@@ -26,6 +26,8 @@ class DropinReservation < ApplicationRecord
     target = Time.zone.now + 30.minutes
     where(mail_send_flag: false).where(arel_table[:checkin].lteq(target))
   end
+  
+  scope :with_corporation, ->(target_corporation) { includes(facility: :shop).where(shops: { corporation_id: target_corporation.id }) }
 
   delegate :name, to: :user, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true, allow_nil: true
