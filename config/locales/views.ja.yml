@@ -218,6 +218,15 @@ ja:
         title: 利用者編集
       show:
         title: 利用者詳細
+    plans:
+      index:
+        title: プラン一覧
+      new:
+        title: プラン登録
+      edit:
+        title: プラン編集
+      show:
+        title: プラン詳細
     user_contracts:
       index:
         title: 契約一覧

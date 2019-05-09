@@ -87,6 +87,7 @@ ja:
       payment:
         token: 決済ID
       plan:
+        id: プランID
         name: プラン名
         price: 月額
         description: 説明

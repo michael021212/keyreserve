@@ -1,0 +1,32 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="box-tools">
+      <%= link_to t('common.btn.back'), corporation_manage_plans_path, class: 'btn btn-default' %>
+      <%= link_to t('common.btn.edit'), edit_corporation_manage_plan_path(@plan), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Plan.human_attribute_name(:id) %></th>
+        <td><%= @plan.id %></td>
+      </tr>
+      <tr class="cy-plan-flag">
+        <th><%= Plan.human_attribute_name(:default_flag) %></th>
+        <td><%= @plan.decorate.default_flag_to_string %></td>
+      </tr>
+      <tr class="cy-plan-name">
+        <th><%= Plan.human_attribute_name(:name) %></th>
+        <td><%= @plan.name %></td>
+      </tr>
+      <tr class="cy-plan-price">
+        <th><%= Plan.human_attribute_name(:price) %></th>
+        <td><%= delimiter_price(@plan.price) %></td>
+      </tr>
+      <tr class="cy-plan-description">
+        <th><%= Plan.human_attribute_name(:description) %></th>
+        <td><%= @plan.description %></td>
+      </tr>
+    </table>
+  </div>
+</div>
