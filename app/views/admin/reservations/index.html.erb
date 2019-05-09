@@ -55,8 +55,8 @@
               <td><%= delimiter_price(reservation.price) %></td>
               <td><%= reservation.payment_method %></td>
               <td>
-                <%= link_to '詳細', admin_reservation_path(reservation), class: 'btn btn-default' %>
-                <%= link_to 'キャンセル', admin_reservation_path(reservation), method: :delete, data: { confirm: 'キャンセルしますか?' }, class: 'btn btn-danger' if reservation.can_caceled? %>
+                <%= link_to t('common.btn.edit'), admin_reservation_path(reservation), class: 'btn btn-default' %>
+                <%= link_to t('common.btn.cancel'), admin_reservation_path(reservation), method: :delete, data: { confirm: t('common.confirms.really_to_cancele') }, class: 'btn btn-danger' if reservation.can_caceled? %>
               </td>
             </tr>
           <% end %>
