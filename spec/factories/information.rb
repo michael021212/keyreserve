@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:title) { |n| "タイトル#{n}"}
     sequence(:description) { |n| "説明文#{n}"}
     info_type { [:event, :important_notice].sample }
-    published_at { Time.zone.now }
+    publish_time { Time.zone.now }
     mail_send_flag { false }
     info_target_type { [:all_users, :shop_users].sample }
 

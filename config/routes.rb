@@ -120,6 +120,7 @@ Rails.application.routes.draw do
     end
     resources :plans
     resources :user_contracts
+    resources :information
   end
   # resources :users, only: [:index, :new, :create, :show]
   # resources :plans, except: [:show]
