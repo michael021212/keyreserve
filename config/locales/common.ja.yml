@@ -9,7 +9,8 @@ ja:
     messages:
       updated: "%{name}を更新しました。"
       created: "%{name}を作成しました。"
-      deleted: "#{name}を削除しました。"
+      deleted: "%{name}を削除しました。"
+      list_not_exist: "表示する%{name}はありません。"
     confirms:
       really_to_delete: 本当に削除しますか？
     sidebar:
