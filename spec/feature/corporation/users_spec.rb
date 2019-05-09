@@ -92,11 +92,21 @@ RSpec.feature 'corporation/users', type: :feature do
   end
 
   feature '利用者削除' do
-    context 'ログインしているユーザーの場合' do
+    context 'ユーザーがまだ契約を終えていなかった場合' do
+      let(:target_user) { create(:user) }
+      let(:corporation_user_2) { create(:corporation_user,
+                                        user: target_user,
+                                        corporation: corporation) }
+      let(:plan) { create(:plan) }
+      let(:user_contract) { create(:user_contract,
+                                   corporation: corporation,
+                                   plan: plan,
+                                   user: target_user) }
+      
       before do
-        corporation
-        user
         corporation_user
+        corporation_user_2
+        user_contract
         login_user(user)
       end
 
@@ -105,23 +115,28 @@ RSpec.feature 'corporation/users', type: :feature do
 
         click_on('利用者管理')
 
-        within(find(".cy-user-#{user.id}")) do
+        within(".cy-user-#{target_user.id}") do
           expect(page).not_to have_content('削除')
         end
       end
     end
 
-    context 'ログインしているユーザー以外の場合' do
-      let(:target_user) { create(:user)}
+    context 'ユーザーが契約を終えている場合' do
+      let(:target_user) { create(:user) }
       let(:corporation_user_2) { create(:corporation_user,
                                         user: target_user,
-                                        corporation: corporation)}
+                                        corporation: corporation) }
+      let(:plan) { create(:plan) }
+      let(:user_contract) { create(:user_contract,
+                                   corporation: corporation,
+                                   plan: plan,
+                                   user: target_user,
+                                   state: :finished) }
 
       before do
-        corporation
-        user
         corporation_user
         corporation_user_2
+        user_contract
         login_user(user)
       end
 
@@ -136,7 +151,7 @@ RSpec.feature 'corporation/users', type: :feature do
 
         page.driver.browser.switch_to.alert.accept
 
-        expect(find('.alert-warning')).to have_content('利用者を削除しました。')
+        expect(page).to have_css('.alert-warning', text: '利用者を削除しました。')
         expect(page).not_to have_css(".cy-user-#{target_user.id}")
       end
     end
