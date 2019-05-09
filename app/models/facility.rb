@@ -2,11 +2,11 @@ class Facility < ApplicationRecord
 
   acts_as_paranoid
   belongs_to :shop
-  has_many :facility_plans, dependent: :restrict_with_exception
+  has_many :facility_plans, dependent: :destroy
   has_many :plans, through: :facility_plans
-  has_many :facility_keys, dependent: :restrict_with_exception
-  has_many :facility_temporary_plans, dependent: :restrict_with_exception
-  has_many :facility_dropin_plans, dependent: :restrict_with_exception
+  has_many :facility_keys, dependent: :destroy
+  has_many :facility_temporary_plans, dependent: :destroy
+  has_many :facility_dropin_plans, dependent: :destroy
   has_many :reservations, dependent: :restrict_with_exception
   has_many :dropin_reservations, dependent: :restrict_with_exception
 
