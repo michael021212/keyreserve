@@ -8,9 +8,9 @@ RSpec.feature 'corporation/personal_identifications', type: :feature do
                                   corporation: corporation) }
 
   feature '本人確認用の書類の作成' do
-    let(:client_user) { create(:user, name: '顧客ユーザー') }
+    let(:target_user) { create(:user, name: '顧客ユーザー') }
     let(:corporation_user_2) { create(:corporation_user,
-                                      user: client_user,
+                                      user: target_user,
                                       corporation: corporation) }
 
     before do
@@ -20,10 +20,10 @@ RSpec.feature 'corporation/personal_identifications', type: :feature do
     end
 
     scenario '本人確認用の書類を作成できる', js: true do
-      visit corporation_manage_user_path(client_user)
+      visit corporation_manage_user_path(target_user)
 
-      within(find('.cy-identification-btns')) do
-        click_on('登録')
+      within('.cy-identification-btns') do
+        click_on('新規追加')
       end
 
       select '未認証', from: '認証状態'
@@ -33,11 +33,11 @@ RSpec.feature 'corporation/personal_identifications', type: :feature do
 
       click_on('登録')
 
-      expect(find('.alert-warning')).to have_content('本人確認を登録しました。')
-      expect(find('.cy-identification-status')).to have_content('未認証')
-      expect(find('.cy-identification-card-type')).to have_content('運転免許証')
-      expect(find('.cy-identification-front-img')['src']).to have_content('untenmenkyo.jpeg')
-      expect(find('.cy-identification-back-img')['src']).to have_content('untenmenkyo_uramen.jpg')
+      expect(page).to have_css('.alert-warning', text: '本人確認を作成しました。')
+      expect(page).to have_css('.cy-identification-status', text: '未認証')
+      expect(page).to have_css('.cy-identification-card-type', text: '運転免許証')
+      expect(page).to have_css('.cy-identification-front-img')
+      expect(page).to have_css('.cy-identification-back-img')
     end
   end
 end
