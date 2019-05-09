@@ -210,6 +210,9 @@ ja:
       show:
         title: 店舗詳細
     users:
+      form:
+        select_corproation: 所属している法人を選択して下さい (法人に所属していない場合は空にして下さい)
+        guide_change_password: 変更したくない場合は空にしてください
       index:
         title: 利用者一覧
       new:

@@ -12,7 +12,7 @@ class CorporationManage::UsersController < CorporationManage::Base
   def create
     @user = current_corporation.users.build(user_params)
     if @user.save
-      redirect_to corporation_manage_user_path(@user), notice: "#{User.model_name.human}を作成しました。"
+      redirect_to corporation_manage_user_path(@user), notice: t('common.messages.created', name: User.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class CorporationManage::UsersController < CorporationManage::Base
 
   def update
     if @user.update(user_params)
-      redirect_to corporation_manage_user_path(@user), notice: "#{User.model_name.human}を更新しました。"
+      redirect_to corporation_manage_user_path(@user), notice: t('common.messages.updated', name: User.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class CorporationManage::UsersController < CorporationManage::Base
 
   def destroy
     @user.destroy!
-    redirect_to corporation_manage_users_path, notice: "#{User.model_name.human}を削除しました。"
+    redirect_to corporation_manage_users_path, notice: t('common.messages.deleted', name: User.model_name.human)
   end
 
   private
