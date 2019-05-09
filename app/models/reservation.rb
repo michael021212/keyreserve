@@ -115,13 +115,11 @@ class Reservation < ApplicationRecord
     payment_id.present? ? 'クレジットカード' : '請求書'
   end
 
-  # 予約を削除できるかを検証
   def deletable?
     time = Time.zone.now + 1.days
     canceled? || (time > checkin)
   end
-  
-  # 予約をキャンセルできるかを検証
+
   def can_caneled?
     time = Time.zone.now + 1.days
     checkin > time
