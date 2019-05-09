@@ -1,5 +1,6 @@
 ja:
   common:
+    show_title: "%{name}詳細"
     btn:
       delete: 削除
       show: 詳細

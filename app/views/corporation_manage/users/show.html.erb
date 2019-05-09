@@ -37,12 +37,12 @@
 
 <div class="box box-default">
   <div class="box-header with-border">
-    <h4 class="box-title"><%= PersonalIdentification.model_name.human %>詳細</h4>
+    <h4 class="box-title"><%= t('common.show_title', name: PersonalIdentification.model_name.human) %></h4>
     <div class="box-tools cy-identification-btns">
       <% if @user.personal_identification.present? %>
-        <%= link_to '編集', edit_corporation_manage_user_personal_identification_path(@user, @user.personal_identification), class: 'btn btn-primary' %>
+        <%= link_to t('common.btn.edit'), edit_corporation_manage_user_personal_identification_path(@user, @user.personal_identification), class: 'btn btn-primary' %>
       <% else %>
-        <%= link_to '登録', new_corporation_manage_user_personal_identification_path(@user), class: 'btn btn-primary' %>
+        <%= link_to t('common.btn.new'), new_corporation_manage_user_personal_identification_path(@user), class: 'btn btn-primary' %>
       <% end %>
     </div>
     <div class="box-body">
@@ -60,7 +60,7 @@
           <td>
             <% if @user.personal_identification.try(:front_img).present? %>
               <%= link_to @user.personal_identification.front_img.url, target: '_blank' do %>
-                <%= image_tag @user.personal_identification.front_img.url, class: 'cy-identification-front-img', width: '300px' %>
+                <%= image_tag @user.personal_identification.front_img.url, class: 'cy-identification-front-img identification-img' %>
               <% end %>
             <% end %>
           </td>
@@ -70,7 +70,7 @@
           <td>
             <% if @user.personal_identification.try(:back_img).present? %>
               <%= link_to @user.personal_identification.back_img.url, target: '_blank' do %>
-                <%= image_tag @user.personal_identification.back_img.url, class: 'cy-identification-back-img', width: '300px' %>
+                <%= image_tag @user.personal_identification.back_img.url, class: 'cy-identification-back-img identification-img' %>
               <% end %>
             <% end %>
           </td>

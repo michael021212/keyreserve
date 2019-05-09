@@ -4,13 +4,13 @@
   <%= f.file_field :front_img %>
   <% if f.object.front_img.present? %>
     <%= f.form_group :front_img do %>
-      <%= image_tag f.object.front_img.url, width: '200px' %>
+      <%= image_tag f.object.front_img.url, class: 'identification-img' %>
     <% end %>
   <% end %>
   <%= f.file_field :back_img %>
   <% if f.object.back_img.present? %>
     <%= f.form_group :back_img do %>
-      <%= image_tag f.object.back_img.url, width: '200px' %>
+      <%= image_tag f.object.back_img.url, class: 'identification-img' %>
     <% end %>
   <% end %>
   <%= f.submit class: 'btn btn-primary center-block' %>

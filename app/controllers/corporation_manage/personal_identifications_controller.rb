@@ -9,7 +9,7 @@ class CorporationManage::PersonalIdentificationsController < CorporationManage::
   def create
     @personal_identification = @user.build_personal_identification(personal_identification_params)
     if @personal_identification.save
-      redirect_to corporation_manage_user_path(@user), notice: "#{PersonalIdentification.model_name.human}を登録しました。"
+      redirect_to corporation_manage_user_path(@user), notice: t('common.messages.created', name: PersonalIdentification.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
@@ -19,7 +19,7 @@ class CorporationManage::PersonalIdentificationsController < CorporationManage::
 
   def update
     if @personal_identification.update(personal_identification_params)
-      redirect_to corporation_manage_user_path(@user), notice: "#{PersonalIdentification.model_name.human}を更新しました。"
+      redirect_to corporation_manage_user_path(@user), notice: t('common.messages.updated', name: PersonalIdentification.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
