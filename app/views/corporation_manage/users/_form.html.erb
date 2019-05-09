@@ -1,4 +1,5 @@
 <%= bootstrap_form_for([:corporation_manage, user], layout: :horizontal) do |f| %>
+  <%= f.collection_select :parent_id, current_corporation.users.parent_corporation, :id, :name, prompt: t('.select_corproation') %>
   <%= f.text_field :name %>
   <%= f.text_field :email %>
   <%= f.text_field :tel %>
@@ -8,8 +9,8 @@
     <%= f.password_field :password %>
     <%= f.password_field :password_confirmation %>
   <% else %>
-    <%= f.password_field :password, help: '変更したくない場合は空にしてください' %>
-    <%= f.password_field :password_confirmation, help: '変更したくない場合は空にしてください' %>
+    <%= f.password_field :password, help: t('.guide_change_password') %>
+    <%= f.password_field :password_confirmation, help: t('.guide_change_password') %>
   <% end %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
