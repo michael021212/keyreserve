@@ -226,6 +226,15 @@ ja:
       show:
         title: 施設詳細
         target_plan: 月額対象プラン
+    plans:
+      index:
+        title: プラン一覧
+      new:
+        title: プラン登録
+      edit:
+        title: プラン編集
+      show:
+        title: プラン詳細
     user_contracts:
       index:
         title: 契約一覧

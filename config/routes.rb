@@ -118,6 +118,7 @@ Rails.application.routes.draw do
     resources :shops, except: :index do
       resources :facilities, except: :index
     end
+    resources :plans
     resources :user_contracts
   end
   # resources :users, only: [:index, :new, :create, :show]
