@@ -8,3 +8,4 @@
 //= require datetimepicker_fmt
 //= require app
 //= require map
+//= require corporation_manage/common
