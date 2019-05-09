@@ -1,11 +1,15 @@
 ja:
   common:
+    credit_card: クレジットカード
+    invoice: 請求書
+    drop_in: ドロップイン
     btn:
       delete: 削除
       show: 詳細
       new: 新規追加
       edit: 編集
       back: 戻る
+      search: 検索
     messages:
       updated: "%{name}を更新しました。"
       created: "%{name}を作成しました。"

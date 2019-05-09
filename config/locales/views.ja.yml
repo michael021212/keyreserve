@@ -228,10 +228,15 @@ ja:
       show:
         title: 契約詳細
     billings:
+      search_form:
+        select_year_month: 年月を指定
+        select_payway_type: 支払い方法を選択してください
       index:
         title: 請求一覧
       show:
         title: 請求詳細
+        used_date: 利用日
+        money: 金額
     information:
       form:
         input_shop: 送信元店舗を選択して下さい
