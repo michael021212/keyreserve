@@ -64,7 +64,7 @@
                           <%= link_to 'キャンセル', dropin_reservation_path(dropin_reservation),
                             method: :delete,
                             data: { confirm: 'キャンセルしますか?' },
-                            class: 'btn btn-danger' if dropin_reservation.deletable? %>
+                            class: 'btn btn-danger' if dropin_reservation.can_caceled? %>
                         </div>
                       </div>
 

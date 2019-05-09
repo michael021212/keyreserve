@@ -65,7 +65,7 @@
                             reservation_path(reservation),
                             method: :delete,
                             data: { confirm: 'キャンセルしますか?' },
-                            class: 'btn btn-danger' if reservation.deletable? %>
+                            class: 'btn btn-danger' if reservation.can_caceled? %>
                         </div>
                       </div>
                     </div>

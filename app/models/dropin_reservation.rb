@@ -123,8 +123,15 @@ class DropinReservation < ApplicationRecord
     %w[運営会社名 店舗名 施設名 お名前 ご利用プラン 利用日 利用開始時間 利用終了時間 利用時間 状態 利用料金]
   end
 
+  # 予約を削除できるかを検証
   def deletable?
-    time = Time.zone.now + 24.hours
-    time > checkin
+    time = Time.zone.now + 1.days
+    canceled? || (time > checkin)
+  end
+
+  # 予約をキャンセルできるかを検証
+  def can_caneled?
+    time = Time.zone.now + 1.days
+    checkin > time
   end
 end

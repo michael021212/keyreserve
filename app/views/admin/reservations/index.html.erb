@@ -56,7 +56,7 @@
               <td><%= reservation.payment_method %></td>
               <td>
                 <%= link_to '詳細', admin_reservation_path(reservation), class: 'btn btn-default' %>
-                <%= link_to 'キャンセル', admin_reservation_path(reservation), method: :delete, data: { confirm: 'キャンセルしますか?' }, class: 'btn btn-danger' if reservation.deletable? %>
+                <%= link_to 'キャンセル', admin_reservation_path(reservation), method: :delete, data: { confirm: 'キャンセルしますか?' }, class: 'btn btn-danger' if reservation.can_caceled? %>
               </td>
             </tr>
           <% end %>
