@@ -10,7 +10,6 @@ class DropinReservation < ApplicationRecord
   belongs_to :payment, optional: true
   belongs_to :billing, optional: true
 
-  before_save :create_payment, if: Proc.new { |r| r.user_id? }
   before_destroy :cancel_payment, if: Proc.new { |r| r.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
@@ -42,9 +41,9 @@ class DropinReservation < ApplicationRecord
     payment.present? && payment.credit_card_id.present?
   end
 
-  def create_payment
+  def set_payment
     return unless self.user.creditcard?
-    self.payment = Payment.create!(
+    self.payment = Payment.build(
       user_id: self.reservation_user_id,
       corporation_id: self.user_id,
       facility_id: self.facility_id,
