@@ -10,6 +10,7 @@ ja:
       edit: 編集
       back: 戻る
       search: 検索
+      cancel: キャンセル
     messages:
       updated: "%{name}を更新しました。"
       created: "%{name}を作成しました。"
@@ -17,5 +18,6 @@ ja:
       list_not_exist: "表示する%{name}はありません。"
     confirms:
       really_to_delete: 本当に削除しますか？
+      really_to_cancele: 本当にキャンセルしますか？
     sidebar:
       manage: "%{name}管理"

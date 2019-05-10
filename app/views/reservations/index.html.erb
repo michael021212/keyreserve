@@ -61,11 +61,11 @@
                             class: 'btn btn-main btn-block' %>
                         </div>
                         <div class="col-md-offset-4 col-md-4 text-right">
-                          <%= link_to 'キャンセル',
+                          <%= link_to t('common.btn.cancel'),
                             reservation_path(reservation),
                             method: :delete,
-                            data: { confirm: 'キャンセルしますか?' },
-                            class: 'btn btn-danger' if reservation.deletable? %>
+                            data: { confirm: t('common.confirms.really_to_cancele') },
+                            class: 'btn btn-danger' if reservation.can_caceled? %>
                         </div>
                       </div>
                     </div>
