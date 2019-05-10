@@ -49,16 +49,16 @@
       <table class="table table-striped">
         <tr class="cy-identification-status">
           <th><%= PersonalIdentification.human_attribute_name(:status) %></th>
-          <td><%= @user.personal_identification.try(:status_i18n) %></td>
+          <td><%= @user.personal_identification&.status_i18n %></td>
         </tr>
         <tr class="cy-identification-card-type">
           <th><%= PersonalIdentification.human_attribute_name(:card_type) %></th>
-          <td><%= @user.personal_identification.try(:card_type_i18n) %></td>
+          <td><%= @user.personal_identification&.card_type_i18n %></td>
         </tr>
         <tr>
           <th><%= PersonalIdentification.human_attribute_name(:front_img) %></th>
           <td>
-            <% if @user.personal_identification.try(:front_img).present? %>
+            <% if @user.personal_identification&.front_img.present? %>
               <%= link_to @user.personal_identification.front_img.url, target: '_blank' do %>
                 <%= image_tag @user.personal_identification.front_img.url, class: 'cy-identification-front-img identification-img' %>
               <% end %>
@@ -68,7 +68,7 @@
         <tr>
           <th><%= PersonalIdentification.human_attribute_name(:back_img) %></th>
           <td>
-            <% if @user.personal_identification.try(:back_img).present? %>
+            <% if @user.personal_identification&.back_img.present? %>
               <%= link_to @user.personal_identification.back_img.url, target: '_blank' do %>
                 <%= image_tag @user.personal_identification.back_img.url, class: 'cy-identification-back-img identification-img' %>
               <% end %>
