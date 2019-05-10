@@ -34,7 +34,7 @@
       <li class="<%= active_parent('user_corps') %>">
         <%= link_to corporation_manage_user_corps_path do %>
           <i class='fa fa-users'></i><span>
-          <%= UserCorp.model_name.human %>管理</span>
+          <span><%= t('common.sidebar.manage', name: UserCorp.model_name.human) %></span>
         <% end %>
       </li>
     </ul>
