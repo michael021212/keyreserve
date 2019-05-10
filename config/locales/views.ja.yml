@@ -267,10 +267,16 @@ ja:
         used_date: 利用日
         money: 金額
     dropin_reservations:
+      search_form:
+        select_year_month: 年月を指定
+        input_name: ユーザ又は法人名
       index:
         title: ドロップイン一覧
+        plan_name: 利用プラン名
+        utilization_time: 利用時間
       show:
         title: ドロップイン詳細
+        utilization_time: 利用時間
     personal_identifications:
       new:
         title: 本人確認登録

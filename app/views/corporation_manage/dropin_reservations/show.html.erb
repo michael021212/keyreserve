@@ -1,8 +1,8 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h4 class="box-title"><%= DropinReservation.model_name.human %>詳細</h4>
+    <h4 class="box-title"><%= t('.title') %></h4>
     <div class="box-tools">
-      <%= link_to "戻る", corporation_manage_dropin_reservations_path, class: 'btn btn-default' %>
+      <%= link_to t('common.btn.back'), corporation_manage_dropin_reservations_path, class: 'btn btn-default' %>
     </div>
   </div>
   <div class="box-body">
@@ -25,19 +25,19 @@
       </tr>
       <tr>
         <th><%= Facility.human_attribute_name(:name) %></th>
-        <td><%= @dropin_reservation.facility.name %></td>
+        <td><%= @dropin_reservation.facility_name %></td>
       </tr>
       <tr>
         <th><%= DropinReservation.human_attribute_name(:user_id) %></th>
-        <td><%= @dropin_reservation.user.try(:name) %></td>
+        <td><%= @dropin_reservation.user_name %></td>
       </tr>
       <tr>
         <th><%= User.human_attribute_name(:email) %></th>
-        <td><%= @dropin_reservation.user.try(:email) %></td>
+        <td><%= @dropin_reservation.user_email %></td>
       </tr>
       <tr>
-        <th>利用プラン名</th>
-        <td><%= @dropin_reservation.facility_dropin_sub_plan.with_plan_name %></td>
+        <th><%= t('.plan_name') %></th>
+        <td><%= @dropin_reservation.facility_dropin_sub_plan_with_plan_name %></td>
       </tr>
       <tr>
         <th><%= DropinReservation.human_attribute_name(:checkin) %></th>
@@ -48,20 +48,20 @@
         <td><%= datetime_ja @dropin_reservation.checkout %></td>
       </tr>
       <tr>
-        <th>利用時間</th>
-        <td><%= @dropin_reservation.facility_dropin_sub_plan.using_hours %>時間</td>
+        <th><%= t('.utilization_time') %></th>
+        <td><%= @dropin_reservation.facility_dropin_sub_plan.using_hours %></td>
       </tr>
       <tr>
         <th><%= DropinReservation.human_attribute_name(:price) %></th>
-        <td><%= number_with_delimiter @dropin_reservation.price %>円</td>
+        <td><%= delimiter_price(@dropin_reservation.price) %></td>
       </tr>
       <tr>
         <th><%= Payment.human_attribute_name(:token) %></th>
-        <td><%= @dropin_reservation.payment.try(:token) %></td>
+        <td><%= @dropin_reservation.payment_token %></td>
       </tr>
       <tr>
         <th><%= DropinReservation.human_attribute_name(:mail_send_flag) %></th>
-        <td><%= @dropin_reservation.mail_send_flag? ? '◯' : '' %></td>
+        <td><%= @dropin_reservation.mail_send_flag_to_string %></td>
       </tr>
     </table>
   </div>

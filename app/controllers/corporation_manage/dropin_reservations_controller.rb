@@ -7,7 +7,7 @@ class CorporationManage::DropinReservationsController < CorporationManage::Base
         @dropin_reservations = @dropin_reservations.page(params[:page]).per(30)
       end
       format.csv do
-        send_data @dropin_reservations.to_csv(col_sep: "\t"), filename: "dropin_reservations_#{Time.zone.now.strftime('%Y%m%d%H%M')}.csv"
+        send_data @dropin_reservations.to_csv(col_sep: "\t"), filename: t('common.csv.dropin_reservation_csv', date: Time.zone.now.strftime('%Y/%m/%d'))
       end
     end
   end

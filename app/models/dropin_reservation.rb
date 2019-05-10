@@ -31,6 +31,9 @@ class DropinReservation < ApplicationRecord
   delegate :name, to: :user, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :facility, prefix: true, allow_nil: true
+  delegate :usage_hour, to: :facility_dropin_plan, prefix: true, allow_nil: true
+  delegate :with_plan_name, to: :facility_dropin_plan, prefix: true, allow_nil: true
+  delegate :token, to: :payment, prefix: true, allow_nil: true
 
   # 請求時に削除済の施設も参照できる必要があったので上書き
   def facility_with_deleted
