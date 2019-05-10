@@ -115,7 +115,7 @@ Rails.application.routes.draw do
   # 法人メニュー
   namespace :corporation_manage do
     root 'dashboards#index'
-    resources :shops, except: :index
+    resources :shops, only: %i[new create show edit update destroy]
     resources :users do
       resources :personal_identifications, only: %i[new create edit update]
     end
