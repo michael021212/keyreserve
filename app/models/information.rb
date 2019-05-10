@@ -16,4 +16,5 @@ class Information < ApplicationRecord
 
   scope(:ready_to_send, -> { where(mail_send_flag: false).where('publish_time <= ?', Time.zone.now) })
   scope(:enable_disp, -> {where('publish_time <= ?', Time.zone.now) })
+  scope :target_shops, -> (shops_ids) { where(shop_id: shops_ids) }
 end

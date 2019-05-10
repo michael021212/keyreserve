@@ -1,7 +1,4 @@
 <div class="box box-default">
-  <div class="box-header with-border">
-    <h4 class="box-title"><%= Billing.model_name.human %>一覧</h4>
-  </div>
   <div class="box-body">
     <table class="table table-striped">
       <%= render 'search_form', q: @q %>
@@ -18,19 +15,19 @@
       <% if @billings.present? %>
         <% @billings.each do |billing| %>
           <tr class="cy-billing-<%= billing.id %>">
-            <td><%= billing.user.name %></td>
-            <td><%= billing.shop.name %></td>
+            <td><%= billing.user_name %></td>
+            <td><%= billing.shop_name %></td>
             <td><%= billing.payment_way_i18n %></td>
             <td><%= billing.decorate.price_with_delimiter %></td>
             <td>
-              <%= link_to '詳細', corporation_manage_billing_path(billing), class: 'btn btn-default' %>
+              <%= link_to t('common.btn.show'), corporation_manage_billing_path(billing), class: 'btn btn-default' %>
             </td>
           </tr>
         <% end %>
       <% else %>
         <tr>
           <td colspan="20">
-            <%= Billing.model_name.human %>がありません
+            <%= t('common.messages.list_not_exist', name: Billing.model_name.human) %>
           </td>
         </tr>
       <% end %>

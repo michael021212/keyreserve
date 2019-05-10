@@ -1,0 +1,36 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="box-tools">
+      <%= link_to t('common.btn.new'), new_corporation_manage_plan_path, class: 'btn btn-info' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><%= Plan.human_attribute_name(:id) %></th>
+        <th><%= Plan.human_attribute_name(:default_flag) %></th>
+        <th><%= Plan.human_attribute_name(:name) %></th>
+        <th><%= Plan.human_attribute_name(:price) %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @plans.each do |plan| %>
+        <tr class="cy-plan-<%= plan.id %>">
+          <td><%= plan.id %></td>
+          <td><%= plan.decorate.default_flag_to_string %></td>
+          <td><%= plan.name %></td>
+          <td><%= delimiter_price(plan.price) %></td>
+          <td>
+            <%= link_to t('common.btn.show'), corporation_manage_plan_path(plan), class: 'btn btn-default' %>
+            <%= link_to t('common.btn.edit'), edit_corporation_manage_plan_path(plan), class: 'btn btn-primary' %>
+            <%= link_to t('common.btn.delete'), corporation_manage_plan_path(plan), method: :delete, data: { confirm: t('common.confirms.really_to_delete') }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @plans %>
+  </div>
+</div>

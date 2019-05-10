@@ -1,0 +1,46 @@
+<div class="box box-default">
+  <div class="box-header">
+    <div class="box-tools">
+      <%= link_to t('common.btn.new'), new_corporation_manage_user_path, class: 'btn btn-info' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><%= User.human_attribute_name(:id) %></th>
+        <th><%= User.human_attribute_name(:name) %></th>
+        <th><%= User.human_attribute_name(:email) %></th>
+        <th><%= User.human_attribute_name(:tel) %></th>
+        <th><%= User.human_attribute_name(:state) %></th>
+        <th><%= User.human_attribute_name(:payway) %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @users.each do |user| %>
+        <tr class="cy-user-<%= user.id %>">
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.tel %></td>
+          <td><%= user.state_i18n %></td>
+          <td><%= user.payway_i18n %></td>
+          <td>
+            <%= link_to t('common.btn.show'), corporation_manage_user_path(user), class: 'btn btn-default' %>
+            <%= link_to t('common.btn.edit'), edit_corporation_manage_user_path(user), class: 'btn btn-primary' %>
+            <% if user.can_delete? %>
+              <%= link_to t('common.btn.delete'),
+                          corporation_manage_user_path(user),
+                          method: :delete,
+                          data: { confirm: t('common.confirms.really_to_delete') },
+                          class: 'btn btn-danger' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @users %>
+  </div>
+</div>

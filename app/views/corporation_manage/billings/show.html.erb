@@ -1,8 +1,7 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h4 class="box-title"><%= Billing.model_name.human %>詳細</h4>
     <div class="box-tools">
-      <%= link_to "戻る",
+      <%= link_to t('common.btn.back'),
                   corporation_manage_billings_path,
                   class: 'btn btn-default' %>
     </div>
@@ -15,11 +14,11 @@
       </tr>
       <tr>
         <th><%= Billing.human_attribute_name(:user_id) %></th>
-        <td><%= @billing.user.name %></td>
+        <td><%= @billing.user_name %></td>
       </tr>
       <tr>
         <th><%= Billing.human_attribute_name(:shop_id) %></th>
-        <td><%= @billing.shop.name %></td>
+        <td><%= @billing.shop_name %></td>
       </tr>
       <tr>
         <th><%= Billing.human_attribute_name(:month) %></th>
@@ -33,18 +32,18 @@
 
     <table class="table table-striped mt60">
       <tr>
-        <th>利用日</th>
-        <th>利用施設</th>
-        <th>利用時間</th>
-        <th>支払い方法</th>
-        <th>金額</th>
+        <th><%= t('.used_date') %></th>
+        <th><%= Facility.human_attribute_name(:name) %></th>
+        <th><%= Facility.human_attribute_name(:usage_period) %></th>
+        <th><%= Billing.human_attribute_name(:payment_way) %></th>
+        <th><%= t('.money') %></th>
       </tr>
       <% @billing_details.each do |detail| %>
         <tr>
           <td class="cy-detail-time"><%= detail.checkin.strftime('%Y/%m/%d') %></td>
           <td class="cy-detail-facility-name"><%= detail.facility.name %></td>
-          <td class="cy-detail-usage-time"><%= detail.class.name == 'Reservation' ? detail.decorate.usage_period_with_unit : 'ドロップイン' %></td>
-          <td class="cy-detail-paid-type"><%= detail.paid_by_credit_card? ? 'クレジットカード' : '請求書' %></td>
+          <td class="cy-detail-usage-time"><%= display_usage_period(detail) %></td>
+          <td class="cy-detail-paid-type"><%= detail.decorate.display_payway %></td>
           <td class="cy-detail-price"><%= detail.decorate.price_with_delimiter %></td>
         </tr>
       <% end %>

@@ -126,7 +126,12 @@ class DropinReservation < ApplicationRecord
   end
 
   def deletable?
-    checkin > Time.zone.now + 24.hours
+    time = Time.zone.now + 1.days
+    canceled? || (time > checkin)
   end
 
+  def can_caneled?
+    time = Time.zone.now + 1.days
+    checkin > time
+  end
 end
