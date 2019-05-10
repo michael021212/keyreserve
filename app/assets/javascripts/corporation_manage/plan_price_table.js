@@ -8,8 +8,8 @@ var ajaxRequest = function ajaxRequest(url) {
 };
 
 $(document).ready(function() {
-  var shop_id = $('#js-plan-price-table').data('shop-id')
-  var facility_id = $('#js-plan-price-table').data('facility-id')
+  var shop_id = gon.shop_id
+  var facility_id = gon.facility_id
 
   $('#js-plan-price-table').fullCalendar({
     schedulerLicenseKey: gon.schedular_licence_key,
