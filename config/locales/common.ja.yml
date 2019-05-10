@@ -3,6 +3,7 @@ ja:
     credit_card: クレジットカード
     invoice: 請求書
     drop_in: ドロップイン
+    show_title: "%{name}詳細"
     btn:
       delete: 削除
       show: 詳細

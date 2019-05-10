@@ -266,6 +266,11 @@ ja:
         title: 請求詳細
         used_date: 利用日
         money: 金額
+    personal_identifications:
+      new:
+        title: 本人確認登録
+      edit:
+        title: 本人確認編集
     information:
       form:
         input_shop: 送信元店舗を選択して下さい
