@@ -15,7 +15,7 @@ class CorporationManage::UserCorpsController < CorporationManage::Base
   def create
     @user_corp = current_corporation.users.build(user_corp_params)
     if @user_corp.save
-      redirect_to corporation_manage_user_corp_path(@user_corp), notice: "#{UserCorp.model_name.human}を作成しました。"
+      redirect_to corporation_manage_user_corp_path(@user_corp), notice: t('common.messages.created', name: UserCorp.model_name.human)
     else
       render :new
     end
@@ -23,7 +23,7 @@ class CorporationManage::UserCorpsController < CorporationManage::Base
 
   def update
     if @user_corp.update(user_corp_params)
-      redirect_to corporation_manage_user_corp_path(@user_corp), notice: "#{UserCorp.model_name.human}を更新しました。"
+      redirect_to corporation_manage_user_corp_path(@user_corp), notice: t('common.messages.updated', name: UserCorp.model_name.human)
     else
       render :edit
     end
@@ -31,7 +31,7 @@ class CorporationManage::UserCorpsController < CorporationManage::Base
 
   def destroy
     @user_corp.destroy!
-    redirect_to corporation_manage_user_corps_path, notice: "#{UserCorp.model_name.human}を削除しました。"
+    redirect_to corporation_manage_user_corps_path, notice: t('common.messages.deleted', name: UserCorp.model_name.human)
   end
 
   private
