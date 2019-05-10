@@ -12,5 +12,3 @@ module BillingHelper
     resource.class.name == Reservation.name ? resource.decorate.usage_period_with_unit : t('common.drop_in')
   end
 end
-
-

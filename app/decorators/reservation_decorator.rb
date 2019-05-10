@@ -13,4 +13,3 @@ class ReservationDecorator < Draper::Decorator
     paid_by_credit_card? ? I18n.t('common.credit_card') : I18n.t('common.invoice')
   end
 end
-
