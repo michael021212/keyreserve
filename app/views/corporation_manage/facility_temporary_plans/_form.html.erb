@@ -24,7 +24,7 @@
         <span class="price-text-field mr50 ml20">
           <%= pp.text_field :price, hide_label: true %><%= t('.en') %>
         </span>
-        <%= pp.link_to_remove t('common.btn.delete'), confirm: t('cargo_iem.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>
+        <%= pp.link_to_remove t('common.btn.delete'), class: 'glyphicon glyphicon-remove', inline: true %>
       </div>
     <% end %>
     <p><%= f.link_to_add t('common.btn.add'), :facility_temporary_plan_prices, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
