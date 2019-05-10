@@ -8,7 +8,7 @@
   <%= f.text_field :guide_mail_title, help: t('.guide_mail_title') %>
   <%= f.text_area :guide_mail_content, rows: 10 %>
   <%= f.file_field :guide_file, help: t('.guide_file') %>
-  <div class='form-group'>
+  <div class="form-group">
     <% if f.object.guide_file.present? %>
       <%= f.label t('.file_exist') %><br/>
       <%= link_to f.object.guide_file.file.filename, f.object.guide_file.url %>
@@ -22,7 +22,7 @@
         <%= pp.time_select :starting_time, { minute_step: 30, include_blank: true, hide_label: true } %> 〜
         <%= pp.time_select :ending_time, { minute_step: 30, include_blank: true, hide_label: true } %>
         <span class="price-text-field mr50 ml20">
-          <%= pp.text_field :price, hide_label: true %>円
+          <%= pp.text_field :price, hide_label: true %><%= t('.en') %>
         </span>
         <%= pp.link_to_remove t('common.btn.delete'), confirm: t('cargo_iem.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>
       </div>
