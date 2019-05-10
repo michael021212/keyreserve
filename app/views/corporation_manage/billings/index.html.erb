@@ -15,8 +15,8 @@
       <% if @billings.present? %>
         <% @billings.each do |billing| %>
           <tr class="cy-billing-<%= billing.id %>">
-            <td><%= billing.user.name %></td>
-            <td><%= billing.shop.name %></td>
+            <td><%= billing.user_name %></td>
+            <td><%= billing.shop_name %></td>
             <td><%= billing.payment_way_i18n %></td>
             <td><%= billing.decorate.price_with_delimiter %></td>
             <td>
