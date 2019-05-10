@@ -209,7 +209,6 @@ ja:
         title: 店舗編集
       show:
         title: 店舗詳細
-<<<<<<< HEAD
     facilities:
       form:
         add_facility_type: 施設タイプを選択してください
