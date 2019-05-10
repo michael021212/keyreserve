@@ -4,6 +4,8 @@ class AdminController < ActionController::Base
   layout 'admin/layouts/application'
 
   before_action :authenticate_admin_user!
+  
+  rescue_from ActiveRecord::DeleteRestrictionError, with: :can_not_delete
 
   def current_admin_user
     if session[:admin_user_id].present?
@@ -22,5 +24,9 @@ class AdminController < ActionController::Base
 
   def better_errors_hack
     request.env['puma.config'].options.user_options.delete(:app) if request.env.has_key?('puma.config')
+  end
+
+  def can_not_delete
+    redirect_back fallback_location: root_path, notice: t('errors.messages.restrict_dependent_destroy.has_many')
   end
 end

@@ -116,9 +116,9 @@ Rails.application.routes.draw do
   namespace :corporation_manage do
     root 'dashboards#index'
     resources :user_contracts
-    resources :shops, except: :index do
-      resources :facilities, except: :index do
-        resources :facility_temporary_plans, only: [:new, :edit, :create, :update, :destroy] do
+    resources :shops, only: %i[new create show edit update destroy] do
+      resources :facilities, only: %i[new create show edit update destroy] do
+        resources :facility_temporary_plans, only: %i[new edit create update destroy] do
           collection do
             get :resources
             get :events
@@ -126,10 +126,12 @@ Rails.application.routes.draw do
         end
       end
     end
+    resources :users do
+      resources :personal_identifications, only: %i[new create edit update]
+    end
+    resources :plans
+    resources :user_contracts
+    resources :billings, only: %i[index show]
+    resources :information
   end
-  # resources :users, only: [:index, :new, :create, :show]
-  # resources :plans, except: [:show]
-  # resources :shops, except: [:destroy] do
-  #   resources :facilities, except: [:index]
-  # end
 end

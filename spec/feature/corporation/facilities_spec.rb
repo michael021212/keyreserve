@@ -21,33 +21,35 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
     end
 
     scenario '施設を作成できる', js: true do
+      facility_attibutes = build(:facility, shop: shop)
+      
       visit corporation_manage_shop_path(shop)
 
       click_on('新規追加')
 
       VCR.use_cassette 'corporation_manage/facilities/new_facility_google_map' do
-        fill_in '施設名', with: '西尾オフィス'
-        fill_in '最大利用人数', with: 10
-        fill_in '住所', with: '渋谷区宇田川町'
-        select '会議室', from: '施設タイプ'
-        fill_in '施設説明', with: '意識高い系の人たちが集まるオフィスなんだぜ'
+        fill_in '施設名', with: facility_attibutes.name
+        fill_in '最大利用人数', with: facility_attibutes.max_num
+        fill_in '住所', with: facility_attibutes.address
+        select facility_attibutes.facility_type_i18n, from: '施設タイプ'
+        fill_in '施設説明', with: facility_attibutes.description
 
         find('.cy-add-plan').click
 
-        within(find('.cy-facility-plans')) do
+        within('.cy-facility-plans') do
           all('.cy-select-plan option[value="1"]')[0].select_option
         end
 
         click_on('登録')
       end
 
-      expect(find('.alert-warning')).to have_content('施設を作成しました')
-      expect(find('.cy-facility-name')).to have_content('西尾オフィス')
-      expect(find('.cy-facility-max-num')).to have_content(10)
-      expect(find('.cy-facility-address')).to have_content('渋谷区宇田川町')
-      expect(find('.cy-facility-type')).to have_content('会議室')
-      expect(find('.cy-facility-description')).to have_content('意識高い系の人たちが集まるオフィスなんだぜ')
-      expect(find('.cy-facility-plans')).to have_content('お得プラン')
+      expect(page).to have_css('.alert-warning', text: '施設を作成しました')
+      expect(page).to have_css('.cy-facility-name', text: facility_attibutes.name)
+      expect(page).to have_css('.cy-facility-max-num', text: facility_attibutes.max_num)
+      expect(page).to have_css('.cy-facility-address', text: facility_attibutes.address)
+      expect(page).to have_css('.cy-facility-type', text: facility_attibutes.facility_type_i18n)
+      expect(page).to have_css('.cy-facility-description', text: facility_attibutes.description)
+      expect(page).to have_css('.cy-facility-plans', text: 'お得プラン')
     end
   end
 
@@ -71,35 +73,37 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
     end
 
     scenario '施設を作成できる', js: true do
+      facility_attibutes = build(:facility, shop: shop)
+      
       visit corporation_manage_shop_path(shop)
 
-      within(find(".cy-facility-#{facility.id}")) do
+      within(".cy-facility-#{facility.id}") do
         click_on('編集')
       end
 
       VCR.use_cassette 'corporation_manage/facilities/edit_facility_google_map' do
-        fill_in '施設名', with: '橋本オフィス'
-        fill_in '最大利用人数', with: 100
-        fill_in '住所', with: '六本木ヒルズ'
-        select '賃貸物件', from: '施設タイプ'
-        fill_in '施設説明', with: '柔術やってる人しか来れないんだぜ'
+        fill_in '施設名', with: facility_attibutes.name
+        fill_in '最大利用人数', with: facility_attibutes.max_num
+        fill_in '住所', with: facility_attibutes.address
+        select facility_attibutes.facility_type_i18n, from: '施設タイプ'
+        fill_in '施設説明', with: facility_attibutes.description
 
         find('.cy-add-plan').click
 
-        within(find('.cy-facility-plans')) do
+        within('.cy-facility-plans') do
           all('.cy-select-plan option[value="1"]')[0].select_option
         end
 
         click_on('更新')
       end
 
-      expect(find('.alert-warning')).to have_content('施設を更新しました')
-      expect(find('.cy-facility-name')).to have_content('橋本オフィス')
-      expect(find('.cy-facility-max-num')).to have_content(100)
-      expect(find('.cy-facility-address')).to have_content('六本木ヒルズ')
-      expect(find('.cy-facility-type')).to have_content('賃貸物件')
-      expect(find('.cy-facility-description')).to have_content('柔術やってる人しか来れないんだぜ')
-      expect(find('.cy-facility-plans')).to have_content('天才プラン')
+      expect(page).to have_css('.alert-warning', text: '施設を更新しました')
+      expect(page).to have_css('.cy-facility-name', text: facility_attibutes.name)
+      expect(page).to have_css('.cy-facility-max-num', text: facility_attibutes.max_num)
+      expect(page).to have_css('.cy-facility-address', text: facility_attibutes.address)
+      expect(page).to have_css('.cy-facility-type', text: facility_attibutes.facility_type_i18n)
+      expect(page).to have_css('.cy-facility-description', text: facility_attibutes.description)
+      expect(page).to have_css('.cy-facility-plans', text: '天才プラン')
     end
   end
 
@@ -115,14 +119,14 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
     scenario '施設を削除できる', js: true do
       visit corporation_manage_shop_facility_path(shop, facility)
 
-      within(find('.cy-facility-box-tools')) do
+      within('.cy-facility-box-tools') do
         click_on('削除')
       end
 
       page.driver.browser.switch_to.alert.accept
 
-      expect(find('.alert-warning')).to have_content('施設を削除しました')
-      expect(find('.cy-facilities-table')).not_to have_css(".cy-facility-#{shop.id}")
+      expect(page).to have_css('.alert-warning', text: '施設を削除しました')
+      expect(page).not_to have_css(".cy-facility-#{shop.id}")
     end
   end
 end
