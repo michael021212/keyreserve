@@ -55,3 +55,36 @@
     </table>
   </div>
 </div>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="box-tools">
+      <%= link_to t('common.btn.new'), new_corporation_manage_shop_facility_path(@shop), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped cy-facilities-table">
+      <thead>
+      <tr>
+        <th><%= Facility.human_attribute_name(:name) %></th>
+        <th><%= Facility.human_attribute_name(:max_num) %></th>
+        <th><%= Facility.human_attribute_name(:facility_type) %></th>
+        <th</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @shop.facilities.each do |facility| %>
+        <tr class="cy-facility-<%= facility.id %>">
+          <td><%= facility.name %></td>
+          <td><%= facility.max_num %></td>
+          <td><%= facility.facility_type_i18n %></td>
+          <td>
+            <%= link_to t('common.btn.show'), corporation_manage_shop_facility_path(@shop, facility), class: 'btn btn-default' %>
+            <%= link_to t('common.btn.edit'), edit_corporation_manage_shop_facility_path(@shop, facility), class: 'btn btn-primary' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
