@@ -74,6 +74,8 @@ class Admin::ReservationsController < AdminController
       flash[:error] = 'クレジットカードで決済する場合は、利用料金が50円を超えるようにしてください'
       return render :payment
     end
+    @reservation.set_payment
+    @reservation.payment.stripe_charge
     if @reservation.save
       session[:reservation] = nil
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
