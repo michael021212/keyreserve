@@ -39,19 +39,19 @@
         <th><%= t('.plan_name') %></th>
         <td><%= @dropin_reservation.facility_dropin_sub_plan_with_plan_name %></td>
       </tr>
-      <tr>
+      <tr class="cy-dropin-reservation-checkin">
         <th><%= DropinReservation.human_attribute_name(:checkin) %></th>
-        <td><%= datetime_ja @dropin_reservation.checkin %></td>
+        <td><%= datetime_ja(@dropin_reservation.checkin) %></td>
       </tr>
-      <tr>
+      <tr class="cy-dropin-reservation-checkout">
         <th><%= DropinReservation.human_attribute_name(:checkout) %></th>
-        <td><%= datetime_ja @dropin_reservation.checkout %></td>
+        <td><%= datetime_ja(@dropin_reservation.checkout) %></td>
       </tr>
       <tr>
         <th><%= t('.utilization_time') %></th>
-        <td><%= @dropin_reservation.facility_dropin_sub_plan.using_hours %></td>
+        <td><%= @dropin_reservation.facility_dropin_sub_plan_using_hours %></td>
       </tr>
-      <tr>
+      <tr class="cy-dropin-reservation-price">
         <th><%= DropinReservation.human_attribute_name(:price) %></th>
         <td><%= delimiter_price(@dropin_reservation.price) %></td>
       </tr>
@@ -59,9 +59,9 @@
         <th><%= Payment.human_attribute_name(:token) %></th>
         <td><%= @dropin_reservation.payment_token %></td>
       </tr>
-      <tr>
+      <tr class="cy-dropin-reservation-mail-send">
         <th><%= DropinReservation.human_attribute_name(:mail_send_flag) %></th>
-        <td><%= @dropin_reservation.mail_send_flag_to_string %></td>
+        <td><%= @dropin_reservation.decorate.mail_send_flag_to_string %></td>
       </tr>
     </table>
   </div>
