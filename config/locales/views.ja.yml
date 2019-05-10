@@ -209,6 +209,23 @@ ja:
         title: 店舗編集
       show:
         title: 店舗詳細
+    facilities:
+      form:
+        add_facility_type: 施設タイプを選択してください
+        add_address: 住所を入力してください
+        add_name: 施設名を入力してください
+        target_plan: 月額対象プラン
+        select_plan: プランを選択してください
+        add_plan: プランを追加する
+      index:
+        title: 施設一覧
+      new:
+        title: 施設登録
+      edit:
+        title: 施設編集
+      show:
+        title: 施設詳細
+        target_plan: 月額対象プラン
     users:
       form:
         select_corproation: 所属している法人を選択して下さい (法人に所属していない場合は空にして下さい)
