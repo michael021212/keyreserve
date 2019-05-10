@@ -72,7 +72,7 @@ module ApplicationHelper
   end
   
   def delimiter_price_per_hour(price)
-    price = price ? price : 0
+    price ||= 0
     "#{delimiter_price(price)}/h"
   end
 
