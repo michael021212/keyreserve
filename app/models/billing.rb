@@ -17,8 +17,8 @@ class Billing < ApplicationRecord
     card_and_invoice: 3 # クレカと請求書
   }
   
-  delegate :name, to: :user, prefix: true, allow_nil: true
-  delegate :name, to: :shop, prefix: true, allow_nil: true
+  delegate :name, to: :user, prefix: true
+  delegate :name, to: :shop, prefix: true
 
   scope :in_month, -> (year, month) do
     where('year = ? && month = ?', year, month)
