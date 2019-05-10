@@ -256,6 +256,11 @@ ja:
         title: 契約編集
       show:
         title: 契約詳細
+    personal_identifications:
+      new:
+        title: 本人確認登録
+      edit:
+        title: 本人確認編集
     information:
       form:
         input_shop: 送信元店舗を選択して下さい
