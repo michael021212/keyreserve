@@ -21,7 +21,7 @@ class Admin::FacilitiesController < AdminController
   end
 
   def update
-    @facility.assign_attribute(facility_params)
+    @facility.assign_attributes(facility_params)
     @facility.set_geocode
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を更新しました。"
@@ -33,7 +33,7 @@ class Admin::FacilitiesController < AdminController
   def show; end
 
   def destroy
-    @facility.destroy
+    @facility.destroy!
     redirect_to admin_corporation_shop_path(@corporation, @shop), notice: "#{Facility.model_name.human}を削除しました"
   end
 
