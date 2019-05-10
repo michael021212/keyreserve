@@ -1,13 +1,9 @@
-<!-- 都度課金対象プラン -->
 <div class="box box-default">
   <div class="box-header with-border">
-    <h4 class="box-title">都度課金対象プラン</h4>
+    <h4 class="box-title"><%= FacilityTemporaryPlan.model_name.human %></h4>
     <div class="box-tools cy-add-temporary-plan-btn">
-      <%= link_to "新規追加", new_corporation_manage_shop_facility_facility_temporary_plan_path(shop, facility), class: 'btn btn-primary' %>
+      <%= link_to t('common.btn.new'), new_corporation_manage_shop_facility_facility_temporary_plan_path(shop, facility), class: 'btn btn-primary' %>
     </div>
   </div>
-  <div id="js-plan-price-table"
-       data-shop-id=<%="#{shop.id}"%>
-       data-facility-id=<%="#{facility.id}"%>>
-  </div>
+  <div id="js-plan-price-table"></div>
 </div>
