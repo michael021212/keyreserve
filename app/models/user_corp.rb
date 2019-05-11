@@ -14,11 +14,10 @@ class UserCorp < User
 
   def set_corp_settings
     self.parent_id = nil
-    pass = SecureRandom.hex(10)
-    self.password = pass
-    self.password_confirmation = pass
     self.advertise_notice_flag = false
     self.user_type = :parent_corporation
+    self.payway = :invoice
+    self.state = :registered
   end
 
   def remove_parent_id
