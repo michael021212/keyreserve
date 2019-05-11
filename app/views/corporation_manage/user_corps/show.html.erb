@@ -12,27 +12,23 @@
         <th><%= UserCorp.human_attribute_name(:id) %></th>
         <td><%= @user_corp.id %></td>
       </tr>
-      <tr>
+      <tr class="cy-user-corp-name">
         <th><%= UserCorp.human_attribute_name(:name) %></th>
         <td><%= @user_corp.name %></td>
       </tr>
-      <tr>
+      <tr class="cy-user-corp-email">
         <th><%= UserCorp.human_attribute_name(:email) %></th>
         <td><%= @user_corp.email %></td>
       </tr>
-      <tr>
+      <tr class="cy-user-corp-tel">
         <th><%= UserCorp.human_attribute_name(:tel) %></th>
         <td><%= @user_corp.tel %></td>
       </tr>
-      <tr>
+      <tr class="cy-user-corp-max-num">
         <th><%= UserCorp.human_attribute_name(:max_user_num) %></th>
         <td><%= @user_corp.max_user_num %></td>
       </tr>
-      <tr>
-        <th><%= UserCorp.human_attribute_name(:state) %></th>
-        <td><%= @user_corp.state_i18n %></td>
-      </tr>
-      <tr>
+      <tr class="cy-user-corp-payway">
         <th><%= UserCorp.human_attribute_name(:payway) %></th>
         <td><%= @user_corp.payway_i18n %></td>
       </tr>

@@ -24,13 +24,13 @@
         <th><%= UserCorp.human_attribute_name(:name) %></th>
         <th><%= UserCorp.human_attribute_name(:email) %></th>
         <th><%= UserCorp.human_attribute_name(:tel) %></th>
-        <th style="width: 200px;"></th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
       <% if @user_corps.present? %>
         <% @user_corps.each do |user_corp| %>
-          <tr>
+          <tr class="cy-user-corp-<%= user_corp.id %>">
             <td><%= user_corp.id %></td>
             <td><%= user_corp.name %></td>
             <td><%= user_corp.email %></td>
