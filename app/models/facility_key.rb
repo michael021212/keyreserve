@@ -2,7 +2,6 @@ class FacilityKey < ApplicationRecord
   acts_as_paranoid
 
   belongs_to :facility
-  before_save :set_name
 
   scope(:selected, ->(c_id) { includes(facility: { shop: :corporation }).where(facilities: { shops: { corporations: { id: c_id } } }) })
 
