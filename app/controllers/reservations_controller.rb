@@ -99,7 +99,9 @@ class ReservationsController <  ApplicationController
       redirect_to spot_reservations_url and return
     end
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
+    @reservation.set_payment
     ActiveRecord::Base.transaction do
+      @reservation.payment.stripe_charge
       @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
