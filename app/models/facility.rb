@@ -75,7 +75,7 @@ class Facility < ApplicationRecord
 
   def discount_rate(user)
     return 1 if user.nil?
-    user.user_contracts.present? ? 0.5 : 1
+    user.user_contracts.present? ? Settings.discount_rate : 1
   end
 
   def calc_price(user, start, usage_hour)
