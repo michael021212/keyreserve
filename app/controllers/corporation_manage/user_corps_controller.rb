@@ -6,6 +6,8 @@ class CorporationManage::UserCorpsController < CorporationManage::Base
     @user_corps = @q.result(distinct: true).order(id: :desc).page(params[:page])
   end
 
+  def show; end
+
   def new
     @user_corp = current_corporation.user_corps.build
   end
