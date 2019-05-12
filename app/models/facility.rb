@@ -61,21 +61,21 @@ class Facility < ApplicationRecord
     min_price = ftps.minimum(:standard_price_per_hour)
     min_price = option_min_price if option_min_price.present? && option_min_price < min_price
     min_price ||= 0
+    compute_discount_price(min_price, user)
   end
 
   # userに表示し得る施設の最小利用料金(30分)
-  def min_half_hourly_price(user, target_time=nil)
-    plan_ids = user.present? ? user.user_contracts.map(&:plan_id) : []
-    ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
-      where(plan_id: nil).or(self.facility_temporary_plans.where(plan_id: plan_ids))
-    options = FacilityTemporaryPlanPrice.where.not(price: 0).where(facility_temporary_plan_id: ftps.pluck(:id).push(nil))
-    al = FacilityTemporaryPlanPrice.arel_table
-    options = options.where(al[:starting_time].lteq(target_time.to_s(:time))).where(al[:ending_time].gt(target_time.to_s(:time))) if target_time.present?
-    option_min_price = options.minimum(:price)
-    min_price = ftps.minimum(:standard_price_per_hour)
-    min_price = option_min_price if option_min_price.present? && option_min_price < min_price
-    min_price ||= 0
-    (min_price / 2) unless min_price.zero? && min_price.nil?
+  def min_half_hourly_price(user, target_time)
+    min_hourly_price(user, target_time) / 2
+  end
+
+  def compute_discount_price(price, user)
+    (price * discount_rate(user)).floor
+  end
+
+  def discount_rate(user)
+    return 1 if user.nil?
+    user.user_contracts.present? ? 0.5 : 1
   end
 
   def calc_price(user, start, usage_hour)
