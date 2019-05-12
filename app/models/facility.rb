@@ -65,7 +65,7 @@ class Facility < ApplicationRecord
   end
 
   # userに表示し得る施設の最小利用料金(30分)
-  def min_half_hourly_price(user, target_time)
+  def min_half_hourly_price(user, target_time=nil)
     min_hourly_price(user, target_time) / 2
   end
 
