@@ -115,10 +115,18 @@ Rails.application.routes.draw do
   # 法人メニュー
   namespace :corporation_manage do
     root 'dashboards#index'
-    resources :shops, except: :index
+    resources :shops, only: %i[new create show edit update destroy] do
+      resources :facilities, only: %i[new create show edit update destroy]
+    end
+    resources :users do
+      resources :personal_identifications, only: %i[new create edit update]
+    end
+    resources :users
+    resources :plans
     resources :user_contracts
     resources :billings, only: %i[index show]
     resources :reservations
+    resources :information
   end
   # resources :users, only: [:index, :new, :create, :show]
   # resources :plans, except: [:show]

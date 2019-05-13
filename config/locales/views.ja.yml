@@ -209,6 +209,44 @@ ja:
         title: 店舗編集
       show:
         title: 店舗詳細
+    facilities:
+      form:
+        add_facility_type: 施設タイプを選択してください
+        add_address: 住所を入力してください
+        add_name: 施設名を入力してください
+        target_plan: 月額対象プラン
+        select_plan: プランを選択してください
+        add_plan: プランを追加する
+      index:
+        title: 施設一覧
+      new:
+        title: 施設登録
+      edit:
+        title: 施設編集
+      show:
+        title: 施設詳細
+        target_plan: 月額対象プラン
+    users:
+      form:
+        select_corproation: 所属している法人を選択して下さい (法人に所属していない場合は空にして下さい)
+        guide_change_password: 変更したくない場合は空にしてください
+      index:
+        title: 利用者一覧
+      new:
+        title: 利用者登録
+      edit:
+        title: 利用者編集
+      show:
+        title: 利用者詳細
+    plans:
+      index:
+        title: プラン一覧
+      new:
+        title: プラン登録
+      edit:
+        title: プラン編集
+      show:
+        title: プラン詳細
     user_contracts:
       index:
         title: 契約一覧
@@ -219,7 +257,29 @@ ja:
       show:
         title: 契約詳細
     billings:
+      search_form:
+        select_year_month: 年月を指定
+        select_payway_type: 支払い方法を選択してください
       index:
         title: 請求一覧
       show:
         title: 請求詳細
+        used_date: 利用日
+        money: 金額
+    personal_identifications:
+      new:
+        title: 本人確認登録
+      edit:
+        title: 本人確認編集
+    information:
+      form:
+        input_shop: 送信元店舗を選択して下さい
+        input_title: タイトルを入力して下さい
+      index:
+        title: お知らせ一覧
+      new:
+        title: お知らせ登録
+      edit:
+        title: お知らせ編集
+      show:
+        title: お知らせ詳細

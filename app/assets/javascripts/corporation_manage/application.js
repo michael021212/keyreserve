@@ -1,6 +1,7 @@
 //= require rails-ujs
 //= require jquery
 //= require jquery-ui
+//= require jquery_nested_form
 //= require bootstrap-sprockets
 //= require moment
 //= require moment/ja.js

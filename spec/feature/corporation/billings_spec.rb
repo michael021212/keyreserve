@@ -39,8 +39,8 @@ RSpec.describe 'corporation_manage/billings', type: :feature do
       
       click_on('検索')
       
-      expect(find('.table-striped')).to have_css(".cy-billing-#{billing.id}")
-      expect(find('.table-striped')).not_to have_css(".cy-billing-#{billing_2.id}")
+      expect(page).to have_css(".cy-billing-#{billing.id}")
+      expect(page).not_to have_css(".cy-billing-#{billing_2.id}")
     end
     
     scenario '該当しない年月の請求は表示されない' do
@@ -52,8 +52,8 @@ RSpec.describe 'corporation_manage/billings', type: :feature do
       
       click_on('検索')
       
-      expect(find('.table-striped')).not_to have_css(".cy-billing-#{billing.id}")
-      expect(find('.table-striped')).not_to have_css(".cy-billing-#{billing_2.id}")
+      expect(page).not_to have_css(".cy-billing-#{billing.id}")
+      expect(page).not_to have_css(".cy-billing-#{billing_2.id}")
     end
     
     scenario 'デフォルトで先月の月の検索がかかっている' do
@@ -62,8 +62,8 @@ RSpec.describe 'corporation_manage/billings', type: :feature do
         
         click_on('請求管理')
         
-        expect(find('.table-striped')).not_to have_css(".cy-billing-#{billing.id}")
-        expect(find('.table-striped')).to have_css(".cy-billing-#{billing_2.id}")
+        expect(page).not_to have_css(".cy-billing-#{billing.id}")
+        expect(page).to have_css(".cy-billing-#{billing_2.id}")
       end
     end
   end
@@ -102,11 +102,11 @@ RSpec.describe 'corporation_manage/billings', type: :feature do
     scenario '請求の詳細が表示される' do
       visit corporation_manage_billing_path(billing)
       
-      expect(find('.cy-detail-time')).to have_content('2019/10/20')
-      expect(find('.cy-detail-facility-name')).to have_content('ぺご施設')
-      expect(find('.cy-detail-usage-time')).to have_content('2.5時間')
-      expect(find('.cy-detail-paid-type')).to have_content('クレジットカード')
-      expect(find('.cy-detail-price')).to have_content('¥10,000')
+      expect(page).to have_css('.cy-detail-time', text: '2019/10/20')
+      expect(page).to have_css('.cy-detail-facility-name', text: 'ぺご施設')
+      expect(page).to have_css('.cy-detail-usage-time', text: '2.5時間')
+      expect(page).to have_css('.cy-detail-paid-type', text: 'クレジットカード')
+      expect(page).to have_css('.cy-detail-price', text: '¥10,000')
     end
   end
 end

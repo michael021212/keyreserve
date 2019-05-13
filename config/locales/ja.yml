@@ -87,6 +87,7 @@ ja:
       payment:
         token: 決済ID
       plan:
+        id: プランID
         name: プラン名
         price: 月額
         description: 説明
@@ -407,6 +408,8 @@ ja:
       min_size_error: "ファイルを%{min_size}バイト以上のサイズにしてください"
       max_size_error: "ファイルを%{max_size}バイト以下のサイズにしてください"
       reservation_already_exists: その時間帯にはすでに予約が存在しています
+      restrict_dependent_destroy:
+        has_many: 関連するレコードが存在するので削除ができません
     template:
       body: 次の項目を確認してください。
       header:
