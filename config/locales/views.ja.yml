@@ -256,7 +256,6 @@ ja:
         title: 契約編集
       show:
         title: 契約詳細
-<<<<<<< HEAD:config/locales/page_title.ja.yml
     facility_temporary_plans:
       new:
         title: 施設利用都度課金プラン登録
@@ -267,7 +266,6 @@ ja:
         title: 施設利用ドロップインプラン登録
       edit:
         title: 施設利用ドロップインプラン編集
-=======
     user_corps:
       form:
         can_be_added: 追加可能な利用者人数
@@ -307,4 +305,3 @@ ja:
         title: お知らせ編集
       show:
         title: お知らせ詳細
->>>>>>> ec4b3de2f34d3734c7b76249df814a9ab0661b81:config/locales/views.ja.yml
