@@ -29,7 +29,7 @@
           <td>
             <%= link_to t('common.btn.show'), corporation_manage_user_path(user), class: 'btn btn-default' %>
             <%= link_to t('common.btn.edit'), edit_corporation_manage_user_path(user), class: 'btn btn-primary' %>
-            <% if user.can_delete? %>
+            <% if user.deletable? %>
               <%= link_to t('common.btn.delete'),
                           corporation_manage_user_path(user),
                           method: :delete,
