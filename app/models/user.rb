@@ -87,7 +87,7 @@ class User < ApplicationRecord
     user_corp.present? ? "(#{user_corp.name}) #{name}" : name
   end
 
-  def can_delete?
+  def deletable?
     user_contracts.all?(&:finished?) && reservations.all?(&:deletable?) && dropin_reservations.all?(&:deletable?)
   end
 end
