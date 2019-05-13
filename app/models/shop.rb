@@ -21,6 +21,7 @@ class Shop < ApplicationRecord
   end
 
   def business_time
+    return if opening_time.blank? || closing_time.blank?
     errors.add(:opening_time, '開店時間は閉店時間より早めにしてください') if opening_time > closing_time
   end
 
