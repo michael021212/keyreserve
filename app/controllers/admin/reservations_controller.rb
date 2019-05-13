@@ -75,7 +75,7 @@ class Admin::ReservationsController < AdminController
       return render :payment
     end
     @reservation.set_payment
-    @reservation.payment.stripe_charge
+    @reservation.payment.stripe_charge!
     if @reservation.save
       session[:reservation] = nil
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
