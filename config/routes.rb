@@ -126,7 +126,11 @@ Rails.application.routes.draw do
     resources :user_contracts
     resources :user_corps
     resources :billings, only: %i[index show]
-    resources :reservations
+    resources :reservations do
+      collection do
+        post :payment
+      end
+    end
     resources :information
   end
   # resources :users, only: [:index, :new, :create, :show]

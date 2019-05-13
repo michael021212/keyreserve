@@ -14,6 +14,12 @@ class Reservation < ApplicationRecord
   validates :checkin, :checkout, :usage_period, presence: true
   validate :reservation_already_exists_in_range?
 
+  with_options on: :need_for_payment do
+    validates :user_id, :price, presence: true
+    validate :need_credit_card
+    validate :need_limit_has_been_exceeded
+  end
+
   # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
@@ -38,11 +44,11 @@ class Reservation < ApplicationRecord
   def set_payment
     return unless self.user.creditcard?
     return if self.payment.present?
-    self.payment = Payment.build(
+    self.payment = Payment.new(
       user_id: self.user_id,
       corporation_id: self.facility.shop.corporation_id,
       facility_id: self.facility_id,
-      credit_card_id: self.user.credit_card.id,
+      credit_card_id: self.user&.credit_card&.id,
       price: self.price,
     )
   end
@@ -131,11 +137,41 @@ class Reservation < ApplicationRecord
     self.checkout = checkin + usage_period.hours
   end
 
+  def set_price
+    return if usage_period.nil?
+    self.price = facility.calc_price(self.user, self.checkin, self.usage_period)
+  end
+
+  def save_and_charge!
+    ActiveRecord::Base.transaction do
+      payment.stripe_charge!
+      save!
+      send_reserved_mail!
+    end
+  end
+  
   private
+
+  def send_reserved_mail!
+    NotificationMailer.reserved(self, self.user_id).deliver_now!
+    NotificationMailer.reserved(self, self.user.user_corp.id).deliver_now! if user.user_corp.present?
+    NotificationMailer.reserved_to_admin(self).deliver_now!
+  end
+
+  def need_credit_card
+    return if user.credit_card.present?
+    errors.add(:user_id, :credit_card_is_not_exists)
+  end
+
+  def need_limit_has_been_exceeded
+    return if price > 50
+    errors.add(:price, :need_limit_has_been_exceeded)
+  end
 
   def reservation_already_exists_in_range?
     return false if checkin.nil? || checkout.nil?
-    return true if facility.reservations.in_range(checkin..checkout).blank?
-    errors.add(:checkin, :reservation_already_exists)
+    if facility.reservations.in_range(checkin..checkout).present?
+      errors.add(:checkin, :reservation_already_exists)
+    end
   end
 end

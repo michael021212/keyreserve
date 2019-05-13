@@ -408,7 +408,10 @@ ja:
       mini_magick_processing_error: "MiniMagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
       min_size_error: "ファイルを%{min_size}バイト以上のサイズにしてください"
       max_size_error: "ファイルを%{max_size}バイト以下のサイズにしてください"
+      stripe_error: 予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。
       reservation_already_exists: その時間帯にはすでに予約が存在しています
+      credit_card_is_not_exists: 指定したユーザーはまだクレジットカードを登録していません
+      need_limit_has_been_exceeded: クレジットカードで決済する場合は、利用料金が50円を超えるようにしてください
       restrict_dependent_destroy:
         has_many: 関連するレコードが存在するので削除ができません
     template:
