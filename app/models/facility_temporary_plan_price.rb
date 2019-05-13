@@ -3,6 +3,13 @@ class FacilityTemporaryPlanPrice < ApplicationRecord
   acts_as_paranoid
   belongs_to :facility_temporary_plan
 
+  scope :not_zero_yen, -> { where.not(price: 0) }
+  scope :target_temporary_plan_ids, ->(temporary_plan_ids) { where(facility_temporary_plan_id: temporary_plan_ids) }
+  scope :in_time, ->(target_time) do
+    al = FacilityTemporaryPlanPrice.arel_table
+    where(al[:starting_time].lteq(target_time.to_s(:time))).where(al[:ending_time].gt(target_time.to_s(:time)))
+  end
+
   validates :starting_time, :ending_time, :price,  presence: true
   validate :within_business_hours
 

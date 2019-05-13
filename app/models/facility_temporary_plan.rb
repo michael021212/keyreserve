@@ -15,6 +15,9 @@ class FacilityTemporaryPlan < ApplicationRecord
 
   scope(:belongs_to_corporation, ->(corporation) { includes(facility: { shop: :corporation }).where(facilities: { shops: { corporation_id: corporation.id }}) })
   scope(:exclude_ks_room_key_ids, ->(facility_id) { includes(:facility).where(facilities: { id: facility_id }).pluck(:ks_room_key_id) })
+  scope :not_zero_yen, -> { where.not(standard_price_per_hour: 0) }
+  scope :plan_id_nil, -> { where(plan_id: nil) }
+  scope :target_plan_ids, ->(plan_ids) { where(plan_id: plan_ids) }
 
   def overlap_facility_temporary_plan_prices
     time_period_with_indices = []

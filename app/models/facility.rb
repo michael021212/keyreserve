@@ -58,33 +58,19 @@ class Facility < ApplicationRecord
     facilities = facilities.where('max_num > ?',  condition[:use_num].to_i)
   end
 
-  # userに表示し得る施設の最小利用料金(1時間)
   def min_hourly_price(user, target_time=nil)
-    plan_ids = user.present? ? user.user_contracts.pluck(:plan_id) : []
-    ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
-      where(plan_id: nil).or(self.facility_temporary_plans.where(plan_id: plan_ids))
-    options = FacilityTemporaryPlanPrice.where.not(price: 0).where(facility_temporary_plan_id: ftps.pluck(:id).push(nil))
-    al = FacilityTemporaryPlanPrice.arel_table
-    options = options.where(al[:starting_time].lteq(target_time.to_s(:time))).where(al[:ending_time].gt(target_time.to_s(:time))) if target_time.present?
-    option_min_price = options.minimum(:price)
-    min_price = ftps.minimum(:standard_price_per_hour)
-    min_price = option_min_price if option_min_price.present? && option_min_price < min_price
-    min_price ||= 0
+    temporary_plans = (get_temporary_plans_linked_with_user(user).presence || get_temporary_plans_of_not_contracts.presence)
+    temporary_plan_prices = get_temporary_plan_prices_linked_with_temporary_plan_ids(temporary_plans&.ids)
+    temporary_plan_prices = temporary_plan_prices.in_time(target_time) if temporary_plan_prices.present? && target_time.present?
+    min_price = get_min_price_from_target_temporary_plans(temporary_plans)
+    option_min_price = get_min_price_from_target_temporary_plan_prices(temporary_plan_prices)
+    min_price = option_min_price if !option_min_price.zero?
     compute_discount_price(min_price, user)
   end
 
   # userに表示し得る施設の最小利用料金(30分)
   def min_half_hourly_price(user, target_time=nil)
     min_hourly_price(user, target_time) / 2
-  end
-
-  def compute_discount_price(price, user)
-    (price * discount_rate(user)).floor
-  end
-
-  def discount_rate(user)
-    return 1 if user.nil?
-    user.user_contracts.present? ? Settings.discount_rate : 1
   end
 
   def calc_price(user, start, usage_hour)
@@ -165,5 +151,40 @@ class Facility < ApplicationRecord
       self.lat = response["results"][0]["geometry"]["location"]["lat"]
       self.lon = response["results"][0]["geometry"]["location"]["lng"]
     end
+  end
+
+  private
+
+  def get_min_price_from_target_temporary_plans(target_temporay_plans)
+    return 0 if target_temporay_plans.blank?
+    target_temporay_plans.minimum(:standard_price_per_hour)
+  end
+
+  def get_min_price_from_target_temporary_plan_prices(target_temporay_plan_prices)
+    return 0 if target_temporay_plan_prices.blank?
+    target_temporay_plan_prices.minimum(:price)
+  end
+
+  def get_temporary_plan_prices_linked_with_temporary_plan_ids(temporary_plan_ids)
+    return [] if facility_temporary_plan_prices.blank? || temporary_plan_ids.blank?
+    FacilityTemporaryPlanPrice.not_zero_yen.target_temporary_plan_ids(temporary_plan_ids)
+  end
+
+  def get_temporary_plans_linked_with_user(user)
+    return [] if user.get_contract_plan_ids.blank?
+    facility_temporary_plans.target_plan_ids(user.get_contract_plan_ids)
+  end
+
+  def get_temporary_plans_of_not_contracts
+    facility_temporary_plans.not_zero_yen.plan_id_nil
+  end
+
+  def compute_discount_price(price, user)
+    (price * discount_rate(user)).floor
+  end
+
+  def discount_rate(user)
+    return 1 if user.nil? || get_temporary_plans_linked_with_user(user).present?
+    user.user_contracts.present? ? Settings.discount_rate : 1
   end
 end

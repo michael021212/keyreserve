@@ -90,4 +90,8 @@ class User < ApplicationRecord
   def deletable?
     user_contracts.all?(&:finished?) && reservations.all?(&:deletable?) && dropin_reservations.all?(&:deletable?)
   end
+  
+  def get_contract_plan_ids
+    user_contracts.present? ? user_contracts.map(&:plan_id) : []
+  end
 end
