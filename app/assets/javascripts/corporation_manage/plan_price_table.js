@@ -20,12 +20,12 @@ $(document).ready(function() {
     slotDuration: '00:30:00',
     slotLabelInterval: '00:30:00',
     resourceRender: function(resource, el) {
-      link = '/corporation_manage/shops/' + shop_id + '/facilities/' + facility_id + '/facility_temporary_plans/' + resource.id + '/edit';
+      link = `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/facility_temporary_plans/${resource.id}/edit`;
       el.append("<p><a href=" + link + '>編集</a></p>');
     },
     resources: function (callback) {
       ajaxRequest(
-        '/corporation_manage/shops/' + shop_id + '/facilities/' + facility_id + '/facility_temporary_plans/resources'
+        `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/facility_temporary_plans/resources`
       ).then(function(resources) {
         callback(resources);
       })
@@ -34,7 +34,7 @@ $(document).ready(function() {
       {
         events: function (start, end, timezone, callback) {
           ajaxRequest(
-            '/corporation_manage/shops/' + shop_id + '/facilities/' + facility_id + '/facility_temporary_plans/events'
+            `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/facility_temporary_plans/events`
           ).then(function(events) {
             callback(events);
           })
