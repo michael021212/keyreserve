@@ -14,7 +14,6 @@ class Admin::UserCorpsController < AdminController
 
   def create
     @user_corp = UserCorp.new(user_corp_params)
-    @user_corp.set_corp_settings
     if @user_corp.save
       redirect_to admin_user_corp_path(@user_corp), notice: t('common.messages.created', name: UserCorp.model_name.human)
     else
@@ -23,9 +22,7 @@ class Admin::UserCorpsController < AdminController
   end
 
   def update
-    @user_corp.assign_attributes(user_corp_params)
-    @user_corp.set_corp_settings
-    if @user_corp.save
+    if @user_corp.update(user_corp_params)
       redirect_to admin_user_corp_path(@user_corp), notice: t('common.messages.updated', name: UserCorp.model_name.human)
     else
       render :edit
@@ -52,6 +49,9 @@ class Admin::UserCorpsController < AdminController
       :max_user_num,
       :password,
       :password_confirmation
-    )
+    ).merge(advertise_notice_flag: false,
+            user_type: :parent_corporation,
+            payway: :invoice,
+            state: :registered)
   end
 end

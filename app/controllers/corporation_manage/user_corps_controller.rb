@@ -16,7 +16,6 @@ class CorporationManage::UserCorpsController < CorporationManage::Base
 
   def create
     @user_corp = current_corporation.user_corps.build(user_corp_params)
-    @user_corp.set_corp_settings
     if @user_corp.save
       redirect_to corporation_manage_user_corp_path(@user_corp), notice: t('common.messages.created', name: UserCorp.model_name.human)
     else
@@ -25,9 +24,7 @@ class CorporationManage::UserCorpsController < CorporationManage::Base
   end
 
   def update
-    @user_corp.assign_attributes(user_corp_params)
-    @user_corp.set_corp_settings
-    if @user_corp.save
+    if @user_corp.update(user_corp_params)
       redirect_to corporation_manage_user_corp_path(@user_corp), notice: t('common.messages.updated', name: UserCorp.model_name.human)
     else
       render :edit, status: :unprocessable_entity
@@ -53,6 +50,10 @@ class CorporationManage::UserCorpsController < CorporationManage::Base
       :max_user_num,
       :password,
       :password_confirmation
-    ).merge(corporation_ids: [current_corporation.id])
+    ).merge(advertise_notice_flag: false,
+            user_type: :parent_corporation,
+            payway: :invoice,
+            state: :registered,
+            corporation_ids: [current_corporation.id])
   end
 end

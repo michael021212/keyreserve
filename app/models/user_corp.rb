@@ -12,14 +12,6 @@ class UserCorp < User
 
   before_destroy :remove_parent_id
 
-  def set_corp_settings
-    self.parent_id = nil
-    self.advertise_notice_flag = false
-    self.user_type = :parent_corporation
-    self.payway = :invoice
-    self.state = :registered
-  end
-
   def remove_parent_id
     users.each do |user|
       user.update(parent_id: nil)
