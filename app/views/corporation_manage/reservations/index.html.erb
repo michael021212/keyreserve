@@ -1,21 +1,13 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h4 class="box-title"><%= Reservation.model_name.human %>一覧</h4>
+    <h4 class="box-title"><%= t('.title') %></h4>
     <div class="box-tools">
-      <%= link_to '新規追加', new_corporation_manage_reservation_path, class: 'btn btn-info' %>
+      <%= link_to t('common.btn.new'), new_corporation_manage_reservation_path, class: 'btn btn-info' %>
     </div>
   </div>
   <div class="box-header with-border">
-    <%= search_form_for @q, url: corporation_manage_reservations_path, class: "form-inline" do |f| %>
-      <%= f.text_field :checkin_during_month, data: { :date_format => 'YYYY/MM' }, :class => 'form-control monthPicker', placeholder: '年月を指定' %>
-      <%= f.search_field :facility_shop_corporation_name_cont, placeholder: "運営会社名", class: "form-control" %>
-      <%= f.search_field :facility_shop_name_cont, placeholder: "店舖名", class: "form-control" %>
-      <%= f.search_field :facility_name_cont, placeholder: "施設名", class: "form-control" %>
-      <%= f.search_field :user_name_cont, placeholder: "ユーザ又は法人名", class: "form-control" %>
-      <%= f.select :state_eq, Reservation.states_i18n.invert.map{|k, v| [k, Reservation.states[v]]}, { prompt: 'ステータス' }, class: "form-control" %>
-      <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
-    <% end %>
-    <%= link_to "CSVダウンロード", corporation_manage_reservations_path(q: request.params[:q], format: 'csv'), class: "btn btn-default" %>
+    <%= render 'search_form', q: @q %>
+    <%= link_to t('common.btn.csv'), corporation_manage_reservations_path(q: request.params[:q], format: 'csv'), class: "btn btn-default" %>
   </div>
   <div class="box-body">
     <table class="table table-striped">
@@ -29,7 +21,7 @@
         <th><%= Reservation.human_attribute_name(:usage_period) %></th>
         <th><%= Reservation.human_attribute_name(:state) %></th>
         <th><%= Reservation.human_attribute_name(:price) %></th>
-        <th>決済方法</th>
+        <th><%= t('.how_to_payment') %></th>
         <th></th>
       </tr>
       </thead>
@@ -37,25 +29,29 @@
       <% if @reservations.present? %>
         <% @reservations.each do |reservation| %>
           <tr>
-            <td><%= reservation.block_flag? ? '◯' : '' %></td>
+            <td><%= reservation.decorate.block_flag_to_string %></td>
             <td><%= reservation.facility.shop.name %></td>
             <td><%= reservation.facility.name %></td>
-            <td><%= reservation.user.try(:name) %></td>
+            <td><%= reservation.user&.name %></td>
             <td><%= reservation.checkin %></td>
             <td><%= "#{reservation.usage_period}時間" %></td>
             <td><%= reservation.state_i18n %></td>
             <td><%= delimiter_price(reservation.price) %></td>
             <td><%= reservation.payment_method %></td>
             <td>
-              <%= link_to '詳細', corporation_manage_reservation_path(reservation), class: 'btn btn-default' %>
-              <%= link_to 'キャンセル', corporation_manage_reservation_path(reservation), method: :delete, data: { confirm: 'キャンセルしますか?' }, class: 'btn btn-danger' if reservation.deletable? %>
+              <%= link_to t('common.btn.show'), corporation_manage_reservation_path(reservation), class: 'btn btn-default' %>
+              <%= link_to t('common.btn.cancel'),
+                          corporation_manage_reservation_path(reservation),
+                          method: :delete,
+                          data: { confirm: t('common.confirms.really_to_cancele') },
+                          class: 'btn btn-danger' if reservation.can_canceled? %>
             </td>
           </tr>
         <% end %>
       <% else %>
         <tr>
           <td colspan="20">
-            表示する<%= Reservation.model_name.human %>はありません
+            <%= t('common.messages.list_not_exist', name: Reservation.model_name.human) %>
           </td>
         </tr>
       <% end %>

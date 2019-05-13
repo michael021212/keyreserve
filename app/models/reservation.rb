@@ -121,13 +121,13 @@ class Reservation < ApplicationRecord
     canceled? || (time > checkin)
   end
 
-  def can_caneled?
+  def can_canceled?
     time = Time.zone.now + 1.days
     checkin > time
   end
 
   def set_check_out
-    return nil if checkin.nil? || usage_period.nil?
+    return if checkin.nil? || usage_period.nil?
     self.checkout = checkin + usage_period.hours
   end
 

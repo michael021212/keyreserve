@@ -17,7 +17,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     @reservation = Reservation.new(reservation_params)
     @reservation.set_check_out
     if @reservation.save
-      redirect_to corporation_manage_reservations_path, notice: "#{Reservation.model_name.human}ブロックを作成しました。"
+      redirect_to corporation_manage_reservations_path, notice: t('common.messages.create_block', name: Reservation.model_name.human)
     else
       render :new
     end

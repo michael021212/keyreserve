@@ -5,6 +5,7 @@ ja:
     drop_in: ドロップイン
     show_title: "%{name}詳細"
     btn:
+      csv: CSVをダウンロード
       delete: 削除
       show: 詳細
       new: 新規追加
@@ -17,6 +18,7 @@ ja:
       created: "%{name}を作成しました。"
       deleted: "%{name}を削除しました。"
       list_not_exist: "表示する%{name}はありません。"
+      create_block: "%{name}ブロックを作成しました。"
     confirms:
       really_to_delete: 本当に削除しますか？
       really_to_cancele: 本当にキャンセルしますか？

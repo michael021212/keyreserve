@@ -12,4 +12,8 @@ class ReservationDecorator < Draper::Decorator
   def display_payway
     paid_by_credit_card? ? I18n.t('common.credit_card') : I18n.t('common.invoice')
   end
+  
+  def block_flag_to_string
+    block_flag? ? '◯' : '-'
+  end
 end
