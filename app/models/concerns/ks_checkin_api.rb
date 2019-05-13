@@ -1,7 +1,7 @@
 module KsCheckinApi
   extend ActiveSupport::Concern
 
-  KS_CHECKIN_API_CLIENT = 'https://staging_identity.key-stations.com'
+  KS_CHECKIN_API_CLIENT = Settings[:ks_checkin_endpoint]
 
   def self.set_client(url)
     Faraday.new(url: url) do |faraday|
@@ -11,7 +11,7 @@ module KsCheckinApi
     end
   end
 
-  def regist_ksc_reservation!
+  def regist_ksc_reservation
     ks_checkin_token = facility.shop.corporation.ksc_token
     raise "ks checkin token is not set" if ks_checkin_token.blank?
     path = '/api/v1/reservations'
@@ -37,8 +37,15 @@ module KsCheckinApi
               }
       req.body = body.to_json
     end
-    raise JSON.parse(res.body)['error_message'] unless res.status == 201
+    unless res.status == 201
+      binding.pry
+      logger.debug JSON.parse(res.body)['error_message']
+      return false
+    end
     reservation_no
+  rescue => e
+    logger.debug e.message
+    false
   end
 
 end

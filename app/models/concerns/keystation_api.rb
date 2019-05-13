@@ -1,7 +1,7 @@
 module KeystationApi
   extend ActiveSupport::Concern
 
-  KS_API_CLIENT = 'https://key-stations.com'
+  KS_API_CLIENT = Settings[:keystation_endpoint]
 
   def self.set_client(url)
     Faraday.new(url: url) do |faraday|
@@ -12,20 +12,20 @@ module KeystationApi
   end
 
   # 鍵のIDからパスを取得 #reservationのインスタンスメソッド
-  def fetch_ks_room_key!
+  def fetch_ks_room_key
     key = facility.facility_keys.first
     conn = KeystationApi::set_client(KS_API_CLIENT)
     res = conn.get do |req|
       req.url "/api/v1/room_keys/#{ key.ks_room_key_id }"
       # TODO: 本当は企業毎に変える必要ありそう
-      req.headers['Authorization'] = "Bearer #{ ENV['KS_PARTNER_TOKEN'] }"
+      req.headers['Authorization'] = "Bearer #{ Settings[:keyreserve_partner_token] }"
     end
     res = JSON.parse(res.body)
     raise res.find{ |k,v| k == 'error' }.second if res.find{ |k,v| k == 'error' }.present?
     res
   rescue => e
-    logger.debug e
-    raise e.message
+    logger.debug e.message
+    false
   end
 
 end

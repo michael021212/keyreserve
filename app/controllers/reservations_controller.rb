@@ -104,8 +104,12 @@ class ReservationsController <  ApplicationController
       @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
-      ks_room_key_info = @reservation.facility.rent? ? @reservation.fetch_ks_room_key! : nil
-      ksc_reservation_no = @reservation.facility.rent? ? @reservation.regist_ksc_reservation! : nil
+      ks_room_key_info = @reservation.facility.rent? ? @reservation.fetch_ks_room_key : false
+      ksc_reservation_no = @reservation.facility.rent? && ks_room_key_info.present? ? @reservation.regist_ksc_reservation : false
+      if @reservation.facility.rent? && (ks_room_key_info.blank? || ksc_reservation_no.blank?)
+        flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
+        redirect_to spot_reservations_url and return
+      end
       NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no, ks_room_key_info).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
@@ -113,7 +117,7 @@ class ReservationsController <  ApplicationController
       redirect_to thanks_reservations_url
   rescue => e
     logger.debug(e)
-    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
+    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
     redirect_to spot_reservations_url
   end
 
