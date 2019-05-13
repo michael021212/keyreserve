@@ -46,7 +46,7 @@ class DropinReservation < ApplicationRecord
 
   def set_payment
     return unless self.user.creditcard?
-    self.payment = Payment.build(
+    self.payment = Payment.new(
       user_id: self.reservation_user_id,
       corporation_id: self.user_id,
       facility_id: self.facility_id,
