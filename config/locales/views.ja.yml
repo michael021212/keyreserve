@@ -270,6 +270,11 @@ ja:
       edit:
         title: 施設利用都度課金プラン編集
     facility_dropin_plans:
+      form:
+        guide_mail_title: 「空」の場合は案内メールの通知機能は「オフ」になります
+        guide_file: 新しいファイルをアップロードすると既存の案内ファイルが上書きされます
+        add_dropin_plan_price: 施設利用ドロップイン時間帯プラン
+        en: 円
       new:
         title: 施設利用ドロップインプラン登録
       edit:
