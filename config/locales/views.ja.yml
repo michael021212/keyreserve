@@ -257,6 +257,14 @@ ja:
       show:
         title: 契約詳細
     facility_temporary_plans:
+      form:
+        guide_ks_room_key: 鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください
+        guide_mail_title: 「空」の場合は案内メールの通知機能は「オフ」になります
+        guide_file: 新しいファイルをアップロードすると既存の案内ファイルが上書きされます
+        file_exist: 既存の案内ファイル
+        guide_price: 0の場合未対応
+        add_temporary_plan_price: 施設利用都度課金プラン時間帯価格（標準価格以外の価格）
+        en: 円
       new:
         title: 施設利用都度課金プラン登録
       edit:

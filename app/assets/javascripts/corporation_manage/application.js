@@ -9,8 +9,6 @@
 //= require datetimepicker_fmt
 //= require app
 //= require map
-//= require moment
-//= require bootstrap-datetimepicker
 //= require fullcalendar.min.js
 //= require scheduler.min.js
 //= require fullcalendar_ja.js
