@@ -9,7 +9,7 @@ class Admin::FacilitiesController < AdminController
 
   def create
     @facility = @shop.facilities.new(facility_params)
-    @facility.max_num = 99 if @facility.rent?
+    @facility.max_num = 99 if @facility.rent? && @facility.max_num.blank?
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を作成しました。"
     else
