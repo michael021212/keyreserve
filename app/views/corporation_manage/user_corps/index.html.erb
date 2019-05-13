@@ -1,0 +1,58 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="panel panel-inverse">
+      <div class="panel-body">
+        <%= search_form_for @q, url: corporation_manage_user_corps_path, :class => "form-inline" do |f| %>
+          <div class="mb20">
+            <%= f.search_field :name_cont, placeholder: User.human_attribute_name(:name), class: "form-control" %>
+            <%= f.search_field :tel_cont, placeholder: User.human_attribute_name(:tel), class: "form-control" %>
+            <%= f.submit t('common.btn.search'), class: "btn btn-info w40 mr10" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <h4 class="box-title"><%= UserCorp.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to t('common.btn.new'), new_corporation_manage_user_corp_path, class: 'btn btn-info' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><%= UserCorp.human_attribute_name(:id) %></th>
+        <th><%= UserCorp.human_attribute_name(:name) %></th>
+        <th><%= UserCorp.human_attribute_name(:email) %></th>
+        <th><%= UserCorp.human_attribute_name(:tel) %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @user_corps.present? %>
+        <% @user_corps.each do |user_corp| %>
+          <tr class="cy-user-corp-<%= user_corp.id %>">
+            <td><%= user_corp.id %></td>
+            <td><%= user_corp.name %></td>
+            <td><%= user_corp.email %></td>
+            <td><%= user_corp.tel %></td>
+            <td>
+              <%= link_to t('common.btn.show'), corporation_manage_user_corp_path(user_corp), class: 'btn btn-default' %>
+              <%= link_to t('common.btn.edit'), edit_corporation_manage_user_corp_path(user_corp), class: 'btn btn-primary' %>
+              <% if user_corp.deletable? %>
+                <%= link_to t('common.btn.delete'), corporation_manage_user_corp_path(user_corp), method: :delete, data: { confirm: t('common.confirms.really_to_delete') }, class: 'btn btn-danger' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="20">
+            <%= t('common.messages.list_not_exist', name: UserCorp.model_name.human) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @user_corps %>
+  </div>
+</div>

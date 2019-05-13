@@ -130,6 +130,7 @@ Rails.application.routes.draw do
     end
     resources :plans
     resources :user_contracts
+    resources :user_corps
     resources :billings, only: %i[index show]
     resources :information
   end
