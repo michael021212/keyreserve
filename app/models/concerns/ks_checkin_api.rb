@@ -38,7 +38,6 @@ module KsCheckinApi
       req.body = body.to_json
     end
     unless res.status == 201
-      binding.pry
       logger.debug JSON.parse(res.body)['error_message']
       return false
     end
