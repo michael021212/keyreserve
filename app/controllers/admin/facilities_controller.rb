@@ -33,7 +33,7 @@ class Admin::FacilitiesController < AdminController
   def show; end
 
   def destroy
-    @facility.destroy
+    @facility.destroy!
     redirect_to admin_corporation_shop_path(@corporation, @shop), notice: "#{Facility.model_name.human}を削除しました"
   end
 

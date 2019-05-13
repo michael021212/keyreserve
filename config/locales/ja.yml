@@ -68,6 +68,7 @@ ja:
         created_at: 登録日時
         user_type: 法人/個人
         parent_id: 法人
+        max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
         campaign_id: キャンペーンID
       user_corp:
@@ -87,6 +88,7 @@ ja:
       payment:
         token: 決済ID
       plan:
+        id: プランID
         name: プラン名
         price: 月額
         description: 説明
@@ -406,6 +408,8 @@ ja:
       mini_magick_processing_error: "MiniMagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
       min_size_error: "ファイルを%{min_size}バイト以上のサイズにしてください"
       max_size_error: "ファイルを%{max_size}バイト以下のサイズにしてください"
+      restrict_dependent_destroy:
+        has_many: 関連するレコードが存在するので削除ができません
     template:
       body: 次の項目を確認してください。
       header:
