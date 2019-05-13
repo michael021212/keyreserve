@@ -17,4 +17,8 @@ class UserCorp < User
       user.update(parent_id: nil)
     end
   end
+  
+  def deletable?
+    users.all?(&:deletable?)
+  end
 end

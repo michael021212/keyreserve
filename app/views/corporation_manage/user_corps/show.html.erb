@@ -3,7 +3,9 @@
     <div class="box-tools">
       <%= link_to t('common.btn.back'), corporation_manage_user_corps_path, class: 'btn btn-default' %>
       <%= link_to t('common.btn.edit'), edit_corporation_manage_user_corp_path(@user_corp), class: 'btn btn-primary' %>
-      <%= link_to t('common.btn.delete'), corporation_manage_user_corp_path(@user_corp), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+      <% if @user_corp.deletable? %>
+        <%= link_to t('common.btn.delete'), corporation_manage_user_corp_path(@user_corp), method: :delete, data: { confirm: t('common.confirms.really_to_delete') }, class: 'btn btn-danger' %>
+      <% end %>
     </div>
   </div>
   <div class="box-body">
