@@ -1,7 +1,7 @@
 class CorporationManage::FacilityDropinPlansController < CorporationManage::Base
   before_action :set_facility
   before_action :set_facility_dropin_plan, only: %i[edit update destroy]
-  before_action :set_facility_dropin_plans, only: %i[resources events]
+  before_action :set_facility_dropin_plans, only: %i[dropin_plan_infos dropin_events]
 
   def new
     @facility_dropin_plan = @facility.facility_dropin_plans.build
@@ -34,9 +34,12 @@ class CorporationManage::FacilityDropinPlansController < CorporationManage::Base
                 notice: t('common.messages.deleted', name: FacilityDropinPlan.model_name.human)
   end
 
-  def resources; end
 
-  def events; end
+  # GET /corporation_manager/shops/shop_id/facilities/facility_id/facility_dropin_plans/dropin_plan_infos (format: json)
+  def dropin_plan_infos; end
+
+  # GET /corporation_manager/shops/shop_id/facilities/facility_id/facility_dropin_plans/dropin_events (format: json)
+  def dropin_events; end
 
   private
 

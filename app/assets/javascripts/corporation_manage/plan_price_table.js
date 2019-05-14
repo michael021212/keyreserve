@@ -7,7 +7,7 @@ var ajaxRequest = function (url) {
   });
 };
 
-var planPriceTableScheduller = function (target_class, target_plan_name) {
+var planPriceTableScheduller = function (target_class, target_plan_name, target_resources_action, target_events_action) {
   var shop_id = gon.shop_id
   var facility_id = gon.facility_id
 
@@ -25,7 +25,7 @@ var planPriceTableScheduller = function (target_class, target_plan_name) {
     },
     resources: function (callback) {
       ajaxRequest(
-        `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/resources`
+        `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/${target_resources_action}`
       ).then(function(resources) {
         callback(resources);
       })
@@ -34,7 +34,7 @@ var planPriceTableScheduller = function (target_class, target_plan_name) {
       {
         events: function (start, end, timezone, callback) {
           ajaxRequest(
-            `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/events`
+            `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/${target_events_action}`
           ).then(function(events) {
             callback(events);
           })
@@ -49,6 +49,6 @@ var planPriceTableScheduller = function (target_class, target_plan_name) {
 };
 
 $(document).ready(function() {
-  planPriceTableScheduller('#js-temporary-plan-table', 'facility_temporary_plans')
-  planPriceTableScheduller('#js-dropin-plan-table', 'facility_dropin_plans')
+  planPriceTableScheduller('#js-temporary-plan-table', 'facility_temporary_plans', 'temporary_plan_infos', 'temporary_events')
+  planPriceTableScheduller('#js-dropin-plan-table', 'facility_dropin_plans', 'dropin_plan_infos', 'dropin_events')
 });

@@ -126,8 +126,8 @@ Rails.application.routes.draw do
         end
         resources :facility_dropin_plans, only: %i[new edit create update destroy] do
           collection do
-            get :resources
-            get :events
+            get :dropin_plan_infos
+            get :dropin_events
           end
         end
       end
