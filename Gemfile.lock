@@ -225,6 +225,10 @@ GEM
     geocoder (1.5.1)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    gon (6.2.1)
+      actionpack (>= 3.0)
+      multi_json
+      request_store (>= 1.0)
     gretel (3.0.9)
       rails (>= 3.1.0)
     hashdiff (0.3.8)
@@ -531,6 +535,7 @@ DEPENDENCIES
   faraday
   font-awesome-rails
   geocoder
+  gon
   gretel
   http
   jbuilder (~> 2.5)

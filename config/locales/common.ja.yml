@@ -5,9 +5,11 @@ ja:
     drop_in: ドロップイン
     show_title: "%{name}詳細"
     reservation: 予約
+    not_member: 非会員
     csv:
       dropin_reservation_csv: "dropin_reservations_%{date}.csv"
     btn:
+      add: 追加
       delete: 削除
       show: 詳細
       new: 新規追加

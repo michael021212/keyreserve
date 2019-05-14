@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <div class="box-tools">
+    <div class="box-tools cy-facility-box-tools">
       <%= link_to t('common.btn.back'), corporation_manage_shop_path(@shop), class: 'btn btn-default' %>
       <%= link_to t('common.btn.edit'), edit_corporation_manage_shop_facility_path(@shop, @facility), class: 'btn btn-primary' %>
       <%= link_to t('common.btn.delete'),
@@ -47,3 +47,5 @@
     </table>
   </div>
 </div>
+
+<%= render 'facility_temporary_plan', shop: @shop, facility: @facility %>
