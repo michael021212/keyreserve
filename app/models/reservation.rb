@@ -9,6 +9,8 @@ class Reservation < ApplicationRecord
   before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
+  delegate :name, to: :user, prefix: true, allow_nil: true
+
   # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
   validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
   validates :checkin, :checkout, :usage_period, presence: true
