@@ -28,6 +28,8 @@ class Reservation < ApplicationRecord
     validate :limit_has_not_exceeded
   end
 
+  scope :with_corporation, ->(corporation) { includes(facility: :shop).where(shops: { corporation_id: corporation.id }) }
+
   # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
@@ -157,7 +159,7 @@ class Reservation < ApplicationRecord
       send_reserved_mail!
     end
   end
-  
+
   private
 
   def send_reserved_mail!

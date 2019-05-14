@@ -2,7 +2,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
   before_action :set_reservation, only: %i[show destroy]
 
   def index
-    @q = Reservation.ransack(params[:q])
+    @q = Reservation.with_corporation(current_corporation).ransack(params[:q])
     @reservations = @q.result.order(checkin: :desc)
     respond_to do |format|
       format.html do
@@ -56,7 +56,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
   private
 
   def set_reservation
-    @reservation = Reservation.find(params[:id])
+    @reservation = Reservation.with_corporation(current_corporation).find(params[:id])
   end
 
   def build_reservation_from_session
