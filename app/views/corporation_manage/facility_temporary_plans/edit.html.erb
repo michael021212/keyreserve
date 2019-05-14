@@ -1,0 +1,14 @@
+<div class="box box-default">
+  <div class="box-header">
+    <div class="box-tools pull-right">
+      <%= link_to t('common.btn.delete'),
+                  corporation_manage_shop_facility_facility_temporary_plan_path(@facility.shop, @facility, @facility_temporary_plan),
+                  method: :delete,
+                  data: { confirm: t('common.confirms.really_to_delete') },
+                  class: 'btn btn-danger' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <%= render 'form', shop: @shop, facility: @facility, facility_temporary_plan: @facility_temporary_plan %>
+  </div>
+</div>
