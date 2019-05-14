@@ -8,6 +8,9 @@ class CorporationManage::ReservationsController < CorporationManage::Base
       format.html do
         @reservations = @reservations.page(params[:page]).per(30)
       end
+      format.csv do
+        send_data @reservations.to_csv(col_sep: "\t"), filename: t('common.csv.reservation_csv', date: Time.zone.now.strftime('%Y/%m/%d'))
+      end
     end
   end
 

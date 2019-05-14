@@ -8,6 +8,7 @@ ja:
     not_member: 非会員
     csv:
       dropin_reservation_csv: "dropin_reservations_%{date}.csv"
+      reservation_csv: "reservations_%{date}.csv"
     btn:
       csv: CSVをダウンロード
       add: 追加
