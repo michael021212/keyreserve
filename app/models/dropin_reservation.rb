@@ -10,7 +10,6 @@ class DropinReservation < ApplicationRecord
   belongs_to :payment, optional: true
   belongs_to :billing, optional: true
 
-  before_save :create_payment, if: Proc.new { |r| r.user_id? }
   before_destroy :cancel_payment, if: Proc.new { |r| r.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
@@ -26,10 +25,17 @@ class DropinReservation < ApplicationRecord
     target = Time.zone.now + 30.minutes
     where(mail_send_flag: false).where(arel_table[:checkin].lteq(target))
   end
+  
+  scope :with_corporation, ->(target_corporation) { includes(facility: :shop).where(shops: { corporation_id: target_corporation.id }) }
 
   delegate :name, to: :user, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_corporation_name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_name, to: :facility, prefix: true, allow_nil: true
+  delegate :using_hours, to: :facility_dropin_sub_plan, prefix: true, allow_nil: true
+  delegate :with_plan_name, to: :facility_dropin_sub_plan, prefix: true, allow_nil: true
+  delegate :token, to: :payment, prefix: true, allow_nil: true
 
   # 請求時に削除済の施設も参照できる必要があったので上書き
   def facility_with_deleted
@@ -40,9 +46,9 @@ class DropinReservation < ApplicationRecord
     payment.present? && payment.credit_card_id.present?
   end
 
-  def create_payment
+  def set_payment
     return unless self.user.creditcard?
-    self.payment = Payment.create!(
+    self.payment = Payment.new(
       user_id: self.reservation_user_id,
       corporation_id: self.user_id,
       facility_id: self.facility_id,
@@ -128,7 +134,7 @@ class DropinReservation < ApplicationRecord
     canceled? || (time > checkin)
   end
 
-  def can_canceled?
+  def cancelable?
     time = Time.zone.now + 1.days
     checkin > time
   end

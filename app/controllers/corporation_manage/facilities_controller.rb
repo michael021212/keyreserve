@@ -2,7 +2,11 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
   before_action :set_shop
   before_action :set_facility, only: %i[show edit update destroy]
 
-  def show; end
+  def show
+    gon.schedular_licence_key = ENV['SCHEDULER_LICENCE_KEY']
+    gon.shop_id = @shop.id
+    gon.facility_id = @facility.id
+  end
 
   def new
     @facility = @shop.facilities.build

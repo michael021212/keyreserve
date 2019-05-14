@@ -16,6 +16,7 @@ class Facility < ApplicationRecord
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank
 
   delegate :name, to: :shop, prefix: true, allow_nil: true
+  delegate :corporation_name, to: :shop, prefix: true, allow_nil: true
 
   mount_uploader :image, ImageUploader
 

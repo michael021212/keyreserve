@@ -64,7 +64,7 @@
                           <%= link_to t('common.btn.cancel'), dropin_reservation_path(dropin_reservation),
                             method: :delete,
                             data: { confirm: t('common.confirms.really_to_cancele') },
-                            class: 'btn btn-danger' if dropin_reservation.can_canceled? %>
+                            class: 'btn btn-danger' if dropin_reservation.cancelable? %>
                         </div>
                       </div>
 

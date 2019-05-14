@@ -65,7 +65,7 @@
                             reservation_path(reservation),
                             method: :delete,
                             data: { confirm: t('common.confirms.really_to_cancele') },
-                            class: 'btn btn-danger' if reservation.can_canceled? %>
+                            class: 'btn btn-danger' if reservation.cancelable? %>
                         </div>
                       </div>
                     </div>

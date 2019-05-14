@@ -30,6 +30,7 @@ gem 'adminlte2-rails'
 gem 'jquery-slimscroll-rails'
 gem 'rails_autolink'
 gem 'draper'
+gem 'gon'
 
 # Authentication
 gem 'sorcery'
