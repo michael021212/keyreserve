@@ -309,3 +309,5 @@ ja:
         title: 予約詳細
       new:
         title: 予約登録
+      confirm:
+        title: 決済詳細

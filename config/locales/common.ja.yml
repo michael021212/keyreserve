@@ -13,6 +13,7 @@ ja:
       back: 戻る
       search: 検索
       cancel: キャンセル
+      pay: 決済する
     messages:
       updated: "%{name}を更新しました。"
       created: "%{name}を作成しました。"
