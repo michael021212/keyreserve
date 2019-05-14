@@ -29,12 +29,12 @@
       <% if @reservations.present? %>
         <% @reservations.each do |reservation| %>
           <tr>
-            <td class="cy-reservation-block-flag"><%= reservation.decorate.block_flag_to_string %></td>
-            <td><%= reservation.facility.shop.name %></td>
-            <td><%= reservation.facility.name %></td>
-            <td><%= reservation.user&.name %></td>
+            <td class="cy-reservation-block-flag"><%= reservation.decorate.block_flag_to_text %></td>
+            <td><%= reservation.facility_shop_name %></td>
+            <td><%= reservation.facility_name %></td>
+            <td><%= reservation.user_name %></td>
             <td class="cy-reservation-checkin"><%= reservation.checkin %></td>
-            <td class="cy-reservation-usage-period"><%= "#{reservation.usage_period}時間" %></td>
+            <td class="cy-reservation-usage-period"><%= reservation.decorate.usage_period_hour %></td>
             <td><%= reservation.state_i18n %></td>
             <td class="cy-reservation-price"><%= delimiter_price(reservation.price) %></td>
             <td><%= reservation.payment_method %></td>

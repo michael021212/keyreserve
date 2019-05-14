@@ -10,6 +10,12 @@ class Reservation < ApplicationRecord
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   delegate :name, to: :user, prefix: true, allow_nil: true
+  delegate :name, to: :user, prefix: true, allow_nil: true
+  delegate :email, to: :user, prefix: true, allow_nil: true
+  delegate :name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_corporation_name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_name, to: :facility, prefix: true, allow_nil: true
+  delegate :token, to: :payment, prefix: true, allow_nil: true
 
   # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
   validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
