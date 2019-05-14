@@ -39,6 +39,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     session[:reservation] = nil
     redirect_to corporation_manage_reservations_path, notice: t('common.messages.created', name: Reservation.model_name.human)
   rescue Stripe::StripeError => e
+    logger.error("#{e.class.name} #{e.message}")
     flash[:notice] = t('errors.messages.stripe_error')
     render :confirm
   end
