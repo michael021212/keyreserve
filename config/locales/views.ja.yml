@@ -256,6 +256,18 @@ ja:
         title: 契約編集
       show:
         title: 契約詳細
+    user_corps:
+      form:
+        can_be_added: 追加可能な利用者人数
+        guide_change_password: 変更したくない場合は空にしてください
+      index:
+        title: 法人一覧
+      new:
+        title: 法人登録
+      edit:
+        title: 法人編集
+      show:
+        title: 法人詳細
     billings:
       search_form:
         select_year_month: 年月を指定
