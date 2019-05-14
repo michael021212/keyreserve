@@ -46,7 +46,7 @@ RSpec.feature 'corporation_manage/facility_dropin_plans', type: :feature do
 
       fill_in_with_script('.js-dropin-starting-time', '11:00')
       fill_in_with_script('.js-dropin-ending-time', '18:00')
-      # NOTE: cocoonで追加される要素のIDが固定できないため下記の記法で対応
+      # NOTE: nested_fieldで追加される要素のIDが固定できないため下記の記法で対応
       find('.cy-dropin-price').set('10000')
       find('.cy-dropin-name').set('スーパープラン')
 
