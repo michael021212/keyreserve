@@ -31,6 +31,8 @@ class DropinReservation < ApplicationRecord
   delegate :name, to: :user, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_corporation_name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_name, to: :facility, prefix: true, allow_nil: true
   delegate :using_hours, to: :facility_dropin_sub_plan, prefix: true, allow_nil: true
   delegate :with_plan_name, to: :facility_dropin_sub_plan, prefix: true, allow_nil: true
   delegate :token, to: :payment, prefix: true, allow_nil: true

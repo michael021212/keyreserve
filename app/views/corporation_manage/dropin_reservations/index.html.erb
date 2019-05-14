@@ -29,7 +29,7 @@
       <% if @dropin_reservations.present? %>
         <% @dropin_reservations.each do |dropin_reservation| %>
           <tr class="cy-dropin-reservation-<%= dropin_reservation.id %>">
-            <td><%= dropin_reservation.facility.shop.name %></td>
+            <td><%= dropin_reservation.facility_shop_name %></td>
             <td><%= dropin_reservation.facility_name %></td>
             <td><%= dropin_reservation.user_name %></td>
             <td><%= dropin_reservation.facility_dropin_sub_plan_with_plan_name %></td>

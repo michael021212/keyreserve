@@ -13,6 +13,8 @@ class Shop < ApplicationRecord
             numericality: { only_integer: true, allow_blank: true }
   validate :business_time
 
+  delegate :name, to: :corporation, prefix: true, allow_nil: true
+
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
   end
