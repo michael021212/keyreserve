@@ -4,17 +4,19 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def show
     gon.schedular_licence_key = ENV['SCHEDULER_LICENCE_KEY']
+    gon.shop_id = @shop.id
+    gon.facility_id = @facility.id
   end
 
   def new
-    @facility = @shop.facilities.new
+    @facility = @shop.facilities.build
   end
 
   def create
-    @facility = @shop.facilities.new(facility_params)
+    @facility = @shop.facilities.build(facility_params)
     @facility.set_geocode
     if @facility.save
-      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: "#{Facility.model_name.human}を作成しました。"
+      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.created', name: Facility.model_name.human)
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,7 +28,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
     @facility.assign_attributes(facility_params)
     @facility.set_geocode
     if @facility.save
-      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: "#{Facility.model_name.human}を更新しました。"
+      redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.updated', name: Facility.model_name.human)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -34,7 +36,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def destroy
     @facility.destroy!
-    redirect_to corporation_manage_shop_path(@shop), notice: "#{Facility.model_name.human}を削除しました"
+    redirect_to corporation_manage_shop_path(@shop), notice: t('common.messages.deleted', name: Facility.model_name.human)
   end
 
   def events

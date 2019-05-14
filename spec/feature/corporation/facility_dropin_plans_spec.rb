@@ -28,31 +28,35 @@ RSpec.feature 'corporation_manage/facility_dropin_plans', type: :feature do
     end
 
     scenario '施設利用ドロップインプランを作成できる', js: true do
+      temporary_plan_attributes = build(:facility_temporary_plan,
+                                        facility: facility,
+                                        plan: plan)
+      
       visit corporation_manage_shop_facility_path(shop, facility)
 
       within(find('.cy-add-dropin-plan-btn')) do
         click_on('新規追加')
       end
 
-      select '西尾プラン', from: 'プラン'
-      fill_in '案内メールタイトル', with: '西尾プランですよー！'
-      fill_in '案内メール内容', with: '西尾プランはすごいよー！'
+      select temporary_plan_attributes.plan_name, from: 'プラン'
+      fill_in '案内メールタイトル', with: temporary_plan_attributes.guide_mail_title
+      fill_in '案内メール内容', with: temporary_plan_attributes.guide_mail_content
 
       click_on('追加')
 
       fill_in_with_script('.js-dropin-starting-time', '11:00')
       fill_in_with_script('.js-dropin-ending-time', '18:00')
-      # NOTE: cocoonで追加される要素のIDが固定できないため下記の記法で対応
+      # NOTE: nested_fieldで追加される要素のIDが固定できないため下記の記法で対応
       find('.cy-dropin-price').set('10000')
       find('.cy-dropin-name').set('スーパープラン')
 
       click_on('登録')
 
-      expect(find('.alert-warning')).to have_content('施設利用ドロップインプランを作成しました。')
-      expect(find('.fc-resource-cell')).to have_content('西尾プラン')
-      within(find('.fc-time-grid-event')) do
-        expect(find('.fc-time')).to have_content('11:00 - 18:00')
-        expect(find('.fc-title')).to have_content("スーパープラン\n10,000 円")
+      expect(page).to have_css('.alert-warning', text: '施設利用ドロップインプランを作成しました。')
+      expect(page).to have_css('.fc-resource-cell', text: temporary_plan_attributes.plan_name)
+      within('.fc-time-grid-event') do
+        expect(page).to have_css('.fc-time', text: '11:00 - 18:00')
+        expect(page).to have_css('.fc-title', text: "スーパープラン\n10,000 円")
       end
     end
   end

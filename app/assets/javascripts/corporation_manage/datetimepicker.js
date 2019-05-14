@@ -4,7 +4,13 @@ var addDateTimePicker = function addDateTimePicker(target_class) {
   });
 };
 
-$(document).on('nested:fieldAdded', function() {
-  addDateTimePicker('.js-dropin-starting-time')
-  addDateTimePicker('.js-dropin-ending-time')
-});
+$(document)
+  .on('ready', function () {
+    addDateTimePicker('.js-dropin-starting-time');
+    addDateTimePicker('.js-dropin-ending-time');
+  })
+
+  .on('nested:fieldAdded', function() {
+    addDateTimePicker('.js-dropin-starting-time');
+    addDateTimePicker('.js-dropin-ending-time');
+  });

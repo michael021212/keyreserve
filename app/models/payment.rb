@@ -4,8 +4,8 @@ class Payment < ApplicationRecord
   include Target
   belongs_to :user
   belongs_to :facility
+  belongs_to :credit_card
   belongs_to :corporation
-  # belongs_to :credit_card
 
   before_destroy :stripe_cancel
 

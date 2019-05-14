@@ -1,0 +1,21 @@
+<%= search_form_for [:corporation_manage, q] do |f| %>
+  <div class="row mb15">
+    <div class="col-md-2">
+      <%= f.search_field :year_month_eq,
+                         placeholder: t('.select_year_month'),
+                         class: 'form-control monthPicker',
+                         data: { :date_format => 'YYYY/MM' } %>
+    </div>
+
+    <div class="col-md-3">
+      <%= f.select :payment_way_eq,
+                   Billing.payment_ways_i18n.invert.map { |key, value| [key, Billing.payment_ways[value]] },
+                   { prompt: t('.select_payway_type') },
+                   class: 'form-control'%>
+    </div>
+
+    <div class="col-md-2">
+      <%= f.submit t('common.btn.search'),  class: 'btn btn-info w40 mr10' %>
+    </div>
+  </div>
+<% end %>

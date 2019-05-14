@@ -210,6 +210,13 @@ ja:
       show:
         title: 店舗詳細
     facilities:
+      form:
+        add_facility_type: 施設タイプを選択してください
+        add_address: 住所を入力してください
+        add_name: 施設名を入力してください
+        target_plan: 月額対象プラン
+        select_plan: プランを選択してください
+        add_plan: プランを追加する
       index:
         title: 施設一覧
       new:
@@ -218,6 +225,28 @@ ja:
         title: 施設編集
       show:
         title: 施設詳細
+        target_plan: 月額対象プラン
+    users:
+      form:
+        select_corproation: 所属している法人を選択して下さい (法人に所属していない場合は空にして下さい)
+        guide_change_password: 変更したくない場合は空にしてください
+      index:
+        title: 利用者一覧
+      new:
+        title: 利用者登録
+      edit:
+        title: 利用者編集
+      show:
+        title: 利用者詳細
+    plans:
+      index:
+        title: プラン一覧
+      new:
+        title: プラン登録
+      edit:
+        title: プラン編集
+      show:
+        title: プラン詳細
     user_contracts:
       index:
         title: 契約一覧
@@ -228,12 +257,64 @@ ja:
       show:
         title: 契約詳細
     facility_temporary_plans:
+      form:
+        guide_ks_room_key: 鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください
+        guide_mail_title: 「空」の場合は案内メールの通知機能は「オフ」になります
+        guide_file: 新しいファイルをアップロードすると既存の案内ファイルが上書きされます
+        file_exist: 既存の案内ファイル
+        guide_price: 0の場合未対応
+        add_temporary_plan_price: 施設利用都度課金プラン時間帯価格（標準価格以外の価格）
+        en: 円
       new:
         title: 施設利用都度課金プラン登録
       edit:
         title: 施設利用都度課金プラン編集
     facility_dropin_plans:
+      form:
+        guide_mail_title: 「空」の場合は案内メールの通知機能は「オフ」になります
+        guide_file: 新しいファイルをアップロードすると既存の案内ファイルが上書きされます
+        add_dropin_plan_price: 施設利用ドロップイン時間帯プラン
+        en: 円
       new:
         title: 施設利用ドロップインプラン登録
       edit:
         title: 施設利用ドロップインプラン編集
+    user_corps:
+      form:
+        can_be_added: 追加可能な利用者人数
+        guide_change_password: 変更したくない場合は空にしてください
+      index:
+        title: 法人一覧
+      new:
+        title: 法人登録
+      edit:
+        title: 法人編集
+      show:
+        title: 法人詳細
+    billings:
+      search_form:
+        select_year_month: 年月を指定
+        select_payway_type: 支払い方法を選択してください
+      index:
+        title: 請求一覧
+      show:
+        title: 請求詳細
+        used_date: 利用日
+        money: 金額
+    personal_identifications:
+      new:
+        title: 本人確認登録
+      edit:
+        title: 本人確認編集
+    information:
+      form:
+        input_shop: 送信元店舗を選択して下さい
+        input_title: タイトルを入力して下さい
+      index:
+        title: お知らせ一覧
+      new:
+        title: お知らせ登録
+      edit:
+        title: お知らせ編集
+      show:
+        title: お知らせ詳細

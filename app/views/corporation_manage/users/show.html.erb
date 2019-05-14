@@ -1,0 +1,81 @@
+<div class="box box-default">
+  <div class="box-header">
+    <div class="box-tools">
+      <%= link_to t('common.btn.back'), corporation_manage_users_path, class: 'btn btn-default' %>
+      <%= link_to t('common.btn.edit'), edit_corporation_manage_user_path(@user), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= User.human_attribute_name(:id) %></th>
+        <td><%= @user.id %></td>
+      </tr>
+      <tr class="cy-user-name">
+        <th><%= User.human_attribute_name(:name) %></th>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr class="cy-user-email">
+        <th><%= User.human_attribute_name(:email) %></th>
+        <td><%= @user.email %></td>
+      </tr>
+      <tr class="cy-user-tel">
+        <th><%= User.human_attribute_name(:tel) %></th>
+        <td><%= @user.tel %></td>
+      </tr>
+      <tr class="cy-user-state">
+        <th><%= User.human_attribute_name(:state) %></th>
+        <td><%= @user.state_i18n %></td>
+      </tr>
+      <tr class="cy-user-payway">
+        <th><%= User.human_attribute_name(:payway) %></th>
+        <td><%= @user.payway_i18n %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= t('common.show_title', name: PersonalIdentification.model_name.human) %></h4>
+    <div class="box-tools cy-identification-btns">
+      <% if @user.personal_identification.present? %>
+        <%= link_to t('common.btn.edit'), edit_corporation_manage_user_personal_identification_path(@user, @user.personal_identification), class: 'btn btn-primary' %>
+      <% else %>
+        <%= link_to t('common.btn.new'), new_corporation_manage_user_personal_identification_path(@user), class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+    <div class="box-body">
+      <table class="table table-striped">
+        <tr class="cy-identification-status">
+          <th><%= PersonalIdentification.human_attribute_name(:status) %></th>
+          <td><%= @user.personal_identification&.status_i18n %></td>
+        </tr>
+        <tr class="cy-identification-card-type">
+          <th><%= PersonalIdentification.human_attribute_name(:card_type) %></th>
+          <td><%= @user.personal_identification&.card_type_i18n %></td>
+        </tr>
+        <tr>
+          <th><%= PersonalIdentification.human_attribute_name(:front_img) %></th>
+          <td>
+            <% if @user.personal_identification&.front_img.present? %>
+              <%= link_to @user.personal_identification.front_img.url, target: '_blank' do %>
+                <%= image_tag @user.personal_identification.front_img.url, class: 'cy-identification-front-img identification-img' %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th><%= PersonalIdentification.human_attribute_name(:back_img) %></th>
+          <td>
+            <% if @user.personal_identification&.back_img.present? %>
+              <%= link_to @user.personal_identification.back_img.url, target: '_blank' do %>
+                <%= image_tag @user.personal_identification.back_img.url, class: 'cy-identification-back-img identification-img' %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

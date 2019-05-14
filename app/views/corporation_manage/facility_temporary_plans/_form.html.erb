@@ -1,29 +1,33 @@
-<%= bootstrap_nested_form_for([:corporation_manage, facility.shop, facility, facility_temporary_plan]) do |f| %>
-  <%= f.collection_select :plan_id, current_corporation.plans.all, :id, :name, { include_blank: '非会員' } %>
-  <%= f.select :ks_room_key_id, options_for_select(@facility.facility_keys.map {|f| [f.name, f.ks_room_key_id]}, selected: f.object.ks_room_key_id), include_blank: true, help: '鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください' %>
-  <%= f.text_field :guide_mail_title, help: '「空」の場合は案内メールの通知機能は「オフ」になります' %>
+<%= bootstrap_nested_form_for([:corporation_manage, shop, facility, facility_temporary_plan]) do |f| %>
+  <%= f.collection_select :plan_id, current_corporation.plans.all, :id, :name, { include_blank: t('common.not_member') } %>
+  <%= f.select :ks_room_key_id,
+               options_for_select(@facility.facility_keys.map {|f| [f.name, f.ks_room_key_id]},
+                                  selected: f.object.ks_room_key_id),
+               include_blank: true,
+               help: t('.guide_ks_room_key') %>
+  <%= f.text_field :guide_mail_title, help: t('.guide_mail_title') %>
   <%= f.text_area :guide_mail_content, rows: 10 %>
-  <%= f.file_field :guide_file, help: '新しいファイルをアップロードすると既存の案内ファイルが上書きされます' %>
-  <div class='form-group'>
+  <%= f.file_field :guide_file, help: t('.guide_file') %>
+  <div class="form-group">
     <% if f.object.guide_file.present? %>
-      <%= f.label '既存の案内ファイル' %><br/>
+      <%= f.label t('.file_exist') %><br/>
       <%= link_to f.object.guide_file.file.filename, f.object.guide_file.url %>
     <% end %>
   </div>
-  <%= f.text_field :standard_price_per_day, help: "'0'の場合未対応" %>
-  <%= f.text_field :standard_price_per_hour, help: "'0'の場合未対応" %>
-  <%= f.form_group :facility_temporary_plan_prices, label: {text: '施設利用都度課金プラン時間帯価格（標準価格以外の価格）'} do %>
+  <%= f.text_field :standard_price_per_day, help: t('.guide_price') %>
+  <%= f.text_field :standard_price_per_hour, help: t('.guide_price') %>
+  <%= f.form_group :facility_temporary_plan_prices, label: {text: t('.add_temporary_plan_price') } do %>
     <%= f.fields_for :facility_temporary_plan_prices do |pp| %>
       <div class="form-inline mb20">
         <%= pp.time_select :starting_time, { minute_step: 30, include_blank: true, hide_label: true } %> 〜
         <%= pp.time_select :ending_time, { minute_step: 30, include_blank: true, hide_label: true } %>
         <span class="price-text-field mr50 ml20">
-          <%= pp.text_field :price, hide_label: true %>円
+          <%= pp.text_field :price, hide_label: true %><%= t('.en') %>
         </span>
-        <%= pp.link_to_remove '削除', :confirm => t('cargo_iem.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>
+        <%= pp.link_to_remove t('common.btn.delete'), class: 'glyphicon glyphicon-remove', inline: true %>
       </div>
     <% end %>
-    <p><%= f.link_to_add '追加', :facility_temporary_plan_prices, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
+    <p><%= f.link_to_add t('common.btn.add'), :facility_temporary_plan_prices, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
   <% end %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
