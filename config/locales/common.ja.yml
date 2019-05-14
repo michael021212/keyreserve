@@ -4,6 +4,7 @@ ja:
     invoice: 請求書
     drop_in: ドロップイン
     show_title: "%{name}詳細"
+    reservation: 予約
     csv:
       dropin_reservation_csv: "dropin_reservations_%{date}.csv"
     btn:
