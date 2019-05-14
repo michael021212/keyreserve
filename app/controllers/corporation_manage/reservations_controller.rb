@@ -9,6 +9,10 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     end
   end
 
+  def show
+    @reservation = Reservation.find(params[:id])
+  end
+
   def new
     @reservation = if session[:reservation_attributes].present?
                      build_reservation_from_session
@@ -45,7 +49,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
   end
 
   private
-  
+
   def build_reservation_from_session
     @reservation = Reservation.new(session[:reservation_attributes])
   end
