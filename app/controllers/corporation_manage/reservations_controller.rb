@@ -1,4 +1,6 @@
 class CorporationManage::ReservationsController < CorporationManage::Base
+  before_action :set_reservation, only: %i[show destroy]
+
   def index
     @q = Reservation.ransack(params[:q])
     @reservations = @q.result.order(checkin: :desc)
@@ -9,9 +11,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     end
   end
 
-  def show
-    @reservation = Reservation.find(params[:id])
-  end
+  def show; end
 
   def new
     @reservation = if session[:reservation_attributes].present?
@@ -48,7 +48,16 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     render :confirm
   end
 
+  def destroy
+    @reservation.destroy!
+    redirect_to corporation_manage_reservations_path, notice: t('common.messages.deleted', name: Reservation.model_name.human)
+  end
+
   private
+
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
   def build_reservation_from_session
     @reservation = Reservation.new(session[:reservation_attributes])
