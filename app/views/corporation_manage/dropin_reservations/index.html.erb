@@ -1,0 +1,54 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= t('.title') %></h4>
+    <div class="box-tools">
+    </div>
+  </div>
+  <div class="box-header with-border">
+    <%= render 'search_form', q: @q %>
+    <%= link_to t('common.btn.csv_download'),
+                corporation_manage_dropin_reservations_path(q: request.params[:q], format: 'csv'),
+                class: 'btn btn-default' %>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th><%= Shop.human_attribute_name(:name) %></th>
+        <th><%= Facility.human_attribute_name(:name) %></th>
+        <th><%= User.human_attribute_name(:name) %></th>
+        <th><%= t('.plan_name') %></th>
+        <th><%= DropinReservation.human_attribute_name(:checkin) %></th>
+        <th><%= t('.utilization_time') %></th>
+        <th><%= DropinReservation.human_attribute_name(:state) %></th>
+        <th><%= DropinReservation.human_attribute_name(:price) %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @dropin_reservations.present? %>
+        <% @dropin_reservations.each do |dropin_reservation| %>
+          <tr class="cy-dropin-reservation-<%= dropin_reservation.id %>">
+            <td><%= dropin_reservation.facility_shop_name %></td>
+            <td><%= dropin_reservation.facility_name %></td>
+            <td><%= dropin_reservation.user_name %></td>
+            <td><%= dropin_reservation.facility_dropin_sub_plan_with_plan_name %></td>
+            <td><%= dropin_reservation.checkin %></td>
+            <td><%= dropin_reservation.facility_dropin_sub_plan_using_hours %></td>
+            <td><%= dropin_reservation.state_i18n %></td>
+            <td><%= delimiter_price(dropin_reservation.price) %></td>
+            <td><%= link_to t('common.btn.show'), corporation_manage_dropin_reservation_path(dropin_reservation), class: 'btn btn-default' %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="20">
+            <%= t('common.messages.list_not_exist', name: DropinReservation.model_name.human) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @dropin_reservations %>
+  </div>
+</div>

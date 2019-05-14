@@ -132,6 +132,7 @@ Rails.application.routes.draw do
     resources :user_contracts
     resources :user_corps
     resources :billings, only: %i[index show]
+    resources :dropin_reservations, only: %i[index show]
     resources :information
   end
 end

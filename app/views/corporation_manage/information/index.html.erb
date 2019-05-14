@@ -23,7 +23,7 @@
             <td><%= date_ja(information.publish_time) %></td>
             <td><%= information.shop_name %></td>
             <td><%= information.title %></td>
-            <td><%= information.decorate.mail_send_flag_to_string %></td>
+            <td><%= information.decorate.mail_send_flag_to_text %></td>
             <td>
               <%= link_to t('common.btn.show'), corporation_manage_information_path(information), class: 'btn btn-default' %>
               <%= link_to t('common.btn.edit'), edit_corporation_manage_information_path(information), class: 'btn btn-primary' %>
