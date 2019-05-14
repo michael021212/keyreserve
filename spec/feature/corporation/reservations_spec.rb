@@ -46,9 +46,11 @@ RSpec.feature 'corporation_manage/resevations', type: :feature do
                                              facility: facility,
                                              plan_id: nil,
                                              standard_price_per_hour: 1000) }
+      let(:user_corp) { create(:user_corp) }
       let(:target_user) { create(:user,
                                  name: '橋本環奈',
-                                 payway: :creditcard) }
+                                 payway: :creditcard,
+                                 parent_id: user_corp.id) }
       let(:credit_card) { create(:credit_card, user: target_user) }
       let(:corporation_user_2) { create(:corporation_user,
                                         user: target_user,
@@ -89,6 +91,7 @@ RSpec.feature 'corporation_manage/resevations', type: :feature do
         expect(page).to have_css('.cy-reservation-checkin', text: '2019/10/15 12:30')
         expect(page).to have_css('.cy-reservation-usage-period', text: '2.5時間')
         expect(page).to have_css('.cy-reservation-price', text: '2,500 円')
+        expect(ActionMailer::Base.deliveries.size).to eq(3)
       end
     end
 
