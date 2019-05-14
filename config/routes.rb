@@ -120,8 +120,8 @@ Rails.application.routes.draw do
       resources :facilities, only: %i[new show edit create update destroy] do
         resources :facility_temporary_plans, only: %i[new edit create update destroy] do
           collection do
-            get :resources
-            get :events
+            get :temporary_plan_infos
+            get :temporary_events
           end
         end
         resources :facility_dropin_plans, only: %i[new edit create update destroy] do
