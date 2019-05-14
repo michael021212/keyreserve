@@ -17,7 +17,7 @@ class Reservation < ApplicationRecord
   with_options on: :need_for_payment do
     validates :user_id, :price, presence: true
     validate :need_credit_card
-    validate :need_limit_has_been_exceeded
+    validate :limit_has_not_exceeded
   end
 
   # 指定した時間内の予約一覧
@@ -139,7 +139,7 @@ class Reservation < ApplicationRecord
 
   def set_price
     return if usage_period.nil?
-    self.price = facility.calc_price(self.user, self.checkin, self.usage_period)
+    self.price = facility.calc_price(self.user, self.checkin, self.usage_period) || 0
   end
 
   def save_and_charge!
@@ -159,13 +159,13 @@ class Reservation < ApplicationRecord
   end
 
   def need_credit_card
-    return if user.credit_card.present?
+    return if user&.credit_card.present?
     errors.add(:user_id, :credit_card_is_not_exists)
   end
 
-  def need_limit_has_been_exceeded
-    return if price > 50
-    errors.add(:price, :need_limit_has_been_exceeded)
+  def limit_has_not_exceeded
+    return if price.present? && price > 50
+    errors.add(:price, :limit_has_not_exceeded)
   end
 
   def reservation_already_exists_in_range?
