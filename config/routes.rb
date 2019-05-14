@@ -137,6 +137,7 @@ Rails.application.routes.draw do
         post :payment
       end
     end
+    resources :dropin_reservations, only: %i[index show]
     resources :information
   end
 end

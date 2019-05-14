@@ -22,7 +22,7 @@ class Admin::FacilityKeysController < AdminController
   end
 
   def update
-    @facility_key.assign_attribute(facility_key_params)
+    @facility_key.assign_attributes(facility_key_params)
     @facility_key.set_name
     if @facility_key.save
       redirect_to [:admin, @corporation, @shop, @facility, @facility_key], notice: "#{FacilityKey.model_name.human}を更新しました。"
