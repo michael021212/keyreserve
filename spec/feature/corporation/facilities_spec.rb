@@ -152,9 +152,9 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
 
       move_to_target_date('#js-reservation-calendar', '2019-05-20')
 
-      within(find('.fc-time-grid-event')) do
-        expect(find('.fc-time')).to have_content('11:00 - 18:00')
-        expect(find('.fc-title')).to have_content('ブロック')
+      within('.fc-time-grid-event') do
+        expect(page).to have_css('.fc-time', text: '11:00 - 18:00')
+        expect(page).to have_css('.fc-title', text: 'ブロック')
       end
     end
   end
