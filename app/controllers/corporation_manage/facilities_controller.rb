@@ -1,10 +1,12 @@
 class CorporationManage::FacilitiesController < CorporationManage::Base
   before_action :set_shop
-  before_action :set_facility, only: %i[show edit update destroy events]
+  before_action :set_facility, only: %i[show edit update destroy facility_events]
 
   def show
     gon.schedular_licence_key = ENV['SCHEDULER_LICENCE_KEY']
     gon.shop_id = @shop.id
+    gon.opening_time = @shop.opening_time
+    gon.closing_time = @shop.closing_time
     gon.facility_id = @facility.id
   end
 
@@ -39,7 +41,8 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
     redirect_to corporation_manage_shop_path(@shop), notice: t('common.messages.deleted', name: Facility.model_name.human)
   end
 
-  def events
+  # GET /corporation_manager/shops/shop_id/facilities/facility_id/facility_events (format: json)
+  def facility_events
     @reservations = @facility.reservations
   end
 

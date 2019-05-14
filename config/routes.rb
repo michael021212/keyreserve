@@ -119,7 +119,7 @@ Rails.application.routes.draw do
     resources :shops, only: %i[new show edit create update destroy] do
       resources :facilities, only: %i[new show edit create update destroy] do
         member do
-          get :events
+          get :facility_events
         end
         resources :facility_temporary_plans, only: %i[new edit create update destroy] do
           collection do

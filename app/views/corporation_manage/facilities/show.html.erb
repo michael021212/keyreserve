@@ -52,12 +52,7 @@
   <div class="box-header with-border">
     <h4 class="box-title">予約状況カレンダー</h4>
   </div>
-  <div id="js-reservation-calendar"
-       data-opening-time=<%= time_fmt(@shop.opening_time) %>
-       data-closing-time=<%= time_fmt(@shop.closing_time) %>
-       data-shop-id=<%=@shop.id%>
-       data-facility-id=<%=@facility.id %>
-  </div>
+  <div id="js-reservation-calendar"></div>
 </div>
 
 <% if @facility.dropin? %>

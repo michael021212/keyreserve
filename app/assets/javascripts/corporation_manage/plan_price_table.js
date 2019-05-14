@@ -49,10 +49,10 @@ var planPriceTableScheduller = function (target_class, target_plan_name, target_
 };
 
 var setReservationCalender = function setReservationCalender(target_class) {
-  var opening_time = $(target_class).data('opening-time');
-  var closing_time = $(target_class).data('closing-time');
-  var shop_id = $(target_class).data('shop-id');
-  var facility_id = $(target_class).data('facility-id');
+  var opening_time = gon.opening_time;
+  var closing_time = gon.closing_time;
+  var shop_id = gon.shop_id;
+  var facility_id = gon.facility_id;
 
   $(target_class).fullCalendar({
     schedulerLicenseKey: gon.schedular_licence_key,
@@ -80,7 +80,7 @@ var setReservationCalender = function setReservationCalender(target_class) {
       {
         events: function (start, end, timezone, callback) {
           ajaxRequest(
-            '/corporation_manage/shops/' + shop_id + '/facilities/' + facility_id + '/events'
+            `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/facility_events`
           ).then(function(events) {
             callback(events);
           })
