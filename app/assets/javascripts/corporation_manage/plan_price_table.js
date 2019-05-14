@@ -1,4 +1,4 @@
-var ajaxRequest = function ajaxRequest(url) {
+var ajaxRequest = function (url) {
   return $.ajax({
     url: url,
     type: "GET",
@@ -7,7 +7,7 @@ var ajaxRequest = function ajaxRequest(url) {
   });
 };
 
-var planPriceTableScheduller = function planPriceTableScheduller(target_class, target_plan_name) {
+var planPriceTableScheduller = function (target_class, target_plan_name) {
   var shop_id = gon.shop_id
   var facility_id = gon.facility_id
 
