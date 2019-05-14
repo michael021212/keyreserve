@@ -127,7 +127,7 @@ class Reservation < ApplicationRecord
     canceled? || (time > checkin)
   end
 
-  def can_canceled?
+  def cancelable?
     time = Time.zone.now + 1.days
     checkin > time
   end

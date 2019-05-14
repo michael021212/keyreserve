@@ -4,8 +4,10 @@ ja:
     invoice: 請求書
     drop_in: ドロップイン
     show_title: "%{name}詳細"
+    not_member: 非会員
     btn:
       csv: CSVをダウンロード
+      add: 追加
       delete: 削除
       show: 詳細
       new: 新規追加

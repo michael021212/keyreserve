@@ -10,6 +10,7 @@ class Admin::FacilityKeysController < AdminController
 
   def create
     @facility_key = @facility.facility_keys.new(facility_key_params)
+    @facility_key.set_name
     if @facility_key.save
       redirect_to [:admin, @corporation, @shop, @facility, @facility_key], notice: "#{FacilityKey.model_name.human}を作成しました。"
     else
@@ -21,7 +22,9 @@ class Admin::FacilityKeysController < AdminController
   end
 
   def update
-    if @facility_key.update(facility_key_params)
+    @facility_key.assign_attribute(facility_key_params)
+    @facility_key.set_name
+    if @facility_key.save
       redirect_to [:admin, @corporation, @shop, @facility, @facility_key], notice: "#{FacilityKey.model_name.human}を更新しました。"
     else
       render :edit
