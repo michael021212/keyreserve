@@ -18,29 +18,29 @@ RSpec.feature 'corporation_manage/resevations', type: :feature do
         corporation_user
         login_user(user)
       end
-  
+
       scenario '予約ブロックを作成できる', js: true do
         visit corporation_manage_root_path
-    
+
         click_on('予約管理')
         sleep 0.2
         click_on('施設予約')
         click_on('新規追加')
-    
+
         find('#reservation_block_flag').click
         select '西尾施設', from: '施設'
         select_datetime('reservation', 'checkin', Time.zone.local(2019, 10, 15, 12, 30))
         select '2.5時間', from: '利用時間'
-    
+
         click_on('登録')
-    
+
         expect(page).to have_css('.alert-warning', text: '予約ブロックを作成しました。')
         expect(page).to have_css('.cy-reservation-block-flag', text: '◯')
         expect(page).to have_css('.cy-reservation-checkin', text: '2019/10/15 12:30')
         expect(page).to have_css('.cy-reservation-usage-period', text: '2.5時間')
       end
     end
-    
+
     context '普通の予約を作成しようとした場合' do
       let(:facility_temporary_plan) { create(:facility_temporary_plan,
                                              facility: facility,
@@ -53,7 +53,7 @@ RSpec.feature 'corporation_manage/resevations', type: :feature do
       let(:corporation_user_2) { create(:corporation_user,
                                         user: target_user,
                                         corporation: corporation) }
-  
+
       before do
         facility_temporary_plan
         credit_card
@@ -61,29 +61,29 @@ RSpec.feature 'corporation_manage/resevations', type: :feature do
         corporation_user_2
         login_user(user)
       end
-  
+
       scenario '予約を作成できる', js: true do
         allow_any_instance_of(Payment).to receive(:stripe_charge!)
         reservation_attributes = build(:reservation,
                                        facility: facility,
                                        user: target_user,
                                        num: 5)
-    
+
         visit corporation_manage_root_path
-    
+
         click_on('予約管理')
         sleep 0.2
         click_on('施設予約')
         click_on('新規追加')
-    
+
         select reservation_attributes.user_name, from: '利用者名'
         fill_in '利用人数', with: reservation_attributes.num
         select_datetime('reservation', 'checkin', Time.zone.local(2019, 10, 15, 12, 30))
         select '2.5時間', from: '利用時間'
-    
+
         click_on('登録')
         click_on('決済する')
-    
+
         expect(page).to have_css('.alert-warning', text: '施設予約を作成しました。')
         expect(page).to have_css('.cy-reservation-block-flag', text: '-')
         expect(page).to have_css('.cy-reservation-checkin', text: '2019/10/15 12:30')
@@ -103,39 +103,38 @@ RSpec.feature 'corporation_manage/resevations', type: :feature do
       let(:corporation_user_2) { create(:corporation_user,
                                         user: target_user,
                                         corporation: corporation) }
-  
+
       before do
         facility_temporary_plan
         corporation_user
         corporation_user_2
         login_user(user)
       end
-  
+
       scenario 'バリデーションエラーで弾かれる', js: true do
-        allow_any_instance_of(Payment).to receive(:stripe_charge!)
         reservation_attributes = build(:reservation,
                                        facility: facility,
                                        user: target_user,
                                        num: 5)
-    
+
         visit corporation_manage_root_path
-    
+
         click_on('予約管理')
         sleep 0.2
         click_on('施設予約')
         click_on('新規追加')
-    
+
         select reservation_attributes.user_name, from: '利用者名'
         fill_in '利用人数', with: reservation_attributes.num
         select_datetime('reservation', 'checkin', Time.zone.local(2019, 10, 15, 12, 30))
         select '2.5時間', from: '利用時間'
-    
+
         click_on('登録')
-        
+
         expect(page).to have_content('指定したユーザーはまだクレジットカードを登録していません')
       end
     end
-    
+
     context '指定した時間内にすでに予約が存在した場合' do
       let(:facility_temporary_plan) { create(:facility_temporary_plan,
                                              facility: facility,
@@ -162,26 +161,25 @@ RSpec.feature 'corporation_manage/resevations', type: :feature do
       end
 
       scenario 'バリデーションエラーで弾かれる', js: true do
-        allow_any_instance_of(Payment).to receive(:stripe_charge!)
         reservation_attributes = build(:reservation,
                                        facility: facility,
                                        user: target_user,
                                        num: 5)
-  
+
         visit corporation_manage_root_path
-  
+
         click_on('予約管理')
         sleep 0.2
         click_on('施設予約')
         click_on('新規追加')
-  
+
         select reservation_attributes.user_name, from: '利用者名'
         fill_in '利用人数', with: reservation_attributes.num
         select_datetime('reservation', 'checkin', Time.zone.local(2019, 10, 15, 11, 30))
         select '2.5時間', from: '利用時間'
-  
+
         click_on('登録')
-  
+
         expect(page).to have_content('その時間帯にはすでに予約が存在しています')
       end
     end
