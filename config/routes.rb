@@ -132,10 +132,8 @@ Rails.application.routes.draw do
     resources :user_contracts
     resources :user_corps
     resources :billings, only: %i[index show]
-    resources :reservations do
-      collection do
-        post :payment
-      end
+    resources :reservations, only: %i[new create index show] do
+      post :payment, on: :collection
     end
     resources :dropin_reservations, only: %i[index show]
     resources :information
