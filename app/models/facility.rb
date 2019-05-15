@@ -172,7 +172,7 @@ class Facility < ApplicationRecord
   end
 
   def get_temporary_plans_linked_with_user(user)
-    return [] if user.get_contract_plan_ids.blank?
+    return [] if user&.get_contract_plan_ids.blank?
     facility_temporary_plans.target_plan_ids(user.get_contract_plan_ids)
   end
 
