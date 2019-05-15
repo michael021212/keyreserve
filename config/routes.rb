@@ -118,9 +118,7 @@ Rails.application.routes.draw do
     resources :user_contracts
     resources :shops, only: %i[new show edit create update destroy] do
       resources :facilities, only: %i[new show edit create update destroy] do
-        member do
-          get :facility_events
-        end
+        get :facility_events, on: :member
         resources :facility_temporary_plans, only: %i[new edit create update destroy] do
           collection do
             get :temporary_plan_infos
