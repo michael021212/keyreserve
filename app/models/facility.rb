@@ -34,6 +34,10 @@ class Facility < ApplicationRecord
     where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
   }
 
+  def facility_temporary_plan_prices
+    facility_temporary_plans.map(&:facility_temporary_plan_prices).flatten
+  end
+
   def facility_dropin_sub_plans
     facility_dropin_plans.map(&:facility_dropin_sub_plans).flatten
   end

@@ -20,7 +20,7 @@ var planPriceTableScheduller = function (target_class, target_plan_name, target_
     slotDuration: '00:30:00',
     slotLabelInterval: '00:30:00',
     resourceRender: function(resource, el) {
-      link = `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/facility_temporary_plans/${resource.id}/edit`;
+      link = `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/${resource.id}/edit`;
       el.append("<p><a href=" + link + '>編集</a></p>');
     },
     resources: function (callback) {
@@ -49,6 +49,6 @@ var planPriceTableScheduller = function (target_class, target_plan_name, target_
 };
 
 $(document).ready(function() {
-  planPriceTableScheduller('#js-temporary-plan-table', 'facility_temporary_plans', 'temporary_events')
+  planPriceTableScheduller('#js-temporary-plan-table', 'facility_temporary_plans', 'facility_temporary_plan_prices')
   planPriceTableScheduller('#js-dropin-plan-table', 'facility_dropin_plans', 'facility_dropin_sub_plans')
 });

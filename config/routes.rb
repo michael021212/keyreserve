@@ -118,12 +118,8 @@ Rails.application.routes.draw do
     resources :user_contracts
     resources :shops, only: %i[new show edit create update destroy] do
       resources :facilities, only: %i[new show edit create update destroy] do
-        resources :facility_temporary_plans, only: %i[new edit create update destroy] do
-          collection do
-            get :temporary_plan_infos
-            get :temporary_events
-          end
-        end
+        resources :facility_temporary_plans, only: %i[index new edit create update destroy]
+        resources :facility_temporary_plan_prices, only: %i[index]
         resources :facility_dropin_plans, only: %i[index new edit create update destroy]
         resources :facility_dropin_sub_plans, only: %i[index]
       end
