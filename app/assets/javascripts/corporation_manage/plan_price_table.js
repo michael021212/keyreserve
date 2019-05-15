@@ -48,7 +48,7 @@ var planPriceTableScheduller = function (target_class, target_plan_name, target_
   }
 };
 
-var setReservationCalender = function setReservationCalender(target_class) {
+var setReservationCalender = function (target_class) {
   var opening_time = gon.opening_time;
   var closing_time = gon.closing_time;
   var shop_id = gon.shop_id;
