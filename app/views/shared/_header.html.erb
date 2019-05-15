@@ -36,9 +36,9 @@
               <% end %>
             </li>
             <!-- 施設管理者面メニュー -->
-            <% if current_corporation? %>
+            <% if current_user.corporate_admin? %>
               <li class="dropdown">
-                <%= link_to '施設管理', corporation_manage_root_path %>
+                <%= link_to t('common.sidebar.manage', name: Corporation.model_name.human), corporation_manage_root_path %>
               </li>
             <% end %>
             <li class="dropdown">
