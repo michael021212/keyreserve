@@ -7,7 +7,7 @@ var ajaxRequest = function (url) {
   });
 };
 
-var planPriceTableScheduller = function (target_class, target_plan_name, target_resources_action, target_events_action) {
+var planPriceTableScheduller = function (target_class, target_plan_name, target_events_name) {
   var shop_id = gon.shop_id
   var facility_id = gon.facility_id
 
@@ -20,12 +20,12 @@ var planPriceTableScheduller = function (target_class, target_plan_name, target_
     slotDuration: '00:30:00',
     slotLabelInterval: '00:30:00',
     resourceRender: function(resource, el) {
-      link = `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/facility_temporary_plans/${resource.id}/edit`;
+      link = `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/${resource.id}/edit`;
       el.append("<p><a href=" + link + '>編集</a></p>');
     },
     resources: function (callback) {
       ajaxRequest(
-        `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/${target_resources_action}`
+        `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}`
       ).then(function(resources) {
         callback(resources);
       })
@@ -34,7 +34,7 @@ var planPriceTableScheduller = function (target_class, target_plan_name, target_
       {
         events: function (start, end, timezone, callback) {
           ajaxRequest(
-            `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_plan_name}/${target_events_action}`
+            `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/${target_events_name}`
           ).then(function(events) {
             callback(events);
           })
@@ -91,7 +91,7 @@ var setReservationCalender = function (target_class) {
 };
 
 $(document).ready(function() {
-  planPriceTableScheduller('#js-temporary-plan-table', 'facility_temporary_plans', 'temporary_plan_infos', 'temporary_events')
-  planPriceTableScheduller('#js-dropin-plan-table', 'facility_dropin_plans', 'dropin_plan_infos', 'dropin_events')
+  planPriceTableScheduller('#js-temporary-plan-table', 'facility_temporary_plans', 'facility_temporary_plan_prices')
+  planPriceTableScheduller('#js-dropin-plan-table', 'facility_dropin_plans', 'facility_dropin_sub_plans')
   setReservationCalender('#js-reservation-calendar')
 });
