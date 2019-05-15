@@ -155,14 +155,14 @@ class Facility < ApplicationRecord
 
   private
 
-  def get_min_price_from_target_temporary_plans(target_temporay_plans)
-    return 0 if target_temporay_plans.blank?
-    target_temporay_plans.minimum(:standard_price_per_hour)
+  def get_min_price_from_target_temporary_plans(target_temporary_plans)
+    return 0 if target_temporary_plans.blank?
+    target_temporary_plans.minimum(:standard_price_per_hour)
   end
 
-  def get_min_price_from_target_temporary_plan_prices(target_temporay_plan_prices)
-    return 0 if target_temporay_plan_prices.blank?
-    target_temporay_plan_prices.minimum(:price)
+  def get_min_price_from_target_temporary_plan_prices(target_temporary_plan_prices)
+    return 0 if target_temporary_plan_prices.blank?
+    target_temporary_plan_prices.minimum(:price)
   end
 
   def get_temporary_plan_prices_linked_with_temporary_plan_ids(temporary_plan_ids)
