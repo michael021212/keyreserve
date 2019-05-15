@@ -35,9 +35,6 @@ class CorporationManage::FacilityTemporaryPlansController < CorporationManage::B
     redirect_to corporation_manage_shop_facility_path(@facility.shop, @facility), notice: t('common.messages.deleted', name: FacilityTemporaryPlan.model_name.human)
   end
 
-  # GET /corporation_manager/shops/shop_id/facilities/facility_id/facility_temporary_plans/temporary_events (format: json)
-  def temporary_events; end
-
   private
 
   def set_shop
