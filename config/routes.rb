@@ -115,21 +115,20 @@ Rails.application.routes.draw do
   # 法人メニュー
   namespace :corporation_manage do
     root 'dashboards#index'
-    resources :shops, only: %i[new create show edit update destroy] do
-      resources :facilities, only: %i[new create show edit update destroy] do
-        resources :facility_temporary_plans, only: %i[new edit create update destroy] do
-          collection do
-            get :resources
-            get :events
-          end
-        end
+    resources :user_contracts
+    resources :shops, only: %i[new show edit create update destroy] do
+      resources :facilities, only: %i[new show edit create update destroy] do
+        get :facility_events, on: :member
+        resources :facility_temporary_plans, only: %i[index new edit create update destroy]
+        resources :facility_temporary_plan_prices, only: %i[index]
+        resources :facility_dropin_plans, only: %i[index new edit create update destroy]
+        resources :facility_dropin_sub_plans, only: %i[index]
       end
     end
     resources :users do
       resources :personal_identifications, only: %i[new create edit update]
     end
     resources :plans
-    resources :user_contracts
     resources :user_corps
     resources :billings, only: %i[index show]
     resources :dropin_reservations, only: %i[index show]

@@ -1,0 +1,29 @@
+<%= bootstrap_nested_form_for([:corporation_manage, facility.shop, facility, facility_dropin_plan]) do |f| %>
+  <%= f.collection_select :plan_id, current_corporation.plans.all, :id, :name, { include_blank: t('common.not_member') } %>
+  <%= f.text_field :guide_mail_title, help: t('.guide_mail_title') %>
+  <%= f.text_area :guide_mail_content, rows: 10 %>
+  <%= f.file_field :guide_file, help: t('.guide_mail_title') %>
+  <%= f.form_group :facility_dropin_sub_plans, label: { text: t('.add_dropin_plan_price') } do %>
+    <%= f.fields_for :facility_dropin_sub_plans do |sub_plan| %>
+      <div class="form-inline mb20">
+        <%= sub_plan.text_field :starting_time,
+                                hide_label: true,
+                                class: 'js-dropin-starting-time',
+                                data: { date_format: 'HH:mm' } %> 〜
+        <%= sub_plan.text_field :ending_time,
+                                hide_label: true,
+                                class: 'js-dropin-ending-time',
+                                data: { date_format: 'HH:mm' } %>
+        <sub_planan class="price-text-field mr20 ml20">
+          <%= sub_plan.text_field :price, hide_label: true, class: 'cy-dropin-price' %><%= t('.en') %>
+        </sub_planan>
+        <sub_planan class="price-text-field mr20">
+          <%= sub_plan.text_field :name, hide_label: true, placeholder: Plan.human_attribute_name(:name), class: 'cy-dropin-name' %>
+        </sub_planan>
+        <%= sub_plan.link_to_remove t('common.btn.delete'), :confirm => t('cargo_iem.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>
+      </div>
+    <% end %>
+    <p><%= f.link_to_add t('common.btn.add'), :facility_dropin_sub_plans, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
+  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

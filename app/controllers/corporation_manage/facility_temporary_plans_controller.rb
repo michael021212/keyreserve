@@ -1,8 +1,11 @@
 class CorporationManage::FacilityTemporaryPlansController < CorporationManage::Base
   before_action :set_shop
   before_action :set_facility
-  before_action :set_facility_temporary_plans, only: %i[resources events]
   before_action :set_facility_temporary_plan, only: %i[edit update destroy]
+
+  def index
+    @facility_temporary_plans = @facility.facility_temporary_plans
+  end
 
   def new
     @facility_temporary_plan = @facility.facility_temporary_plans.build
@@ -32,10 +35,6 @@ class CorporationManage::FacilityTemporaryPlansController < CorporationManage::B
     redirect_to corporation_manage_shop_facility_path(@facility.shop, @facility), notice: t('common.messages.deleted', name: FacilityTemporaryPlan.model_name.human)
   end
 
-  def resources; end
-
-  def events; end
-
   private
 
   def set_shop
@@ -44,10 +43,6 @@ class CorporationManage::FacilityTemporaryPlansController < CorporationManage::B
 
   def set_facility
     @facility = @shop.facilities.find(params[:facility_id])
-  end
-
-  def set_facility_temporary_plans
-    @facility_temporary_plans = @facility.facility_temporary_plans
   end
 
   def set_facility_temporary_plan

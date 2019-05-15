@@ -129,4 +129,33 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
       expect(page).not_to have_css(".cy-facility-#{shop.id}")
     end
   end
+
+  feature '予約カレンダー' do
+    let(:facility) { create(:facility, shop: shop) }
+    let(:reservation) { create(:reservation,
+                               facility: facility,
+                               user: user,
+                               block_flag: true,
+                               checkin: Time.zone.local(2019, 5, 20, 11, 00),
+                               checkout: Time.zone.local(2019, 5, 20, 18, 00)) }
+
+    before do
+      corporation_user
+      shop
+      facility
+      reservation
+      login_user(user)
+    end
+
+    scenario '予約カレンダーが表示される', js: true do
+      visit corporation_manage_shop_facility_path(shop, facility)
+
+      move_to_target_date('#js-reservation-calendar', '2019-05-20')
+
+      within('.fc-time-grid-event') do
+        expect(page).to have_css('.fc-time', text: '11:00 - 18:00')
+        expect(page).to have_css('.fc-title', text: 'ブロック')
+      end
+    end
+  end
 end

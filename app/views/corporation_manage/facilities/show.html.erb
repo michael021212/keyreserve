@@ -48,4 +48,15 @@
   </div>
 </div>
 
-<%= render 'facility_temporary_plan', shop: @shop, facility: @facility %>
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= t('.reservation_calendar') %></h4>
+  </div>
+  <div id="js-reservation-calendar"></div>
+</div>
+
+<% if @facility.dropin? %>
+  <%= render 'facility_dropin_plans', shop: @shop, facility: @facility %>
+<% else %>
+  <%= render 'facility_temporary_plan', shop: @shop, facility: @facility %>
+<% end %>

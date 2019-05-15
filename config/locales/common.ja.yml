@@ -6,6 +6,7 @@ ja:
     show_title: "%{name}詳細"
     reservation: 予約
     not_member: 非会員
+    block: ブロック
     csv:
       dropin_reservation_csv: "dropin_reservations_%{date}.csv"
     btn:
