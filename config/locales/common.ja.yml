@@ -4,8 +4,11 @@ ja:
     invoice: 請求書
     drop_in: ドロップイン
     show_title: "%{name}詳細"
+    reservation: 予約
     not_member: 非会員
     block: ブロック
+    csv:
+      dropin_reservation_csv: "dropin_reservations_%{date}.csv"
     btn:
       add: 追加
       delete: 削除
@@ -15,6 +18,7 @@ ja:
       back: 戻る
       search: 検索
       cancel: キャンセル
+      csv_download: CSVダウンロード
     messages:
       updated: "%{name}を更新しました。"
       created: "%{name}を作成しました。"
