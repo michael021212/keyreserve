@@ -41,8 +41,8 @@ $(document)
     disabledReservationForms('#reservation_block_flag')
   })
 
-  .on('click', '#reservation_block_flag', function () {
-    disabledReservationForms(this)
+  .on('click', '#reservation_block_flag', function (e) {
+    disabledReservationForms(e.target)
   })
 
   .on('change', '#information_info_target_type', function () {
