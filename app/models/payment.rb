@@ -10,13 +10,13 @@ class Payment < ApplicationRecord
   before_destroy :stripe_cancel
 
   def stripe_charge!
-    ch = Stripe::Charge.create(
+    charge = Stripe::Charge.create(
       amount: price,
       currency: 'jpy',
       customer: target.stripe_customer_id,
       capture: true
     )
-    self.token = ch.id
+    self.token = charge.id
     save!
   rescue Stripe::StripeError => e
     logger.error(e)
