@@ -58,6 +58,7 @@ class Facility < ApplicationRecord
     facilities = facilities.where('max_num > ?',  condition[:use_num].to_i)
   end
 
+  # userに表示し得る施設の最小利用料金(1時間)
   def min_hourly_price(user, target_time=nil)
     temporary_plans = (get_temporary_plans_linked_with_user(user).presence || get_temporary_plans_of_not_contracts.presence)
     temporary_plan_prices = get_temporary_plan_prices_linked_with_temporary_plan_ids(temporary_plans&.ids)
