@@ -10,12 +10,15 @@ class Reservation < ApplicationRecord
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
   delegate :name, to: :user, prefix: true, allow_nil: true
+  delegate :credit_card, to: :user, prefix: true, allow_nil: true
+  delegate :credit_card_id, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :user, prefix: true, allow_nil: true
   delegate :email, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :facility, prefix: true, allow_nil: true
   delegate :shop_corporation_name, to: :facility, prefix: true, allow_nil: true
   delegate :shop_name, to: :facility, prefix: true, allow_nil: true
   delegate :token, to: :payment, prefix: true, allow_nil: true
+  delegate :shop_corporation_id, to: :facility, prefix: true, allow_nil: true
 
   # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
   validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
@@ -56,9 +59,9 @@ class Reservation < ApplicationRecord
     return if self.payment.present?
     self.payment = Payment.new(
       user_id: self.user_id,
-      corporation_id: self.facility.shop.corporation_id,
+      corporation_id: self.facility_shop_corporation_id,
       facility_id: self.facility_id,
-      credit_card_id: self.user&.credit_card&.id,
+      credit_card_id: self.user_credit_card_id,
       price: self.price,
     )
   end
@@ -169,7 +172,7 @@ class Reservation < ApplicationRecord
   end
 
   def need_credit_card
-    return if user&.credit_card.present?
+    return if user_credit_card.present?
     errors.add(:user_id, :credit_card_is_not_exists)
   end
 
