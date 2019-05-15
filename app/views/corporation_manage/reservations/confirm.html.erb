@@ -8,15 +8,15 @@
     <table class="table table-striped">
       <tr>
         <th><%= Shop.human_attribute_name(:name) %></th>
-        <td><%= @reservation.facility.shop.name %></td>
+        <td><%= @reservation.facility_shop_name %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:facility_id) %></th>
-        <td><%= @reservation.facility.name %></td>
+        <td><%= @reservation.facility_name %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:user_id) %></th>
-        <td><%= @reservation.user.name %></td>
+        <td><%= @reservation.user_name %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:checkin) %></th>
