@@ -41,7 +41,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
     redirect_to corporation_manage_shop_path(@shop), notice: t('common.messages.deleted', name: Facility.model_name.human)
   end
 
-  # GET /corporation_manager/shops/shop_id/facilities/facility_id/facility_events (format: json)
+  # GET /corporation_manager/shops/:shop_id/facilities/:facility_id/facility_events (format: json)
   def facility_events
     @reservations = @facility.reservations
   end
