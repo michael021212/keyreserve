@@ -14,6 +14,6 @@ class ReservationDecorator < Draper::Decorator
   end
 
   def display_user_name
-    block_flag? ? 'ブロック' : user_name
+    block_flag? ? I18n.t('common.block') : user_name
   end
 end

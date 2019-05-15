@@ -5,6 +5,7 @@ ja:
     drop_in: ドロップイン
     show_title: "%{name}詳細"
     not_member: 非会員
+    block: ブロック
     btn:
       add: 追加
       delete: 削除
