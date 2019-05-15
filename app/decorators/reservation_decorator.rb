@@ -29,4 +29,8 @@ class ReservationDecorator < Draper::Decorator
   def people_count
     "#{num}名"
   end
+  
+  def display_user_name
+    block_flag? ? I18n.t('common.block') : user_name
+  end
 end

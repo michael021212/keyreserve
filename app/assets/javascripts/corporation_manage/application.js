@@ -13,4 +13,5 @@
 //= require scheduler.min.js
 //= require fullcalendar_ja.js
 //= require corporation_manage/plan_price_table
+//= require corporation_manage/datetimepicker
 //= require corporation_manage/common
