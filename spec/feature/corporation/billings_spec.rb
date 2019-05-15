@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'corporation_manage/billings', type: :feature do
   let(:corporation) { create(:corporation) }
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :corporate_admin) }
   let(:corporation_user) { create(:corporation_user,
                                   user: user,
                                   corporation: corporation) }
