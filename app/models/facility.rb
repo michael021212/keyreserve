@@ -34,6 +34,10 @@ class Facility < ApplicationRecord
     where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
   }
 
+  def facility_dropin_sub_plans
+    facility_dropin_plans.map(&:facility_dropin_sub_plans).flatten
+  end
+
   # 現在予約可能な施設一覧
   def self.reservable_facilities(checkin, checkout, condition, user)
     # 都度課金可能な施設を一覧で取得

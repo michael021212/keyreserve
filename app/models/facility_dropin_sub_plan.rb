@@ -7,6 +7,8 @@ class FacilityDropinSubPlan < ApplicationRecord
 
   validate :within_business_hours
 
+  delegate :id, to: :facility_dropin_plan, prefix: true, allow_nil: true
+
   scope :in_range, ->(range) do
     where(arel_table[:starting_time].lteq(range.first)).where(arel_table[:ending_time].gteq(range.last))
   end
