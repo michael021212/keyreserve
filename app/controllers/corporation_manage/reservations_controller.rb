@@ -39,6 +39,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     end
   end
 
+  # POST /corporation_manager/reservations/payments
   def payment
     build_reservation_from_session
     @reservation.set_payment
