@@ -48,7 +48,50 @@ var planPriceTableScheduller = function (target_class, target_plan_name, target_
   }
 };
 
+var setReservationCalender = function (target_class) {
+  var opening_time = gon.opening_time;
+  var closing_time = gon.closing_time;
+  var shop_id = gon.shop_id;
+  var facility_id = gon.facility_id;
+
+  $(target_class).fullCalendar({
+    schedulerLicenseKey: gon.schedular_licence_key,
+    defaultView: 'agendaDay',
+    header: {
+      left: 'prev,next',
+      center: 'title',
+      right: 'today agendaDay,agendaWeek,month'
+    },
+    height: 'auto',
+    lang: 'ja',
+    slotDuration: '00:30:00',
+    slotLabelInterval: '00:30:00',
+    businessHours: [
+      {
+        dow: [0, 1, 2, 3, 4, 5, 6],
+        start: opening_time,
+        end: closing_time
+      }
+    ],
+    displayEventEnd: {
+      month: true
+    },
+    eventSources: [
+      {
+        events: function (start, end, timezone, callback) {
+          ajaxRequest(
+            `/corporation_manage/shops/${shop_id}/facilities/${facility_id}/facility_events`
+          ).then(function(events) {
+            callback(events);
+          })
+        }
+      }
+    ]
+  })
+};
+
 $(document).ready(function() {
   planPriceTableScheduller('#js-temporary-plan-table', 'facility_temporary_plans', 'facility_temporary_plan_prices')
   planPriceTableScheduller('#js-dropin-plan-table', 'facility_dropin_plans', 'facility_dropin_sub_plans')
+  setReservationCalender('#js-reservation-calendar')
 });

@@ -118,6 +118,7 @@ Rails.application.routes.draw do
     resources :user_contracts
     resources :shops, only: %i[new show edit create update destroy] do
       resources :facilities, only: %i[new show edit create update destroy] do
+        get :facility_events, on: :member
         resources :facility_temporary_plans, only: %i[index new edit create update destroy]
         resources :facility_temporary_plan_prices, only: %i[index]
         resources :facility_dropin_plans, only: %i[index new edit create update destroy]

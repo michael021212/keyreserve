@@ -226,6 +226,7 @@ ja:
       show:
         title: 施設詳細
         target_plan: 月額対象プラン
+        reservation_calendar: 予約状況カレンダー
     users:
       form:
         select_corproation: 所属している法人を選択して下さい (法人に所属していない場合は空にして下さい)
