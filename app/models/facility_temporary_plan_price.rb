@@ -6,8 +6,6 @@ class FacilityTemporaryPlanPrice < ApplicationRecord
   validates :starting_time, :ending_time, :price,  presence: true
   validate :within_business_hours
 
-  delegate :id, to: :facility_temporary_plan, prefix: true, allow_nil: true
-
   def within_business_hours
     opening_time = time_today(facility_temporary_plan.facility.shop.opening_time)
     closing_time = time_today(facility_temporary_plan.facility.shop.closing_time)
