@@ -9,7 +9,9 @@ ja:
     block: ブロック
     csv:
       dropin_reservation_csv: "dropin_reservations_%{date}.csv"
+      reservation_csv: "reservations_%{date}.csv"
     btn:
+      csv: CSVをダウンロード
       add: 追加
       delete: 削除
       show: 詳細
@@ -18,12 +20,14 @@ ja:
       back: 戻る
       search: 検索
       cancel: キャンセル
+      pay: 決済する
       csv_download: CSVダウンロード
     messages:
       updated: "%{name}を更新しました。"
       created: "%{name}を作成しました。"
       deleted: "%{name}を削除しました。"
       list_not_exist: "表示する%{name}はありません。"
+      create_block: "%{name}ブロックを作成しました。"
     confirms:
       really_to_delete: 本当に削除しますか？
       really_to_cancele: 本当にキャンセルしますか？
