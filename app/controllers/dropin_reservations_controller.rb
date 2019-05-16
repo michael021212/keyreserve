@@ -110,7 +110,7 @@ class DropinReservationsController <  ApplicationController
     @dropin_reservation = DropinReservation.new_from_dropin_spot(session[:dropin_spot], @user, current_user)
     @dropin_reservation.set_payment
     if @dropin_reservation.save
-      @dropin_reservation.payment.stripe_charge
+      @dropin_reservation.payment.stripe_charge!
       session[:dropin_spot] = nil
       session[:reservation_id] = @dropin_reservation.id
       @dropin_reservation.send_dropin_reserved_mails

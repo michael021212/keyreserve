@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :user_corp do
-    sequence(:email) { |n| "sample#{n}@example.com" }
+    sequence(:email) { |n| "houzin#{n}@example.com" }
     sequence(:name) { |n| "法人#{n}" }
     password { 'password' }
     tel { "09012345678" }

@@ -17,6 +17,7 @@ class Facility < ApplicationRecord
 
   delegate :name, to: :shop, prefix: true, allow_nil: true
   delegate :corporation_name, to: :shop, prefix: true, allow_nil: true
+  delegate :corporation_id, to: :shop, prefix: true, allow_nil: true
 
   mount_uploader :image, ImageUploader
 

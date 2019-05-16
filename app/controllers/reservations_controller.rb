@@ -101,7 +101,7 @@ class ReservationsController <  ApplicationController
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
     @reservation.set_payment
     ActiveRecord::Base.transaction do
-      @reservation.payment.stripe_charge
+      @reservation.payment.stripe_charge!
       @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id

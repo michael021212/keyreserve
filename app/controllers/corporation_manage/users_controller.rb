@@ -2,7 +2,7 @@ class CorporationManage::UsersController < CorporationManage::Base
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
-    @users = current_corporation.users.order(id: :desc).page(params[:page])
+    @users = current_corporation.users.personal_and_corporate_admin.order(id: :desc).page(params[:page])
   end
 
   def new
@@ -50,7 +50,8 @@ class CorporationManage::UsersController < CorporationManage::Base
       :name,
       :tel,
       :state,
-      :payway
+      :payway,
+      :user_type
     ).merge(corporation_ids: [current_corporation.id])
   end
 end
