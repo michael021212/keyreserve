@@ -28,6 +28,7 @@ class FacilityTemporaryPlanPrice < ApplicationRecord
   
   def self.squeeze_from_plans_and_time(plans, target_time)
     facility_temporary_plan_prices = not_zero_yen.target_plans(plans)
-    facility_temporary_plan_prices.in_time(target_time) if target_time.present?
+    facility_temporary_plan_prices = facility_temporary_plan_prices.in_time(target_time) if target_time.present?
+    facility_temporary_plan_prices
   end
 end
