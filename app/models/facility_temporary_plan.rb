@@ -20,6 +20,7 @@ class FacilityTemporaryPlan < ApplicationRecord
   scope :target_plan_ids, ->(plan_ids) { where(plan_id: plan_ids) }
   scope :linked_with_user, ->(user) { target_plan_ids(user.get_contract_plan_ids) }
   scope :for_not_member, -> { not_zero_yen.plan_id_nil }
+  scope :select_plans_for_user_condition, ->(user) { linked_with_user(user).presence || for_not_member }
 
   def overlap_facility_temporary_plan_prices
     time_period_with_indices = []
