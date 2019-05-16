@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   belongs_to :user_corp, foreign_key: :parent_id, optional: true
   delegate :name, to: :user_corp, prefix: true, allow_nil: true
+  delegate :id, to: :credit_card, prefix: true, allow_nil: true
   has_many :billings
 
   accepts_nested_attributes_for :corporation_users

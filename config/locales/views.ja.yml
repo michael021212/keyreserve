@@ -340,3 +340,19 @@ ja:
         title: 施設鍵編集
       show:
         title: 施設鍵詳細
+    reservations:
+      search_form:
+        select_year_month: 年月を指定
+        input_name: ユーザ又は法人名
+      form:
+        select_facility: 施設を選択
+        select_user: ユーザーを選択
+      index:
+        title: 予約一覧
+        how_to_payment: 決済方法
+      show:
+        title: 予約詳細
+      new:
+        title: 予約登録
+      confirm:
+        title: 決済詳細

@@ -1,0 +1,50 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="box-tools">
+      <%= link_to t('common.btn.back'), new_admin_reservation_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Shop.human_attribute_name(:name) %></th>
+        <td><%= @reservation.facility_shop_name %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:facility_id) %></th>
+        <td><%= @reservation.facility_name %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:user_id) %></th>
+        <td><%= @reservation.user_name %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:checkin) %></th>
+        <td><%= datetime_ja(@reservation.checkin) %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:checkout) %></th>
+        <td><%= datetime_ja(@reservation.checkout) %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:usage_period) %></th>
+        <td><%= @reservation.usage_period %></td>
+      </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:price) %></th>
+        <td><%= delimiter_price(@reservation.price) %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:payway) %></th>
+        <td><%= @reservation.user.payway_i18n %></td>
+      </tr>
+    </table>
+    <div class="row mt30">
+      <div class="col-md-offset-5 col-md-4">
+        <%= button_to t('common.btn.pay'),
+                      payment_corporation_manage_reservations_path,
+                      class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>

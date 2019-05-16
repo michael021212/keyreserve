@@ -132,6 +132,9 @@ Rails.application.routes.draw do
     resources :plans
     resources :user_corps
     resources :billings, only: %i[index show]
+    resources :reservations, only: %i[new create index show] do
+      post :payment, on: :collection
+    end
     resources :dropin_reservations, only: %i[index show]
     resources :information
   end
