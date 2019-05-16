@@ -30,4 +30,8 @@ class Corporation < ApplicationRecord
     end
     arrs
   end
+
+  def plans_linked_with_user?(user)
+    plans.ids.any? { |plan_id| user.get_contract_plan_ids.include?(plan_id) }
+  end
 end

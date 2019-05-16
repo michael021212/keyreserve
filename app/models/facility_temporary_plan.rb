@@ -18,6 +18,8 @@ class FacilityTemporaryPlan < ApplicationRecord
   scope :not_zero_yen, -> { where.not(standard_price_per_hour: 0) }
   scope :plan_id_nil, -> { where(plan_id: nil) }
   scope :target_plan_ids, ->(plan_ids) { where(plan_id: plan_ids) }
+  scope :linked_with_user, ->(user) { target_plan_ids(user.get_contract_plan_ids) }
+  scope :for_not_member, -> { not_zero_yen.plan_id_nil }
 
   def overlap_facility_temporary_plan_prices
     time_period_with_indices = []

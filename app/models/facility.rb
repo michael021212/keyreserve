@@ -60,11 +60,8 @@ class Facility < ApplicationRecord
 
   # userに表示し得る施設の最小利用料金(1時間)
   def min_hourly_price(user, target_time=nil)
-    temporary_plans = (get_temporary_plans_linked_with_user(user).presence || get_temporary_plans_of_not_contracts.presence)
-    temporary_plan_prices = get_temporary_plan_prices_linked_with_temporary_plan_ids(temporary_plans&.ids)
-    temporary_plan_prices = temporary_plan_prices.in_time(target_time) if temporary_plan_prices.present? && target_time.present?
-    min_price = get_min_price_from_target_temporary_plans(temporary_plans)
-    option_min_price = get_min_price_from_target_temporary_plan_prices(temporary_plan_prices)
+    min_price = min_price_of_target_facility_temporary_plans(user)
+    option_min_price = min_price_of_target_facility_temporary_plan_prices(user, target_time)
     min_price = option_min_price if !option_min_price.zero?
     compute_discount_price(min_price, user)
   end
@@ -156,36 +153,31 @@ class Facility < ApplicationRecord
 
   private
 
-  def get_min_price_from_target_temporary_plans(target_temporary_plans)
-    return 0 if target_temporary_plans.blank?
-    target_temporary_plans.minimum(:standard_price_per_hour)
+  def target_facility_temporary_plans(user)
+    facility_temporary_plans.linked_with_user(user).presence || facility_temporary_plans.for_not_member
   end
 
-  def get_min_price_from_target_temporary_plan_prices(target_temporary_plan_prices)
-    return 0 if target_temporary_plan_prices.blank?
-    target_temporary_plan_prices.minimum(:price)
+  def min_price_of_target_facility_temporary_plans(user)
+    return 0 if target_facility_temporary_plans(user).blank?
+    target_facility_temporary_plans(user).minimum(:standard_price_per_hour)
   end
 
-  def get_temporary_plan_prices_linked_with_temporary_plan_ids(temporary_plan_ids)
-    return [] if facility_temporary_plan_prices.blank? || temporary_plan_ids.blank?
-    FacilityTemporaryPlanPrice.not_zero_yen.target_temporary_plan_ids(temporary_plan_ids)
+  def target_facility_temporary_plan_prices(user, target_time)
+    facility_temporary_plan_prices = FacilityTemporaryPlanPrice.not_zero_yen.target_temporary_plan_ids(target_facility_temporary_plans(user)&.ids)
+    facility_temporary_plan_prices.in_time(target_time) if target_time.present?
   end
 
-  def get_temporary_plans_linked_with_user(user)
-    return [] if user&.get_contract_plan_ids.blank?
-    facility_temporary_plans.target_plan_ids(user.get_contract_plan_ids)
-  end
-
-  def get_temporary_plans_of_not_contracts
-    facility_temporary_plans.not_zero_yen.plan_id_nil
+  def min_price_of_target_facility_temporary_plan_prices(user, target_time)
+    return 0 if target_facility_temporary_plan_prices(user, target_time).blank?
+    target_facility_temporary_plan_prices(user, target_time).minimum(:price)
   end
 
   def compute_discount_price(price, user)
-    (price * discount_rate(user)).floor
+    return price if not_need_to_discount?(user)
+    (price * Settings.discount_rate).floor
   end
 
-  def discount_rate(user)
-    return 1 if user.nil? || get_temporary_plans_linked_with_user(user).present?
-    user.user_contracts.present? ? Settings.discount_rate : 1
+  def not_need_to_discount?(user)
+    user.nil? || user.get_contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
   end
 end
