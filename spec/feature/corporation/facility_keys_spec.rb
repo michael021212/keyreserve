@@ -16,7 +16,7 @@ RSpec.feature 'corporation_manage/facility_keys', type: :feature do
       login_user(user)
     end
 
-    scenario '施設鍵を登録できる', js: true do
+    scenario '施設鍵を登録できる' do
       allow(KeystationService).to receive(:sync_rooms).and_return([["テスト鍵", 1], ["テスト鍵２", 2]])
       allow(KeystationService).to receive(:sync_room_key_name).and_return('テスト鍵')
       allow(KeystationService).to receive(:sync_room_key_password).and_return('12345')
