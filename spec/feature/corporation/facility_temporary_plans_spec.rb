@@ -30,6 +30,7 @@ RSpec.feature 'corporation_manage/facility_temporary_plans', type: :feature do
     end
 
     scenario '都度課金プランを作成できる', js: true do
+      allow(KeystationService).to receive(:sync_room_key_password).and_return('12345')
       temporary_plan_attributes = build(:facility_temporary_plan,
                                         facility: facility,
                                         plan: plan,
