@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'corporation/users', type: :feature do
   let(:corporation) { create(:corporation) }
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :corporate_admin) }
   let(:corporation_user) { create(:corporation_user,
                                   user: user,
                                   corporation: corporation) }
@@ -31,6 +31,7 @@ RSpec.feature 'corporation/users', type: :feature do
       fill_in '電話番号', with: user_attributes.tel
       select user_attributes.state_i18n, from: '状態'
       select user_attributes.payway_i18n, from: 'お支払い方法'
+      select user_attributes.user_type_i18n, from: 'ユーザータイプ'
       fill_in 'パスワード', with: 'Password123'
       fill_in '確認用パスワード', with: 'Password123'
 
@@ -42,6 +43,7 @@ RSpec.feature 'corporation/users', type: :feature do
       expect(page).to have_css('.cy-user-tel', text: user_attributes.tel)
       expect(page).to have_css('.cy-user-state', text: user_attributes.state_i18n)
       expect(page).to have_css('.cy-user-payway', text: user_attributes.payway_i18n)
+      expect(page).to have_css('.cy-user-user-type', text: user_attributes.user_type_i18n)
     end
   end
 
@@ -81,6 +83,7 @@ RSpec.feature 'corporation/users', type: :feature do
       fill_in '電話番号', with: user_attributes.tel
       select user_attributes.state_i18n, from: '状態'
       select user_attributes.payway_i18n, from: 'お支払い方法'
+      select user_attributes.user_type_i18n, from: 'ユーザータイプ'
       fill_in 'パスワード', with: 'Password123'
       fill_in '確認用パスワード', with: 'Password123'
 
@@ -91,7 +94,7 @@ RSpec.feature 'corporation/users', type: :feature do
       expect(page).to have_css('.cy-user-email', text: user_attributes.email)
       expect(page).to have_css('.cy-user-tel', text: user_attributes.tel)
       expect(page).to have_css('.cy-user-state', text: user_attributes.state_i18n)
-      expect(page).to have_css('.cy-user-payway', text: user_attributes.payway_i18n)
+      expect(page).to have_css('.cy-user-user-type', text: user_attributes.user_type_i18n)
     end
   end
 

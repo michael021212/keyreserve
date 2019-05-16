@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'corporation/information', type: :feature do
   let(:corporation) { create(:corporation) }
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :corporate_admin) }
   let(:corporation_user) { create(:corporation_user,
                                   user: user,
                                   corporation: corporation) }

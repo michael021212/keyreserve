@@ -9,7 +9,7 @@ class CorporationManage::Base < ApplicationController
   private
 
   def authenticate_corporation!
-    raise AuthenticateCorporationError unless current_corporation?
+    raise AuthenticateCorporationError unless current_user.corporate_admin? && current_corporation?
   end
 
   def corporation_not_authorized

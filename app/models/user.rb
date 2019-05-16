@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
   enum state: { registered: 0, activated: 1 }
   enum payway: { creditcard: 1, invoice: 2 }
-  enum user_type: { personal: 1, parent_corporation: 2 }
+  enum user_type: { personal: 1, parent_corporation: 2, corporate_admin: 3 }
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :email, email: true, uniqueness: true, if: Proc.new { |u| u.personal? }
@@ -31,6 +31,7 @@ class User < ApplicationRecord
 
   scope(:user_corp_token, ->(token) { find_by(parent_token: token) })
   scope(:parent_is_nil, -> { where(parent_id: nil) })
+  scope :personal_and_corporate_admin, -> { personal.or(corporate_admin) }
 
   # 利用可能な施設一覧
   # ユーザが契約中のプランに紐付いてる施設一覧
