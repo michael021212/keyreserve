@@ -61,9 +61,7 @@ class Facility < ApplicationRecord
 
   # userに表示し得る施設の最小利用料金(1時間)
   def min_hourly_price(user, target_time=nil)
-    min_price = min_price_of_facility_temporary_plans(user)
-    option_min_price = min_price_of_target_facility_temporary_plan_prices(user, target_time)
-    min_price = option_min_price if !option_min_price.zero?
+    min_price = compute_min_price(user, target_time)
     compute_discount_price(min_price, user)
   end
 
@@ -153,6 +151,13 @@ class Facility < ApplicationRecord
   end
 
   private
+
+  def compute_min_price(user, target_time)
+    min_price = min_price_of_facility_temporary_plans(user)
+    option_min_price = min_price_of_target_facility_temporary_plan_prices(user, target_time)
+    min_price = option_min_price if !option_min_price.zero?
+    min_price
+  end
 
   def min_price_of_facility_temporary_plans(user)
     facility_temporary_plans.select_plans_for_user_condition(user)&.minimum(:standard_price_per_hour) || 0
