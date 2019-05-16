@@ -170,6 +170,6 @@ class Facility < ApplicationRecord
   end
 
   def not_need_to_discount?(user)
-    user.nil? || user.get_contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
+    user.nil? || user.contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
   end
 end

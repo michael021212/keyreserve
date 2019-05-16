@@ -32,6 +32,6 @@ class Corporation < ApplicationRecord
   end
 
   def plans_linked_with_user?(user)
-    plans.ids.any? { |plan_id| user.get_contract_plan_ids.include?(plan_id) }
+    plans.ids.any? { |plan_id| user.contract_plan_ids.include?(plan_id) }
   end
 end
