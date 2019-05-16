@@ -20,10 +20,10 @@ RSpec.describe Facility, type: :model do
 
   describe '#min_houry_price' do
     context 'ユーザーがどこのプランとも契約していなかった場合' do
-      let(:user) { create(:user) }
-      let(:shop) { create(:shop) }
-      let(:facility) { create(:facility, shop: shop) }
-      let(:plan) { create(:plan) }
+      let(:user)                    { create(:user) }
+      let(:shop)                    { create(:shop) }
+      let(:facility)                { create(:facility, shop: shop) }
+      let(:plan)                    { create(:plan) }
       let(:facility_temporary_plan) { create(:facility_temporary_plan,
                                              plan: plan,
                                              facility: facility,
@@ -127,9 +127,9 @@ RSpec.describe Facility, type: :model do
                                                user: user,
                                                plan: plan) }
       let(:another_corporation)       { create(:corporation, name: '他の運営会社') }
-      let(:shop)                    { create(:shop, corporation: another_corporation) }
+      let(:shop)                      { create(:shop, corporation: another_corporation) }
       let(:plan_2)                    { create(:plan, corporation: another_corporation) }
-      let(:facility)                { create(:facility, shop: shop) }
+      let(:facility)                  { create(:facility, shop: shop) }
       let(:facility_temporary_plan)   { create(:facility_temporary_plan,
                                                plan: nil,
                                                facility: facility,
@@ -153,10 +153,10 @@ RSpec.describe Facility, type: :model do
 
   describe '#min_half_houry_price' do
     context 'ユーザーがどこのプランとも契約していなかった場合' do
-      let(:user) { create(:user) }
-      let(:shop) { create(:shop) }
-      let(:facility) { create(:facility, shop: shop) }
-      let(:plan) { create(:plan) }
+      let(:user)                    { create(:user) }
+      let(:shop)                    { create(:shop) }
+      let(:facility)                { create(:facility, shop: shop) }
+      let(:plan)                    { create(:plan) }
       let(:facility_temporary_plan) { create(:facility_temporary_plan,
                                              plan: plan,
                                              facility: facility,
@@ -260,9 +260,9 @@ RSpec.describe Facility, type: :model do
                                                user: user,
                                                plan: plan) }
       let(:another_corporation)       { create(:corporation, name: '他の運営会社') }
-      let(:shop)                    { create(:shop, corporation: another_corporation) }
+      let(:shop)                      { create(:shop, corporation: another_corporation) }
       let(:plan_2)                    { create(:plan, corporation: another_corporation) }
-      let(:facility)                { create(:facility, shop: shop) }
+      let(:facility)                  { create(:facility, shop: shop) }
       let(:facility_temporary_plan)   { create(:facility_temporary_plan,
                                                plan: nil,
                                                facility: facility,
