@@ -21,7 +21,7 @@ RSpec.describe FacilityTemporaryPlanPrice, type: :model do
       end
 
       scenario 'facility_temporary_plan_2が返ってくる' do
-        expect(FacilityTemporaryPlan.select_plans_for_user_condition(nil)).to eq([facility_temporary_plan_2])
+        expect(FacilityTemporaryPlan.select_plans_for_user_condition).to eq([facility_temporary_plan_2])
       end
     end
 
