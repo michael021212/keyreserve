@@ -18,7 +18,10 @@ class FacilityTemporaryPlan < ApplicationRecord
   scope :not_zero_yen, -> { where.not(standard_price_per_hour: 0) }
   scope :plan_id_nil, -> { where(plan_id: nil) }
   scope :target_plan_ids, ->(plan_ids) { where(plan_id: plan_ids) }
-  scope :linked_with_user, ->(user) { target_plan_ids(user&.contract_plan_ids) }
+  scope :linked_with_user, ->(user) do
+    plans = user&.contract_plan_ids.presence || []
+    target_plan_ids(plans)
+  end
   scope :for_not_member, -> { not_zero_yen.plan_id_nil }
   scope :select_plans_for_user_condition, ->(user=nil) { linked_with_user(user).presence || for_not_member }
 
