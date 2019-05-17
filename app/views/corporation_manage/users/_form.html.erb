@@ -5,7 +5,6 @@
   <%= f.text_field :tel %>
   <%= f.select :state, User.states_i18n.invert %>
   <%= f.select :payway, User.payways_i18n.invert %>
-  <%= f.select :user_type, select_user_type_without_parent_corporation %>
   <% if f.object.new_record? %>
     <%= f.password_field :password %>
     <%= f.password_field :password_confirmation %>
