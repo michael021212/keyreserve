@@ -227,6 +227,7 @@ ja:
         title: 施設詳細
         target_plan: 月額対象プラン
         reservation_calendar: 予約状況カレンダー
+        facility_key_index: 施設鍵一覧
     users:
       form:
         select_corproation: 所属している法人を選択して下さい (法人に所属していない場合は空にして下さい)
@@ -330,6 +331,15 @@ ja:
         title: お知らせ編集
       show:
         title: お知らせ詳細
+    facility_keys:
+      form:
+        can_not_select_facility_key: ただ今、選択できる施設鍵はございません
+      new:
+        title: 施設鍵登録
+      edit:
+        title: 施設鍵編集
+      show:
+        title: 施設鍵詳細
     reservations:
       search_form:
         select_year_month: 年月を指定
