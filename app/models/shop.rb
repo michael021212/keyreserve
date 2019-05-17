@@ -11,7 +11,7 @@ class Shop < ApplicationRecord
   validates :tel,
             length: { maximum: 13 },
             numericality: { only_integer: true, allow_blank: true }
-  validate :business_time
+  validate :do_not_over_closing_time
 
   delegate :name, to: :corporation, prefix: true, allow_nil: true
   delegate :id, to: :corporation, prefix: true, allow_nil: true
@@ -20,8 +20,10 @@ class Shop < ApplicationRecord
     Corporation.find(c_id).shops
   end
 
-  def business_time
-    errors.add(:opening_time, '開店時間は閉店時間より早めにしてください') if opening_time > closing_time
+  def do_not_over_closing_time
+    return if opening_time.nil? || closing_time.nil?
+    return if opening_time < closing_time
+    errors.add(:opening_time, :do_not_over_closing_time)
   end
 
   def assign_date_for_opening(y, m, d)
