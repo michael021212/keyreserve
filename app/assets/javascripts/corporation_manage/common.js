@@ -59,8 +59,4 @@ $(document)
 
   .on('click', '.js-all-checkbox', function (e) {
     checkAll(e.target, '.js-shop-checkbox')
-  })
-
-  .on('click', '.js-shop-checkbox', function (e) {
-    checkAll('.js-all-checkbox', e.target)
   });
