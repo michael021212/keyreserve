@@ -53,6 +53,6 @@ class CorporationManage::InformationController < CorporationManage::Base
       :info_type,
       :info_target_type,
       shop_ids: []
-    )
+    ).merge(info_target_type: :shop_users)
   end
 end

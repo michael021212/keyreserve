@@ -35,6 +35,14 @@ var disabledReservationForms = function (target_class) {
   }
 };
 
+var checkAll = function(selectorCheckAll, selectorCheckBox) {
+  if ($(selectorCheckAll).prop('checked')) {
+    $(selectorCheckBox).prop('checked', true);
+  } else {
+    $(selectorCheckBox).prop('checked', false);
+  }
+};
+
 $(document)
   .on('ready', function () {
     dispInfoShops();
@@ -47,4 +55,12 @@ $(document)
 
   .on('change', '#information_info_target_type', function () {
     dispInfoShops();
+  })
+
+  .on('click', '.js-all-checkbox', function (e) {
+    checkAll(e.target, '.js-shop-checkbox')
+  })
+
+  .on('click', '.js-shop-checkbox', function (e) {
+    checkAll('.js-all-checkbox', e.target)
   });
