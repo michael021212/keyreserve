@@ -6,6 +6,9 @@ class Corporation < ApplicationRecord
   has_many :user_corps, class_name: 'UserCorp',
                         through: :corporation_users,
                         source: :user
+  has_many :corporate_admin_users, class_name: 'CorporateAdminUser',
+                                   through: :corporation_users,
+                                   source: :user
   has_many :plans, dependent: :destroy
   has_many :shops, dependent: :destroy
   has_many :user_contracts, dependent: :destroy

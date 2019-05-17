@@ -1,0 +1,33 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="box-tools">
+      <%= link_to t('common.btn.back'), corporation_manage_corporate_admin_users_path, class: 'btn btn-default' %>
+      <%= link_to t('common.btn.edit'), edit_corporation_manage_corporate_admin_user_path(@corporate_admin_user), class: 'btn btn-primary' %>
+      <%= link_to t('common.btn.delete'),
+                  corporation_manage_corporate_admin_user_path(@corporate_admin_user),
+                  method: :delete,
+                  data: { confirm: t('common.confirms.really_to_delete') },
+                  class: 'btn btn-danger' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= UserCorp.human_attribute_name(:id) %></th>
+        <td><%= @corporate_admin_user.id %></td>
+      </tr>
+      <tr class="cy-corporate-admin-user-name">
+        <th><%= UserCorp.human_attribute_name(:name) %></th>
+        <td><%= @corporate_admin_user.name %></td>
+      </tr>
+      <tr class="cy-corporate-admin-user-email">
+        <th><%= UserCorp.human_attribute_name(:email) %></th>
+        <td><%= @corporate_admin_user.email %></td>
+      </tr>
+      <tr class="cy-corporate-admin-user-tel">
+        <th><%= UserCorp.human_attribute_name(:tel) %></th>
+        <td><%= @corporate_admin_user.tel %></td>
+      </tr>
+    </table>
+  </div>
+</div>
