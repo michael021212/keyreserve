@@ -50,7 +50,14 @@ class Admin::CorporationUsersController < AdminController
 
   def corporation_user_params
     params.require(:corporation_user).permit(
-      user_attributes: [:id, :email, :password, :password_confirmation, :name, :tel, :state, :payway]
-    )
+      user_attributes: [:id,
+                        :email,
+                        :password,
+                        :password_confirmation,
+                        :name,
+                        :tel,
+                        :state,
+                        :payway]
+    ).to_h.deep_merge(user_attributes: { user_type: :corporate_admin })
   end
 end

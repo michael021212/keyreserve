@@ -113,10 +113,29 @@ Rails.application.routes.draw do
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
   # 法人メニュー
-  resource :corporation, only: [:show, :edit, :update]
-  # resources :users, only: [:index, :new, :create, :show]
-  # resources :plans, except: [:show]
-  # resources :shops, except: [:destroy] do
-  #   resources :facilities, except: [:index]
-  # end
+  namespace :corporation_manage do
+    root 'dashboards#index'
+    resources :user_contracts
+    resources :shops, only: %i[new show edit create update destroy] do
+      resources :facilities, only: %i[new show edit create update destroy] do
+        get :facility_events, on: :member
+        resources :facility_keys, only: %i[new show edit create update destroy]
+        resources :facility_temporary_plans, only: %i[index new edit create update destroy]
+        resources :facility_temporary_plan_prices, only: %i[index]
+        resources :facility_dropin_plans, only: %i[index new edit create update destroy]
+        resources :facility_dropin_sub_plans, only: %i[index]
+      end
+    end
+    resources :users do
+      resources :personal_identifications, only: %i[new create edit update]
+    end
+    resources :plans
+    resources :user_corps
+    resources :billings, only: %i[index show]
+    resources :reservations, only: %i[new create index show] do
+      post :payment, on: :collection
+    end
+    resources :dropin_reservations, only: %i[index show]
+    resources :information
+  end
 end

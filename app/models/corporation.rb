@@ -3,9 +3,13 @@ class Corporation < ApplicationRecord
 
   has_many :corporation_users, dependent: :destroy
   has_many :users, through: :corporation_users
+  has_many :user_corps, class_name: 'UserCorp',
+                        through: :corporation_users,
+                        source: :user
   has_many :plans, dependent: :destroy
   has_many :shops, dependent: :destroy
   has_many :user_contracts, dependent: :destroy
+
   accepts_nested_attributes_for :users
 
   validates :name, :kana, presence: true, length: { maximum: 255 }
@@ -25,5 +29,9 @@ class Corporation < ApplicationRecord
       arrs << arr
     end
     arrs
+  end
+
+  def plans_linked_with_user?(user)
+    plans.ids.any? { |plan_id| user.contract_plan_ids.include?(plan_id) }
   end
 end

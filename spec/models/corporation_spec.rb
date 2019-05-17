@@ -41,4 +41,41 @@ RSpec.describe Corporation, type: :model do
     end
   end
 
+  describe '#plans_linked_with_user?' do
+    context 'ユーザーが対象の運営会社が所持するプランと契約していた場合' do
+      let(:corporation)   { create(:corporation) }
+      let(:user)          { create(:user) }
+      let(:plan)          { create(:plan, corporation: corporation)}
+      let(:user_contract) { create(:user_contract,
+                                   plan: plan,
+                                   user: user)}
+
+      before do
+        user_contract
+      end
+
+      scenario 'trueが返る' do
+        expect(corporation.plans_linked_with_user?(user)).to eq(true)
+      end
+    end
+
+    context 'ユーザーが対象の運営会社が所持するプランと契約していなかった場合' do
+      let(:corporation)         { create(:corporation) }
+      let(:another_corporation) { create(:corporation) }
+      let(:user)                { create(:user) }
+      let(:plan)                { create(:plan, corporation: corporation) }
+      let(:plan_2)              { create(:plan, corporation: another_corporation) }
+      let(:user_contract)       { create(:user_contract,
+                                         plan: plan_2,
+                                         user: user)}
+
+      before do
+        user_contract
+      end
+
+      scenario 'falseが返る' do
+        expect(corporation.plans_linked_with_user?(user)).to eq(false)
+      end
+    end
+  end
 end

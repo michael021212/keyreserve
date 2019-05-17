@@ -1,0 +1,38 @@
+<div class="box box-default">
+  <div class="box-body">
+    <table class="table table-striped">
+      <%= render 'search_form', q: @q %>
+      <thead>
+      <tr>
+        <th><%= Billing.human_attribute_name(:user_id) %></th>
+        <th><%= Billing.human_attribute_name(:shop_id) %></th>
+        <th><%= Billing.human_attribute_name(:payment_way) %></th>
+        <th><%= Billing.human_attribute_name(:price) %></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @billings.present? %>
+        <% @billings.each do |billing| %>
+          <tr class="cy-billing-<%= billing.id %>">
+            <td><%= billing.user_name %></td>
+            <td><%= billing.shop_name %></td>
+            <td><%= billing.payment_way_i18n %></td>
+            <td><%= billing.decorate.price_with_delimiter %></td>
+            <td>
+              <%= link_to t('common.btn.show'), corporation_manage_billing_path(billing), class: 'btn btn-default' %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="20">
+            <%= t('common.messages.list_not_exist', name: Billing.model_name.human) %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @billings %>
+  </div>
+</div>

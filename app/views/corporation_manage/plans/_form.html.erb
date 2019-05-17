@@ -1,0 +1,9 @@
+<%= bootstrap_form_for([:corporation_manage, plan], layout: :horizontal) do |f| %>
+  <%= f.form_group :default_flag do %>
+    <%= f.check_box :default_flag %>
+  <% end %>
+  <%= f.text_field :name %>
+  <%= f.number_field :price %>
+  <%= f.text_area :description, rows: 5 %>
+  <%= f.submit class: 'btn btn-primary center-block' %>
+<% end %>

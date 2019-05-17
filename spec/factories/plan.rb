@@ -4,6 +4,7 @@ FactoryBot.define do
     sequence(:name) { |n| "プラン#{n}"}
     price { 0 }
     default_flag { false }
+    description { 'テストプランです' }
   end
 end
 

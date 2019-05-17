@@ -1,6 +1,6 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 
 
 require 'simplecov'
@@ -19,11 +19,14 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-# support/config配下のファイルを読み込み
-Dir[Rails.root.join("spec/support/config/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/support/helper/*.rb")].each { |f| require f }
+# support/配下のファイルを読み込み
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
+  config.include SessionHelper, type: :feature
+  config.include JsHelper, type: :feature
+  config.include DateHelper, type: :feature
+  config.include ActiveSupport::Testing::TimeHelpers
   # ロードするfixtureのパスを指定
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

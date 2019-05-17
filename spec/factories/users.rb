@@ -13,5 +13,9 @@ FactoryBot.define do
       corporation
       parent_id { corporation.id }
     end
+
+    trait :corporate_admin do
+      user_type { :corporate_admin }
+    end
   end
 end
