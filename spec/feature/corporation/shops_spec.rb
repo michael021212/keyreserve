@@ -45,6 +45,47 @@ RSpec.describe 'corporation_manage/shops', type: :feature do
     end
   end
 
+  feature 'バリデーションエラーの挙動' do
+    before do
+      corporation_user
+      login_user(user)
+      allow_any_instance_of(Shop).to receive(:set_geocode)
+    end
+
+    context '何も入力しないでsubmitを押した場合' do
+      scenario 'バリデーションエラーが発生する' do
+        visit corporation_manage_root_path
+
+        click_on('新規追加')
+        click_on('登録')
+
+        expect(page).to have_content('店舗名を入力してください。')
+        expect(page).to have_content('開店時間を入力してください。')
+        expect(page).to have_content('閉店時間を入力してください。')
+      end
+    end
+
+    context '開店時刻より閉店時刻の方が早かった場合' do
+      scenario 'バリデーションエラーになる', js: true do
+        visit corporation_manage_root_path
+
+        click_on('新規追加')
+
+        fill_in '店舗名', with: '西尾店舗'
+        fill_in '郵便番号', with: '150-0042'
+        fill_in '住所', with: '東京都渋谷区宇田川町３１−９'
+        fill_in '電話番号', with: '08012311231'
+        fill_in_with_script('#shop_opening_time', '12:00')
+        fill_in_with_script('#shop_closing_time', '11:00')
+        fill_in 'イベントカレンダーURL', with: 'https://www.fe-siken.com/'
+
+        click_on('登録')
+
+        expect(page).to have_content('開店時間は閉店時間より早めにしてください')
+      end
+    end
+  end
+
   feature '店舗編集' do
     let(:shop) { create(:shop,
                         corporation: corporation,
