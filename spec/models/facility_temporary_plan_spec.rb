@@ -12,7 +12,11 @@ RSpec.describe FacilityTemporaryPlanPrice, type: :model do
       let(:facility_temporary_plan) { create(:facility_temporary_plan,
                                              plan: plan) }
       let(:facility_temporary_plan_2) { create(:facility_temporary_plan,
-                                             plan: nil) }
+                                               plan: nil,
+                                               standard_price_per_hour: 1000) }
+      let(:facility_temporary_plan_3) { create(:facility_temporary_plan,
+                                               plan: nil,
+                                               standard_price_per_hour: 0) }
 
       before do
         user_contract
