@@ -8,6 +8,24 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
                                   corporation: corporation) }
   let(:shop) { create(:shop, corporation: corporation) }
 
+  feature '施設一覧' do
+    let(:facility) { create(:facility, shop: shop)}
+
+    before do
+      corporation_user
+      shop
+      facility
+      login_user(user)
+    end
+
+    scenario '施設一覧を確認できる' do
+      visit corporation_manage_shop_path(shop)
+
+      expect(page).to have_css('.cy-facility-index-title', text: '施設一覧')
+      expect(page).to have_css(".cy-facility-#{facility.id}")
+    end
+  end
+
   feature '施設作成' do
     let(:plan) { create(:plan,
                         name: 'お得プラン',
@@ -22,7 +40,7 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
 
     scenario '施設を作成できる', js: true do
       facility_attibutes = build(:facility, shop: shop)
-      
+
       visit corporation_manage_shop_path(shop)
 
       click_on('新規追加')
@@ -74,7 +92,7 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
 
     scenario '施設を作成できる', js: true do
       facility_attibutes = build(:facility, shop: shop)
-      
+
       visit corporation_manage_shop_path(shop)
 
       within(".cy-facility-#{facility.id}") do
