@@ -71,6 +71,28 @@ RSpec.feature 'corporation_manage/facilities', type: :feature do
     end
   end
 
+  feature 'バリデーション周りの挙動' do
+    before do
+      corporation_user
+      shop
+      login_user(user)
+      allow_any_instance_of(Facility).to receive(:set_geocode)
+    end
+
+    context '何も入力しないでsubmitを押した場合' do
+      scenario 'バリデーションエラーになる' do
+        visit corporation_manage_shop_path(shop)
+
+        click_on('新規追加')
+        click_on('登録')
+
+        expect(page).to have_content('施設名を入力してください。')
+        expect(page).to have_content('住所を入力してください。')
+        expect(page).to have_content('施設タイプ（スポット利用時）を入力してください。')
+      end
+    end
+  end
+
   feature '施設編集' do
     let(:plan) { create(:plan,
                         name: '天才プラン',
