@@ -25,7 +25,7 @@ RSpec.feature 'corporation/information', type: :feature do
 
     scenario 'お知らせを作成できる' do
       information_attributes = build(:information, info_target_type: :shop_users)
-      
+
       visit corporation_manage_root_path
 
       click_on('お知らせ管理')
@@ -36,7 +36,6 @@ RSpec.feature 'corporation/information', type: :feature do
       fill_in '詳細', with: information_attributes.description
       select_datetime('information', 'publish_time', Time.zone.local(2019, 10, 25, 10, 30))
       select information_attributes.info_type_i18n, from: 'お知らせ種別'
-      select information_attributes.info_target_type_i18n, from: '配信対象'
       find('#information_shop_ids_2').click
 
       click_on('登録')
@@ -81,9 +80,9 @@ RSpec.feature 'corporation/information', type: :feature do
       login_user(user)
     end
 
-    scenario 'お知らせを編集できる' do
+    scenario 'お知らせを編集できる', js: true do
       information_attributes = build(:information, info_target_type: :shop_users)
-      
+
       visit corporation_manage_root_path
 
       click_on('お知らせ管理')
@@ -96,10 +95,7 @@ RSpec.feature 'corporation/information', type: :feature do
       fill_in '詳細', with: information_attributes.description
       select_datetime('information', 'publish_time', Time.zone.local(2019, 12, 25, 15, 30))
       select information_attributes.info_type_i18n, from: 'お知らせ種別'
-      select information_attributes.info_target_type_i18n, from: '配信対象'
-      find('#information_shop_ids_1').click
-      find('#information_shop_ids_2').click
-      find('#information_shop_ids_3').click
+      find('.js-all-checkbox').click
 
       click_on('更新')
 
@@ -109,7 +105,7 @@ RSpec.feature 'corporation/information', type: :feature do
       expect(page).to have_css('.cy-information-publish-time', text: '2019年12月25日(水) 15:30')
       expect(page).to have_css('.cy-information-type', text: information_attributes.info_type_i18n)
       expect(page).to have_css('.cy-information-target-type', text: information_attributes.info_target_type_i18n)
-      expect(page).to have_css('.cy-information-shops', text: 'とりせん オータニ イオン')
+      expect(page).to have_css('.cy-information-shops', text: "とりせん\nオータニ\nイオン")
     end
   end
 
