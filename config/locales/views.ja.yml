@@ -200,6 +200,7 @@ ja:
     dashboards:
       index:
         title: 運営会社詳細
+        shop_index_title: 店舗一覧
     shops:
       index:
         title: 店舗一覧
@@ -209,6 +210,7 @@ ja:
         title: 店舗編集
       show:
         title: 店舗詳細
+        facility_index_title: 施設一覧
     facilities:
       form:
         add_facility_type: 施設タイプを選択してください
@@ -356,3 +358,14 @@ ja:
         title: 予約登録
       confirm:
         title: 決済詳細
+    corporate_admin_users:
+      form:
+        guide_change_password: 変更したくない場合は空にしてください
+      index:
+        title: 施設管理者一覧
+      new:
+        title: 施設管理者登録
+      edit:
+        title: 施設管理者編集
+      show:
+        title: 施設管理者詳細

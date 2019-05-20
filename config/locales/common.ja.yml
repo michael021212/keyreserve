@@ -7,6 +7,7 @@ ja:
     reservation: 予約
     not_member: 非会員
     block: ブロック
+    select_all: 全て選択
     csv:
       dropin_reservation_csv: "dropin_reservations_%{date}.csv"
       reservation_csv: "reservations_%{date}.csv"

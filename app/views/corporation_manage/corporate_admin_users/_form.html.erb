@@ -1,10 +1,7 @@
-<%= bootstrap_form_for([:corporation_manage, user], layout: :horizontal) do |f| %>
-  <%= f.collection_select :parent_id, current_corporation.users.parent_corporation, :id, :name, prompt: t('.select_corproation') %>
+<%= bootstrap_form_for([:corporation_manage, corporate_admin_user], layout: :horizontal) do |f| %>
   <%= f.text_field :name %>
   <%= f.text_field :email %>
   <%= f.text_field :tel %>
-  <%= f.select :state, User.states_i18n.invert %>
-  <%= f.select :payway, User.payways_i18n.invert %>
   <% if f.object.new_record? %>
     <%= f.password_field :password %>
     <%= f.password_field :password_confirmation %>
