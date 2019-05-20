@@ -33,7 +33,6 @@ class User < ApplicationRecord
 
   scope(:user_corp_token, ->(token) { find_by(parent_token: token) })
   scope(:parent_is_nil, -> { where(parent_id: nil) })
-  scope :personal_and_corporate_admin, -> { personal.or(corporate_admin) }
 
   # 利用可能な施設一覧
   # ユーザが契約中のプランに紐付いてる施設一覧

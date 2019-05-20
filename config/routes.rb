@@ -131,6 +131,7 @@ Rails.application.routes.draw do
     end
     resources :plans
     resources :user_corps
+    resources :corporate_admin_users
     resources :billings, only: %i[index show]
     resources :reservations, only: %i[new create index show] do
       post :payment, on: :collection
