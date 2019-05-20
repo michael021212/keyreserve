@@ -21,7 +21,7 @@ class Facility < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-  validates :name, :address, presence: true
+  validates :name, :address, :facility_type, presence: true
   validates :address, presence: true, if: proc { |f| f.rent? }
 
   scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
