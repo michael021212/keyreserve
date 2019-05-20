@@ -19,7 +19,7 @@ RSpec.describe Shop, type: :model do
 
       it 'バリデーションチェックが通らない' do
         expect(shop.valid?).to eq(false)
-        expect(shop.errors[:opening_time].first).to eq('開店時間は閉店時間より早めにしてください')
+        expect(shop.errors[:opening_time].first).to eq('開店時間は閉店時間より早い時間に設定してください')
       end
     end
   end

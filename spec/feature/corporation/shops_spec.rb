@@ -81,7 +81,7 @@ RSpec.describe 'corporation_manage/shops', type: :feature do
 
         click_on('登録')
 
-        expect(page).to have_content('開店時間は閉店時間より早めにしてください')
+        expect(page).to have_content('開店時間は閉店時間より早い時間に設定してください')
       end
     end
   end
