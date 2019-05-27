@@ -5,22 +5,22 @@ class Payment < ApplicationRecord
   belongs_to :user
   belongs_to :facility
   belongs_to :credit_card
+  belongs_to :corporation
 
-  before_create :stripe_charge
   before_destroy :stripe_cancel
 
-  def stripe_charge
-    begin
-      ch = Stripe::Charge.create(
-        amount: price,
-        currency: 'jpy',
-        customer: target.stripe_customer_id,
-        capture: true
-      )
-    rescue StandardError => e
-      logger.error(e)
-    end
-    self.token = ch.id
+  def stripe_charge!
+    charge = Stripe::Charge.create(
+      amount: price,
+      currency: 'jpy',
+      customer: target.stripe_customer_id,
+      capture: true
+    )
+    self.token = charge.id
+    save!
+  rescue Stripe::StripeError => e
+    logger.error(e)
+    raise
   end
 
   def stripe_cancel

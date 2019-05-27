@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%8B%E8%B0%B7%E5%8C%BA&key=<GOOGLE_API_KEY>
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Connection:
+      - close
+      Host:
+      - maps.googleapis.com
+      User-Agent:
+      - http.rb/4.1.1
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 23 Apr 2019 07:47:39 GMT
+      Expires:
+      - Wed, 24 Apr 2019 07:47:39 GMT
+      Cache-Control:
+      - public, max-age=86400
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=286
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,44,43,39"
+      Accept-Ranges:
+      - none
+      Vary:
+      - Accept-Language,Accept-Encoding
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "Shibuya City",
+                       "short_name" : "Shibuya City",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Tokyo",
+                       "short_name" : "Tokyo",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "Japan",
+                       "short_name" : "JP",
+                       "types" : [ "country", "political" ]
+                    }
+                 ],
+                 "formatted_address" : "Shibuya City, Tokyo, Japan",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 35.6921778,
+                          "lng" : 139.7238593
+                       },
+                       "southwest" : {
+                          "lat" : 35.6415538,
+                          "lng" : 139.6613727
+                       }
+                    },
+                    "location" : {
+                       "lat" : 35.6619707,
+                       "lng" : 139.703795
+                    },
+                    "location_type" : "APPROXIMATE",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 35.6921778,
+                          "lng" : 139.7238593
+                       },
+                       "southwest" : {
+                          "lat" : 35.6415538,
+                          "lng" : 139.6613727
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJ0Qgx67KMGGARd2ZbObLZHPE",
+                 "types" : [ "locality", "political" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Tue, 23 Apr 2019 07:47:39 GMT
+recorded_with: VCR 4.0.0

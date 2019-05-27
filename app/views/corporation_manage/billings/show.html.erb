@@ -1,0 +1,52 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <div class="box-tools">
+      <%= link_to t('common.btn.back'),
+                  corporation_manage_billings_path,
+                  class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= Billing.human_attribute_name(:id) %></th>
+        <td><%= @billing.id %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:user_id) %></th>
+        <td><%= @billing.user_name %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:shop_id) %></th>
+        <td><%= @billing.shop_name %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:month) %></th>
+        <td><%= @billing.decorate.month_with_year %></td>
+      </tr>
+      <tr>
+        <th><%= Billing.human_attribute_name(:price) %></th>
+        <td><%= @billing.decorate.price_with_delimiter %></td>
+      </tr>
+    </table>
+
+    <table class="table table-striped mt60">
+      <tr>
+        <th><%= t('.used_date') %></th>
+        <th><%= Facility.human_attribute_name(:name) %></th>
+        <th><%= Facility.human_attribute_name(:usage_period) %></th>
+        <th><%= Billing.human_attribute_name(:payment_way) %></th>
+        <th><%= t('.money') %></th>
+      </tr>
+      <% @billing_details.each do |detail| %>
+        <tr>
+          <td class="cy-detail-time"><%= detail.checkin.strftime('%Y/%m/%d') %></td>
+          <td class="cy-detail-facility-name"><%= detail.facility.name %></td>
+          <td class="cy-detail-usage-time"><%= display_usage_period(detail) %></td>
+          <td class="cy-detail-paid-type"><%= detail.decorate.display_payway %></td>
+          <td class="cy-detail-price"><%= detail.decorate.price_with_delimiter %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

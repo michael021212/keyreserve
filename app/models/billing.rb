@@ -16,6 +16,9 @@ class Billing < ApplicationRecord
     invoice: 2,         # 請求書のみ
     card_and_invoice: 3 # クレカと請求書
   }
+  
+  delegate :name, to: :user, prefix: true
+  delegate :name, to: :shop, prefix: true
 
   scope :in_month, -> (year, month) do
     where('year = ? && month = ?', year, month)
@@ -26,6 +29,12 @@ class Billing < ApplicationRecord
   scope :execlude_invoice, -> do
     where.not(payment_way: Billing.payment_ways[:invoice])
   end
+  scope :target_shops, -> (shops_ids) { where(shop_id: shops_ids) }
+  scope :year_month_eq, -> (year_month) {
+    year = year_month.to_date.year
+    month = year_month.to_date.month
+    where(year: year, month: month)
+  }
 
   # 請求時に削除済の施設も参照できる必要があったので上書き
   def user
@@ -64,4 +73,9 @@ class Billing < ApplicationRecord
     way
   end
 
+  class << self
+    def ransackable_scopes(auth_object = nil)
+      [:year_month_eq]
+    end
+  end
 end

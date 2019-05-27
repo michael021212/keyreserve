@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
         current_user.update(parent_id: user_corp.id) if user_corp.present?
         session[:parent_token] = nil
       end
-      target = session[:return_to_url].present? ? session[:return_to_url] : root_url
+      target = set_url
       session[:return_to_url] = nil
       redirect_to target
     else
@@ -50,6 +50,18 @@ class SessionsController < ApplicationController
       redirect_to root_path, notice: 'パスワードの再設定が完了しました。'
     else
       render :reset_password
+    end
+  end
+  
+  private
+  
+  def set_url
+    if session[:return_to_url].present?
+      session[:return_to_url]
+    elsif current_user.corporate_admin?
+      corporation_manage_root_path
+    else
+      root_url
     end
   end
 end

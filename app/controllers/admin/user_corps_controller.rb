@@ -14,10 +14,8 @@ class Admin::UserCorpsController < AdminController
 
   def create
     @user_corp = UserCorp.new(user_corp_params)
-    @user_corp.user_type = :personal
     if @user_corp.save
-      flash[:notice] = "#{UserCorp.model_name.human}を作成しました。"
-      redirect_to admin_user_corp_path(@user_corp)
+      redirect_to admin_user_corp_path(@user_corp), notice: t('common.messages.created', name: UserCorp.model_name.human)
     else
       render :new
     end
@@ -25,8 +23,7 @@ class Admin::UserCorpsController < AdminController
 
   def update
     if @user_corp.update(user_corp_params)
-      flash[:notice] = "#{UserCorp.model_name.human}を更新しました。"
-      redirect_to admin_user_corp_path(@user_corp)
+      redirect_to admin_user_corp_path(@user_corp), notice: t('common.messages.updated', name: UserCorp.model_name.human)
     else
       render :edit
     end
@@ -46,7 +43,15 @@ class Admin::UserCorpsController < AdminController
 
   def user_corp_params
     params.require(:user_corp).permit(
-      :email, :name, :tel, :state, :payway, :max_user_num
-    )
+      :email,
+      :name,
+      :tel,
+      :max_user_num,
+      :password,
+      :password_confirmation
+    ).merge(advertise_notice_flag: false,
+            user_type: :parent_corporation,
+            payway: :invoice,
+            state: :registered)
   end
 end
