@@ -4,5 +4,3 @@ namespace :user do
     User.all.each{ |user| user.corporation_users.create(corporation_id: Corporation.find_by(name: 'KEY STATION').id) }
   end
 end
-
-
