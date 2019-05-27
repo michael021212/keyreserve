@@ -1,0 +1,68 @@
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= t('.title') %></h4>
+    <div class="box-tools">
+      <%= link_to t('common.btn.back'), corporation_manage_dropin_reservations_path, class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <tr>
+        <th><%= DropinReservation.human_attribute_name(:id) %></th>
+        <td><%= @dropin_reservation.id %></td>
+      </tr>
+      <tr>
+        <th><%= DropinReservation.human_attribute_name(:state) %></th>
+        <td><%= @dropin_reservation.state_i18n %></td>
+      </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:name) %></th>
+        <td><%= @dropin_reservation.facility_shop_corporation_name %></td>
+      </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:name) %></th>
+        <td><%= @dropin_reservation.facility_shop_name %></td>
+      </tr>
+      <tr>
+        <th><%= Facility.human_attribute_name(:name) %></th>
+        <td><%= @dropin_reservation.facility_name %></td>
+      </tr>
+      <tr>
+        <th><%= DropinReservation.human_attribute_name(:user_id) %></th>
+        <td><%= @dropin_reservation.user_name %></td>
+      </tr>
+      <tr>
+        <th><%= User.human_attribute_name(:email) %></th>
+        <td><%= @dropin_reservation.user_email %></td>
+      </tr>
+      <tr>
+        <th><%= t('.plan_name') %></th>
+        <td><%= @dropin_reservation.facility_dropin_sub_plan_with_plan_name %></td>
+      </tr>
+      <tr class="cy-dropin-reservation-checkin">
+        <th><%= DropinReservation.human_attribute_name(:checkin) %></th>
+        <td><%= datetime_ja(@dropin_reservation.checkin) %></td>
+      </tr>
+      <tr class="cy-dropin-reservation-checkout">
+        <th><%= DropinReservation.human_attribute_name(:checkout) %></th>
+        <td><%= datetime_ja(@dropin_reservation.checkout) %></td>
+      </tr>
+      <tr>
+        <th><%= t('.utilization_time') %></th>
+        <td><%= @dropin_reservation.facility_dropin_sub_plan_using_hours %></td>
+      </tr>
+      <tr class="cy-dropin-reservation-price">
+        <th><%= DropinReservation.human_attribute_name(:price) %></th>
+        <td><%= delimiter_price(@dropin_reservation.price) %></td>
+      </tr>
+      <tr>
+        <th><%= Payment.human_attribute_name(:token) %></th>
+        <td><%= @dropin_reservation.payment_token %></td>
+      </tr>
+      <tr class="cy-dropin-reservation-mail-send">
+        <th><%= DropinReservation.human_attribute_name(:mail_send_flag) %></th>
+        <td><%= @dropin_reservation.decorate.mail_send_flag_to_text %></td>
+      </tr>
+    </table>
+  </div>
+</div>

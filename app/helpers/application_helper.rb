@@ -70,6 +70,11 @@ module ApplicationHelper
     num = num ? num : 0
     "#{number_with_delimiter num} 円"
   end
+  
+  def delimiter_price_per_hour(price)
+    price ||= 0
+    "#{delimiter_price(price)}/h"
+  end
 
   def yen_sign(price)
     return if price.nil?

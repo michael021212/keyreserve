@@ -1,0 +1,17 @@
+<header class="main-header">
+  <%= link_to corporation_manage_root_path, class: 'logo' do %>
+    <span class="logo-lg"><b><%= current_corporation.name %></b></span>
+  <% end %>
+  <nav class="navbar navbar-static-top" role="navigation">
+    <%= link_to 'javascript:void(0)', class: 'sidebar-toggle', data: { toggle: 'offcanvas' } do %>
+      <span class="sr-only">Toggle navigation</span>
+    <% end %>
+    <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to 'TOPに戻る', root_path %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
