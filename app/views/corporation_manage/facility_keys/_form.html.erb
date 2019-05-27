@@ -1,0 +1,8 @@
+<% if ks_room_key_select(current_corporation).present? %>
+  <%= bootstrap_form_for([:corporation_manage, shop, facility, facility_key], layout: :horizontal) do |f| %>
+    <%= f.select :ks_room_key_id, options_for_select(current_corporation.selectable_keys, selected: f.object.ks_room_key_id), include_blank: true %>
+    <%= f.submit class: 'btn btn-primary center-block' %>
+  <% end %>
+<% else %>
+  <h4><%= t('.can_not_select_facility_key') %></h4>
+<% end %>

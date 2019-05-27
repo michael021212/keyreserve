@@ -1,6 +1,7 @@
 ja:
   activerecord:
     models:
+      corporate_admin_user: 施設管理者
       admin_user: 管理者
       corporation: 運営会社
       dropin_reservation: ドロップイン利用
@@ -9,7 +10,7 @@ ja:
       payment: 支払い
       personal_identification: 本人確認
       plan: プラン
-      reservation: 会議室予約
+      reservation: 施設予約
       shop: 店舗
       facility: 施設
       facility_dropin_plan: 施設利用ドロップインプラン
@@ -67,10 +68,18 @@ ja:
         state: 状態
         payway: お支払い方法
         created_at: 登録日時
-        user_type: 法人/個人
+        user_type: ユーザータイプ
         parent_id: 法人
+        max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
         campaign_id: キャンペーンID
+      corporate_admin_user:
+        id: ID
+        name: 施設管理者名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        tel: 電話番号
       user_corp:
         id: ID
         email: メールアドレス
@@ -88,6 +97,7 @@ ja:
       payment:
         token: 決済ID
       plan:
+        id: プランID
         name: プラン名
         price: 月額
         description: 説明
@@ -111,6 +121,7 @@ ja:
         mail_send_flag: 予約案内メール送信フラグ
         block_flag: ブロック
       shop:
+        id: 店舗ID
         name: 店舗名
         postal_code: 郵便番号
         address: 住所
@@ -161,6 +172,7 @@ ja:
         ending_time: 終了時間
         price: 価格
       user_contract:
+        id: 契約ID
         corporation_id: 運営者会社
         shop_id: 店舗
         user_id: 契約利用者
@@ -208,6 +220,7 @@ ja:
       user_type:
         personal: 個人
         parent_corporation: 法人
+        corporate_admin: 施設管理者
     user_contract:
       state:
         applying: 契約申し込み
@@ -407,6 +420,13 @@ ja:
       mini_magick_processing_error: "MiniMagickがファイルを処理できませんでした。画像を確認してください。エラーメッセージ: %{e}"
       min_size_error: "ファイルを%{min_size}バイト以上のサイズにしてください"
       max_size_error: "ファイルを%{max_size}バイト以下のサイズにしてください"
+      stripe_error: 予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。
+      reservation_already_exists: その時間帯にはすでに予約が存在しています
+      credit_card_is_not_exists: 指定したユーザーはまだクレジットカードを登録していません
+      limit_has_not_exceeded: クレジットカードで決済する場合は、利用料金が50円を超えるようにしてください
+      do_not_over_closing_time: 開店時間は閉店時間より早い時間に設定してください
+      restrict_dependent_destroy:
+        has_many: 関連するレコードが存在するので削除ができません
     template:
       body: 次の項目を確認してください。
       header:

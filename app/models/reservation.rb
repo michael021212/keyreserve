@@ -9,12 +9,32 @@ class Reservation < ApplicationRecord
   belongs_to :payment, optional: true
   belongs_to :billing, optional: true
 
-  before_create :create_payment, if: Proc.new { |reservation| reservation.user_id? }
   before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
 
+  delegate :name, to: :user, prefix: true, allow_nil: true
+  delegate :credit_card, to: :user, prefix: true, allow_nil: true
+  delegate :credit_card_id, to: :user, prefix: true, allow_nil: true
+  delegate :name, to: :user, prefix: true, allow_nil: true
+  delegate :email, to: :user, prefix: true, allow_nil: true
+  delegate :name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_corporation_name, to: :facility, prefix: true, allow_nil: true
+  delegate :shop_name, to: :facility, prefix: true, allow_nil: true
+  delegate :token, to: :payment, prefix: true, allow_nil: true
+  delegate :shop_corporation_id, to: :facility, prefix: true, allow_nil: true
+
   # 請求時に施設が削除されている場合を考慮し、新規作成時のみfacility_idを必須に
   validates :facility_id, presence: true, if: Proc.new{ |r| r.new_record? }
+  validates :checkin, :checkout, :usage_period, presence: true
+  validate :reservation_already_exists_in_range?
+
+  with_options on: :need_for_payment do
+    validates :user_id, :price, presence: true
+    validate :need_credit_card
+    validate :limit_has_not_exceeded
+  end
+
+  scope :with_corporation, ->(corporation) { includes(facility: :shop).where(shops: { corporation_id: corporation.id }) }
 
   # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
@@ -37,14 +57,14 @@ class Reservation < ApplicationRecord
     payment.present? && payment.credit_card_id.present?
   end
 
-  def create_payment
+  def set_payment
     return unless self.user.creditcard?
     return if self.payment.present?
-    self.payment = Payment.create!(
+    self.payment = Payment.new(
       user_id: self.user_id,
-      corporation_id: self.facility.shop.corporation_id,
+      corporation_id: self.facility_shop_corporation_id,
       facility_id: self.facility_id,
-      credit_card_id: self.user.credit_card.id,
+      credit_card_id: self.user_credit_card_id,
       price: self.price,
     )
   end
@@ -119,6 +139,55 @@ class Reservation < ApplicationRecord
   end
 
   def deletable?
-    checkin > Time.zone.now + 24.hours
+    time = Time.zone.now + 1.days
+    canceled? || (time > checkin)
+  end
+
+  def cancelable?
+    time = Time.zone.now + 1.days
+    checkin > time
+  end
+
+  def set_check_out
+    return if checkin.nil? || usage_period.nil?
+    self.checkout = checkin + usage_period.hours
+  end
+
+  def set_price
+    return if usage_period.nil?
+    self.price = facility.calc_price(self.user, self.checkin, self.usage_period) || 0
+  end
+
+  def save_and_charge!
+    ActiveRecord::Base.transaction do
+      payment.stripe_charge!
+      save!
+      send_reserved_mail!
+    end
+  end
+
+  private
+
+  def send_reserved_mail!
+    NotificationMailer.reserved(self, self.user_id).deliver_now!
+    NotificationMailer.reserved(self, self.user.user_corp.id).deliver_now! if user.user_corp.present?
+    NotificationMailer.reserved_to_admin(self).deliver_now!
+  end
+
+  def need_credit_card
+    return if user_credit_card.present?
+    errors.add(:user_id, :credit_card_is_not_exists)
+  end
+
+  def limit_has_not_exceeded
+    return if price.present? && price > 50
+    errors.add(:price, :limit_has_not_exceeded)
+  end
+
+  def reservation_already_exists_in_range?
+    return if checkin.nil? || checkout.nil?
+    if facility.reservations.in_range(checkin..checkout).present?
+      errors.add(:checkin, :reservation_already_exists)
+    end
   end
 end

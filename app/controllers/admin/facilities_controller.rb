@@ -10,6 +10,7 @@ class Admin::FacilitiesController < AdminController
   def create
     @facility = @shop.facilities.new(facility_params)
     @facility.max_num = 99 if @facility.rent? && @facility.max_num.blank?
+    @facility.set_geocode
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を作成しました。"
     else
@@ -23,6 +24,7 @@ class Admin::FacilitiesController < AdminController
   def update
     @facility.assign_attributes(facility_params)
     @facility.max_num = 99 if @facility.rent?
+    @facility.set_geocode
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を更新しました。"
     else
@@ -33,7 +35,7 @@ class Admin::FacilitiesController < AdminController
   def show; end
 
   def destroy
-    @facility.destroy
+    @facility.destroy!
     redirect_to admin_corporation_shop_path(@corporation, @shop), notice: "#{Facility.model_name.human}を削除しました"
   end
 

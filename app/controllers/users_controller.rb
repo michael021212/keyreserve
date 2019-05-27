@@ -104,7 +104,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :email, :password, :password_confirmation, :name, :tel, :state, :payway, :user_type, :parent_id,
-      :advertise_notice_flag, :stripe_customer_id, :campaign_id
+      :advertise_notice_flag, :stripe_customer_id, :campaign_id, :corporation_id
     )
   end
 end

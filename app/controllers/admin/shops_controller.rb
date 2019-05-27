@@ -8,6 +8,7 @@ class Admin::ShopsController < AdminController
 
   def create
     @shop = @corporation.shops.new(shop_params)
+    @shop.set_geocode
     if @shop.save
       redirect_to [:admin, @corporation, @shop], notice: "#{Shop.model_name.human}を作成しました。"
     else
@@ -20,7 +21,9 @@ class Admin::ShopsController < AdminController
   def edit; end
 
   def update
-    if @shop.update(shop_params)
+    @shop.assign_attributes(shop_params)
+    @shop.set_geocode
+    if @shop.save
       redirect_to [:admin, @corporation, @shop], notice: "#{Shop.model_name.human}を更新しました。"
     else
       render :edit

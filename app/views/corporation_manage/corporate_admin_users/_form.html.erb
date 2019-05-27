@@ -1,0 +1,13 @@
+<%= bootstrap_form_for([:corporation_manage, corporate_admin_user], layout: :horizontal) do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :email %>
+  <%= f.text_field :tel %>
+  <% if f.object.new_record? %>
+    <%= f.password_field :password %>
+    <%= f.password_field :password_confirmation %>
+  <% else %>
+    <%= f.password_field :password, help: t('.guide_change_password') %>
+    <%= f.password_field :password_confirmation, help: t('.guide_change_password') %>
+  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

@@ -7,12 +7,14 @@ class Shop < ApplicationRecord
   has_many :information
   has_many :user_contracts
 
-  before_validation :geocode
   validates :name, :opening_time, :closing_time, presence: true
   validates :tel,
             length: { maximum: 13 },
             numericality: { only_integer: true, allow_blank: true }
-  validate :business_time
+  validate :do_not_over_closing_time
+
+  delegate :name, to: :corporation, prefix: true, allow_nil: true
+  delegate :id, to: :corporation, prefix: true, allow_nil: true
 
   RENT_SHOP_ID = 6
 
@@ -20,9 +22,10 @@ class Shop < ApplicationRecord
     Corporation.find(c_id).shops
   end
 
-  def business_time
-    return if opening_time.blank? || closing_time.blank?
-    errors.add(:opening_time, '開店時間は閉店時間より早めにしてください') if opening_time > closing_time
+  def do_not_over_closing_time
+    return if opening_time.nil? || closing_time.nil?
+    return if opening_time < closing_time
+    errors.add(:opening_time, :do_not_over_closing_time)
   end
 
   def assign_date_for_opening(y, m, d)
@@ -45,7 +48,7 @@ class Shop < ApplicationRecord
   end
 
   private
-  def geocode
+  def set_geocode
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s
     response = JSON.parse(res)

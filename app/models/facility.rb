@@ -7,10 +7,8 @@ class Facility < ApplicationRecord
   has_many :facility_keys, dependent: :destroy
   has_many :facility_temporary_plans, dependent: :destroy
   has_many :facility_dropin_plans, dependent: :destroy
-  has_many :reservations, dependent: :destroy
-  has_many :dropin_reservations
-
-  before_validation :geocode
+  has_many :reservations, dependent: :restrict_with_exception
+  has_many :dropin_reservations, dependent: :restrict_with_exception
 
   RENT_SHOP_ID= 6
 
@@ -20,11 +18,13 @@ class Facility < ApplicationRecord
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank
 
   delegate :name, to: :shop, prefix: true, allow_nil: true
+  delegate :corporation_name, to: :shop, prefix: true, allow_nil: true
+  delegate :corporation_id, to: :shop, prefix: true, allow_nil: true
 
   mount_uploader :image, ImageUploader
   mount_uploader :detail_document, PdfUploader
 
-  validates :name, presence: true
+  validates :name, :address, :facility_type, presence: true
   validates :address, presence: true, if: proc { |f| f.rent? }
   validates :detail_document, presence: true, if: proc { |f| f.rent? }
 
@@ -39,6 +39,14 @@ class Facility < ApplicationRecord
     sanitized_id_string = @facilities.map {|f| f[:id]}.join(",")
     where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
   }
+
+  def facility_temporary_plan_prices
+    facility_temporary_plans.map(&:facility_temporary_plan_prices).flatten
+  end
+
+  def facility_dropin_sub_plans
+    facility_dropin_plans.map(&:facility_dropin_sub_plans).flatten
+  end
 
   # 現在予約可能な施設一覧
   def self.reservable_facilities(checkin, checkout, condition, user)
@@ -62,31 +70,13 @@ class Facility < ApplicationRecord
 
   # userに表示し得る施設の最小利用料金(1時間)
   def min_hourly_price(user, target_time=nil)
-    plan_ids = user.present? ? user.user_contracts.pluck(:plan_id) : []
-    ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
-      where(plan_id: nil).or(self.facility_temporary_plans.where(plan_id: plan_ids))
-    options = FacilityTemporaryPlanPrice.where.not(price: 0).where(facility_temporary_plan_id: ftps.pluck(:id).push(nil))
-    al = FacilityTemporaryPlanPrice.arel_table
-    options = options.where(al[:starting_time].lteq(target_time.to_s(:time))).where(al[:ending_time].gt(target_time.to_s(:time))) if target_time.present?
-    option_min_price = options.minimum(:price)
-    min_price = ftps.minimum(:standard_price_per_hour)
-    min_price = option_min_price if option_min_price.present? && option_min_price < min_price
-    min_price ||= 0
+    min_price = compute_min_price(user, target_time)
+    compute_discount_price(min_price, user)
   end
 
   # userに表示し得る施設の最小利用料金(30分)
   def min_half_hourly_price(user, target_time=nil)
-    plan_ids = user.present? ? user.user_contracts.map(&:plan_id) : []
-    ftps = self.facility_temporary_plans.where.not(standard_price_per_hour: 0).
-      where(plan_id: nil).or(self.facility_temporary_plans.where(plan_id: plan_ids))
-    options = FacilityTemporaryPlanPrice.where.not(price: 0).where(facility_temporary_plan_id: ftps.pluck(:id).push(nil))
-    al = FacilityTemporaryPlanPrice.arel_table
-    options = options.where(al[:starting_time].lteq(target_time.to_s(:time))).where(al[:ending_time].gt(target_time.to_s(:time))) if target_time.present?
-    option_min_price = options.minimum(:price)
-    min_price = ftps.minimum(:standard_price_per_hour)
-    min_price = option_min_price if option_min_price.present? && option_min_price < min_price
-    min_price ||= 0
-    (min_price / 2) unless min_price.zero? && min_price.nil?
+    min_hourly_price(user, target_time) / 2
   end
 
   def calc_price(user, start, usage_hour)
@@ -167,7 +157,7 @@ class Facility < ApplicationRecord
   end
 
   private
-  def geocode
+  def set_geocode
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s
     response = JSON.parse(res)
@@ -177,4 +167,31 @@ class Facility < ApplicationRecord
     end
   end
 
+  private
+
+  def compute_min_price(user, target_time)
+    min_price = min_price_of_facility_temporary_plans(user)
+    option_min_price = min_price_of_target_facility_temporary_plan_prices(user, target_time)
+    min_price = option_min_price if !option_min_price.zero?
+    min_price
+  end
+
+  def min_price_of_facility_temporary_plans(user)
+    facility_temporary_plans.select_plans_for_user_condition(user)&.minimum(:standard_price_per_hour) || 0
+  end
+
+  def min_price_of_target_facility_temporary_plan_prices(user, target_time)
+    target_facility_temporary_plans = facility_temporary_plans.select_plans_for_user_condition(user)
+    facility_temporary_plan_prices = FacilityTemporaryPlanPrice.squeeze_from_plans_and_time(target_facility_temporary_plans, target_time)
+    facility_temporary_plan_prices&.minimum(:price) || 0
+  end
+
+  def compute_discount_price(price, user)
+    return price if not_need_to_discount?(user)
+    (price * Settings.discount_rate).floor
+  end
+
+  def not_need_to_discount?(user)
+    user.nil? || user.contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
+  end
 end
