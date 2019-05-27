@@ -47,7 +47,6 @@ class Shop < ApplicationRecord
     id == Shop::RENT_SHOP_ID
   end
 
-  private
   def set_geocode
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s

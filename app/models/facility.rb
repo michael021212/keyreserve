@@ -156,7 +156,6 @@ class Facility < ApplicationRecord
     rent_facilities = Facility.where(id: rent_facilities.joins(:facility_keys).uniq.map{|facility| facility.id})
   end
 
-  private
   def set_geocode
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s
@@ -166,8 +165,6 @@ class Facility < ApplicationRecord
       self.lon = response["results"][0]["geometry"]["location"]["lng"]
     end
   end
-
-  private
 
   def compute_min_price(user, target_time)
     min_price = min_price_of_facility_temporary_plans(user)

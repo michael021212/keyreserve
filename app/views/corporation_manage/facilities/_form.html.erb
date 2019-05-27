@@ -2,7 +2,13 @@
   <%= f.text_field :name, placeholder: t('.add_name') %>
   <%= f.number_field :max_num %>
   <%= f.text_field :address, placeholder: t('.add_address') %>
-  <%= f.select :facility_type, Facility.facility_types_i18n.invert, prompt: t('.add_facility_type') %>
+  <% if shop.is_rent? %>
+    <%= f.hidden_field :facility_type, value: :rent %>
+  <% else %>
+    <%= f.select :facility_type,
+      Facility.facility_types_i18n.invert,
+      prompt: t('.add_facility_type') %>
+  <% end %>
   <%= f.file_field :image %>
   <%= f.text_area :description, rows: 6 %>
   <%= f.form_group :facility_plans, label: {text: t('.target_plan')} do %>
