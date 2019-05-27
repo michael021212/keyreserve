@@ -25,12 +25,15 @@
           <span><%= t('common.sidebar.manage', name: Information.model_name.human) %></span>
         <% end %>
       </li>
+      <%# まだ施設管理者用の請求整ってないので、メニュー隠す %>
+      <% if false %>
       <li class="<%= active_parent('billings') %>">
         <%= link_to corporation_manage_billings_path do %>
           <i class='fa fa-users'></i>
           <span><%= t('common.sidebar.manage', name: Billing.model_name.human) %></span>
         <% end %>
       </li>
+      <% end %>
       <li class="<%= active_parent('user_corps') %>">
         <%= link_to corporation_manage_user_corps_path do %>
           <i class='fa fa-users'></i><span>
