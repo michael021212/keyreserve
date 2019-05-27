@@ -194,4 +194,9 @@ class Facility < ApplicationRecord
   def not_need_to_discount?(user)
     user.nil? || user.contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
   end
+
+  def set_max_num
+    self.assign_attributes(max_num: 99) if rent? && (max_num.blank? || max_num == 0)
+  end
+
 end

@@ -16,6 +16,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def create
     @facility = @shop.facilities.build(facility_params)
+    @facility.set_max_num
     @facility.set_geocode
     if @facility.save
       redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.created', name: Facility.model_name.human)
@@ -28,6 +29,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def update
     @facility.assign_attributes(facility_params)
+    @facility.set_max_num
     @facility.set_geocode
     if @facility.save
       redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.updated', name: Facility.model_name.human)
