@@ -2,26 +2,42 @@
   <%= f.text_field :name %>
   <%= f.number_field :max_num %>
   <%= f.text_field :address %>
+
+  <%# 賃貸用店舗の場合は施設タイプをhiddenで送る %>
   <% if shop.is_rent? %>
     <%= f.hidden_field :facility_type, value: :rent %>
   <% else %>
     <%= f.select :facility_type,
       Facility.facility_types_i18n.invert,
-      prompt: t('.add_facility_type') %>
+      prompt: '施設タイプを選択してください' %>
   <% end %>
+
   <%= f.file_field :image %>
   <%= f.hidden_field :image_cache %>
   <%= f.file_field :detail_document %>
   <%= f.hidden_field :detail_document_cache %>
   <%= f.text_area :description, rows: 6 %>
-  <%= f.form_group :facility_plans, label: {text: "月額対象プラン"} do %>
-    <%= f.fields_for :facility_plans do |fp| %>
-      <div class="form-inline">
-        <%= fp.collection_select :plan_id, corporation.plans, :id, :name, { include_blank: 'プランを選択してください' , hide_label: true }, { class: 'add-link-column', inline: true } %>
-        <%= fp.link_to_remove "削除", :confirm => t('cargo_item.remove_item_confirmation'), class: 'glyphicon glyphicon-remove', inline: true %>
-      </div>
+
+  <%# 賃貸用店舗の場合は月額対象プラン隠す %>
+  <% if !shop.is_rent? %>
+    <%= f.form_group :facility_plans, label: {text: "月額対象プラン"} do %>
+      <%= f.fields_for :facility_plans do |fp| %>
+        <div class="form-inline">
+          <%= fp.collection_select :plan_id,
+                                   corporation.plans,
+                                   :id,
+                                   :name,
+                                   { prompt: 'プランを選択してください',
+                                     hide_label: true },
+                                   { class: 'add-link-column', inline: true } %>
+          <%= fp.link_to_remove "削除",
+                                 confirm: t('cargo_item.remove_item_confirmation'),
+                                 class: 'glyphicon glyphicon-remove', inline: true %>
+        </div>
+      <% end %>
+      <p><%= f.link_to_add "プランを追加する", :facility_plans, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
     <% end %>
-    <p><%= f.link_to_add "プランを追加する", :facility_plans, class: 'btn btn-info glyphicon glyphicon-plus' %></p>
   <% end %>
+
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>
