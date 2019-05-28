@@ -103,8 +103,6 @@ class ReservationsController <  ApplicationController
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
     @reservation.set_payment
     ActiveRecord::Base.transaction do
-      session[:spot] = nil
-      session[:reservation_id] = @reservation.id
       ks_room_key_info = @reservation.facility.rent? ? @reservation.fetch_ks_room_key : false
       ksc_reservation_no = @reservation.facility.rent? && ks_room_key_info.present? ? @reservation.regist_ksc_reservation : false
       # 賃貸物件登録時、API連携でエラーが発生した場合は予約を作成せずtopにリダイレクト
@@ -113,6 +111,8 @@ class ReservationsController <  ApplicationController
         redirect_to spot_reservations_url and return
       end
       @reservation.save!
+      session[:spot] = nil
+      session[:reservation_id] = @reservation.id
       @reservation.payment.stripe_charge! if @reservation.user.creditcard?
       NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no, ks_room_key_info).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
