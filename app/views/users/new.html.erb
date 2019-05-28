@@ -21,14 +21,24 @@
           <%= f.password_field :password_confirmation, placeholder: "4文字以上" %>
           <%= f.hidden_field :corporation_token, value: params[:token] %>
           <%= f.hidden_field :parent_id, value: User.user_corp_token(session[:parent_token]).id if session[:parent_token].present? %>
+          <% if @user.new_record? %>
+            <%= f.form_group :term_of_use, class: 'form-inline' do %>
+              <%= f.check_box :term_of_use,
+                class: 'pr5',
+                label: '' %>
+              <%= link_to '利用規約',
+                term_of_use_path,
+                target: '_blank',
+                class: 'ml5' %>に同意する
+            <% end %>
+          <% end %>
           <div class="row">
-            <div class="col-md-12 col-xs-12 text-center">
-              <%= f.button '電話番号認証に進む', class: 'btn btn-primary mb20' %>
+            <div class="col-md-12 col-xs-12 text-left mt30">
+              <%= f.button '電話番号認証に進む', class: 'btn btn-primary mb10' %>
             </div>
-            <div class="col-md-12 col-xs-12 mt-10">
-              <%= link_to 'ログインはこちら', sign_in_path, class: 'pull-right' %>
+            <div class="col-md-12 col-xs-12 text-left">
+              <%= link_to 'ログインはこちら', sign_in_path %>
             </div>
-            <div class="col-md-3 col-sm-2 col-xs-12"></div>
           </div>
         <% end %>
       </div>

@@ -28,6 +28,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 255 }
   validates :email, email: true, uniqueness: true, if: Proc.new { |u| u.personal? }
   validates :password, confirmation: true, presence:true, length: { minimum: 4, maximum: 20, allow_blank: true }, if: -> { new_record? || changes[:crypted_password] }
+  validates_acceptance_of :term_of_use, allow_nil: false, on: :create
 
   scope(:user_corp_token, ->(token) { find_by(parent_token: token) })
   scope(:parent_is_nil, -> { where(parent_id: nil) })

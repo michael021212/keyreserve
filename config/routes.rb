@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   end
 
   root 'top#index'
+  get '/term_of_use' => 'top#term_of_use'
 
   namespace :admin do
     get '/' => 'dashboards#index'
