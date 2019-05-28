@@ -166,6 +166,8 @@ class Facility < ApplicationRecord
     end
   end
 
+  private
+
   def compute_min_price(user, target_time)
     min_price = min_price_of_facility_temporary_plans(user)
     option_min_price = min_price_of_target_facility_temporary_plan_prices(user, target_time)

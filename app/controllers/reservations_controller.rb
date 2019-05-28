@@ -50,7 +50,8 @@ class ReservationsController <  ApplicationController
     @condition = session[:spot].map{|k,v| [k.to_sym,v]}.to_h
     set_selected_facility(@condition)
     return redirect_to confirm_reservations_url if current_user.credit_card.present?
-    @credit_card = @user.build_credit_card(credit_card_params)
+    @credit_card = current_user.build_credit_card(credit_card_params)
+    @credit_card.prepare_stripe_card
     return render :credit_card unless @credit_card.valid?
     begin
       @credit_card.save!
@@ -102,16 +103,17 @@ class ReservationsController <  ApplicationController
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
     @reservation.set_payment
     ActiveRecord::Base.transaction do
-      @reservation.payment.stripe_charge!
-      @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
       ks_room_key_info = @reservation.facility.rent? ? @reservation.fetch_ks_room_key : false
       ksc_reservation_no = @reservation.facility.rent? && ks_room_key_info.present? ? @reservation.regist_ksc_reservation : false
+      # 賃貸物件登録時、API連携でエラーが発生した場合は予約を作成せずtopにリダイレクト
       if @reservation.facility.rent? && (ks_room_key_info.blank? || ksc_reservation_no.blank?)
         flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
         redirect_to spot_reservations_url and return
       end
+      @reservation.save!
+      @reservation.payment.stripe_charge! if @reservation.user.creditcard?
       NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no, ks_room_key_info).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
