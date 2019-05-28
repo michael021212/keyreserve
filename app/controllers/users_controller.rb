@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 
   # 認証コードの確認
   def sms_confirm
-    if @user.sms_verify_code == params[:sms_verify_code].to_i
+    if @user.sms_verify_code.to_s == params[:sms_verify_code]
       ActiveRecord::Base.transaction do
         @user.update!(sms_verified: true)
         @user.invoice! if @user.campaign_id.present?
