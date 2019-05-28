@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       user_corp ||= UserCorp.find_by(parent_token: session[:parent_token])
       @user.parent_id = user_corp.id if user_corp.present?
     end
-    if @user.save
+    if @user.save(context: :new_user_registration)
       session[:parent_token] = nil
       auto_login(@user)
       redirect_to tel_user_path
