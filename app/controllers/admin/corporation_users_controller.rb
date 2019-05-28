@@ -3,7 +3,7 @@ class Admin::CorporationUsersController < AdminController
   before_action :set_corporation_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @corporation_users = @corporation.corporation_users.order(id: :desc).page(params[:page])
+    @corporation_users = @corporation.corporate_admin_users.order(id: :desc).page(params[:page])
   end
 
   def new
