@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
     resources :information
     resources :corporations do
-      resources :corporation_users
+      resources :corporate_admin_users
       resources :user_contracts
       resources :plans
       resources :facilities, only: [] do
