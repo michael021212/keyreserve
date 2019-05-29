@@ -51,9 +51,9 @@ class ReservationsController <  ApplicationController
     set_selected_facility(@condition)
     return redirect_to confirm_reservations_url if current_user.credit_card.present?
     @credit_card = current_user.build_credit_card(credit_card_params)
-    @credit_card.prepare_stripe_card
     return render :credit_card unless @credit_card.valid?
     begin
+      @credit_card.prepare_stripe_card
       @credit_card.save!
       current_user.activated!
       redirect_to confirm_reservations_url
