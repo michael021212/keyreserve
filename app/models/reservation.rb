@@ -158,6 +158,10 @@ class Reservation < ApplicationRecord
     self.price = facility.calc_price(self.user, self.checkin, self.usage_period) || 0
   end
 
+  def stripe_chargeable?
+    user.creditcard? && price != 0
+  end
+
   def save_and_charge!
     ActiveRecord::Base.transaction do
       payment.stripe_charge!

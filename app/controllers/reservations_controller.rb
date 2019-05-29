@@ -113,7 +113,7 @@ class ReservationsController <  ApplicationController
       @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
-      @reservation.payment.stripe_charge! if @reservation.user.creditcard?
+      @reservation.payment.stripe_charge! if @reservation.stripe_chargeable?
       NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no, ks_room_key_info).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
