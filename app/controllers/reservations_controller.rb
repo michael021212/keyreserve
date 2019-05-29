@@ -49,7 +49,7 @@ class ReservationsController <  ApplicationController
   def credit_card
     @condition = session[:spot].map{|k,v| [k.to_sym,v]}.to_h
     set_selected_facility(@condition)
-    return redirect_to confirm_reservations_url if current_user.credit_card.present?
+    return redirect_to confirm_reservations_url(credit_card: true) if current_user.credit_card.present?
     @credit_card = current_user.build_credit_card(credit_card_params)
     return render :credit_card unless @credit_card.valid?
     begin
@@ -67,7 +67,11 @@ class ReservationsController <  ApplicationController
   # 2.カード情報入力
   # 3.確認画面
   def confirm
-    @condition = params[:page] == 'shop' ? session[:spot].map{|k,v| [k.to_sym,v]}.to_h : (params[:spot] ||= {})
+    if params[:page] == 'shop' || params[:credit_card].present?
+      @condition = session[:spot].map{|k,v| [k.to_sym,v]}.to_h
+    else
+      @condition = params[:spot] ||= {}
+    end
     session[:spot] = @condition if @condition.present?
     set_selected_facility(@condition)
 
