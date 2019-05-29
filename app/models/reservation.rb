@@ -186,7 +186,7 @@ class Reservation < ApplicationRecord
 
   def reservation_already_exists_in_range?
     return if checkin.nil? || checkout.nil?
-    if facility.reservations.in_range(checkin..checkout).present?
+    if facility.reservations.where.not(id: self.id).in_range(checkin..checkout).present?
       errors.add(:checkin, :reservation_already_exists)
     end
   end
