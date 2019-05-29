@@ -49,14 +49,14 @@ class ReservationsController <  ApplicationController
   def credit_card
     @condition = session[:spot].map{|k,v| [k.to_sym,v]}.to_h
     set_selected_facility(@condition)
-    return redirect_to confirm_reservations_url(credit_card: true) if current_user.credit_card.present?
+    return redirect_to confirm_reservations_url if current_user.credit_card.present?
     @credit_card = current_user.build_credit_card(credit_card_params)
     return render :credit_card unless @credit_card.valid?
     begin
       @credit_card.prepare_stripe_card
       @credit_card.save!
       current_user.activated!
-      redirect_to confirm_reservations_url
+      redirect_to confirm_reservations_url(credit_card: true)
     rescue => e
       logger.warn("#{e.class.name} #{e.message}")
       flash[:error] = 'クレジットカードの登録に失敗しました。入力情報が正しいか、今一度ご確認ください。'
