@@ -3,13 +3,16 @@ class UsersController < ApplicationController
   before_action :set_personal_identification, only: [:show]
 
   def new
+    set_facility_from_return_to_url
     logout if logged_in?
     @user = User.new
     session[:parent_token] = params[:parent_token]
   end
 
   def create
+    set_facility_from_return_to_url
     @user = User.new(user_params)
+    @user.payway = :invoice if @facility.present? && @facility.rent?
     @user.corporation_users.build(corporation_id: user_params[:corporation_id]) if user_params[:corporation_id].present?
     if session[:parent_token].present?
       user_corp ||= UserCorp.find_by(parent_token: session[:parent_token])
@@ -107,5 +110,11 @@ class UsersController < ApplicationController
       :email, :password, :password_confirmation, :name, :tel, :state, :payway, :user_type, :parent_id,
       :advertise_notice_flag, :stripe_customer_id, :campaign_id, :corporation_id, :term_of_use
     )
+  end
+
+  def set_facility_from_return_to_url
+    return_to_url = session[:return_to_url].match(/shops\/\d+\/facilities\/new\?id=(\d+)/)
+    facility_id = return_to_url[1] if return_to_url.present?
+    @facility = Facility.find_by(id: facility_id) if facility_id.present?
   end
 end

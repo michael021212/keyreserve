@@ -13,7 +13,11 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <%= bootstrap_form_for @user, url: user_path do |f| %>
-          <%= f.select :corporation_id, selectable_shops, label: "利用予定店舗", include_blank: true %>
+          <% if @facility.present? && @facility.rent? %>
+            <%= f.hidden_field :corporation_id, value: @facility.shop.corporation.id %>
+          <% else %>
+            <%= f.select :corporation_id, selectable_shops, label: "利用予定店舗", include_blank: true %>
+          <% end %>
           <%= f.text_field :name, placeholder: "例)山田太郎" %>
           <%= f.text_field :email, placeholder: "例)keystation@gmail.com" %>
           <%= f.text_field :campaign_id , placeholder: "※キャンペーンIDをお持ちの方のみご入力ください" %>
