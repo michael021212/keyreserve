@@ -110,7 +110,8 @@ class DropinReservationsController <  ApplicationController
   def create
     @dropin_reservation = DropinReservation.new_from_dropin_spot(session[:dropin_spot], @user, current_user)
     @dropin_reservation.set_payment
-    if @dropin_reservation.save
+    ActiveRecord::Base.transaction do
+      @dropin_reservation.save!
       @dropin_reservation.payment.stripe_charge!
       session[:dropin_spot] = nil
       session[:reservation_id] = @dropin_reservation.id
@@ -119,11 +120,11 @@ class DropinReservationsController <  ApplicationController
         NotificationMailer.send_dropin_reservation_password(@dropin_reservation).deliver_now
         @dropin_reservation.update!(mail_send_flag: true)
       end
-      redirect_to thanks_dropin_reservations_path
-    else
-      flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
-      redirect_to dropin_spot_reservations_path
     end
+    redirect_to thanks_dropin_reservations_path
+  rescue
+    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
+    redirect_to dropin_spot_dropin_reservations_path
   end
 
   def thanks
