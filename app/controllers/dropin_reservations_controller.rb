@@ -122,7 +122,8 @@ class DropinReservationsController <  ApplicationController
       end
     end
     redirect_to thanks_dropin_reservations_path
-  rescue
+  rescue => e
+    logger.debug(e)
     flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
     redirect_to dropin_spot_dropin_reservations_path
   end
