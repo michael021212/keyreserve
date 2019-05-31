@@ -112,7 +112,7 @@ class DropinReservationsController <  ApplicationController
     @dropin_reservation.set_payment
     ActiveRecord::Base.transaction do
       @dropin_reservation.save!
-      @dropin_reservation.payment.stripe_charge!
+      @dropin_reservation.payment.stripe_charge! if @dropin_reservation.stripe_chargeable?
       session[:dropin_spot] = nil
       session[:reservation_id] = @dropin_reservation.id
       @dropin_reservation.send_dropin_reserved_mails
