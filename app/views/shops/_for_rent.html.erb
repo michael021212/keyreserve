@@ -55,7 +55,7 @@
                       <% end %>
                     </div>
                     <div class='col-sm-6 text-right' style='height: 200px; position: relative;'>
-                      <%= link_to facility.detail_document.to_s, class: 'btn btn-success', target: '_blank', style: 'position: absolute; bottom: 60px; right:30px;' do %>
+                      <%= link_to facility.detail_document.url, class: 'btn btn-success', target: '_blank', style: 'position: absolute; bottom: 60px; right:30px;' do %>
                         資料確認<i class="fa fa-angle-double-right"></i>
                       <% end %>
                       <%= link_to new_shop_facility_path(@shop, id: facility.id), class: 'btn btn-main', style: 'position: absolute; bottom: 0; right:30px;' do %>
