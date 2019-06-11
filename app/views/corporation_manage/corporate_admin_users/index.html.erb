@@ -37,11 +37,13 @@
             <td>
               <%= link_to t('common.btn.show'), corporation_manage_corporate_admin_user_path(corporate_admin_user), class: 'btn btn-default' %>
               <%= link_to t('common.btn.edit'), edit_corporation_manage_corporate_admin_user_path(corporate_admin_user), class: 'btn btn-primary' %>
-              <%= link_to t('common.btn.delete'),
-                          corporation_manage_corporate_admin_user_path(corporate_admin_user),
-                          method: :delete,
-                          data: { confirm: t('common.confirms.really_to_delete') },
-                          class: 'btn btn-danger' %>
+              <% unless corporate_admin_user.id == current_user.id %>
+                <%= link_to t('common.btn.delete'),
+                            corporation_manage_corporate_admin_user_path(corporate_admin_user),
+                            method: :delete,
+                            data: { confirm: t('common.confirms.really_to_delete') },
+                            class: 'btn btn-danger' %>
+              <% end %>
             </td>
           </tr>
         <% end %>

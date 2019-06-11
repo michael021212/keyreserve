@@ -10,6 +10,8 @@ class Facility < ApplicationRecord
   has_many :reservations, dependent: :restrict_with_exception
   has_many :dropin_reservations, dependent: :restrict_with_exception
 
+  RENT_SHOP_ID= 6
+
   enum facility_type: {conference_room: 1, dropin: 2, rent: 3, car: 4}
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
@@ -20,9 +22,11 @@ class Facility < ApplicationRecord
   delegate :corporation_id, to: :shop, prefix: true, allow_nil: true
 
   mount_uploader :image, ImageUploader
+  mount_uploader :detail_document, PdfUploader
 
   validates :name, :address, :facility_type, presence: true
   validates :address, presence: true, if: proc { |f| f.rent? }
+  validates :detail_document, presence: true, if: proc { |f| f.rent? }
 
   scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
     includes(facility_dropin_plans: :facility_dropin_sub_plans)
@@ -50,7 +54,12 @@ class Facility < ApplicationRecord
     facilities = user.try(:logged_in?) ? user.login_spots : Facility.logout_spots
     # 指定時間に予約済の施設は削除
     exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
-    facilities = facilities.send(condition[:facility_type]).where.not(id: exclude_facility_ids)
+    # 賃貸物件とその他施設を分けて施設検索
+    if condition[:facility_type] == 'rent'
+      facilities = Facility.displayale_rent_facilities.where.not(id: exclude_facility_ids)
+    else
+      facilities = facilities.send(condition[:facility_type]).where.not(id: exclude_facility_ids)
+    end
     # 店舗の運営時間外の施設は削除
     facilities = facilities.joins(:shop)
       .where(Shop.arel_table[:opening_time].lteq(checkin))
@@ -140,6 +149,13 @@ class Facility < ApplicationRecord
     FacilityDropinSubPlan.in_range(checkin..checkout).where(id: sub_plan_ids).where(facility_dropin_plan_id: facility_dropin_plan_ids).order('price ASC').first
   end
 
+  # 表示可能な賃貸物件を一覧で取得
+  def self.displayale_rent_facilities
+    rent_facilities = Facility.rent + Facility.where(shop_id: Shop::RENT_SHOP_ID)
+    rent_facilities = Facility.where(id: rent_facilities.map{|facility| facility.id})
+    rent_facilities = Facility.where(id: rent_facilities.joins(:facility_keys).uniq.map{|facility| facility.id})
+  end
+
   def set_geocode
     uri = URI.escape("https://maps.googleapis.com/maps/api/geocode/json?address="+self.address.gsub(" ", "")+"&key=#{Settings.google_key}")
     res = HTTP.get(uri).to_s
@@ -148,6 +164,10 @@ class Facility < ApplicationRecord
       self.lat = response["results"][0]["geometry"]["location"]["lat"]
       self.lon = response["results"][0]["geometry"]["location"]["lng"]
     end
+  end
+
+  def set_max_num
+    self.assign_attributes(max_num: 99) if rent? && (max_num.blank? || max_num == 0)
   end
 
   private
@@ -177,4 +197,6 @@ class Facility < ApplicationRecord
   def not_need_to_discount?(user)
     user.nil? || user.contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
   end
+
+
 end

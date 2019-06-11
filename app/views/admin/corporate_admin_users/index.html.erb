@@ -1,0 +1,61 @@
+<% breadcrumb :admin_corporation_corporate_admin_users, @corporation %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= CorporateAdminUser.model_name.human %>一覧</h4>
+    <div class="box-tools">
+      <%= link_to '新規追加', new_admin_corporation_corporate_admin_user_path(@corporation), class: 'btn btn-info' %>
+      <%= link_to '戻る', admin_corporation_path(@corporation), class: 'btn btn-default' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><%= User.human_attribute_name(:id) %></th>
+          <th><%= User.human_attribute_name(:name) %></th>
+          <th><%= User.human_attribute_name(:email) %></th>
+          <th><%= User.human_attribute_name(:tel) %></th>
+          <th><%= User.human_attribute_name(:state) %></th>
+          <th><%= User.human_attribute_name(:payway) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @corporate_admin_users.present? %>
+          <% @corporate_admin_users.each do |corporate_admin_user| %>
+            <tr>
+              <td><%= corporate_admin_user.id %></td>
+              <td><%= corporate_admin_user.name %></td>
+              <td><%= corporate_admin_user.email %></td>
+              <td><%= corporate_admin_user.tel %></td>
+              <td><%= corporate_admin_user.state_i18n %></td>
+              <td><%= corporate_admin_user.payway_i18n %></td>
+              <td>
+                <%= link_to '詳細',
+                  admin_corporation_corporate_admin_user_path(@corporation, corporate_admin_user),
+                  class: 'btn btn-default' %>
+                <%= link_to '編集',
+                  edit_admin_corporation_corporate_admin_user_path(@corporation, corporate_admin_user),
+                  class: 'btn btn-primary' %>
+                <%= link_to '削除',
+                  admin_corporation_corporate_admin_user_path(@corporation, corporate_admin_user),
+                  method: :delete,
+                  data: { confirm: '削除しますか?' },
+                  class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              表示する<%= CorporateAdminUser.model_name.human %>はありません
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @corporate_admin_users %>
+  </div>
+</div>
+

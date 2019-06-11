@@ -3,11 +3,15 @@ class ShopsController <  ApplicationController
   before_action :set_shop, only: [:show]
 
   def index
-    @shops = Shop.order(id: :desc).page(params[:page])
+    @shops = Shop.where.not(is_rent: true).order(id: :desc).page(params[:page])
   end
 
   def show
-    @facilities = @shop.facilities.order(id: :desc).page(params[:page])
+    if @shop.for_rent?
+      @rent_facilities = Facility.displayale_rent_facilities.order(id: :desc).page(params[:page])
+    else
+      @facilities = @shop.facilities.order(id: :desc).page(params[:page])
+    end
   end
 
   private

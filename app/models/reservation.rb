@@ -1,5 +1,8 @@
 class Reservation < ApplicationRecord
   include ActionView::Helpers::NumberHelper
+  include KsCheckinApi
+  include KeystationApi
+
   acts_as_paranoid
   belongs_to :facility, optional: true
   belongs_to :user, optional: true
@@ -155,6 +158,10 @@ class Reservation < ApplicationRecord
     self.price = facility.calc_price(self.user, self.checkin, self.usage_period) || 0
   end
 
+  def stripe_chargeable?
+    user.creditcard? && price != 0
+  end
+
   def save_and_charge!
     ActiveRecord::Base.transaction do
       payment.stripe_charge!
@@ -183,7 +190,7 @@ class Reservation < ApplicationRecord
 
   def reservation_already_exists_in_range?
     return if checkin.nil? || checkout.nil?
-    if facility.reservations.in_range(checkin..checkout).present?
+    if facility.reservations.where.not(id: self.id).in_range(checkin..checkout).present?
       errors.add(:checkin, :reservation_already_exists)
     end
   end

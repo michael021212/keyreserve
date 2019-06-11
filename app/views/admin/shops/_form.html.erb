@@ -3,9 +3,12 @@
   <%= f.text_field :postal_code %>
   <%= f.text_field :address %>
   <%= f.text_field :tel %>
-  <%= f.time_select :opening_time, { include_blank: true }, { class: 'bootstrap-date' } %>
-  <%= f.time_select :closing_time, { include_blank: true }, { class: 'bootstrap-date'} %>
+  <%= f.time_field :opening_time, { include_blank: true, class: 'bootstrap-date' } %>
+  <%= f.time_field :closing_time, { include_blank: true, class: 'bootstrap-date' } %>
   <%= f.text_field :calendar_url %>
   <%= f.file_field :image %>
+  <div class='col-sm-offset-2'>
+    <%= f.check_box :is_rent %>
+  </div>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

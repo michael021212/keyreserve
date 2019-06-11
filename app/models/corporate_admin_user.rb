@@ -7,5 +7,6 @@ class CorporateAdminUser < User
   has_many :corporation_users, foreign_key: :user_id, dependent: :destroy, inverse_of: :user
   has_many :corporations, through: :corporation_users
 
+  validates :email, email: true, uniqueness: true
   accepts_nested_attributes_for :corporation_users
 end

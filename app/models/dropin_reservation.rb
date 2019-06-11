@@ -96,6 +96,10 @@ class DropinReservation < ApplicationRecord
     user_id != reservation_user_id
   end
 
+  def stripe_chargeable?
+    user.creditcard? && price != 0
+  end
+
   def self.to_csv(options)
     csv_data = CSV.generate(options) do |csv|
       csv << csv_column_names

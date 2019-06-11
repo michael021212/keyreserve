@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20190521031442) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "ksc_token"
   end
 
   create_table "credit_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -110,6 +111,7 @@ ActiveRecord::Schema.define(version: 20190521031442) do
     t.string "address"
     t.float "lat", limit: 24
     t.float "lon", limit: 24
+    t.string "detail_document"
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 
@@ -284,6 +286,7 @@ ActiveRecord::Schema.define(version: 20190521031442) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.string "calendar_url"
+    t.boolean "is_rent", default: false
     t.index ["corporation_id"], name: "index_shops_on_corporation_id"
   end
 
@@ -327,6 +330,9 @@ ActiveRecord::Schema.define(version: 20190521031442) do
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
     t.string "campaign_id"
+    t.integer "sms_verify_code"
+    t.datetime "sms_sent_at"
+    t.boolean "sms_verified", default: false
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
