@@ -1,5 +1,6 @@
 class FacilitiesController <  ApplicationController
   before_action :require_login
+  before_action :require_sms_verification
   before_action :set_user, only: [:index, :show]
   before_action :set_facility, only: [:show]
 

@@ -2,6 +2,7 @@ class Shops::FacilitiesController <  ApplicationController
   include SearchParams
 
   before_action :require_login, only: [:new, :create]
+  before_action :require_sms_verification, only: [:new, :create]
   before_action :set_user
   before_action :set_facility
   before_action :set_shop

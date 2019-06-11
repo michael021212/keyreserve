@@ -30,7 +30,7 @@ ja:
         title: 運営会社編集
       show:
         title: 運営会社詳細
-    corporation_users:
+    corporate_admin_users:
       index:
         title: 施設管理者一覧
       new:

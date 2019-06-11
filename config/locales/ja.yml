@@ -40,6 +40,7 @@ ja:
         note: 備考
         state: 状態
         ks_corporation_id: Keystation法人
+        ksc_token: KS Checkin JWTトークン
       corporation_user:
         corporation_id: 運営会社
         user_id: 施設管理者
@@ -72,6 +73,7 @@ ja:
         max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
         campaign_id: キャンペーンID
+        term_of_use: 利用規約
       corporate_admin_user:
         id: ID
         name: 施設管理者名
@@ -131,6 +133,7 @@ ja:
         closing_time: 閉店時間
         image: 店舖画像
         calendar_url: イベントカレンダーURL
+        is_rent: 賃貸物件掲載用店舗
       facility:
         name: 施設名
         address: 住所
@@ -138,6 +141,7 @@ ja:
         description: 施設説明
         max_num: 最大利用人数
         facility_type: 施設タイプ（スポット利用時）
+        detail_document: 詳細資料
       facility_dropin_plan:
         facility_id: ドロップイン施設
         plan_id: プラン

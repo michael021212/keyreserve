@@ -1,0 +1,11 @@
+<% breadcrumb :edit_admin_corporation_corporate_admin_user, @corporation, @corporate_admin_user %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= CorporateAdminUser.model_name.human %>編集</h4>
+  </div>
+  <div class="box-body">
+    <%= render 'form', corporation: @corporation, corporate_admin_user: @corporate_admin_user %>
+  </div>
+</div>
+

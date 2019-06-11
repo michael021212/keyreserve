@@ -51,7 +51,8 @@ class CorporationManage::ShopsController < CorporationManage::Base
       :opening_time,
       :closing_time,
       :image,
-      :calendar_url
+      :calendar_url,
+      :is_rent
     )
   end
 end

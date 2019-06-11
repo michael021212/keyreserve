@@ -1,6 +1,7 @@
 class ReservationsController <  ApplicationController
   before_action :set_user
   before_action :require_login, except: [:spot]
+  before_action :require_sms_verification, except: [:spot]
   include ActionView::Helpers::NumberHelper
   include SearchParams
 
@@ -27,7 +28,7 @@ class ReservationsController <  ApplicationController
   def new
     @condition = params[:spot] ||= session[:spot].map{|k,v| [k.to_sym,v]}.to_h
     session[:reservation_id] = nil
-    @facility = @user.login_spots.find_by(id: params[:facility_id])
+    @facility = @condition[:facility_type] == 'rent' ? Facility.find_by(id: params[:facility_id]) : @user.login_spots.find_by(id: params[:facility_id])
     if @facility.blank?
       flash[:error] = '検索条件を入力してください'
       redirect_to spot_reservations_path
@@ -49,12 +50,13 @@ class ReservationsController <  ApplicationController
     @condition = session[:spot].map{|k,v| [k.to_sym,v]}.to_h
     set_selected_facility(@condition)
     return redirect_to confirm_reservations_url if current_user.credit_card.present?
-    @credit_card = @user.build_credit_card(credit_card_params)
+    @credit_card = current_user.build_credit_card(credit_card_params)
     return render :credit_card unless @credit_card.valid?
     begin
+      @credit_card.prepare_stripe_card
       @credit_card.save!
       current_user.activated!
-      redirect_to confirm_reservations_url
+      redirect_to confirm_reservations_url(credit_card: true)
     rescue => e
       logger.warn("#{e.class.name} #{e.message}")
       flash[:error] = 'クレジットカードの登録に失敗しました。入力情報が正しいか、今一度ご確認ください。'
@@ -65,7 +67,11 @@ class ReservationsController <  ApplicationController
   # 2.カード情報入力
   # 3.確認画面
   def confirm
-    @condition = params[:page] == 'shop' ? session[:spot].map{|k,v| [k.to_sym,v]}.to_h : (params[:spot] ||= {})
+    if params[:page] == 'shop' || params[:credit_card].present?
+      @condition = session[:spot].map{|k,v| [k.to_sym,v]}.to_h
+    else
+      @condition = params[:spot] ||= {}
+    end
     session[:spot] = @condition if @condition.present?
     set_selected_facility(@condition)
 
@@ -101,18 +107,25 @@ class ReservationsController <  ApplicationController
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
     @reservation.set_payment
     ActiveRecord::Base.transaction do
-      @reservation.payment.stripe_charge!
+      ks_room_key_info = @reservation.facility.rent? ? @reservation.fetch_ks_room_key : false
+      ksc_reservation_no = @reservation.facility.rent? && ks_room_key_info.present? ? @reservation.regist_ksc_reservation : false
+      # 賃貸物件登録時、API連携でエラーが発生した場合は予約を作成せずtopにリダイレクト
+      if @reservation.facility.rent? && (ks_room_key_info.blank? || ksc_reservation_no.blank?)
+        flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
+        redirect_to spot_reservations_url and return
+      end
       @reservation.save!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
-      NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
-      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
+      @reservation.payment.stripe_charge! if @reservation.stripe_chargeable?
+      NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no, ks_room_key_info).deliver_now if @reservation.send_cc_mail?
+      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
     end
       redirect_to thanks_reservations_url
   rescue => e
     logger.debug(e)
-    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
+    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
     redirect_to spot_reservations_url
   end
 

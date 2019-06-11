@@ -9,6 +9,7 @@ class Admin::FacilitiesController < AdminController
 
   def create
     @facility = @shop.facilities.new(facility_params)
+    @facility.set_max_num
     @facility.set_geocode
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を作成しました。"
@@ -22,6 +23,7 @@ class Admin::FacilitiesController < AdminController
 
   def update
     @facility.assign_attributes(facility_params)
+    @facility.set_max_num
     @facility.set_geocode
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を更新しました。"
@@ -58,7 +60,8 @@ class Admin::FacilitiesController < AdminController
 
   def facility_params
     params.require(:facility).permit(
-      :shop_id, :name, :image, :description, :max_num, :facility_type, :address, :lat, :lon,
+      :shop_id, :name, :image, :image_cache, :detail_document, :detail_document_cache,
+      :description, :max_num, :facility_type, :address, :lat, :lon,
       facility_plans_attributes: [:id, :plan_id, '_destroy']
     )
   end

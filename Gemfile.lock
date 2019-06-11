@@ -322,6 +322,8 @@ GEM
       activerecord (>= 5.1.0, < 5.2)
     parser (2.5.1.0)
       ast (~> 2.4.0)
+    patron (0.13.1)
+    phonelib (0.6.33)
     polyamorous (1.3.3)
       activerecord (>= 3.0)
     powerpack (0.1.1)
@@ -472,6 +474,10 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    twilio-ruby (5.22.2)
+      faraday (~> 0.9)
+      jwt (>= 1.5, <= 2.5)
+      nokogiri (>= 1.6, < 2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.11)
@@ -553,6 +559,8 @@ DEPENDENCIES
   page_title_helper
   paranoia
   paranoia_uniqueness_validator (= 3.0.0)
+  patron
+  phonelib
   pry
   pry-byebug
   pry-doc
@@ -579,6 +587,7 @@ DEPENDENCIES
   spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   stripe
+  twilio-ruby
   uglifier (>= 1.3.0)
   vcr
   web-console (>= 3.3.0)

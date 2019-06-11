@@ -36,6 +36,7 @@ gem 'gon'
 gem 'sorcery'
 gem 'oauth2', '~> 1.3.0'
 gem 'bcrypt', '~> 3.1.7'
+gem 'twilio-ruby'
 
 # Configuration
 gem 'dotenv-rails'
@@ -65,6 +66,7 @@ gem 'seed-fu'
 
 # HTTP client lib
 gem 'faraday'
+gem 'patron'
 
 # Upload
 gem 'carrierwave', '~> 1.0'
@@ -78,6 +80,7 @@ gem 'stripe'
 gem 'nested_form'
 gem 'geocoder'
 gem 'http'
+gem 'phonelib'
 
 gem 'whenever', require: false
 gem 'letter_opener_web'

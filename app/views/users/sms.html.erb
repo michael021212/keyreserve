@@ -1,0 +1,27 @@
+<div class="mg-page-title parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>認証コード入力</h2>
+        <p>携帯電話に送付された認証コードをご入力ください</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt30">
+  <div class="col-md-offset-3 col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= form_tag sms_confirm_user_path, method: :post do |f| %>
+          <%= text_field_tag :sms_verify_code, '',
+            class: 'form-control',
+            placeholder: "認証コード"  %>
+          <div class="row">
+            <div class="col-md-12 col-xs-12 text-center">
+              <%= button_tag '認証', class: 'btn btn-primary mb20' %>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

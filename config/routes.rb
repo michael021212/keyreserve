@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   end
 
   root 'top#index'
+  get '/term_of_use' => 'top#term_of_use'
 
   namespace :admin do
     get '/' => 'dashboards#index'
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
     end
     resources :information
     resources :corporations do
-      resources :corporation_users
+      resources :corporate_admin_users
       resources :user_contracts
       resources :plans
       resources :facilities, only: [] do
@@ -66,6 +67,9 @@ Rails.application.routes.draw do
   resource :user do
     collection do
       get 'new/:parent_token', to: 'users#new', as: 'new_parent_token'
+      get 'tel', to: 'users#tel'
+      post 'sms', to: 'users#sms'
+      post 'sms_confirm', to: 'users#sms_confirm'
     end
   end
   get '/sign_in' => 'sessions#new'

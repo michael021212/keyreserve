@@ -1,6 +1,7 @@
 class DropinReservationsController <  ApplicationController
   before_action :set_user
   before_action :require_login, except: [:dropin_spot]
+  before_action :require_sms_verification, except: [:dropin_spot]
   include ActionView::Helpers::NumberHelper
 
   def index
@@ -109,8 +110,9 @@ class DropinReservationsController <  ApplicationController
   def create
     @dropin_reservation = DropinReservation.new_from_dropin_spot(session[:dropin_spot], @user, current_user)
     @dropin_reservation.set_payment
-    if @dropin_reservation.save
-      @dropin_reservation.payment.stripe_charge!
+    ActiveRecord::Base.transaction do
+      @dropin_reservation.save!
+      @dropin_reservation.payment.stripe_charge! if @dropin_reservation.stripe_chargeable?
       session[:dropin_spot] = nil
       session[:reservation_id] = @dropin_reservation.id
       @dropin_reservation.send_dropin_reserved_mails
@@ -118,11 +120,12 @@ class DropinReservationsController <  ApplicationController
         NotificationMailer.send_dropin_reservation_password(@dropin_reservation).deliver_now
         @dropin_reservation.update!(mail_send_flag: true)
       end
-      redirect_to thanks_dropin_reservations_path
-    else
-      flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
-      redirect_to dropin_spot_reservations_path
     end
+    redirect_to thanks_dropin_reservations_path
+  rescue => e
+    logger.debug(e)
+    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
+    redirect_to dropin_spot_dropin_reservations_path
   end
 
   def thanks
