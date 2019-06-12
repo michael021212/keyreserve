@@ -113,7 +113,7 @@ class UsersController < ApplicationController
   end
 
   def set_facility_from_return_to_url
-    return_to_url = session[:return_to_url].match(/shops\/\d+\/facilities\/new\?id=(\d+)/)
+    return_to_url = session[:return_to_url].present? ? session[:return_to_url].match(/shops\/\d+\/facilities\/new\?id=(\d+)/) : nil
     facility_id = return_to_url[1] if return_to_url.present?
     @facility = Facility.find_by(id: facility_id) if facility_id.present?
   end
