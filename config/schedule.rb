@@ -19,6 +19,6 @@ every 1.month, at: 'start of the month at 1am' do
   rake 'billing:create_monthly_billings'
 end
 
-every 1.day, at: '9:00 am' do
-  rake 'campaign:make_oyo_campaign_user_to_normal'
-end
+# every 1.day, at: '9:00 am' do
+#   rake 'campaign:make_oyo_campaign_user_to_normal'
+# end
