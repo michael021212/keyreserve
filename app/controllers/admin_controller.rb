@@ -4,7 +4,7 @@ class AdminController < ActionController::Base
   layout 'admin/layouts/application'
 
   before_action :authenticate_admin_user!
-  
+
   rescue_from ActiveRecord::DeleteRestrictionError, with: :can_not_delete
 
   def current_admin_user
@@ -13,6 +13,11 @@ class AdminController < ActionController::Base
     end
   end
   helper_method :current_admin_user
+
+  def back_to_previous_form(e = nil)
+    logger.warn '422 Invalid Access Token with exception occurred, and redirect to registration form:' + e.message + "\n" + e.backtrace.join("\n") if e
+    redirect_back(fallback_location: sign_in_path, alert: 'エラーが発生しました。お手数ですが、もう一度お試しください')
+  end
 
   private
 

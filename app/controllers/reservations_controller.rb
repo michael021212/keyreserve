@@ -38,8 +38,9 @@ class ReservationsController <  ApplicationController
   # 利用料金の計算用
   def price
     @condition = params[:spot]
-    @facility = @user.login_spots.find_by(id: @condition[:facility_id]) if @condition[:facility_id].present?
     return render json: { price: '' } if empty_params?(@condition)
+    @facility = @user.login_spots.find_by(id: @condition[:facility_id]) if @condition[:facility_id].present?
+    return render json: { price: '' } if @facility.blank?
     set_checkin(@condition)
     price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
     render json: { price: number_with_delimiter(price) }

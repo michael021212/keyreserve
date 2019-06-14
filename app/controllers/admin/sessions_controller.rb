@@ -1,6 +1,7 @@
 class Admin::SessionsController < AdminController
   layout 'admin/layouts/sign_in'
   skip_before_action :authenticate_admin_user!
+  rescue_from ActionController::InvalidAuthenticityToken, with: :back_to_previous_form
 
   def new
   end
