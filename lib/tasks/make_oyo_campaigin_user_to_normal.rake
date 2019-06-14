@@ -4,6 +4,7 @@ namespace :campaign do
     limited_users = User
                     .invoice
                     .where.not(campaign_id: nil)
+                    .where.not(campaign_id: '')
                     .where.not(created_at: Time.zone.now - 1.month .. Time.zone.now)
     limited_users.each do |user|
       user.creditcard!
