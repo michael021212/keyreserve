@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :tel, :sms, :sms_confirm]
   before_action :set_personal_identification, only: [:show]
+  before_action :require_login, except: [:new, :create]
+  before_action :require_sms_verification, except: [:new, :create, :tel, :sms, :sms_confirm]
 
   def new
     set_facility_from_return_to_url
