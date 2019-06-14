@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  rescue_from ActionController::InvalidAuthenticityToken, with: :back_to_previous_form
   def new; end
 
   def create
@@ -52,9 +53,9 @@ class SessionsController < ApplicationController
       render :reset_password
     end
   end
-  
+
   private
-  
+
   def set_url
     if session[:return_to_url].present?
       session[:return_to_url]

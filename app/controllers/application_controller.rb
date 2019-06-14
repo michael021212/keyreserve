@@ -21,4 +21,10 @@ class ApplicationController < ActionController::Base
   def not_authenticated
     redirect_to new_session_url
   end
+
+  def back_to_previous_form(e = nil)
+    logger.warn '422 Invalid Access Token with exception occurred, and redirect to registration form:' + e.message + "\n" + e.backtrace.join("\n") if e
+    redirect_back(fallback_location: sign_in_path, alert: 'エラーが発生しました。お手数ですが、もう一度お試しください')
+  end
+
 end
