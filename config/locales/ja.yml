@@ -142,6 +142,7 @@ ja:
         max_num: 最大利用人数
         facility_type: 施設タイプ（スポット利用時）
         detail_document: 詳細資料
+        published: 掲載状況
       facility_dropin_plan:
         facility_id: ドロップイン施設
         plan_id: プラン

@@ -5,10 +5,14 @@ class FacilitiesController <  ApplicationController
   before_action :set_facility, only: [:show]
 
   def index
-    @facilities = @user.available_facilities
+    @facilities = @user
+                  .available_facilities
+                  .where(published: true)
   end
 
-  def show; end
+  def show
+    redirect_to root_path, alert: '現在掲載停止中の施設です。' if !@facility.published
+  end
 
   private
 
