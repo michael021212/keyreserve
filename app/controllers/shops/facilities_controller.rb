@@ -8,6 +8,7 @@ class Shops::FacilitiesController <  ApplicationController
   before_action :set_shop
 
   def new
+    redirect_to root_path, alert: '現在掲載停止中の施設です。' if !@facility.published
     @condition = params[:spot] ||= {}
   end
 

@@ -8,9 +8,18 @@ class ShopsController <  ApplicationController
 
   def show
     if @shop.for_rent?
-      @rent_facilities = Facility.displayale_rent_facilities.order(id: :desc).page(params[:page])
+      @rent_facilities = Facility
+                         .displayale_rent_facilities
+                         .where(published: true)
+                         .order(id: :desc)
+                         .page(params[:page])
     else
-      @facilities = @shop.facilities.order(id: :desc).page(params[:page])
+      @facilities = @shop
+                    .facilities
+                    .conference_room
+                    .where(published: true)
+                    .order(id: :desc)
+                    .page(params[:page])
     end
   end
 
