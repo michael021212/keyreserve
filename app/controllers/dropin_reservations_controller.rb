@@ -32,7 +32,7 @@ class DropinReservationsController <  ApplicationController
       return render :dropin_spot
     end
     sub_plan_ids = FacilityDropinSubPlan.available_ids(checkin, checkout)
-    @facilities = Facility.logout_dropin_spots
+    @facilities = Facility.logout_dropin_spots.where(published: true)
     @facilities = @facilities.where(id: @user.member_facility_dropin_sub_plan).has_facility_dropin_sub_plans(sub_plan_ids) if @user.present?
     @facilities = @facilities.page(params[:page])
     session[:dropin_spot] = cond

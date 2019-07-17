@@ -18,7 +18,9 @@ class ReservationsController <  ApplicationController
     @condition = params[:spot] ||= {}
     return render :spot if @condition.blank?
     return render :spot unless valid_search_params?(@condition) #@checkinと@checkoutもset
-    @facilities = Facility.reservable_facilities(@checkin, @checkout, @condition, current_user)
+    @facilities = Facility
+                  .reservable_facilities(@checkin, @checkout, @condition, current_user)
+                  .where(published: true)
     return render :spot if @facilities.blank?
     @facilities = Facility.order_by_min_price(@facilities, current_user).page(params[:page])
     session[:spot] = @condition
