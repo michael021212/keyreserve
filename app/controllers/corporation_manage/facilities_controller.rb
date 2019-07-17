@@ -67,6 +67,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
       :detail_document,
       :detail_document_cache,
       :description,
+      :published,
       :max_num,
       :facility_type,
       :address,

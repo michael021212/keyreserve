@@ -17,6 +17,15 @@
   <%= f.file_field :detail_document %>
   <%= f.hidden_field :detail_document_cache %>
   <%= f.text_area :description, rows: 6 %>
+  <div class='form-group'>
+    <div class='control-label col-sm-2'>
+      <label><%= Facility.human_attribute_name(:published) %></label>
+    </div>
+    <div class='col-sm-10 form-inline'>
+      <%= f.radio_button :published, true  %><span class='ml10'>掲載する</span>
+      <%= f.radio_button :published, false %><span class='ml10'>掲載しない</span>
+    </div>
+  </div>
 
   <%# 賃貸用店舗の場合は月額対象プラン隠す %>
   <% if !shop.is_rent? %>
