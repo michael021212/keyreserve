@@ -16,6 +16,7 @@ class ShopsController <  ApplicationController
     else
       @facilities = @shop
                     .facilities
+                    .conference_room
                     .where(published: true)
                     .order(id: :desc)
                     .page(params[:page])
