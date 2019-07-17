@@ -11,6 +11,7 @@ class FacilitiesController <  ApplicationController
   end
 
   def show
+    redirect_to root_path, alert: '現在掲載停止中の施設です。' if !@facility.published
   end
 
   private
