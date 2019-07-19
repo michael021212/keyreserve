@@ -143,6 +143,7 @@ ja:
         facility_type: 施設タイプ（スポット利用時）
         detail_document: 詳細資料
         published: 掲載状況
+        reservation_type: 予約方法
       facility_dropin_plan:
         facility_id: ドロップイン施設
         plan_id: プラン
@@ -241,6 +242,11 @@ ja:
         dropin: ドロップイン
         rent: 賃貸物件
         car: 車
+      reservation_type:
+        general: 通常予約
+        rent_with_ksc: 内覧予約(KS Checkin使用)
+        rent_without_ksc: 内覧予約(KS Checkin未使用)
+        car_share: カーシェア予約
     reservation:
       state:
         unconfirmed: 未確定

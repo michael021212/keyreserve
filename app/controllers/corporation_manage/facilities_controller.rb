@@ -70,6 +70,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
       :published,
       :max_num,
       :facility_type,
+      :reservation_type,
       :address,
       :lat,
       :lon,

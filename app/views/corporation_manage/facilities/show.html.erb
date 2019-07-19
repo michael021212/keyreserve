@@ -40,6 +40,10 @@
         <th><%= Facility.human_attribute_name(:published) %></th>
         <td><%= @facility.published ? '掲載中' : '掲載停止中' %></td>
       </tr>
+      <tr class="cy-facility-description">
+        <th><%= Facility.human_attribute_name(:reservation_type) %></th>
+        <td><%= @facility.reservation_type_i18n %></td>
+      </tr>
       <tr class="cy-facility-plans">
         <th><%= t('.target_plan') %></th>
         <td>
