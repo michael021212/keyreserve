@@ -116,6 +116,13 @@ class NotificationMailer < ApplicationMailer
     end
   end
 
+  def send_self_viewing_password(reservation)
+    @reservation = reservation
+    key = @reservation.facility.facility_keys.first
+    @password = KeystationService.sync_room_key_password(key.try(:ks_room_key_id))
+    mail(to: @reservation.reservation_user.try(:email), subject: "【KeyStation Office】内見方法のご案内")
+  end
+
   def upload_identification(personal_identification)
     @personal_identification = personal_identification
     mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】本人確認の資料がアップされました")

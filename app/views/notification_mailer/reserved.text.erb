@@ -1,13 +1,16 @@
+<%# 内覧予約の場合 %>
 <% if @reservation.facility.rent? %>
 以下の物件の内見予約を承りました。
 
-予約コード(当日のチェックインに必要となります): <%= @ksc_reservation_no %>
+予約コード: <%= @ksc_reservation_no %>
 物件名: <%= @reservation.facility.name %>
 住所: <%= @reservation.facility.address %>
 内見日時: <%= datetime_ja @reservation.checkin %>
 内見時間: <%= @reservation.usage_period %>時間
 人数: <%= @reservation.num %>名
 
+<%# 内見 且つ KS Checkinを利用する場合 %>
+<% if @reservation.facility.rent_with_ksc? %>
 当日の流れは下記となります。
 
 
@@ -44,10 +47,16 @@
 当日の詳しい流れは、こちらをご参照ください。
 https://s3-ap-northeast-1.amazonaws.com/keyreserve-production/%E5%86%85%E8%A6%8B%E3%81%8F%E3%82%93%E3%82%AD%E3%83%BC%E3%83%9B%E3%82%99%E3%83%83%E3%82%AF%E3%82%B9%E4%BD%BF%E7%94%A8%E6%89%8B%E9%A0%86.pdf
 
+<%# 内見 且つ KS Checkinを利用しない場合 %>
+<% else %>
+物件の内見方法につきましては、
+内見開始の30分前に別途メールにてお伝えさせて頂きます。
+<% end %>
 
 それでは、良い物件と巡り会えますように。
 
 
+<%# 通常の施設予約の場合 %>
 <% else %>
 以下の施設のご予約を承りました。
 
