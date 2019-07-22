@@ -1,8 +1,9 @@
 <%# 内覧予約の場合 %>
 <% if @reservation.facility.rent? %>
 以下の物件の内見予約を承りました。
-
+<% if @ksc_reservation_no.present? %>
 予約コード: <%= @ksc_reservation_no %>
+<% end %>
 物件名: <%= @reservation.facility.name %>
 住所: <%= @reservation.facility.address %>
 内見日時: <%= datetime_ja @reservation.checkin %>
