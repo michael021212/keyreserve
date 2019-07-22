@@ -25,7 +25,6 @@ namespace :reservation do
     # 内見(KS Checkin未使用)のパスワード30分前送付処理
     rs_without_ksc.each do |reservation|
       begin
-        binding.pry
         NotificationMailer.send_self_viewing_password(reservation).deliver_now
         reservation.update(mail_send_flag: true)
       rescue => e
