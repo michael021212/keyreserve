@@ -9,19 +9,17 @@ class CreditCardsController <  ApplicationController
     @credit_card = current_user.build_credit_card(credit_card_params)
     @credit_card.prepare_stripe_card
     return(render :new) unless @credit_card.valid?
-    begin
-      @credit_card.save!
-      current_user.activated!
-      if session[:shop_id].present? && session[:plan_id].present?
-        redirect_to shop_plan_user_contracts_credit_card_path(Shop.find(session[:shop_id]), Plan.find(session[:plan_id])), notice: 'クレジットカードを登録しました。'
-      else
-        redirect_to credit_card_path, notice: 'クレジットカードを登録しました。'
-      end
-    rescue => e
-      logger.warn("#{e.class.name} #{e.message}")
-      flash[:alert] = 'クレジットカードの登録に失敗しました'
-      render :new
+    @credit_card.save!
+    current_user.activated!
+    if session[:shop_id].present? && session[:plan_id].present?
+      redirect_to shop_plan_user_contracts_credit_card_path(Shop.find(session[:shop_id]), Plan.find(session[:plan_id])), notice: 'クレジットカードを登録しました。'
+    else
+      redirect_to credit_card_path, notice: 'クレジットカードを登録しました。'
     end
+  rescue => e
+    logger.warn("#{e.class.name} #{e.message}")
+    flash[:alert] = 'クレジットカードの登録に失敗しました'
+    render :new
   end
 
   def edit; end
@@ -30,13 +28,11 @@ class CreditCardsController <  ApplicationController
     @credit_card.assign_attributes(credit_card_params)
     @credit_card.prepare_stripe_card
     return(render :edit) unless @credit_card.valid?
-    begin
-      @credit_card.save!
-      redirect_to credit_card_path, notice: 'クレジットカードを更新しました。'
-    rescue
-      flash[:alert] = 'クレジットカードの登録に失敗しました'
-      render :edit
-    end
+    @credit_card.save!
+    redirect_to credit_card_path, notice: 'クレジットカードを更新しました。'
+  rescue
+    flash[:alert] = 'クレジットカードの登録に失敗しました'
+    render :edit
   end
 
   def show; end
