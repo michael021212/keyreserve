@@ -22,7 +22,7 @@ class CreditCard < ApplicationRecord
 
   def prepare_stripe_card
     begin
-      user.set_stripe_customer unless user.stripe_customer_id?
+      user.set_stripe_customer if user.stripe_customer_id.blank?
       stripe_card = stripe_card_id? ? update_stripe_card : create_stripe_card
       self.card_no = stripe_card.last4
       self.sequence = 1
