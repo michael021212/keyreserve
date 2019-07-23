@@ -74,14 +74,15 @@ class User < ApplicationRecord
     FacilityDropinPlan.where(plan_id: plan_ids).pluck(:facility_id)
   end
 
+  # stripeのユーザを新規作成して、customer_idをuserに保存
   def set_stripe_customer
     stripe_customer = Stripe::Customer.create(email: email)
-    update(stripe_customer_id: stripe_customer.id)
+    assign_attributes(stripe_customer_id: stripe_customer.id)
   end
 
+  # stripeユーザの情報取得
   def retrieve_stripe_customer
-    # Retrieves the details of an existing customer.
-    return unless stripe_customer_id
+    return if stripe_customer_id.blank?
     Stripe::Customer.retrieve(stripe_customer_id)
   end
 
