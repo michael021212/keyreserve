@@ -73,10 +73,10 @@ class FacilityTemporaryPlan < ApplicationRecord
   def self.unit_price(user, facility, start_t, end_t)
     arr = []
     while start_t < end_t do
-      i = 1
+      i = 0.5
       while (facility.min_hourly_price(user, start_t)) == (facility.min_hourly_price(user, start_t + i.hours)) do
         break if (start_t + i.hours) >= end_t
-        i += 1
+        i += 0.5
       end
       arr << [start_t, start_t + i.hours, facility.min_hourly_price(user, start_t)]
       start_t += i.hours
