@@ -131,7 +131,7 @@ class ReservationsController <  ApplicationController
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
     end
-      redirect_to thanks_reservations_url
+    redirect_to thanks_reservations_url
   rescue => e
     logger.debug(e)
     flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
