@@ -170,6 +170,15 @@ class Reservation < ApplicationRecord
     end
   end
 
+  # 内見予約時にKS、KSCとの連動が正常に出来たかを確認
+  def self_viewing_system_link_error?(ks_room_key_info, ksc_reservation_no)
+    if facility.rent_with_ksc?
+      !(ks_room_key_info.present? && ksc_reservation_no.present?)
+    elsif facility.rent_without_ksc?
+      !ks_room_key_info.present?
+    end
+  end
+
   private
 
   def send_reserved_mail!

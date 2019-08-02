@@ -112,11 +112,13 @@ class ReservationsController <  ApplicationController
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
     @reservation.set_payment
     ActiveRecord::Base.transaction do
-      # KS Checkinと連動させる場合、APIで値が取得出来ていなかったらtopにリダイレクト
-      if @reservation.facility.rent_with_ksc?
+      # KS Checkinと連動させる際の値取得処理
+      if @reservation.facility.rent?
         ks_room_key_info = @reservation.fetch_ks_room_key
-        ksc_reservation_no = @reservation.regist_ksc_reservation if ks_room_key_info.present?
-        if (ks_room_key_info.blank? || ksc_reservation_no.blank?)
+        if @reservation.facility.rent_with_ksc? && ks_room_key_info.present?
+          ksc_reservation_no = @reservation.regist_ksc_reservation
+        end
+        if @reservation.self_viewing_system_link_error?(ks_room_key_info, ksc_reservation_no)
           flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
           redirect_to spot_reservations_url and return
         end
