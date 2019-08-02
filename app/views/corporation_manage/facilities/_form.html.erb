@@ -8,7 +8,7 @@
     <%= f.hidden_field :facility_type, value: :rent %>
   <% else %>
     <%= f.select :facility_type,
-      Facility.facility_types_i18n.invert,
+      Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' }.invert,
       prompt: t('.add_facility_type') %>
   <% end %>
 
@@ -26,6 +26,14 @@
       <%= f.radio_button :published, false %><span class='ml10'>掲載しない</span>
     </div>
   </div>
+  <%# TODO: カーシェア業者や他の業者も考慮する %>
+  <% if shop.is_rent? %>
+    <%= f.select :reservation_type,
+      Facility.reservation_types_i18n.select{ |k,v| k == 'rent_with_ksc' || k == 'rent_without_ksc' }.invert,
+      include_blank: 'この施設の予約方法を選択' %>
+  <% else %>
+    <%= f.hidden_field :reservation_type, value: :general %>
+  <% end %>
 
   <%# 賃貸用店舗の場合は月額対象プラン隠す %>
   <% if !shop.is_rent? %>
