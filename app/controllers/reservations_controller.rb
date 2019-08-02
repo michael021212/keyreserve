@@ -102,6 +102,8 @@ class ReservationsController <  ApplicationController
   end
 
   def create
+    ks_room_key_info = false
+    ksc_reservation_no = false
     @condition = session[:spot] ||= {}
     if @condition.blank?
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
@@ -110,12 +112,16 @@ class ReservationsController <  ApplicationController
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
     @reservation.set_payment
     ActiveRecord::Base.transaction do
-      ks_room_key_info = @reservation.facility.rent? ? @reservation.fetch_ks_room_key : false
-      ksc_reservation_no = @reservation.facility.rent? && ks_room_key_info.present? ? @reservation.regist_ksc_reservation : false
-      # 賃貸物件登録時、API連携でエラーが発生した場合は予約を作成せずtopにリダイレクト
-      if @reservation.facility.rent? && (ks_room_key_info.blank? || ksc_reservation_no.blank?)
-        flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
-        redirect_to spot_reservations_url and return
+      # KS Checkinと連動させる際の値取得処理
+      if @reservation.facility.rent?
+        ks_room_key_info = @reservation.fetch_ks_room_key
+        if @reservation.facility.rent_with_ksc? && ks_room_key_info.present?
+          ksc_reservation_no = @reservation.regist_ksc_reservation
+        end
+        if @reservation.self_viewing_system_link_error?(ks_room_key_info, ksc_reservation_no)
+          flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
+          redirect_to spot_reservations_url and return
+        end
       end
       @reservation.save!
       session[:spot] = nil

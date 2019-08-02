@@ -12,7 +12,13 @@ class Facility < ApplicationRecord
 
   RENT_SHOP_ID= 6
 
-  enum facility_type: {conference_room: 1, dropin: 2, rent: 3, car: 4}
+  enum facility_type: { conference_room: 1,
+                        dropin: 2,
+                        rent: 3,
+                        car: 4 }
+  enum reservation_type: { general: 1,
+                           rent_with_ksc: 10,
+                           rent_without_ksc: 11 }
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank
@@ -27,6 +33,7 @@ class Facility < ApplicationRecord
   validates :name, :address, :facility_type, presence: true
   validates :address, presence: true, if: proc { |f| f.rent? }
   validates :detail_document, presence: true, if: proc { |f| f.rent? }
+  validates :reservation_type, presence: true
 
   scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
     includes(facility_dropin_plans: :facility_dropin_sub_plans)

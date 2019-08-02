@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190717092917) do
+ActiveRecord::Schema.define(version: 20190719053013) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20190717092917) do
     t.float "lon", limit: 24
     t.string "detail_document"
     t.boolean "published", default: true
+    t.integer "reservation_type", default: 1
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 
