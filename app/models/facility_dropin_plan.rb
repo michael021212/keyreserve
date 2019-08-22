@@ -1,5 +1,6 @@
 class FacilityDropinPlan < ApplicationRecord
   acts_as_paranoid
+  mount_uploader :guide_file, PdfUploader
 
   belongs_to :facility
   belongs_to :plan, optional: true
