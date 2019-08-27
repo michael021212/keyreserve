@@ -8,3 +8,6 @@
 ご利用時間: <%= @dropin_reservation.facility_dropin_sub_plan.using_period %>
 お支払方法: <%= @dropin_reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
 ご利用料金: <%= number_with_delimiter @dropin_reservation.price %>円
+
+予約の詳細に関しましては、下記URLをご参照下さい。
+<%= dropin_reservation_url(@dropin_reservation) %>
