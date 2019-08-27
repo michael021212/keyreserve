@@ -5,6 +5,7 @@
 店舗名: <%= @dropin_reservation.facility.shop_name %>
 施設名: <%= @dropin_reservation.facility.name %>
 ご利用プラン名: <%= @dropin_reservation.facility_dropin_sub_plan.with_plan_name %>
+ご利用日: <%= @dropin_reservation.checkin.strftime('%Y/%m/%d') %>
 ご利用時間: <%= @dropin_reservation.facility_dropin_sub_plan.using_period %>
 お支払方法: <%= @dropin_reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
 ご利用料金: <%= number_with_delimiter @dropin_reservation.price %>円
