@@ -81,4 +81,7 @@ https://s3-ap-northeast-1.amazonaws.com/keyreserve-production/%E5%86%85%E8%A6%8B
 ご利用人数: <%= @reservation.num %>名
 お支払方法: <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
 ご利用料金: <%= number_with_delimiter @reservation.price %>円
+
+予約の詳細に関しましては、下記URLをご参照下さい。
+<%= reservation_url(@reservation) %>
 <% end %>

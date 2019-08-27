@@ -9,7 +9,8 @@ class DropinReservationsController <  ApplicationController
   end
 
   def show
-    @dropin_reservation = @user.dropin_reservations.find(params[:id])
+    @dropin_reservation = @user.dropin_reservations.find_by(id: params[:id])
+    redirect_to root_path, alert: '指定された予約は存在しません' if @dropin_reservation.blank?
   end
 
   def dropin_spot
