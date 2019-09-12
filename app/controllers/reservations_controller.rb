@@ -29,7 +29,13 @@ class ReservationsController <  ApplicationController
 
   # 1.ご利用情報入力
   def new
-    @condition = params[:spot] ||= session[:spot].map{|k,v| [k.to_sym,v]}.to_h
+    if params[:spot].present?
+      @condition = params[:spot]
+    elsif session[:spot].present?
+      @condition = session[:spot].map{|k,v| [k.to_sym,v]}.to_h
+    else
+      @condition = {}
+    end
     session[:reservation_id] = nil
     @facility = @condition[:facility_type] == 'rent' ? Facility.find_by(id: params[:facility_id]) : @user.login_spots.find_by(id: params[:facility_id])
     if @facility.blank?
