@@ -97,7 +97,7 @@ class UsersController < ApplicationController
   end
 
   def set_personal_identification
-    @personal_identification = @user.personal_identification
+    @personal_identification = @user.present? ? @user.personal_identification : nil
   end
 
   def user_tel_params
