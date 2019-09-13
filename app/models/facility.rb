@@ -78,7 +78,8 @@ class Facility < ApplicationRecord
   # userに表示し得る施設の最小利用料金(1時間)
   def min_hourly_price(user, target_time=nil)
     min_price = compute_min_price(user, target_time)
-    compute_discount_price(min_price, user)
+    price = compute_discount_price(min_price, user)
+    (price * Payment::TAX_RATE).floor
   end
 
   # userに表示し得る施設の最小利用料金(30分)
