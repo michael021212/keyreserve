@@ -1,6 +1,8 @@
 class Payment < ApplicationRecord
   acts_as_paranoid
 
+  TAX_RATE = 1.08
+
   include Target
   belongs_to :user
   belongs_to :facility
