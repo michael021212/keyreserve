@@ -32,6 +32,11 @@ class NotificationMailer < ApplicationMailer
     mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】キャンペーン期間が終了したユーザがいます")
   end
 
+  def postal_matter_notification(user)
+    @user = user
+    mail(to: @user.email, subject: "郵便物が届いています")
+  end
+
   def reserved(reservation, user_id, ksc_reservation_no=nil, ks_room_key_info=nil)
     user = User.find(user_id)
     return if user.email.blank?
