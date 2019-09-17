@@ -1,5 +1,5 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :postal_matter_notification]
 
   def index
     @q = User.ransack(params[:q])
@@ -34,6 +34,12 @@ class Admin::UsersController < AdminController
   def destroy
     @user.destroy
     flash[:notice] = "#{User.model_name.human}を削除しました。"
+    redirect_to @user.user_corp.present? ? admin_user_corp_path(@user.user_corp) : admin_users_path
+  end
+
+  def postal_matter_notification
+    NotificationMailer.postal_matter_notification(@user).deliver_now
+    flash[:notice] = "郵便物受け取りメールを送信しました"
     redirect_to @user.user_corp.present? ? admin_user_corp_path(@user.user_corp) : admin_users_path
   end
 
