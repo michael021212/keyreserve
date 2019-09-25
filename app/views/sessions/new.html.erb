@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-md-offset-3 col-md-6 col-xs-12">
           <div class="mg-contact-form-input">
-            <label>メールアドレス</label>
+            <label>メールアドレス(Email)</label>
             <%= text_field_tag :email, params[:email], class: "form-control", placeholder: "メールアドレス" %>
           </div>
         </div>
@@ -15,23 +15,23 @@
       <div class="row">
         <div class="col-md-offset-3 col-md-6 col-xs-12">
           <div class="mg-contact-form-input">
-            <label>パスワード</label>
+            <label>パスワード(Password)</label>
             <%= password_field_tag :password, '', id: 'password', class: "form-control login-page-textfield", placeholder: 'パスワード' %>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-offset-4 col-md-4 col-xs-12">
-          <%= button_tag "ログイン", class: "btn btn-main btn-block" %>
+          <%= button_tag "ログイン(Login)", class: "btn btn-main btn-block" %>
         </div>
       </div>
       <div class="notice-area">
         <div class="row">
           <div class="col-md-9 col-md-offset-right-3 col-xs-12">
-            <div class="pull-right"><%= link_to 'アカウント登録', new_user_path %></div>
+            <div class="pull-right"><%= link_to 'アカウント登録(Register)', new_user_path %></div>
           </div>
           <div class="col-md-9 col-md-offset-right-3 col-xs-12">
-            <p class="pull-right"><%= link_to 'パスワードを忘れた方', reminder_sessions_path %></p>
+            <p class="pull-right"><%= link_to 'パスワードを忘れた方(Forget Password)', reminder_sessions_path %></p>
           </div>
         </div>
       </div>
