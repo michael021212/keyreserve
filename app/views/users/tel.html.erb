@@ -13,11 +13,13 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <%= bootstrap_form_for @user, url: sms_user_path, method: :post do |f| %>
-          <%= f.text_field :tel, placeholder: "例)08012345678"  %>
-          ※電話番号は小文字、ハイフン無しでご入力ください
+          <%= f.label :tel, '電話番号(Phone Number)'  %>
+          <%= f.text_field :tel, placeholder: "例)08012345678", hide_label: true  %>
+          <p class='mb0'>※電話番号は小文字、ハイフン無しでご入力ください</p>
+          <p class='mt0'>※Please input your phone number with lowcase, no hyphen</p>
           <div class="row">
             <div class="col-md-12 col-xs-12 text-center mt30">
-              <%= f.button '認証コード発行', class: 'btn btn-primary mb20' %>
+              <%= f.button '認証コード発行(Issue authentication code)', class: 'btn btn-primary mb20' %>
             </div>
         <% end %>
       </div>

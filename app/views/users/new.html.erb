@@ -16,13 +16,18 @@
           <% if @facility.present? && @facility.rent? %>
             <%= f.hidden_field :corporation_id, value: @facility.shop.corporation.id %>
           <% else %>
-            <%= f.select :corporation_id, selectable_shops, label: "利用予定店舗", include_blank: true %>
+            <%= f.select :corporation_id, selectable_shops, label: "利用予定店舗(Shop)", include_blank: true %>
           <% end %>
-          <%= f.text_field :name, placeholder: "例)山田太郎" %>
-          <%= f.text_field :email, placeholder: "例)keystation@gmail.com" %>
-          <%= f.text_field :campaign_id , placeholder: "※キャンペーンIDをお持ちの方のみご入力ください" %>
-          <%= f.password_field :password, placeholder: "4文字以上" %>
-          <%= f.password_field :password_confirmation, placeholder: "4文字以上" %>
+          <%= f.label :name, 'お名前(Name)' %>
+          <%= f.text_field :name, placeholder: "例)山田太郎", hide_label: true %>
+          <%= f.label :email, 'メールアドレス(Email)' %>
+          <%= f.text_field :email, placeholder: "例)keystation@gmail.com", hide_label: true %>
+          <%= f.label :campaign_id, 'キャンペーンID(Campaign_id if you have)' %>
+          <%= f.text_field :campaign_id , placeholder: "※キャンペーンIDをお持ちの方のみご入力ください" , hide_label: true%>
+          <%= f.label :password, 'パスワード(Password)' %>
+          <%= f.password_field :password, placeholder: "4文字以上", hide_label: true %>
+          <%= f.label :password_confirmation, '確認用(Password Confirmation)' %>
+          <%= f.password_field :password_confirmation, placeholder: "4文字以上", hide_label: true %>
           <%= f.hidden_field :corporation_token, value: params[:token] %>
           <%= f.hidden_field :parent_id, value: User.user_corp_token(session[:parent_token]).id if session[:parent_token].present? %>
           <% if @user.new_record? %>
@@ -30,7 +35,7 @@
               <%= f.check_box :term_of_use,
                 class: 'pr5',
                 label: '' %>
-              <%= link_to '利用規約',
+              <%= link_to '利用規約(Term of Use)',
                 term_of_use_path,
                 target: '_blank',
                 class: 'ml5' %>に同意する
@@ -38,10 +43,10 @@
           <% end %>
           <div class="row">
             <div class="col-md-12 col-xs-12 text-left mt30">
-              <%= f.button '電話番号認証に進む', class: 'btn btn-primary mb10' %>
+              <%= f.button '電話番号認証に進む(Phone number authentication)', class: 'btn btn-primary mb10' %>
             </div>
             <div class="col-md-12 col-xs-12 text-left">
-              <%= link_to 'ログインはこちら', sign_in_path %>
+              <%= link_to 'ログインはこちら(Login)', sign_in_path %>
             </div>
           </div>
         <% end %>
