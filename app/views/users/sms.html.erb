@@ -15,10 +15,10 @@
         <%= form_tag sms_confirm_user_path, method: :post do |f| %>
           <%= text_field_tag :sms_verify_code, '',
             class: 'form-control',
-            placeholder: "認証コード"  %>
+            placeholder: "認証コード(Authentication code)"  %>
           <div class="row">
             <div class="col-md-12 col-xs-12 text-center">
-              <%= button_tag '認証', class: 'btn btn-primary mb20' %>
+              <%= button_tag '認証(Authentication)', class: 'btn btn-primary mb20' %>
             </div>
         <% end %>
       </div>

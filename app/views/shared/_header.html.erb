@@ -14,10 +14,16 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <%= link_to '賃貸物件情報', shop_path(Shop.find_by(id: Shop::RENT_SHOP_ID))  %>
+            <%= link_to shop_path(Shop.find_by(id: Shop::RENT_SHOP_ID)) do %>
+              賃貸物件情報<br />
+              Rent
+            <% end %>
           </li>
           <li>
-            <%= link_to '店舗情報', shops_path  %>
+            <%= link_to shops_path do %>
+              店舗情報<br />
+              Shop
+            <% end %>
           </li>
           <li>
             <%= link_to dropin_spot_dropin_reservations_path do %>
