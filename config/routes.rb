@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   root 'top#index'
   get '/term_of_use' => 'top#term_of_use'
+  get '/privacy_policy' => 'top#privacy_policy'
 
   namespace :admin do
     get '/' => 'dashboards#index'
