@@ -73,7 +73,7 @@ ja:
         max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
         campaign_id: キャンペーンID
-        term_of_use: 利用規約
+        term_of_use: 利用規約及びプライバシーポリシー
       corporate_admin_user:
         id: ID
         name: 施設管理者名
