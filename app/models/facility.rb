@@ -15,7 +15,9 @@ class Facility < ApplicationRecord
   enum facility_type: { conference_room: 1,
                         dropin: 2,
                         rent: 3,
-                        car: 4 }
+                        car: 4,
+                        ks_flexible: 5 }
+
   enum reservation_type: { general: 1,
                            rent_with_ksc: 10,
                            rent_without_ksc: 11 }

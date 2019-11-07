@@ -35,8 +35,8 @@
     <%= f.hidden_field :reservation_type, value: :general %>
   <% end %>
 
-  <%# 賃貸用店舗の場合は月額対象プラン隠す %>
-  <% if !shop.rent? %>
+  <%# 一般施設のみ月額対象プラン選択表示 %>
+  <% if shop.general? %>
     <%= f.form_group :facility_plans, label: {text: t('.target_plan')} do %>
       <%= f.fields_for :facility_plans do |fp| %>
         <div class="form-inline cy-facility-plans">

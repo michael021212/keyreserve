@@ -3,9 +3,11 @@
   <%= f.number_field :max_num %>
   <%= f.text_field :address %>
 
-  <%# 賃貸用店舗の場合は施設タイプをhiddenで送る %>
+  <%# 一般店舗以外の場合は施設タイプをhiddenで送る %>
   <% if shop.rent? %>
     <%= f.hidden_field :facility_type, value: :rent %>
+  <% elsif shop.ks_flexible? %>
+    <%= f.hidden_field :facility_type, value: :ks_flexible %>
   <% else %>
     <%= f.select :facility_type,
       Facility.facility_types_i18n.invert,
@@ -37,8 +39,8 @@
     <%= f.hidden_field :reservation_type, value: :general %>
   <% end %>
 
-  <%# 賃貸用店舗の場合は月額対象プラン隠す %>
-  <% if !shop.rent? %>
+  <%# 一般施設のみ月額対象プラン選択表示 %>
+  <% if shop.general? %>
     <%= f.form_group :facility_plans, label: {text: "月額対象プラン"} do %>
       <%= f.fields_for :facility_plans do |fp| %>
         <div class="form-inline">
