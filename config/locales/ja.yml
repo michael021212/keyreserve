@@ -133,7 +133,7 @@ ja:
         closing_time: 閉店時間
         image: 店舖画像
         calendar_url: イベントカレンダーURL
-        is_rent: 賃貸物件掲載用店舗
+        shop_type: 店舗タイプ
       facility:
         name: 施設名
         address: 住所
@@ -208,6 +208,11 @@ ja:
       payway:
         creditcard: クレジットカード
         invoice: 請求書
+    shop:
+      shop_type:
+        general: 一般
+        rent: 賃貸物件登録用
+        ks_flexible: フレキシブルスロット登録用店舗(KEY STATION連動)
     dropin_reservation:
       state:
         unconfirmed: 未確定

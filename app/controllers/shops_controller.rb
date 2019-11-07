@@ -3,7 +3,7 @@ class ShopsController <  ApplicationController
   before_action :set_shop, only: [:show]
 
   def index
-    @shops = Shop.where.not(is_rent: true).order(id: :desc).page(params[:page])
+    @shops = Shop.general.order(id: :desc).page(params[:page])
   end
 
   def show

@@ -15,6 +15,9 @@ class Shop < ApplicationRecord
 
   delegate :name, to: :corporation, prefix: true, allow_nil: true
   delegate :id, to: :corporation, prefix: true, allow_nil: true
+  enum shop_type: { general: 0,
+                    rent: 1,
+                    ks_flexible: 2 }
 
   RENT_SHOP_ID = 6
 
