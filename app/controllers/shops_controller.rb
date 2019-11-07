@@ -13,6 +13,14 @@ class ShopsController <  ApplicationController
                          .where(published: true)
                          .order(id: :desc)
                          .page(params[:page])
+    elsif @shop.for_flexible?
+      flexible_shops = current_user.corporations.map{|c| c.shops.ks_flexible}.flatten
+      @flexible_facilities = Facility
+                            .ks_flexible
+                            .where(shop_id: flexible_shops.map{|s| s.id})
+                            .where(published: true)
+                            .order(id: :desc)
+                            .page(params[:page])
     else
       @facilities = @shop
                     .facilities

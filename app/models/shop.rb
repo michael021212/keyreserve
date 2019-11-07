@@ -20,6 +20,7 @@ class Shop < ApplicationRecord
                     ks_flexible: 2 }
 
   RENT_SHOP_ID = 6
+  FLEXIBLE_SHOP_ID = 11
 
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
@@ -48,6 +49,11 @@ class Shop < ApplicationRecord
   # 賃貸物件掲載用の店舗かどうか
   def for_rent?
     id == Shop::RENT_SHOP_ID
+  end
+
+  # フレキシブル利用用の店舗かどうか
+  def for_flexible?
+    id == Shop::FLEXIBLE_SHOP_ID
   end
 
   def set_geocode

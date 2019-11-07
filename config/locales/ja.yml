@@ -229,6 +229,7 @@ ja:
         personal: 個人
         parent_corporation: 法人
         corporate_admin: 施設管理者
+        ks_flexible: フレキシブルプラン利用者(KEY STATION連動)
     user_contract:
       state:
         applying: 契約申し込み
