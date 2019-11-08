@@ -4,7 +4,7 @@
   <%= f.text_field :address, placeholder: t('.add_address') %>
 
   <%# 賃貸用店舗の場合は施設タイプをhiddenで送る %>
-  <% if shop.is_rent? %>
+  <% if shop.rent? %>
     <%= f.hidden_field :facility_type, value: :rent %>
   <% else %>
     <%= f.select :facility_type,
@@ -26,8 +26,8 @@
       <%= f.radio_button :published, false %><span class='ml10'>掲載しない</span>
     </div>
   </div>
-  <%# TODO: カーシェア業者や他の業者も考慮する %>
-  <% if shop.is_rent? %>
+
+  <% if shop.rent? || shop.ks_flexible? %>
     <%= f.select :reservation_type,
       Facility.reservation_types_i18n.select{ |k,v| k == 'rent_with_ksc' || k == 'rent_without_ksc' }.invert,
       include_blank: 'この施設の予約方法を選択' %>
@@ -35,8 +35,8 @@
     <%= f.hidden_field :reservation_type, value: :general %>
   <% end %>
 
-  <%# 賃貸用店舗の場合は月額対象プラン隠す %>
-  <% if !shop.is_rent? %>
+  <%# 一般施設のみ月額対象プラン選択表示 %>
+  <% if shop.general? %>
     <%= f.form_group :facility_plans, label: {text: t('.target_plan')} do %>
       <%= f.fields_for :facility_plans do |fp| %>
         <div class="form-inline cy-facility-plans">

@@ -20,6 +20,16 @@ class Corporation < ApplicationRecord
   validates :postal_code, length: { maximum: 255 }
   validates :address, :note, length: { maximum: 255, allow_blank: true }
 
+  before_save :generate_token_with_name
+
+  # 企業毎のtoken生成
+  def generate_token_with_name
+    return if jwt_token.present?
+    payload = { name: name, created_at: created_at, partner: true }
+    token = JWT.encode payload, Rails.application.secrets.secret_key_base, 'HS256'
+    self.jwt_token = token
+  end
+
   def self.sync_from_api
     KeystationService.sync_corporations
   end

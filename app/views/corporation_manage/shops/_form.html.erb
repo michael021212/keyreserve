@@ -7,8 +7,6 @@
   <%= f.time_field :closing_time %>
   <%= f.text_field :calendar_url %>
   <%= f.file_field :image %>
-  <div class='col-sm-offset-2'>
-    <%= f.check_box :is_rent %>
-  </div>
+  <%= f.select :shop_type, Shop.shop_types_i18n.invert %>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

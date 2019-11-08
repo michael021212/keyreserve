@@ -32,7 +32,7 @@ module KsCheckinApi
                   checkout: checkout.strftime('%Y-%m-%d %H:%M'),
                   remarks: facility.address,
                   ks_room_key_id: key.try(:ks_room_key_id),
-                  is_rent: '1'
+                  shop_type: '1'
                  }]
               }
       req.body = body.to_json
