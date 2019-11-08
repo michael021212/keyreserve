@@ -30,8 +30,7 @@
     </div>
   </div>
 
-  <%# TODO: カーシェア業者や他の業者も考慮する %>
-  <% if shop.rent? %>
+  <% if shop.rent? || shop.ks_flexible? %>
     <%= f.select :reservation_type,
       Facility.reservation_types_i18n.select{ |k,v| k == 'rent_with_ksc' || k == 'rent_without_ksc' }.invert,
       include_blank: 'この施設の予約方法を選択' %>

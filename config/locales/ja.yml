@@ -252,8 +252,8 @@ ja:
         ks_flexible: フレキシブルスロット用施設(KEY STATION連動)
       reservation_type:
         general: 通常予約
-        rent_with_ksc: 内覧予約(KS Checkin使用)
-        rent_without_ksc: 内覧予約(KS Checkin未使用)
+        rent_with_ksc: KS Checkin使用予約
+        rent_without_ksc: KS Checkin未使用予約
         car_share: カーシェア予約
     reservation:
       state:
