@@ -15,7 +15,8 @@ module API
         def jwt_bearer_token
           return if request.headers['Authorization'].blank?
           scheme, token = request.headers['Authorization'].split(' ')
-          @partner = Partner.find_by(token: token) # partnersからtokenで検索を行い
+
+          @corporation = Corporation.find_by(jwt_token: token)
           @jwt_bearer_token ||= scheme == 'Bearer' ? token : nil
         end
 
@@ -27,10 +28,6 @@ module API
           nil # エラーの詳細をクライアントには伝えないため、常に nil を返す
         end
 
-        def short_time(dt)
-          dt.try(:strftime, '%H:%M')
-        end
-
         # メッセージ付きでエラーを返す
         def raise_with_message(msg, code)
           error!({errors: msg}, code)
@@ -38,7 +35,7 @@ module API
       end
 
       before do
-        #jwt_authenticate
+        jwt_authenticate
       end
 
       rescue_from Grape::Exceptions::ValidationErrors do |e|
