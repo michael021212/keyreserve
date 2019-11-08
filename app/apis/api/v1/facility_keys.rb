@@ -34,7 +34,11 @@ module API
 
         # FacilityIDから紐づくkeyを全て削除するAPI
         namespace do
-          delete '/:facility_id', jbuilder: 'facility_keys/destroy' do
+          params do
+            requires :facility_id, type: Integer
+          end
+
+          delete '/', jbuilder: 'facility_keys/destroy' do
             @facility = Facility.find_by('id = ?', params[:facility_id])
             raise_with_message("facility is not found", 404) if @facility.blank?
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
