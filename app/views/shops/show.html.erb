@@ -3,6 +3,8 @@
 <% end %>
 <% if @shop.for_rent? %>
   <%= render 'for_rent' %>
+<% elsif @shop.for_flexible? %>
+  <%= render 'for_flexible' %>
 <% else %>
   <%= render 'for_shop' %>
 <% end %>

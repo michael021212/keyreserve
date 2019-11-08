@@ -13,6 +13,14 @@ gem 'redis', '~> 3.0'
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 gem 'puma', '~> 3.7'
 
+# API
+gem 'grape'
+gem 'grape-jbuilder'
+gem 'hashie'
+gem 'json_expressions'
+gem 'jwt'
+gem 'http'
+
 # UI/UX
 gem 'sass-rails', '~> 5.0'
 gem 'jquery-rails'

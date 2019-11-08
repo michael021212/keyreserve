@@ -35,6 +35,12 @@
         <th><%= Facility.human_attribute_name(:published) %></th>
         <td><%= @facility.published ? '掲載中' : '掲載停止中' %></td>
       </tr>
+      <% if @facility.rent? %>
+        <tr class="cy-facility-description">
+          <th><%= Facility.human_attribute_name(:reservation_type) %></th>
+          <td><%= @facility.reservation_type_i18n %></td>
+        </tr>
+      <% end %>
       <tr>
         <th>月額対象プラン</th>
         <td><%= simple_format @facility.plans.pluck(:name).join("\n") %></td>

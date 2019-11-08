@@ -42,7 +42,7 @@
       <div class="row">
         <div class="col-xs-12">
           <%= f.select :facility_type,
-            Facility.facility_types_i18n.delete_if{|t| t == 'dropin'}.invert,
+            Facility.facility_types_i18n.delete_if{|t| t == 'dropin' || t == 'ks_flexible' }.invert,
             { selected: params[:spot][:facility_type], include_blank: 'Facility Type' },
             class: 'cs-select cs-skin-elastic' %>
         </div>

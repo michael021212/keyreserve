@@ -44,6 +44,10 @@
         <td><%= @corporation.postal_code %></td>
       </tr>
       <tr>
+        <th><%= Corporation.human_attribute_name(:jwt_token) %></th>
+        <td><%= @corporation.jwt_token %></td>
+      </tr>
+      <tr>
         <th><%= Corporation.human_attribute_name(:ksc_token) %></th>
         <td><%= @corporation.ksc_token %></td>
       </tr>

@@ -3,7 +3,7 @@ class ShopsController <  ApplicationController
   before_action :set_shop, only: [:show]
 
   def index
-    @shops = Shop.where.not(is_rent: true).order(id: :desc).page(params[:page])
+    @shops = Shop.general.order(id: :desc).page(params[:page])
   end
 
   def show
@@ -13,6 +13,14 @@ class ShopsController <  ApplicationController
                          .where(published: true)
                          .order(id: :desc)
                          .page(params[:page])
+    elsif @shop.for_flexible?
+      flexible_shops = current_user.corporations.map{|c| c.shops.ks_flexible}.flatten
+      @flexible_facilities = Facility
+                            .ks_flexible
+                            .where(shop_id: flexible_shops.map{|s| s.id})
+                            .where(published: true)
+                            .order(id: :desc)
+                            .page(params[:page])
     else
       @facilities = @shop
                     .facilities

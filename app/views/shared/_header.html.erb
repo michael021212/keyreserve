@@ -13,6 +13,15 @@
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
+          <% #フレキシブル利用者にのみメニュー表示 %>
+          <% if current_user.present? && current_user.ks_flexible? %>
+            <li>
+              <%= link_to shop_path(Shop.find_by(id: Shop::FLEXIBLE_SHOP_ID)) do %>
+                フレキシブル利用<br />
+                Flexible
+              <% end %>
+            </li>
+          <% end %>
           <li>
             <%= link_to shop_path(Shop.find_by(id: Shop::RENT_SHOP_ID)) do %>
               賃貸物件情報<br />
@@ -38,21 +47,13 @@
             <% end %>
           </li>
           <% if logged_in? %>
-            <li>
-              <%= link_to facilities_path do  %>
-                ご利用可能な施設<br />
-                Available facilities
-              <% end %>
-            </li>
-            <!-- 施設管理者面メニュー -->
-            <% if current_user.corporate_admin? %>
-              <li class="dropdown">
-                <%= link_to t('common.sidebar.manage', name: Corporation.model_name.human), corporation_manage_root_path %>
-              </li>
-            <% end %>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.name %>様<span class="caret"></span></a>
               <ul class="dropdown-menu">
+                <% if current_user.corporate_admin? %>
+                  <li><%= link_to t('common.sidebar.manage', name: Corporation.model_name.human), corporation_manage_root_path %></li>
+                <% end %>
+                <li><%= link_to 'ご利用可能な施設', facilities_path %></li>
                 <li><%= link_to '会議室のご予約履歴', reservations_path %></li>
                 <li><%= link_to 'スペースのご予約履歴', dropin_reservations_path   %></li>
                 <li><%= link_to 'アカウント設定', user_path %></li>
