@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
+  mount API::Root => '/'
+
   root 'top#index'
   get '/term_of_use' => 'top#term_of_use'
   get '/privacy_policy' => 'top#privacy_policy'

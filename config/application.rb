@@ -40,6 +40,15 @@ module Keyreserve
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
 
+    # APIの読み込み
+    config.paths.add File.join('app', 'apis'), glob: File.join('**', '*.rb')
+    config.autoload_paths += Dir[Rails.root.join('app', 'apis', '*')]
+
+    # Grape+JBuilderを使うための設定
+    config.middleware.use(Rack::Config) do |env|
+      env['api.tilt.root'] = Rails.root.join 'app', 'views', 'api'
+    end
+
     def inspect
       "#<#{self.class}>"
     end
