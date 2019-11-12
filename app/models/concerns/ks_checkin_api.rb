@@ -12,20 +12,13 @@ module KsCheckinApi
   end
 
   def regist_ksc_reservation
-    ksc_general = 0
-    ksc_rent = 1
-    ksc_car_share = 2
-    ksc_flexible = 4
     ks_checkin_token = facility.shop.corporation.ksc_token
     raise "ks checkin token is not set" if ks_checkin_token.blank?
     path = '/api/v1/reservations'
     client = KsCheckinApi.set_client(KS_CHECKIN_API_CLIENT)
     key = facility.facility_keys.first
     reservation_no = SecureRandom.random_number(10000000000)
-    reservation_type = ksc_general
-    reservation_type = ksc_rent if facility.rent?
-    reservation_type = ksc_car_share if facility.car?
-    reservation_type = ksc_flexible if facility.ks_flexible?
+    reservation_type = set_reservation_type
     res = client.post do |req|
       req.url path
       req.headers['Content-Type'] = 'application/json'
@@ -53,6 +46,15 @@ module KsCheckinApi
   rescue => e
     logger.debug e.message
     false
+  end
+
+  private
+  def set_reservation_type
+    ksc_reservation_type = {general: 0, rent: 1, car_share: 2, flexible: 4}
+    return ksc_reservation_type[:rent] if facility.rent?
+    return ksc_reservation_type[:car_share] if facility.car?
+    return ksc_reservation_type[:flexible] if facility.ks_flexible?
+    return ksc_reservation_type[:general]
   end
 
 end
