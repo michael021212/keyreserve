@@ -23,8 +23,8 @@ module KsCheckinApi
       req.url path
       req.headers['Content-Type'] = 'application/json'
       req.headers['Authorization'] = "Bearer #{ ks_checkin_token }"
-      body =  { ks_room_id: facility.facility_keys.present? ? facility.ks_room_id : nil,
-                ks_room_key_id: facility.facility_keys.first.try(:ks_room_key_id)}
+      body =  { ks_room_id: facility.ks_room_id,
+                ks_room_key_id: facility.facility_keys.first.try(:ks_room_key_id) }
       req.body = body.to_json
     end
     unless res.status == 200
