@@ -16,8 +16,8 @@ module API
           raise_with_message("facility key is not found", 404) if @facility_key.blank?
           @facility_key.update!(ks_room_key_id: params[:ks_room_key_id])
           # KSCの予約から鍵IDの削除
-          if @facility_key.facility.rent_with_ksc? && @facility_key.facility.reservations.where('checkin > ?', Time.zone.now).present?
-            @facility_key.facility.reservations.where('checkin > ?', Time.zone.now).each do |rsv|
+          if @facility_key.facility.rent_with_ksc?
+            @facility_key.facility.ksc_reservations_after_today.each do |rsv|
               rsv.update_ksc_reservation
             end
           end
@@ -34,16 +34,16 @@ module API
             @facility = Facility.find_by('id = ?', params[:facility_id])
             raise_with_message("facility is not found", 404) if @facility.blank?
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
-            @facility_key = @facility
-                            .facility_keys
-                            .create!(ks_room_key_id: params[:ks_room_key_id],
-                                     name: "#{@facility.name}")
-          # KSCの予約から鍵IDの削除
-          if @facility_key.facility.rent_with_ksc? && @facility_key.facility.reservations.where('checkin > ?', Time.zone.now).present?
-            @facility_key.facility.reservations.where('checkin > ?', Time.zone.now).each do |rsv|
-              rsv.update_ksc_reservation
+              @facility_key = @facility
+                              .facility_keys
+                              .create!(ks_room_key_id: params[:ks_room_key_id],
+                                       name: "#{@facility.name}")
+            # KSCの予約から鍵IDの削除
+            if @facility_key.facility.rent_with_ksc?
+              @facility_key.facility.ksc_reservations_after_today.each do |rsv|
+                rsv.update_ksc_reservation
+              end
             end
-          end
           end
         end
 
@@ -59,11 +59,11 @@ module API
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
             @facility.facility_keys.destroy_all
             # KSCの予約から鍵IDの削除
-            # if @facility.rent_with_ksc? && @facility.reservations.where('checkin > ?', Time.zone.now).present?
-            #   @facility.reservations.where('checkin > ?', Time.zone.now).each do |rsv|
-            #     rsv.update_ksc_reservation
-            #   end
-            # end
+            if @facility.rent_with_ksc?
+              @facility.ksc_reservations_after_today.each do |rsv|
+                rsv.update_ksc_reservation
+              end
+            end
           end
         end
       end

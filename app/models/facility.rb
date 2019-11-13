@@ -57,6 +57,10 @@ class Facility < ApplicationRecord
     end
   end
 
+  def ksc_reservations_after_today
+    reservations.where('checkin > ?', Time.zone.now)
+  end
+
   def facility_temporary_plan_prices
     facility_temporary_plans.map(&:facility_temporary_plan_prices).flatten
   end
