@@ -38,6 +38,12 @@ module API
                             .facility_keys
                             .create!(ks_room_key_id: params[:ks_room_key_id],
                                      name: "#{@facility.name}")
+          # KSCの予約から鍵IDの削除
+          if @facility_key.facility.rent_with_ksc? && @facility_key.facility.reservations.where('checkin > ?', Time.zone.now).present?
+            @facility_key.facility.reservations.where('checkin > ?', Time.zone.now).each do |rsv|
+              rsv.update_ksc_reservation
+            end
+          end
           end
         end
 
