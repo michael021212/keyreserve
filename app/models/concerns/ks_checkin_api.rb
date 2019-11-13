@@ -1,7 +1,7 @@
 module KsCheckinApi
   extend ActiveSupport::Concern
 
-  KS_CHECKIN_API_CLIENT = Settings[:ks_checkin_endpoint]
+  API_CLIENT = Settings[:ks_checkin_endpoint]
 
   def self.set_client(url)
     Faraday.new(url: url) do |faraday|
@@ -11,11 +11,36 @@ module KsCheckinApi
     end
   end
 
+  # -- reservation のインスタンスメソッド --
+
+  def update_ksc_reservation
+    return false if ksc_reservation_no.blank?
+    ks_checkin_token = facility.shop.corporation.ksc_token
+    raise "ks checkin token is not set" if ks_checkin_token.blank?
+    path = "/api/v1/reservations/#{reservation_no}"
+    client = KsCheckinApi.set_client(API_CLIENT)
+    key = facility.facility_keys.first
+    res = client.patch do |req|
+      req.url path
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Authorization'] = "Bearer #{ ks_checkin_token }"
+      body =  { ks_room_key_id: key.try(:ks_room_key_id) }
+      req.body = body.to_json
+    end
+    unless res.status == 200
+      logger.debug JSON.parse(res.body)['error_message']
+      return false
+    end
+  rescue => e
+    logger.debug e.message
+    false
+  end
+
   def regist_ksc_reservation
     ks_checkin_token = facility.shop.corporation.ksc_token
     raise "ks checkin token is not set" if ks_checkin_token.blank?
     path = '/api/v1/reservations'
-    client = KsCheckinApi.set_client(KS_CHECKIN_API_CLIENT)
+    client = KsCheckinApi.set_client(API_CLIENT)
     key = facility.facility_keys.first
     reservation_no = SecureRandom.random_number(10000000000)
     reservation_type = set_reservation_type
