@@ -270,7 +270,6 @@ ActiveRecord::Schema.define(version: 20191113040138) do
     t.integer "payment_id"
     t.boolean "mail_send_flag", default: false
     t.bigint "billing_id"
-    t.string "ksc_reservation_no"
     t.index ["billing_id"], name: "index_reservations_on_billing_id"
     t.index ["facility_id"], name: "index_reservations_on_facility_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
