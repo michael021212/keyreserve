@@ -17,7 +17,7 @@ module KsCheckinApi
     return false if ksc_reservation_no.blank?
     ks_checkin_token = facility.shop.corporation.ksc_token
     raise "ks checkin token is not set" if ks_checkin_token.blank?
-    path = "/api/v1/reservations/#{reservation_no}"
+    path = "/api/v1/reservations/#{ksc_reservation_no}"
     client = KsCheckinApi.set_client(API_CLIENT)
     key = facility.facility_keys.first
     res = client.patch do |req|
