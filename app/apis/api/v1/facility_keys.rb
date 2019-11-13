@@ -15,8 +15,8 @@ module API
           @facility_key = @facility.facility_keys.first
           raise_with_message("facility key is not found", 404) if @facility_key.blank?
           ActiveRecord::Base.transaction do
-            @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
             @facility_key.update!(ks_room_key_id: params[:ks_room_key_id])
+            @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
           end
         end
 
@@ -32,9 +32,9 @@ module API
             raise_with_message("facility is not found", 404) if @facility.blank?
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
             ActiveRecord::Base.transaction do
-              @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
               @facility_key = @facility.facility_keys.create!(ks_room_key_id: params[:ks_room_key_id],
                                                               name: "#{@facility.name}")
+              @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
             end
           end
         end
@@ -50,8 +50,8 @@ module API
             raise_with_message("facility is not found", 404) if @facility.blank?
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
             ActiveRecord::Base.transaction do
-              @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
               @facility.facility_keys.destroy_all
+              @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
             end
           end
         end
