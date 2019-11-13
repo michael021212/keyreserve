@@ -16,7 +16,7 @@ module API
           raise_with_message("facility key is not found", 404) if @facility_key.blank?
           begin
             @facility_key.update!(ks_room_key_id: params[:ks_room_key_id])
-            @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
+            @facility.update_ksc_room if @facility.rent_with_ksc?
             true
           rescue => e
             logger.debug(e)
@@ -38,7 +38,7 @@ module API
             begin
               @facility_key = @facility.facility_keys.create!(ks_room_key_id: params[:ks_room_key_id],
                                                               name: "#{@facility.name}")
-              @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
+              @facility.update_ksc_room if @facility.rent_with_ksc?
               true
             rescue => e
               logger.debug(e)
@@ -59,7 +59,7 @@ module API
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
             begin
               @facility.facility_keys.destroy_all
-              @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
+              @facility.update_ksc_room if @facility.rent_with_ksc?
               true
             rescue => e
               logger.debug(e)

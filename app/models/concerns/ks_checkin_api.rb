@@ -11,8 +11,30 @@ module KsCheckinApi
     end
   end
 
-  # -- reservation のインスタンスメソッド --
+  # -- room のインスタンスメソッド --
+  def update_ksc_room
+    ks_checkin_token = facility.shop.corporation.ksc_token
+    raise "ks checkin token is not set" if ks_checkin_token.blank?
+    path = "/api/v1/rooms"
+    client = KsCheckinApi.set_client(API_CLIENT)
+    res = client.patch do |req|
+      req.url path
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Authorization'] = "Bearer #{ ks_checkin_token }"
+      body =  { ks_room_id: facility.ks_room_id,
+                ks_room_key_id: facility.facility_keys.first.try(:ks_room_key_id) }
+      req.body = body.to_json
+    end
+    unless res.status == 200
+      logger.debug JSON.parse(res.body)['error_message']
+      return false
+    end
+  rescue => e
+    logger.debug e.message
+    false
+  end
 
+  # -- reservation のインスタンスメソッド --
   def update_ksc_reservation
     return false if ksc_reservation_no.blank?
     ks_checkin_token = facility.shop.corporation.ksc_token
