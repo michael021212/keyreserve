@@ -59,11 +59,11 @@ module API
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
             @facility.facility_keys.destroy_all
             # KSCの予約から鍵IDの削除
-            if @facility.rent_with_ksc? && @facility.reservations.where('checkin > ?', Time.zone.now).present?
-              @facility.reservations.where('checkin > ?', Time.zone.now).each do |rsv|
-                rsv.update_ksc_reservation
-              end
-            end
+            # if @facility.rent_with_ksc? && @facility.reservations.where('checkin > ?', Time.zone.now).present?
+            #   @facility.reservations.where('checkin > ?', Time.zone.now).each do |rsv|
+            #     rsv.update_ksc_reservation
+            #   end
+            # end
           end
         end
       end
