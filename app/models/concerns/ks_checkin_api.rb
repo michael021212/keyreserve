@@ -19,12 +19,11 @@ module KsCheckinApi
     raise "ks checkin token is not set" if ks_checkin_token.blank?
     path = "/api/v1/reservations/#{ksc_reservation_no}"
     client = KsCheckinApi.set_client(API_CLIENT)
-    key = facility.facility_keys.first
     res = client.patch do |req|
       req.url path
       req.headers['Content-Type'] = 'application/json'
       req.headers['Authorization'] = "Bearer #{ ks_checkin_token }"
-      body =  { ks_room_key_id: key.try(:ks_room_key_id) }
+      body =  { ks_room_id: facility.facility_keys.present? ? facility.ks_room_id : nil }
       req.body = body.to_json
     end
     unless res.status == 200
