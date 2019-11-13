@@ -14,9 +14,13 @@ module API
           raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
           @facility_key = @facility.facility_keys.first
           raise_with_message("facility key is not found", 404) if @facility_key.blank?
-          ActiveRecord::Base.transaction do
+          begin
             @facility_key.update!(ks_room_key_id: params[:ks_room_key_id])
             @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
+            true
+          rescue => e
+            logger.debug(e)
+            raise_with_message("something went wrong", 500)
           end
         end
 
@@ -31,10 +35,14 @@ module API
             @facility = Facility.find_by('id = ?', params[:facility_id])
             raise_with_message("facility is not found", 404) if @facility.blank?
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
-            ActiveRecord::Base.transaction do
+            begin
               @facility_key = @facility.facility_keys.create!(ks_room_key_id: params[:ks_room_key_id],
                                                               name: "#{@facility.name}")
               @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
+              true
+            rescue => e
+              logger.debug(e)
+              raise_with_message("something went wrong", 500)
             end
           end
         end
@@ -49,12 +57,17 @@ module API
             @facility = Facility.find_by('id = ?', params[:facility_id])
             raise_with_message("facility is not found", 404) if @facility.blank?
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation_id != @corporation.id
-            ActiveRecord::Base.transaction do
+            begin
               @facility.facility_keys.destroy_all
               @facility.ksc_reservations_after_today.each { |rsv| rsv.update_ksc_reservation } if @facility.rent_with_ksc?
+              true
+            rescue => e
+              logger.debug(e)
+              raise_with_message("something went wrong", 500)
             end
           end
         end
+
       end
     end
   end
