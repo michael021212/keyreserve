@@ -124,6 +124,7 @@ class ReservationsController <  ApplicationController
         ks_room_key_info = @reservation.fetch_ks_room_key
         if @reservation.facility.rent_with_ksc? && ks_room_key_info.present?
           ksc_reservation_no = @reservation.regist_ksc_reservation
+          @reservation.ksc_reservation_no = ksc_reservation_no
         end
         if @reservation.self_viewing_system_link_error?(ks_room_key_info, ksc_reservation_no)
           flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
