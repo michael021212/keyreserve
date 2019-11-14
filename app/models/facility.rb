@@ -37,7 +37,6 @@ class Facility < ApplicationRecord
   validates :address, presence: true, if: proc { |f| f.rent? }
   validates :detail_document, presence: true, if: proc { |f| f.rent? }
   validates :reservation_type, presence: true
-  validate :ks_room_id_is_required_if_ks_flexible
 
   scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
     includes(facility_dropin_plans: :facility_dropin_sub_plans)
@@ -50,17 +49,6 @@ class Facility < ApplicationRecord
     sanitized_id_string = @facilities.map {|f| f[:id]}.join(",")
     where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
   }
-
-  def ks_room_id_is_required_if_ks_flexible
-    return if !ks_flexible?
-    if ks_room_id.blank?
-      errors.add(:ks_room_id, 'はフレキシブルプラン利用の場合必須です')
-    end
-  end
-
-  def ksc_reservations_after_today
-    reservations.where('checkin > ?', Time.zone.now)
-  end
 
   def facility_temporary_plan_prices
     facility_temporary_plans.map(&:facility_temporary_plan_prices).flatten
