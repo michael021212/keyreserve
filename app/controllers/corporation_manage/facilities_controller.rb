@@ -74,6 +74,7 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
       :address,
       :lat,
       :lon,
+      :ks_room_id,
       facility_plans_attributes: [:id, :plan_id, :_destroy]
     )
   end

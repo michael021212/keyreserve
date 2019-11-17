@@ -19,6 +19,9 @@
   <%= f.file_field :detail_document %>
   <%= f.hidden_field :detail_document_cache %>
 
+  <% if shop.ks_flexible? %>
+    <%= f.text_field :ks_room_id %>
+  <% end %>
   <%= f.text_area :description, rows: 6 %>
   <div class='form-group'>
     <div class='control-label col-sm-2'>

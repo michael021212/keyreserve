@@ -1,4 +1,5 @@
 class Facility < ApplicationRecord
+  include KsCheckinApi
 
   acts_as_paranoid
   belongs_to :shop
