@@ -4,11 +4,22 @@
 <div class="box box-default">
   <div class="box-header with-border">
     <h4 class="box-title"><%= Facility.model_name.human %>詳細</h4>
+
     <div class="box-tools">
       <%= link_to "戻る", admin_corporation_shop_path(@corporation, @shop), class: 'btn btn-default' %>
       <%= link_to "編集", edit_admin_corporation_shop_facility_path(@corporation, @shop, @facility), class: 'btn btn-primary' %>
     </div>
   </div>
+  <%# フレキシブル用施設且つKSroom_id未登録ならアラート表示 %>
+  <% if @facility.ks_flexible? && @facility.ks_room_id.blank? %>
+    <div class="full-width-alert text-center alert alert-position alert-danger alert-dismissible fade in" role="alert">
+      <span>
+        <span class="close" aria-hidden="true" data-dismiss="alert">×</span>
+        <span class="sr-only">close</span>
+      </span>
+      <%= "#{@facility.name}はKEY STATION部屋IDが未登録のため、フレキシブルの連係が出来ない状態です" %>
+    </div>
+  <% end %>
   <div class="box-body">
     <table class="table table-striped">
       <tr>
