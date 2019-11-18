@@ -136,6 +136,7 @@ ja:
         calendar_url: イベントカレンダーURL
         shop_type: 店舗タイプ
       facility:
+        id: ID
         name: 施設名
         address: 住所
         image: 施設画像
