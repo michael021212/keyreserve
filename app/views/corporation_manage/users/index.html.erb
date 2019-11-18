@@ -4,7 +4,7 @@
       <%= link_to t('common.btn.new'), new_corporation_manage_user_path, class: 'btn btn-info' %>
     </div>
   </div>
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table class="table table-striped">
       <thead>
         <tr>
@@ -27,6 +27,13 @@
           <td><%= user.state_i18n %></td>
           <td><%= user.payway_i18n %></td>
           <td>
+            <% if current_user.is_ks_member?  %>
+            <%= link_to '郵便物受け取り',
+              postal_matter_notification_corporation_manage_user_path(user),
+              method: :post,
+              data: { confirm: 'メールを送信します。よろしいですか？' },
+              class: 'btn btn-success' %>
+            <% end %>
             <%= link_to t('common.btn.show'), corporation_manage_user_path(user), class: 'btn btn-default' %>
             <%= link_to t('common.btn.edit'), edit_corporation_manage_user_path(user), class: 'btn btn-primary' %>
             <% if user.deletable? %>

@@ -1,5 +1,5 @@
 class CorporationManage::UsersController < CorporationManage::Base
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy postal_matter_notification]
 
   def index
     @users = current_corporation
@@ -36,6 +36,11 @@ class CorporationManage::UsersController < CorporationManage::Base
   def destroy
     @user.destroy!
     redirect_to corporation_manage_users_path, notice: t('common.messages.deleted', name: User.model_name.human)
+  end
+
+  def postal_matter_notification
+    NotificationMailer.postal_matter_notification(@user).deliver_now
+    redirect_to corporation_manage_users_path, notice: '郵便物受け取りメールを送信しました'
   end
 
   private

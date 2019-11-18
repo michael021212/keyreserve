@@ -9,4 +9,6 @@ class CorporateAdminUser < User
 
   validates :email, email: true, uniqueness: true
   accepts_nested_attributes_for :corporation_users
+
+
 end
