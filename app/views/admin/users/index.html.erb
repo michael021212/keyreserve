@@ -30,7 +30,7 @@
           <th><%= User.human_attribute_name(:tel) %></th>
           <th><%= PersonalIdentification.model_name.human %></th>
           <th><%= User.human_attribute_name(:campaign_id) %></th>
-          <th style="width: 350px;"></th>
+          <th style="width: 250px;"></th>
         </tr>
       </thead>
       <tbody>
@@ -44,11 +44,6 @@
               <td><%= user.personal_identification.try(:status_i18n) %></td>
               <td><%= user.campaign_id %></td>
               <td>
-                <%= link_to '郵便物受け取り',
-                  postal_matter_notification_admin_user_path(user),
-                  method: :post,
-                  data: { confirm: 'メールを送信します。よろしいですか？' },
-                  class: 'btn btn-success' %>
                 <%= link_to '詳細', admin_user_path(user), class: 'btn btn-default' %>
                 <%= link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary' %>
                 <%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>

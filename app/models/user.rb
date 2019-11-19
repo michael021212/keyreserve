@@ -97,4 +97,8 @@ class User < ApplicationRecord
   def contract_plan_ids
     user_contracts.present? ? user_contracts.map(&:plan_id) : []
   end
+
+  def is_ks_member?
+    corporate_admin? && corporations.pluck(:id).include?(Corporation::KEYSTATION_ID)
+  end
 end

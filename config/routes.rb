@@ -19,9 +19,6 @@ Rails.application.routes.draw do
     resources :admin_users, except: [:show]
     resources :users do
       resources :personal_identifications
-      member do
-        post 'postal_matter_notification' => 'users#postal_matter_notification'
-      end
     end
     resources :user_corps do
       resources :users, controller: 'users'
@@ -138,6 +135,9 @@ Rails.application.routes.draw do
     end
     resources :users do
       resources :personal_identifications, only: %i[new create edit update]
+      member do
+        post 'postal_matter_notification' => 'users#postal_matter_notification'
+      end
     end
     resources :plans
     resources :user_corps
