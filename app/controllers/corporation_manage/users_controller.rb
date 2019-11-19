@@ -1,11 +1,9 @@
 class CorporationManage::UsersController < CorporationManage::Base
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy postal_matter_notification]
 
   def index
-    @users = current_corporation
-             .users
-             .where(user_type: [User.user_types[:personal], User.user_types[:ks_flexible]])
-             .order(id: :desc).page(params[:page])
+    @q = current_corporation.users.where(user_type: [User.user_types[:personal], User.user_types[:ks_flexible]]).ransack(params[:q])
+    @users = @q.result(distinct: true).personal.order(id: :desc).page(params[:page])
   end
 
   def new
@@ -36,6 +34,11 @@ class CorporationManage::UsersController < CorporationManage::Base
   def destroy
     @user.destroy!
     redirect_to corporation_manage_users_path, notice: t('common.messages.deleted', name: User.model_name.human)
+  end
+
+  def postal_matter_notification
+    NotificationMailer.postal_matter_notification(@user).deliver_now
+    redirect_to corporation_manage_users_path, notice: '郵便物受け取りメールを送信しました'
   end
 
   private

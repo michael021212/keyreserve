@@ -22,6 +22,8 @@ class Corporation < ApplicationRecord
 
   before_save :generate_token_with_name
 
+  KEYSTATION_ID = 2
+
   # 企業毎のtoken生成
   def generate_token_with_name
     return if jwt_token.present?
