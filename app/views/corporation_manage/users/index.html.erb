@@ -1,5 +1,17 @@
 <div class="box box-default">
   <div class="box-header">
+    <div class="panel panel-inverse">
+      <div class="panel-body">
+        <%= search_form_for @q, url: corporation_manage_users_path, :class => "form-inline" do |f| %>
+          <div class="mb20">
+            <%= f.search_field :name_cont, placeholder: "名前", class: "form-control" %>
+            <%= f.search_field :tel_cont, placeholder: "電話番号", class: "form-control" %>
+            <%= f.search_field :email_cont, placeholder: "メールアドレス", class: "form-control" %>
+            <%= f.select :state_eq, User.states_i18n.invert.map{|k, v| [k, User.states[v]]}, { include_blank: '状態を指定' }, { class: "form-control" } %>
+            <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
+          </div>
+        <% end %>
+      </div>
     <div class="box-tools">
       <%= link_to t('common.btn.new'), new_corporation_manage_user_path, class: 'btn btn-info' %>
     </div>
