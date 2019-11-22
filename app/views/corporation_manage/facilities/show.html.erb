@@ -13,6 +13,10 @@
   <div class="box-body">
     <table class="table table-striped">
       <tr class="cy-facility-name">
+        <th><%= Facility.human_attribute_name(:id) %></thc>
+        <td><%= @facility.id %></td>
+      </tr>
+      <tr class="cy-facility-name">
         <th><%= Facility.human_attribute_name(:name) %></thc>
         <td><%= @facility.name %></td>
       </tr>
