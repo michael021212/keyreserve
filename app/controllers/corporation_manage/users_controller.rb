@@ -3,7 +3,7 @@ class CorporationManage::UsersController < CorporationManage::Base
 
   def index
     @q = current_corporation.users.where(user_type: [User.user_types[:personal], User.user_types[:ks_flexible]]).ransack(params[:q])
-    @users = @q.result(distinct: true).personal.order(id: :desc).page(params[:page])
+    @users = @q.result(distinct: true).order(id: :desc).page(params[:page])
   end
 
   def new
