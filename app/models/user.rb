@@ -52,7 +52,7 @@ class User < ApplicationRecord
   end
 
   def self.selectable_user_contracts
-     User.personal.parent_is_nil.or(User.parent_corporation)
+    User.personal.parent_is_nil.or(User.parent_corporation)
   end
 
   # 利用者の契約で都度課金が可能な施設の一覧
