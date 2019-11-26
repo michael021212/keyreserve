@@ -252,6 +252,7 @@ ja:
         rent: 賃貸物件
         car: 車
         ks_flexible: フレキシブルスロット用施設(KEY STATION連動)
+        public_place: 公共施設
       reservation_type:
         general: 通常予約
         rent_with_ksc: KS Checkin使用予約

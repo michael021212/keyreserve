@@ -17,7 +17,8 @@ class Facility < ApplicationRecord
                         dropin: 2,
                         rent: 3,
                         car: 4,
-                        ks_flexible: 5 }
+                        ks_flexible: 5,
+                        public_place: 6 }
 
   enum reservation_type: { general: 1,
                            rent_with_ksc: 10,
@@ -61,7 +62,7 @@ class Facility < ApplicationRecord
   # 現在予約可能な施設一覧
   def self.reservable_facilities(checkin, checkout, condition, user)
     # 都度課金可能な施設を一覧で取得
-    facilities = user.try(:logged_in?) ? user.login_spots : Facility.logout_spots
+    facilities = user.present? ? user.login_spots : Facility.logout_spots
     # 指定時間に予約済の施設は削除
     exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
     # 賃貸物件とその他施設を分けて施設検索
