@@ -49,4 +49,11 @@ class Corporation < ApplicationRecord
   def plans_linked_with_user?(user)
     plans.ids.any? { |plan_id| user.contract_plan_ids.include?(plan_id) }
   end
+
+  def selectable_users_for_contract
+    selectable_users = users
+      .where(user_type: [User.user_types[:personal],
+                         User.user_types[:corporate_admin]])
+    selectable_users.parent_is_nil.or(users.parent_corporation)
+  end
 end
