@@ -5,6 +5,7 @@
   <%= render 'for_rent' %>
 <% elsif @shop.for_flexible? %>
   <%= render 'for_flexible' %>
+  <% elsif @shop.for_ %>
 <% else %>
   <%= render 'for_shop' %>
 <% end %>

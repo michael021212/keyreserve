@@ -17,10 +17,12 @@ class Shop < ApplicationRecord
   delegate :id, to: :corporation, prefix: true, allow_nil: true
   enum shop_type: { general: 0,
                     rent: 1,
-                    ks_flexible: 2 }
+                    ks_flexible: 2,
+                    public_facility: 3 }
 
   RENT_SHOP_ID = 6
   FLEXIBLE_SHOP_ID = 11
+  PUBLIC_SHOP_ID = 15
 
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
@@ -54,6 +56,11 @@ class Shop < ApplicationRecord
   # フレキシブル利用用の店舗かどうか
   def for_flexible?
     id == Shop::FLEXIBLE_SHOP_ID
+  end
+
+  # 公共施設用の店舗かどうか
+  def for_public?
+    id == Shop::PUBLIC_SHOP_ID
   end
 
   def set_geocode
