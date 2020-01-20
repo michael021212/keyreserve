@@ -5,7 +5,8 @@
   <%= render 'for_rent' %>
 <% elsif @shop.for_flexible? %>
   <%= render 'for_flexible' %>
-  <% elsif @shop.for_ %>
+<% elsif @shop.for_public? %>
+  <%= render 'for_public' %>
 <% else %>
   <%= render 'for_shop' %>
 <% end %>

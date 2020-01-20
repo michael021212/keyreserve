@@ -22,7 +22,7 @@ class Shop < ApplicationRecord
 
   RENT_SHOP_ID = 6
   FLEXIBLE_SHOP_ID = 11
-  PUBLIC_SHOP_ID = 15
+  PUBLIC_SHOP_ID = 18
 
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
