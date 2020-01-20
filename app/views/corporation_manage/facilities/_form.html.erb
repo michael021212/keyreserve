@@ -3,11 +3,13 @@
   <%= f.number_field :max_num %>
   <%= f.text_field :address, placeholder: t('.add_address') %>
 
-  <%# 賃貸用店舗の場合は施設タイプをhiddenで送る %>
+  <%# 一般店舗以外の場合は施設タイプをhiddenで送る %>
   <% if shop.rent? %>
     <%= f.hidden_field :facility_type, value: :rent %>
   <% elsif shop.public_facility? %>
     <%= f.hidden_field :facility_type, value: :public_place %>
+  <% elsif shop.ks_flexible?%>
+    <%= f.hidden_field :facility_type, value: :ks_flexible %>
   <% else %>
     <%= f.select :facility_type,
       Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' || k == 'public_place' || k == 'ks_flexible' }.invert,
