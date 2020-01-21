@@ -48,7 +48,7 @@ class NotificationMailer < ApplicationMailer
 
   def reserved_to_admin(reservation)
     @reservation = reservation
-    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】#{ reservation.facility.rent? ? '内見' : '会議室' }の予約が入りました")
+    mail(to: 'contact@key-stations.jp', subject: "【KeyStation Office】施設の予約が入りました")
   end
 
   def dropin_reserved(dropin_reservation, user_id)
@@ -93,9 +93,13 @@ class NotificationMailer < ApplicationMailer
 
   def send_reservation_password(reservation)
     @reservation = reservation
-    plan_ids = @reservation.user.user_contracts.pluck(:plan_id)
+    plan_ids = @reservation.user.user_contracts.pluck(:plan_id).presence || nil
     @member_ftps = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
-    @not_member_ftp = reservation.facility.facility_temporary_plans.where.not(standard_price_per_hour: 0).where(plan_id: nil)
+    if @reservation.facility.rent?
+      @not_member_ftp = reservation.facility.facility_temporary_plans.where(plan_id: nil)
+    else
+      @not_member_ftp = reservation.facility.facility_temporary_plans.where.not(standard_price_per_hour: 0).where(plan_id: nil)
+    end
     @ftp = @member_ftps.present? ? @member_ftps.first : @not_member_ftp.first
     @ftp_title = @ftp.guide_mail_title
     @password = KeystationService.sync_room_key_password(@ftp.ks_room_key_id)
@@ -119,13 +123,6 @@ class NotificationMailer < ApplicationMailer
     else
       mail(to: @dropin_reservation.reservation_user.email, subject: @fdp.guide_mail_title)
     end
-  end
-
-  def send_self_viewing_password(reservation)
-    @reservation = reservation
-    key = @reservation.facility.facility_keys.first
-    @password = KeystationService.sync_room_key_password(key.try(:ks_room_key_id))
-    mail(to: @reservation.reservation_user.try(:email), subject: "【KeyStation Office】内見方法のご案内")
   end
 
   def upload_identification(personal_identification)
