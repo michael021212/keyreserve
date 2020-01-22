@@ -16,6 +16,20 @@
       prompt: t('.add_facility_type') %>
   <% end %>
 
+  <% if shop.public_facility? %>
+  <div class='form-group'>
+    <div class='control-label col-sm-2'>
+      <label><%= Facility.human_attribute_name(:chartered) %></label>
+    </div>
+    <div class='col-sm-10 form-inline'>
+      <%= f.radio_button :chartered, true, class: 'chartered_radio' %>
+      <span class='ml10'>貸し切り可</span>
+      <%= f.radio_button :chartered, false, class: 'chartered_radio' %>
+      <span class='ml10'>貸し切り不可</span>
+    </div>
+  </div>
+  <% end %>
+
   <%# 貸し切り対応フォーム %>
   <div class='chartered_area' style= "display: <%= f.object.chartered ? 'block;' : 'none;' %>">
     <div class='form-group'>
