@@ -1,0 +1,74 @@
+<div class="mg-single-room">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <%= image_tag @shop.image_url(:main), class: 'img-responsive' %>
+      </div>
+      <div class="col-md-5 mg-room-fecilities">
+        <h2 class="mg-sec-left-title"><%= @shop.name %></h2>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="row mg-room-fecilities">
+              <div class="col-sm-12">
+                <ul class='ul-newline'>
+                  <li>
+                    <%= "電話: #{tel_fmt(@shop.tel)}" %>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="mg-single-room-txt">
+          <h3 class="mg-shop-facility-title">予約可能施設一覧</h3>
+          <% @public_facilities.each do |facility| %>
+            <div class="mg-available-rooms">
+              <div class="row">
+                <div class="col-sm-4">
+                  <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                </div>
+                <div class="col-sm-8">
+                  <h3 class="mg-avl-room-title">
+                    <%= link_to new_reservation_path(facility_id: facility.id) do %>
+                      <%= facility.name %>
+                    <% end %>
+                  </h3>
+                  <div class='row mg-room-fecilities'>
+                    <div class='col-sm-12'>
+                      <ul>
+                        <li>
+                          <i class="fa fa-home"></i>
+                          <span class="mg-desc-text"><%= facility.address %></span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class='col-sm-6'>
+                      <% if facility.lat? && facility.lon? %>
+                        <div class="google-map" style="height: 200px;" data-lat="<%= facility.lat %>" data-lon="<%= facility.lon %>"></div>
+                      <% end %>
+                    </div>
+                    <div class='col-sm-6 text-right' style='height: 200px; position: relative;'>
+                      <%= link_to new_shop_facility_path(@shop, id: facility.id), class: 'btn btn-main', style: 'position: absolute; bottom: 0; right:30px;' do %>
+                        利用予約<i class="fa fa-angle-double-right"></i>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <br/>
+  </div>
+</div>
+

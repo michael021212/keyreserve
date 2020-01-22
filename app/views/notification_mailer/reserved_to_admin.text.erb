@@ -1,33 +1,16 @@
-<%# 内見予約の場合 %>
-<% if @reservation.facility.rent? %>
-物件の内見予約が入りました。
-詳細は以下となります。
+施設の予約が入りました。
+詳細は以下です。
 
-物件名: <%= @reservation.facility.name %>
-住所: <%= @reservation.facility.address %>
-内見者名: <%= @reservation.user.name %>
-内見者メールアドレス: <%= @reservation.user.email %>
-内見日時: <%= datetime_ja @reservation.checkin %>
-内見時間: <%= @reservation.usage_period %>時間
-人数: <%= @reservation.num %>名
-内見タイプ: <%= @reservation.facility.reservation_type_i18n %>
-
-<%= admin_reservation_url(@reservation) %>
-
-<%# 通常の施設予約の場合 %>
-<% else %>
-会議室の予約が入りました。
-詳細は以下となります。
-
-店舗名: <%= @reservation.facility.shop_name %>
+店舗名: <%= @reservation.facility.shop.try(:name) %>
 施設名: <%= @reservation.facility.name %>
+住所: <%= @reservation.facility.address %>
 利用者名: <%= @reservation.user.name %>
 メールアドレス: <%= @reservation.user.email %>
-ご利用日時: <%= datetime_ja @reservation.checkin %>
-ご利用時間: <%= @reservation.usage_period %>時間
-ご利用人数: <%= @reservation.num %>名
-お支払方法: <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
+利用日時: <%= datetime_ja @reservation.checkin %>
+利用時間: <%= @reservation.usage_period %>時間
+利用人数: <%= @reservation.num %>名
 ご利用料金: <%= number_with_delimiter @reservation.price %>円
+お支払方法: <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
+予約タイプ: <%= @reservation.facility.reservation_type_i18n %>
 
 <%= admin_reservation_url(@reservation) %>
-<% end %>
