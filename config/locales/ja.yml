@@ -216,6 +216,7 @@ ja:
         general: 一般
         rent: 賃貸物件登録用
         ks_flexible: フレキシブルスロット登録用店舗(KEY STATION連動)
+        public_facility: 公共施設登録用
     dropin_reservation:
       state:
         unconfirmed: 未確定

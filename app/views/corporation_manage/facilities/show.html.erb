@@ -12,16 +12,12 @@
   </div>
   <div class="box-body">
     <table class="table table-striped">
-      <tr class="cy-facility-id">
-        <th><%= Facility.human_attribute_name(:id) %></thc>
+      <tr class="cy-facility-name">
+        <th><%= Facility.human_attribute_name(:id) %></th>
         <td><%= @facility.id %></td>
       </tr>
       <tr class="cy-facility-name">
-        <th><%= Facility.human_attribute_name(:id) %></thc>
-        <td><%= @facility.id %></td>
-      </tr>
-      <tr class="cy-facility-name">
-        <th><%= Facility.human_attribute_name(:name) %></thc>
+        <th><%= Facility.human_attribute_name(:name) %></th>
         <td><%= @facility.name %></td>
       </tr>
       <tr class="cy-facility-max-num">
