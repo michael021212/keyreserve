@@ -79,7 +79,12 @@ class Facility < ApplicationRecord
       .where(Shop.arel_table[:opening_time].lteq(checkin))
       .where(Shop.arel_table[:closing_time].gteq(checkout))
     # 最大収容人数が予約人数を下回る施設は削除
-    facilities = facilities.where('max_num > ?',  condition[:use_num].to_i)
+    facilities = facilities.where('max_num >= ?',  condition[:use_num].to_i)
+    # 貸し切り施設の場合紐づく施設が予約で埋まってたら削除
+    exclude_facility_ids = []
+    facilities.chartered_place.each{ |f|
+      exclude_facility_ids << f.id if !f.associated_facilities_available?(checkin, checkout) }
+    facilities = facilities.where.not(id: exclude_facility_ids)
   end
 
   # userに表示し得る施設の最小利用料金(1時間)
@@ -189,6 +194,21 @@ class Facility < ApplicationRecord
   def associated_facilities
     return nil if !chartered?
     Facility.where(id: chartered_facilities.map{|cf| cf.child_facility_id})
+  end
+
+  # 紐付いてる施設が全て予約可能かどうか判定
+  def associated_facilities_available?(checkin, checkout)
+    return false if !chartered?
+    unavailable_associated_facility_ids(checkin, checkout).blank?
+  end
+
+  # 使えない紐付き施設のid一覧
+  def unavailable_associated_facility_ids(checkin, checkout)
+    return nil if !chartered?
+    reservations = Reservation
+                    .where(facility_id: associated_facilities.pluck(:id))
+                    .in_range(checkin .. checkout)
+    reservations.pluck(:facility_id)
   end
 
   private
