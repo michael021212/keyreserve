@@ -20,7 +20,8 @@ class Facility < ApplicationRecord
                         rent: 3,
                         car: 4,
                         ks_flexible: 5,
-                        public_place: 6 }
+                        public_place: 6,
+                        chartered_place: 7 }
 
   enum reservation_type: { general: 1,
                            rent_with_ksc: 10,
