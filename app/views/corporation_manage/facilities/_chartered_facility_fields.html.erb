@@ -1,0 +1,14 @@
+<div class='row'>
+  <div class='nested-fields form-inline'>
+    <div class='control-label col-sm-2'>
+      <label>貸し切るスペース</label>
+    </div>
+    <div class='col-sm-10'>
+      <%= f.select :child_facility_id,
+        Facility.all.map{|f|[f.name, f.id]}, hide_label: true %>
+      <%= link_to_remove_association "行削除",
+        f, class: 'ml15 btn btn-danger' %>
+    </div>
+  </div>
+</div>
+

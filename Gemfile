@@ -39,6 +39,7 @@ gem 'jquery-slimscroll-rails'
 gem 'rails_autolink'
 gem 'draper'
 gem 'gon'
+gem 'cocoon'
 
 # Authentication
 gem 'sorcery'

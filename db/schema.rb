@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191113040138) do
+ActiveRecord::Schema.define(version: 20200122011723) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -34,6 +34,15 @@ ActiveRecord::Schema.define(version: 20191113040138) do
     t.datetime "updated_at", null: false
     t.index ["shop_id"], name: "index_billings_on_shop_id"
     t.index ["user_id"], name: "index_billings_on_user_id"
+  end
+
+  create_table "chartered_facilities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id"
+    t.integer "child_facility_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_facility_id"], name: "index_chartered_facilities_on_child_facility_id"
+    t.index ["facility_id"], name: "index_chartered_facilities_on_facility_id"
   end
 
   create_table "corporation_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -116,6 +125,7 @@ ActiveRecord::Schema.define(version: 20191113040138) do
     t.boolean "published", default: true
     t.integer "reservation_type", default: 1
     t.integer "ks_room_id"
+    t.boolean "chartered", default: false
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 

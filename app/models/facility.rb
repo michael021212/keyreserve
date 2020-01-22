@@ -10,6 +10,8 @@ class Facility < ApplicationRecord
   has_many :facility_dropin_plans, dependent: :destroy
   has_many :reservations, dependent: :restrict_with_exception
   has_many :dropin_reservations, dependent: :restrict_with_exception
+  has_many :chartered_facilities, dependent: :destroy
+  accepts_nested_attributes_for :chartered_facilities, allow_destroy: true
 
   RENT_SHOP_ID= 6
 
@@ -210,5 +212,10 @@ class Facility < ApplicationRecord
     user.nil? || user.contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
   end
 
+  # 貸し切り施設に紐付いてる施設一覧を取得
+  def associated_facilities
+    return nil if !chartered?
+    Facility.where(id: chartered_facilities.map{|cf| cf.child_facility_id})
+  end
 
 end

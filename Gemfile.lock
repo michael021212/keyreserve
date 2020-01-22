@@ -146,6 +146,7 @@ GEM
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
     chronic (0.10.2)
+    cocoon (1.2.14)
     coderay (1.1.2)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
@@ -567,6 +568,7 @@ DEPENDENCIES
   carrierwave-aws
   carrierwave-data-uri
   chromedriver-helper
+  cocoon
   coffee-rails (~> 4.2)
   config
   database_cleaner
@@ -638,4 +640,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.2
+   2.0.2

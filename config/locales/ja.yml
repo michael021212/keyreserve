@@ -147,6 +147,7 @@ ja:
         published: 掲載状況
         reservation_type: 予約方法
         ks_room_id: KEY STATION部屋ID
+        chartered: 貸し切り施設
       facility_dropin_plan:
         facility_id: ドロップイン施設
         plan_id: プラン
