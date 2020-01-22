@@ -179,12 +179,14 @@ class Reservation < ApplicationRecord
     end
   end
 
-  # 貸し切り施設予約時に紐づく全施設のブロック対応
+  # 貸し切り施設予約時に紐づく全施設のブロック処理
   def block_for_chartered_place!
     return if !facility.chartered?
     facility.associated_facilities.each do |facility|
       block_reservation = Reservation.new(JSON.parse(self.to_json).merge(
         { id: nil,
+          user_id: nil,
+          reservation_user_id: nil,
           facility_id: facility.id,
           block_flag: true,
           price: 0,
@@ -194,6 +196,18 @@ class Reservation < ApplicationRecord
       ))
       block_reservation.save!
     end
+  end
+
+  # 貸し切り施設予約時に紐づく全施設のブロック解除処理
+  def unblock_for_chartered_place
+    return if !facility.chartered?
+    blocked_reservations = Reservation.where(
+      block_flag: true,
+      checkin: checkin,
+      checkout: checkout,
+      facility_id: facility.associated_facilities.pluck(:id)
+    )
+    blocked_reservations.delete_all
   end
 
 
