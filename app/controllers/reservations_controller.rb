@@ -131,6 +131,7 @@ class ReservationsController <  ApplicationController
         end
       end
       @reservation.save!
+      @reservation.block_for_chartered_place!
       session[:spot] = nil
       session[:reservation_id] = @reservation.id
       @reservation.payment.stripe_charge! if @reservation.stripe_chargeable?

@@ -179,6 +179,24 @@ class Reservation < ApplicationRecord
     end
   end
 
+  # 貸し切り施設予約時に紐づく全施設のブロック対応
+  def block_for_chartered_place!
+    return if !facility.chartered?
+    facility.associated_facilities.each do |facility|
+      block_reservation = Reservation.new(JSON.parse(self.to_json).merge(
+        { id: nil,
+          facility_id: facility.id,
+          block_flag: true,
+          price: 0,
+          num: 0,
+          mail_send_flag: true
+        }
+      ))
+      block_reservation.save!
+    end
+  end
+
+
   private
 
   def send_reserved_mail!
