@@ -12,6 +12,7 @@ class Facility < ApplicationRecord
   has_many :dropin_reservations, dependent: :restrict_with_exception
   has_many :chartered_facilities, dependent: :destroy
   accepts_nested_attributes_for :chartered_facilities, allow_destroy: true
+  validates :chartered_facilities, associated: true
 
   RENT_SHOP_ID= 6
 
