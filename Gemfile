@@ -88,7 +88,6 @@ gem 'stripe'
 
 gem 'nested_form'
 gem 'geocoder'
-gem 'http'
 gem 'phonelib'
 
 gem 'whenever', require: false
