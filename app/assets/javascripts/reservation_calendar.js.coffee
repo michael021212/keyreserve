@@ -20,34 +20,49 @@ $ ->
   $('#calendar-tab').on 'click', ->
     $('#user_reservation_calendar').show()
 
-  $('#user_reservation_calendar').fullCalendar
-    schedulerLicenseKey: '0140948959-fcs-1515040346'
-    defaultView: 'agendaWeek'
-    header:
-      left: 'prev'
-      center: 'title'
-      right: 'next'
-    firstDay: 'today'
-    slotDuration: '00:30:01'
-    height: 'auto'
-    lang: 'ja'
-    aspectRatio: 10
-    displayEventTime: true
-
-    events: (start, end, timezone, callback) ->
-      start = moment(start._d).format('YYYY-MM-DD') # 表示開始日
+  set_evetns = (start, end) ->
+    new Promise(() ->
+      start = moment(start._d).format('YYYY-MM-DD')
       end = moment(end._d).format('YYYY-MM-DD')     # 表示終了日
       ajaxRequest(url + '?start=' + start + '&end=' + end).then (events) ->
-        callback events
+        return events
+    )
 
-    # カレンダー内の時間をクリックしたときの挙動
-    eventClick: (event, jsEvent, view) ->
-      date = moment(event.start).format('YYYY/MM/DD')
-      time = moment(event.start).format('H:mm')
-      $('#spot_checkin').val(date)
-      $('#spot_checkin_time').val(time)
-      $('html, body').animate { scrollTop: 0 }, 500
+  set_calendar = () ->
+    $('#user_reservation_calendar').fullCalendar
+      schedulerLicenseKey: '0140948959-fcs-1515040346'
+      defaultView: 'agendaWeek'
+      header:
+        left: 'prev'
+        center: 'title'
+        right: 'next'
+      firstDay: 'today'
+      height: 'auto'
+      lang: 'ja'
+      aspectRatio: 10
+      displayEventTime: true
+      events: (start, end, timezone, callback) ->
+        start = moment(start._d).format('YYYY-MM-DD') # 表示開始日
+        end = moment(end._d).format('YYYY-MM-DD')     # 表示終了日
+        ajaxRequest(url + '?start=' + start + '&end=' + end).then (events) ->
+          callback events
+      # カレンダー内の時間をクリックしたときの挙動
+      eventClick: (event, jsEvent, view) ->
+        date = moment(event.start).format('YYYY/MM/DD')
+        time = moment(event.start).format('H:mm')
+        $('#spot_checkin').val(date)
+        $('#spot_checkin_time').val(time)
+        $('html, body').animate { scrollTop: 0 }, 500
+
+  show_calendar = () ->
+    $('#calendar-tab').show()
+    $('#calendar').show()
 
   $('a[data-toggle="tab"]').on 'shown.bs.tab', (e)->
     if $(e.target).attr('id') == 'calendar-tab'
       $('#user_reservation_calendar').fullCalendar('rerenderEvents')
+
+  set_calendar()
+  setTimeout(show_calendar, 5000)
+
+
