@@ -80,9 +80,10 @@
             data-toggle="tab"
             href="#calendar"
             role="tab"
-            aria-controls="calendar"
-            aria-selected="false" style='display: none;'>
-            予約状況カレンダー</a>
+            aria-controls="calendar" style='pointer-events: none;'>
+            <span>予約状況カレンダー</span>
+            <span id='data-loading-text' style='font-size: 12px;'>(データ読込中...)</span>
+          </a>
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -92,11 +93,11 @@
             <div class="panel-body"><%= simple_format(@facility.description) %></div>
           </div>
         </div>
+
         <div class="tab-pane fade"
           id="calendar"
           role="tabpanel"
-          aria-labelledby="calendar-tab"
-          style='display: none;'>
+          aria-labelledby="calendar-tab">
           <div class="col-md-12 mt15">
             <span class='reminder-text'>
               ※ カレンダーの<span class='reminder-green'>緑色の箇所</span>を押すと、ご予約フォームが自動的に日付を入力する事ができます

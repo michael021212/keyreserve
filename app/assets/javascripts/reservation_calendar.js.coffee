@@ -47,8 +47,8 @@ $ ->
         $('html, body').animate { scrollTop: 0 }, 500
 
   show_calendar = () ->
-    $('#calendar-tab').show()
-    $('#calendar').show()
+    $('#calendar-tab').css('pointer-events', '')
+    $('#data-loading-text').hide()
 
   $('a[data-toggle="tab"]').on 'shown.bs.tab', (e)->
     if $(e.target).attr('id') == 'calendar-tab'
