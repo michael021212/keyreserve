@@ -20,14 +20,6 @@ $ ->
   $('#calendar-tab').on 'click', ->
     $('#user_reservation_calendar').show()
 
-  set_evetns = (start, end) ->
-    new Promise(() ->
-      start = moment(start._d).format('YYYY-MM-DD')
-      end = moment(end._d).format('YYYY-MM-DD')     # 表示終了日
-      ajaxRequest(url + '?start=' + start + '&end=' + end).then (events) ->
-        return events
-    )
-
   set_calendar = () ->
     $('#user_reservation_calendar').fullCalendar
       schedulerLicenseKey: '0140948959-fcs-1515040346'
