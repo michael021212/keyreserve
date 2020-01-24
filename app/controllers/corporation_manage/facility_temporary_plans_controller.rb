@@ -24,7 +24,6 @@ class CorporationManage::FacilityTemporaryPlansController < CorporationManage::B
 
   def update
     if @facility_temporary_plan.update(facility_temporary_plan_params)
-      binding.pry
       redirect_to corporation_manage_shop_facility_path(@facility.shop, @facility), notice: t('common.messages.updated', name: FacilityTemporaryPlan.model_name.human)
     else
       render :edit
