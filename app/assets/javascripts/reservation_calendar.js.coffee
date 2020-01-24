@@ -55,6 +55,6 @@ $ ->
       $('#user_reservation_calendar').fullCalendar('rerenderEvents')
 
   set_calendar()
-  setTimeout(show_calendar, 5000)
+  setTimeout(show_calendar, 8000)
 
 
