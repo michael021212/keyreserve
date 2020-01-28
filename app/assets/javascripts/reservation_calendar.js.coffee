@@ -47,14 +47,14 @@ $ ->
         $('html, body').animate { scrollTop: 0 }, 500
 
   show_calendar = () ->
-    $('#calendar-tab').show()
-    $('#calendar').show()
+    $('#calendar-tab').css('pointer-events', '')
+    $('#data-loading-text').hide()
 
   $('a[data-toggle="tab"]').on 'shown.bs.tab', (e)->
     if $(e.target).attr('id') == 'calendar-tab'
       $('#user_reservation_calendar').fullCalendar('rerenderEvents')
 
   set_calendar()
-  setTimeout(show_calendar, 5000)
+  setTimeout(show_calendar, 8000)
 
 

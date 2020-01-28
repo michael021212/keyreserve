@@ -18,6 +18,12 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
     @facility = @shop.facilities.build(facility_params)
     @facility.set_max_num
     @facility.set_geocode
+    if @facility.public_place?
+      @facility.facility_type = :chartered_place if @facility.chartered?
+    else
+      @facility.chartered = @facility.chartered_place?
+    end
+    @facility.chartered_facilities.delete_all if !@facility.chartered
     if @facility.save
       redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.created', name: Facility.model_name.human)
     else
@@ -31,6 +37,12 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
     @facility.assign_attributes(facility_params)
     @facility.set_max_num
     @facility.set_geocode
+    if @facility.public_place?
+      @facility.facility_type = :chartered_place if @facility.chartered?
+    else
+      @facility.chartered = @facility.chartered_place?
+    end
+    @facility.chartered_facilities.delete_all if !@facility.chartered
     if @facility.save
       redirect_to corporation_manage_shop_facility_path(@shop, @facility), notice: t('common.messages.updated', name: Facility.model_name.human)
     else
@@ -75,6 +87,8 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
       :lat,
       :lon,
       :ks_room_id,
+      :chartered,
+      chartered_facilities_attributes: [:id, :facility_id, :child_facility_id, :_destroy],
       facility_plans_attributes: [:id, :plan_id, :_destroy]
     )
   end
