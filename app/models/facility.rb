@@ -10,6 +10,9 @@ class Facility < ApplicationRecord
   has_many :facility_dropin_plans, dependent: :destroy
   has_many :reservations, dependent: :restrict_with_exception
   has_many :dropin_reservations, dependent: :restrict_with_exception
+  has_many :chartered_facilities, dependent: :destroy
+  accepts_nested_attributes_for :chartered_facilities, allow_destroy: true
+  validates :chartered_facilities, associated: true
 
   RENT_SHOP_ID= 6
 
@@ -18,7 +21,8 @@ class Facility < ApplicationRecord
                         rent: 3,
                         car: 4,
                         ks_flexible: 5,
-                        public_place: 6 }
+                        public_place: 6,
+                        chartered_place: 7 }
 
   enum reservation_type: { general: 1,
                            rent_with_ksc: 10,
@@ -76,7 +80,12 @@ class Facility < ApplicationRecord
       .where(Shop.arel_table[:opening_time].lteq(checkin))
       .where(Shop.arel_table[:closing_time].gteq(checkout))
     # 最大収容人数が予約人数を下回る施設は削除
-    facilities = facilities.where('max_num > ?',  condition[:use_num].to_i)
+    facilities = facilities.where('max_num >= ?',  condition[:use_num].to_i)
+    # 貸し切り施設の場合紐づく施設が予約で埋まってたら削除
+    exclude_facility_ids = []
+    facilities.chartered_place.each{ |f|
+      exclude_facility_ids << f.id if !f.associated_facilities_available?(checkin, checkout) }
+    facilities = facilities.where.not(id: exclude_facility_ids)
   end
 
   # userに表示し得る施設の最小利用料金(1時間)
@@ -182,6 +191,27 @@ class Facility < ApplicationRecord
     self.assign_attributes(max_num: 99) if rent? && (max_num.blank? || max_num == 0)
   end
 
+  # 貸し切り施設に紐付いてる施設一覧を取得
+  def associated_facilities
+    return nil if !chartered?
+    Facility.where(id: chartered_facilities.map{|cf| cf.child_facility_id})
+  end
+
+  # 紐付いてる施設が全て予約可能かどうか判定
+  def associated_facilities_available?(checkin, checkout)
+    return false if !chartered?
+    unavailable_associated_facility_ids(checkin, checkout).blank?
+  end
+
+  # 使えない紐付き施設のid一覧
+  def unavailable_associated_facility_ids(checkin, checkout)
+    return nil if !chartered?
+    reservations = Reservation
+                    .where(facility_id: associated_facilities.pluck(:id))
+                    .in_range(checkin .. checkout)
+    reservations.pluck(:facility_id)
+  end
+
   private
 
   def compute_min_price(user, target_time)
@@ -209,6 +239,4 @@ class Facility < ApplicationRecord
   def not_need_to_discount?(user)
     user.nil? || user.contract_plan_ids.blank? || shop.corporation.plans_linked_with_user?(user)
   end
-
-
 end

@@ -41,6 +41,18 @@
         <td><%= simple_format @facility.description %></td>
       </tr>
       <tr class="cy-facility-description">
+        <th><%= Facility.human_attribute_name(:chartered) %></th>
+        <td><%= @facility.chartered ? '貸し切り対応中' : '貸し切り非対応' %></td>
+      </tr>
+      <% if @facility.chartered? %>
+        <th>貸し切り紐付け施設</th>
+        <td>
+        <% @facility.associated_facilities.each do |facility| %>
+          <%= "#{facility.name} ,  " %>
+        <% end %>
+        </td>
+      <% end %>
+      <tr class="cy-facility-description">
         <th><%= Facility.human_attribute_name(:published) %></th>
         <td><%= @facility.published ? '掲載中' : '掲載停止中' %></td>
       </tr>

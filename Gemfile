@@ -39,6 +39,7 @@ gem 'jquery-slimscroll-rails'
 gem 'rails_autolink'
 gem 'draper'
 gem 'gon'
+gem 'cocoon'
 
 # Authentication
 gem 'sorcery'
@@ -87,7 +88,6 @@ gem 'stripe'
 
 gem 'nested_form'
 gem 'geocoder'
-gem 'http'
 gem 'phonelib'
 
 gem 'whenever', require: false
