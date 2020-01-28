@@ -120,7 +120,7 @@ class ReservationsController <  ApplicationController
     @reservation.set_payment
     ActiveRecord::Base.transaction do
       # KS Checkinと連動させる際の値取得処理
-      if @reservation.facility.rent? || @reservation.facility.ks_flexible?
+      if @reservation.facility.ksc_avairable?
         ks_room_key_info = @reservation.fetch_ks_room_key
         if @reservation.facility.rent_with_ksc? && ks_room_key_info.present?
           ksc_reservation_no = @reservation.regist_ksc_reservation

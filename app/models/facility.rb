@@ -212,6 +212,11 @@ class Facility < ApplicationRecord
     reservations.pluck(:facility_id)
   end
 
+  # KSCが利用可能な施設タイプかどうか
+  def ksc_avairable?
+    rent? || ks_flexible? || public_place? || chartered_place?
+  end
+
   private
 
   def compute_min_price(user, target_time)
