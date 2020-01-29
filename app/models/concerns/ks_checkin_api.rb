@@ -74,11 +74,11 @@ module KsCheckinApi
 
   private
   def set_reservation_type
-    ksc_reservation_type = {general: 0, rent: 1, car_share: 2, flexible: 4, with_remote_lock: 5}
+    ksc_reservation_type = {general: 0, rent: 1, car_share: 2, flexible: 4, with_rl: 5}
     return ksc_reservation_type[:rent] if facility.rent?
     return ksc_reservation_type[:car_share] if facility.car?
     return ksc_reservation_type[:flexible] if facility.ks_flexible?
-    return ksc_reservation_type[:with_remote_lock] if Shop.with_remote_lock_shops.include?(facility.shop)
+    return ksc_reservation_type[:with_rl] if Shop.with_remote_lock_shops.include?(facility.shop)
     return ksc_reservation_type[:general]
   end
 
