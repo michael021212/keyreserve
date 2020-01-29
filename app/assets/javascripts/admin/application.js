@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery.slimscroll.min
 //= require bootstrap-sprockets
 //= require moment
 //= require moment/ja.js

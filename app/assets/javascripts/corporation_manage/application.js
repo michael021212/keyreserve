@@ -2,6 +2,7 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_nested_form
+//= require jquery.slimscroll.min
 //= require bootstrap-sprockets
 //= require moment
 //= require moment/ja.js
