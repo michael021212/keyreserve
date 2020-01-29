@@ -1,5 +1,8 @@
 <%= bootstrap_form_for([:corporation_manage, shop], layout: :horizontal) do |f| %>
   <%= f.text_field :name %>
+  <div class='col-sm-10 col-sm-offset-2 pl5'>
+    <p class='help-text'>店舗名に「RemoteLock」を含めると、KS Checkin連動時にRemoteLock用の予約が登録されます</p>
+  </div>
   <%= f.text_field :postal_code %>
   <%= f.text_field :address %>
   <%= f.text_field :tel %>
