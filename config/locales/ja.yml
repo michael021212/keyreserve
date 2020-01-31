@@ -135,6 +135,7 @@ ja:
         image: 店舖画像
         calendar_url: イベントカレンダーURL
         shop_type: 店舗タイプ
+        registerable: 登録時選択可否
       facility:
         id: ID
         name: 施設名

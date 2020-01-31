@@ -52,7 +52,8 @@ class CorporationManage::ShopsController < CorporationManage::Base
       :closing_time,
       :image,
       :calendar_url,
-      :shop_type
+      :shop_type,
+      :registerable,
     )
   end
 end

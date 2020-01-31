@@ -76,6 +76,8 @@
         <tr>
           <th><%= Shop.human_attribute_name(:id) %></th>
           <th><%= Shop.human_attribute_name(:name) %></th>
+          <th><%= Shop.human_attribute_name(:tel) %></th>
+          <th><%= Shop.human_attribute_name(:registerable) %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
@@ -84,6 +86,8 @@
           <tr>
             <td><%= shop.id %></td>
             <td><%= shop.name %></td>
+            <td><%= shop.tel %></td>
+            <td><%= shop.registerable ? '可' : '不可' %></td>
             <td>
               <%= link_to '詳細', admin_corporation_shop_path(@corporation, shop), class: 'btn btn-default' %>
               <%= link_to '編集', edit_admin_corporation_shop_path(@corporation, shop), class: 'btn btn-primary' %>
