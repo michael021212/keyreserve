@@ -27,6 +27,10 @@
 //= require fullcalendar.min.js
 //= require scheduler.min.js
 //= require fullcalendar_ja.js
+//= require init
+//= require chosen.jquery
+//= require chosen_setting
+//= require cocoon
 //= require plan_price_table.js
 //= require admin/user_type_radios
 //= require admin/common
