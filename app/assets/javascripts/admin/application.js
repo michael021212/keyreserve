@@ -12,9 +12,7 @@
 //
 //= require rails-ujs
 //= require jquery
-//= require jquery_ujs
 //= require jquery-ui
-//= require jquery.slimscroll.min
 //= require chosen-jquery
 //= require chosen_setting
 //= require bootstrap-sprockets
