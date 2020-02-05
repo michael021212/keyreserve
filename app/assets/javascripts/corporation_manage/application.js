@@ -3,6 +3,8 @@
 //= require jquery-ui
 //= require jquery_nested_form
 //= require jquery.slimscroll.min
+//= require chosen-jquery
+//= require chosen_setting
 //= require bootstrap-sprockets
 //= require moment
 //= require moment/ja.js
@@ -10,8 +12,6 @@
 //= require datetimepicker_fmt
 //= require app
 //= require map
-//= require chosen.jquery
-//= require init
 //= require cocoon
 //= require fullcalendar.min.js
 //= require scheduler.min.js
@@ -20,4 +20,3 @@
 //= require corporation_manage/datetimepicker
 //= require corporation_manage/facility
 //= require corporation_manage/common
-//= require chosen_setting
