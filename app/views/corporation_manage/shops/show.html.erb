@@ -32,6 +32,10 @@
         <th><%= Shop.human_attribute_name(:tel) %></th>
         <td><%= @shop.tel %></td>
       </tr>
+      <tr class="cy-shop-registerable">
+        <th><%= Shop.human_attribute_name(:registerable) %></th>
+        <td><%= @shop.registerable ? '可' : '不可' %></td>
+      </tr>
       <tr class="cy-shop-opening-time">
         <th><%= Shop.human_attribute_name(:opening_time) %></th>
         <td><%= time_fmt(@shop.opening_time) %></td>

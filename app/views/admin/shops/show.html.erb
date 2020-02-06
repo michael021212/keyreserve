@@ -36,6 +36,10 @@
         <td><%= @shop.tel %></td>
       </tr>
       <tr>
+        <th><%= Shop.human_attribute_name(:registerable) %></th>
+        <td><%= @shop.registerable ? '可' : '不可' %></td>
+      </tr>
+      <tr>
         <th><%= Shop.human_attribute_name(:opening_time) %></th>
         <td><%= time_fmt(@shop.opening_time) %></td>
       </tr>

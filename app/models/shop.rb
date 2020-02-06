@@ -20,12 +20,18 @@ class Shop < ApplicationRecord
                     ks_flexible: 2,
                     public_facility: 3 }
 
+  # カテゴリ毎の統合用店舗ID
   RENT_SHOP_ID = 6
   FLEXIBLE_SHOP_ID = 11
   PUBLIC_SHOP_ID = 18
 
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
+  end
+
+  # RemoteLockを使用する店舗のID一覧(名前にRemoteLockって含まれる店舗一覧)
+  def self.with_remote_lock_shops
+    Shop.where('name LIKE ?', '%RemoteLock%')
   end
 
   def do_not_over_closing_time

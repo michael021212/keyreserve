@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200122011723) do
+ActiveRecord::Schema.define(version: 20200131052822) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -301,6 +301,7 @@ ActiveRecord::Schema.define(version: 20200122011723) do
     t.datetime "deleted_at"
     t.string "calendar_url"
     t.integer "shop_type", default: 0
+    t.boolean "registerable", default: false
     t.index ["corporation_id"], name: "index_shops_on_corporation_id"
   end
 
