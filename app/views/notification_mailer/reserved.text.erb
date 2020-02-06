@@ -1,5 +1,12 @@
+<%# RemoteLock利用予約の場合 %>
+<% if Shop.with_remote_lock_shops.include?(@reservation.facility.shop) %>
+<%= render '/notification_mailer/partials/reserved_for_rl',
+  reservation: @reservation,
+  ksc_reservation_no: @ksc_reservation_no,
+  ks_room_key_info: @ks_room_key_info %>
+
 <%# 内覧予約の場合 %>
-<% if @reservation.facility.rent? %>
+<% elsif @reservation.facility.rent? %>
 <%= render '/notification_mailer/partials/reserved_for_rent',
   reservation: @reservation,
   ksc_reservation_no: @ksc_reservation_no,
