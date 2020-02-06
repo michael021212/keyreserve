@@ -40,6 +40,7 @@ gem 'rails_autolink'
 gem 'draper'
 gem 'gon'
 gem 'cocoon'
+gem 'chosen-rails'
 
 # Authentication
 gem 'sorcery'

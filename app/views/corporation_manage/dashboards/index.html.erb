@@ -43,6 +43,7 @@
         <th><%= Shop.human_attribute_name(:id) %></th>
         <th><%= Shop.human_attribute_name(:name) %></th>
         <th><%= Shop.human_attribute_name(:tel) %></th>
+        <th><%= Shop.human_attribute_name(:registerable) %></th>
       </tr>
       </thead>
       <tbody>
@@ -51,6 +52,7 @@
           <td><%= shop.id %></td>
           <td><%= shop.name %></td>
           <td><%= shop.tel %></td>
+          <td><%= shop.registerable ? '可' : '不可' %></td>
           <td>
             <%= link_to t('common.btn.show'), corporation_manage_shop_path(shop), class: 'btn btn-default' %>
             <%= link_to t('common.btn.edit'), edit_corporation_manage_shop_path(shop), class: 'btn btn-primary' %>

@@ -7,7 +7,7 @@
                propmt: t('.select_facility') %>
   <%= f.select :user_id,
                current_corporation.users.personal.collect { |u| [u.name_with_corp, u.id] },
-               propmt: t('.select_user') %>
+               {}, {propmt: t('.select_user'), class: 'chosen-select'} %>
   <%= f.number_field :num %>
   <%= f.datetime_select :checkin, { use_month_numbers: true, minute_step: 30 }, class: 'form-control bootstrap-date' %>
   <%= f.select :usage_period, reservable_usage, include_blank: true %>
