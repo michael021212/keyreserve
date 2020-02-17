@@ -11,7 +11,7 @@ module API
       helpers do
         def jwt_authenticate
           error!('Unauthorized token.', 401) unless jwt_bearer_token
-          #error!('Unauthorized token.', 401) unless jwt_decoded_token
+          error!('Unauthorized token.', 401) unless jwt_decoded_token
         end
 
         def jwt_bearer_token
