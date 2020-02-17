@@ -6,6 +6,7 @@ module API
         params do
           requires :email, type: String
           requires :name, type: String
+          requires :password, type: String
         end
         post '/', jbuilder: 'users/create' do
           begin
@@ -19,6 +20,8 @@ module API
                 password: decrypt(params[:password])
               )
               @user.save!
+              CorporationUser.create!(corporation_id: @corporation.id,
+                                      user_id: @user.id)
             end
           rescue => e
             @e = e
