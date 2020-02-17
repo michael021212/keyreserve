@@ -40,10 +40,14 @@ module API
 
         # ハッシュ形式で送られてきた文字列をデコード
         def decrypt(value)
-          return if @corporation.blank?
-          secure = @corporation.jwt_token
-          crypt = ActiveSupport::MessageEncryptor.new(secure[0..31], CIPHER)
-          crypt.decrypt_and_verify(value)
+          begin
+            return false if @corporation.blank?
+            secure = @corporation.jwt_token
+            crypt = ActiveSupport::MessageEncryptor.new(secure[0..31], CIPHER)
+            crypt.decrypt_and_verify(value)
+          rescue
+            false
+          end
         end
 
         # メッセージ付きでエラーを返す

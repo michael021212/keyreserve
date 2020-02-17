@@ -24,7 +24,7 @@ module API
                                       user_id: @user.id)
             end
           rescue => e
-            @e = e
+            @error = e.to_s
           end
         end
       end
