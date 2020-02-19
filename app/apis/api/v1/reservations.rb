@@ -39,7 +39,7 @@ module API
           requires :checkin, type: Integer
           requires :checkout, type: Integer
         end
-        delete '/block', jbuilder: 'reservations/destroy_block' do
+        put '/block', jbuilder: 'reservations/destroy_block' do
           begin
             @facility = Facility.find_by('id=?', params[:facility_id])
             checkin = Time.at(params[:checkin])
