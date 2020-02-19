@@ -47,8 +47,8 @@ module API
             raise_with_message("facility is not found", 404) if @facility.blank?
             raise_with_message("facility is invalid", 400) if @facility.shop.corporation != @corporation
             @reservation = Reservation.find_by('checkin = ? && checkout = ? && facility_id = ?', checkin, checkout, @facility.id)
-            raise_with_message("reservation is not found", 400) if @reservation.blank?
-            raise_with_message("reservation type is not block", 400) if !@reservation.block_flag
+            return if @reservation.blank?
+            return if !@reservation.block_flag
             @reservation.delete
           rescue => e
             @error = e.to_s
