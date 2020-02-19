@@ -32,6 +32,29 @@ module API
             @error = e.to_s
           end
         end
+
+        # ブロック予約の解除
+        params do
+          requires :facility_id, type: Integer
+          requires :checkin, type: Integer
+          requires :checkout, type: Integer
+        end
+        delete '/block', jbuilder: 'reservations/destroy_block' do
+          begin
+            @facility = Facility.find_by('id=?', params[:facility_id])
+            checkin = Time.at(params[:checkin])
+            checkout = Time.at(params[:checkout])
+            raise_with_message("facility is not found", 404) if @facility.blank?
+            raise_with_message("facility is invalid", 400) if @facility.shop.corporation != @corporation
+            @reservation = Reservation.find_by('checkin = ? && checkout = ? && facility_id = ?', checkin, checkout, @facility.id)
+            raise_with_message("reservation is not found", 400) if @reservation.blank?
+            raise_with_message("reservation type is not block", 400) if !@reservation.block_flag
+            @reservation.delete
+          rescue => e
+            @error = e.to_s
+          end
+        end
+
       end
     end
   end
