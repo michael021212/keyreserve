@@ -5,7 +5,7 @@
 施設名: <%= @reservation.facility.name %>
 利用者名: <%= @reservation.user.name %>
 メールアドレス: <%= @reservation.user.email %>
-ご利用日時: <%= datetime_ja @reservation.checkin %>
+ご利用日時: <%= "#{datetime_ja @reservation.checkin} UNIX:#{@reservation.checkin.to_i}" %>
 ご利用時間: <%= @reservation.usage_period %>時間
 ご利用人数: <%= @reservation.num %>名
 お支払方法: <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>

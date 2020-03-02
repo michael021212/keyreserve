@@ -1,6 +1,8 @@
 module API
   module V1
     class Root < Grape::API
+      CIPHER = "aes-256-cbc"
+
       # http://localhost:3000/api/v1/
       version 'v1', using: :path
       format :json
@@ -28,6 +30,26 @@ module API
           nil # エラーの詳細をクライアントには伝えないため、常に nil を返す
         end
 
+        # 文字列をパートナー毎のtokenでエンコード
+        def encrypt(value)
+          return if @corporation.blank?
+          secure = @corporation.jwt_token
+          crypt = ActiveSupport::MessageEncryptor.new(secure[0..31], CIPHER)
+          crypt.encrypt_and_sign(value)
+        end
+
+        # ハッシュ形式で送られてきた文字列をデコード
+        def decrypt(value)
+          begin
+            return false if @corporation.blank?
+            secure = @corporation.jwt_token
+            crypt = ActiveSupport::MessageEncryptor.new(secure[0..31], CIPHER)
+            crypt.decrypt_and_verify(value)
+          rescue
+            false
+          end
+        end
+
         # メッセージ付きでエラーを返す
         def raise_with_message(msg, code)
           error!({errors: msg}, code)
@@ -51,6 +73,9 @@ module API
       end
 
       mount API::V1::FacilityKeys
+      mount API::V1::Users
+      mount API::V1::Sessions
+      mount API::V1::Reservations
     end
   end
 end
