@@ -26,5 +26,4 @@ class ApplicationController < ActionController::Base
     logger.warn '422 Invalid Access Token with exception occurred, and redirect to registration form:' + e.message + "\n" + e.backtrace.join("\n") if e
     redirect_back(fallback_location: sign_in_path, alert: 'エラーが発生しました。お手数ですが、もう一度お試しください')
   end
-
 end
