@@ -44,6 +44,11 @@
                           <i class="fa fa-home"></i>
                           <span class="mg-desc-text"><%= facility.address %></span>
                         </li>
+                        <% if facility.include_chartered_place? %>
+                          <li>
+                            <span class="mg-desc-text" style='color: red;'>貸切利用の場合は『施設予約』から予約をお願い致します</span>
+                          </li>
+                        <% end %>
                       </ul>
                     </div>
                   </div>
