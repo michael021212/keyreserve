@@ -217,6 +217,11 @@ class Facility < ApplicationRecord
     rent? || ks_flexible? || public_place? || chartered_place?
   end
 
+  # 貸し切り施設の一部として登録されているかどうか
+  def include_chartered_place?
+    CharteredFacility.where(child_facility_id: id).present?
+  end
+
   private
 
   def compute_min_price(user, target_time)
