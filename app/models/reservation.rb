@@ -30,7 +30,7 @@ class Reservation < ApplicationRecord
 
   with_options on: :need_for_payment do
     validates :user_id, :price, presence: true
-    validate :need_credit_card
+    #validate :need_credit_card
     validate :limit_has_not_exceeded
   end
 
