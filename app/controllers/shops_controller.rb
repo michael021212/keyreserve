@@ -37,7 +37,7 @@ class ShopsController <  ApplicationController
                     .facilities
                     .conference_room
                     .where(published: true)
-                    .order(id: :desc)
+                    .order(id: :asc)
                     .page(params[:page])
     end
   end
