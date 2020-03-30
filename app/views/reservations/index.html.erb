@@ -61,11 +61,12 @@
                             class: 'btn btn-main btn-block' %>
                         </div>
                         <div class="col-md-offset-4 col-md-4 text-right">
+                          <%# WBG会議室プランに紐づくユーザには削除ボタン出さない %>
                           <%= link_to t('common.btn.cancel'),
                             reservation_path(reservation),
                             method: :delete,
                             data: { confirm: t('common.confirms.really_to_cancele') },
-                            class: 'btn btn-danger' if reservation.cancelable? %>
+                            class: 'btn btn-danger' if reservation.cancelable? && !current_user.contract_plan_ids.include?(26) %>
                         </div>
                       </div>
                     </div>
