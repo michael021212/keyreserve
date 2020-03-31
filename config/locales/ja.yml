@@ -35,6 +35,7 @@ ja:
         name: 運営会社名
         kana: 運営会社名(カナ)
         tel: 電話番号
+        email: メールアドレス
         postal_code: 郵便番号
         address: 住所
         note: 備考
