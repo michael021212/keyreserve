@@ -33,12 +33,17 @@ class ShopsController <  ApplicationController
         @public_facilities = []
       end
     else
-      @facilities = @shop
-                    .facilities
-                    .conference_room
-                    .where(published: true)
-                    .order(id: :asc)
-                    .page(params[:page])
+      if current_user.present?
+        @facilities = current_user
+                      .login_spots
+                      .conference_room
+                      .where(shop_id: @shop.id)
+                      .where(published: true)
+                      .order(id: :asc)
+                      .page(params[:page])
+      else
+        @facilities = []
+      end
     end
   end
 
