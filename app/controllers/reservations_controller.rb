@@ -137,6 +137,7 @@ class ReservationsController <  ApplicationController
       @reservation.payment.stripe_charge! if @reservation.stripe_chargeable?
       NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no, ks_room_key_info).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
+      NotificationMailer.reserved_to_corporation(@reservation).deliver_now if @reservation.facility.shop.corporation.try(:email).present?
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
     end
     redirect_to thanks_reservations_url
@@ -158,6 +159,7 @@ class ReservationsController <  ApplicationController
       @reservation.unblock_for_chartered_place
       NotificationMailer.reservation_canceled(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
       NotificationMailer.reservation_canceled(@reservation, @reservation.reservation_user_id).deliver_now
+      NotificationMailer.reservation_canceled_to_corporation(@reservation).deliver_now if @reservation.facility.shop.corporation.try(:email).present?
       NotificationMailer.reservation_canceled_to_admin(@reservation).deliver_now
     end
     redirect_to reservations_path, notice: '予約をキャンセルしました'
