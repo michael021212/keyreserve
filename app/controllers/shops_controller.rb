@@ -4,6 +4,8 @@ class ShopsController <  ApplicationController
 
   def index
     @shops = Shop.general.order(id: :desc).page(params[:page])
+    # ザイマックス店舗は一般公開しない
+    @shops = @shops.where.not(id: 22) if current_user.blank? || !current_user.contract_plan_ids.include?(26)
   end
 
   def show
