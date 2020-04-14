@@ -123,6 +123,7 @@ ja:
         payment_id: 決済ID
         mail_send_flag: 予約案内メール送信フラグ
         block_flag: ブロック
+        note: 備考
       shop:
         id: 店舗ID
         name: 店舗名

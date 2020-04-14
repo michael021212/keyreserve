@@ -12,6 +12,7 @@
 ご利用料金: <%= number_with_delimiter @reservation.price %>円
 お支払方法: <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
 予約タイプ: <%= @reservation.facility.reservation_type_i18n %>
+備考: <%= @reservation.note %>
 
 <%= corporation_manage_reservation_url(@reservation) %>
 

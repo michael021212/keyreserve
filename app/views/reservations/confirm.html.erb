@@ -61,7 +61,13 @@
                     <span><%= number_with_delimiter @price %></span><span>円</span>
                   </div>
                 </div>
-                <div class="row">
+                <div class="form-group">
+                  <label class="col-sm-6 control-label">備考</label>
+                  <div class="input-group col-sm-6 static-text">
+                    <span><%= f.text_area :note, class: 'form-control', rows: 4 %></span>
+                  </div>
+                </div>
+                <div class="row mt30">
                   <div class="col-md-offset-4 col-md-4">
                     <button type="submit" class="btn btn-main btn-block" id='confirm_reservaiton_btn'>予約する</button>
                   </div>

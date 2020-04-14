@@ -116,6 +116,8 @@ class ReservationsController <  ApplicationController
       flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
       redirect_to spot_reservations_url and return
     end
+    note = Hash['note', params[:spot][:note]]
+    @condition.merge!(note)
     @reservation = Reservation.new_from_spot(@condition, @user, current_user)
     @reservation.set_payment
     ActiveRecord::Base.transaction do

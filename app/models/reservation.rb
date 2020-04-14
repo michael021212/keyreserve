@@ -87,7 +87,8 @@ class Reservation < ApplicationRecord
       state: :confirmed,
       price: price,
       num: spot['use_num'],
-      mail_send_flag: false
+      mail_send_flag: false,
+      note: spot['note']
     )
   end
 
@@ -143,7 +144,9 @@ class Reservation < ApplicationRecord
     canceled? || (time > checkin)
   end
 
-  def cancelable?
+  def cancelable?(user)
+    # ザイマックスの場合は無条件に削除ボタン非表示
+    return false if user.contract_plan_ids.include?(Plan::XYMAX_PLAN_ID)
     time = Time.zone.now + 1.days
     checkin > time
   end
