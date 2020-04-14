@@ -25,6 +25,9 @@ class Shop < ApplicationRecord
   FLEXIBLE_SHOP_ID = 11
   PUBLIC_SHOP_ID = 18
 
+  # 特別対応を行う店舗ID
+  WBG_SHOP_ID = 22
+
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
   end

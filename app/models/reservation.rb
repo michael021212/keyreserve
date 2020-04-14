@@ -3,6 +3,8 @@ class Reservation < ApplicationRecord
   include KsCheckinApi
   include KeystationApi
 
+  after_create :create_xymax_special_block_rsv, if: Proc.new{ facility.shop.id == Shop::WBG_SHOP_ID && !block_flag }
+
   acts_as_paranoid
   belongs_to :facility, optional: true
   belongs_to :user, optional: true
@@ -48,6 +50,13 @@ class Reservation < ApplicationRecord
     where(mail_send_flag: false).where(arel_table[:checkin].lteq(target))
   end
 
+  def create_xymax_special_block_rsv
+    return if facility.shop.id != Shop::WBG_SHOP_ID
+    start_at = checkout
+    finish_at = start_at + 1.hour
+    Reservation.create_block_reservatin(start_at, finish_at, facility)
+  end
+
   # 請求時に削除済の施設も参照できる必要があったので上書き
   def facility_with_deleted
     Facility.unscope(where: :deleted_at).find_by(id: facility_id)
@@ -71,6 +80,19 @@ class Reservation < ApplicationRecord
 
   def cancel_payment
     payment.destroy!
+  end
+
+  def self.create_block_reservatin(checkin, checkout, facility)
+    usage_period = (checkout - checkin) / 60 / 60
+    Reservation.create(
+      facility_id: facility.id,
+      checkin: checkin,
+      checkout: checkout,
+      usage_period: usage_period,
+      state: Reservation.states[:confirmed],
+      block_flag: true,
+      price: 0
+    )
   end
 
   def self.new_from_spot(spot, user, current_user)
