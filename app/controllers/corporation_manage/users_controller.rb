@@ -13,6 +13,7 @@ class CorporationManage::UsersController < CorporationManage::Base
   def create
     @user = current_corporation.users.build(user_params)
     if @user.save
+      @user.skip_sms_verification_if_not_required!
       redirect_to corporation_manage_user_path(@user), notice: t('common.messages.created', name: User.model_name.human)
     else
       render :new, status: :unprocessable_entity

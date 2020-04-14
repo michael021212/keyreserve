@@ -63,6 +63,10 @@
         <th><%= Corporation.human_attribute_name(:note) %></th>
         <td><%= @corporation.note  %></td>
       </tr>
+      <tr>
+        <th><%= Corporation.human_attribute_name(:verification_required) %></th>
+        <td><%= @corporation.verification_required ? '必要' : '不要'  %></td>
+      </tr>
     </table>
   </div>
 </div>

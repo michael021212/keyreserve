@@ -8,5 +8,6 @@
   <%= f.text_field :address %>
   <%= f.text_field :ksc_token %>
   <%= f.text_field :note %>
+  <%= f.select :verification_required, [['必要', true], ['不要', false]] %>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

@@ -22,9 +22,15 @@ class UsersController < ApplicationController
       @user.parent_id = user_corp.id if user_corp.present?
     end
     if @user.save(context: :new_user_registration)
+      @user.reload
+      @user.skip_sms_verification_if_not_required!
       session[:parent_token] = nil
       auto_login(@user)
-      redirect_to tel_user_path
+      if @user.sms_verified
+        redirect_to root_path, notice: 'ユーザ登録が完了しました'
+      else
+        redirect_to tel_user_path
+      end
     else
       render :new
     end
