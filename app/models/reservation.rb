@@ -32,8 +32,8 @@ class Reservation < ApplicationRecord
 
   with_options on: :need_for_payment do
     validates :user_id, :price, presence: true
-    #validate :need_credit_card
-    #validate :limit_has_not_exceeded
+    validate :need_credit_card
+    validate :limit_has_not_exceeded
   end
 
   scope :with_corporation, ->(corporation) { includes(facility: :shop).where(shops: { corporation_id: corporation.id }) }
@@ -245,11 +245,13 @@ class Reservation < ApplicationRecord
   end
 
   def need_credit_card
+    return if !(user.present? && user.creditcard?)
     return if user_credit_card.present?
     errors.add(:user_id, :credit_card_is_not_exists)
   end
 
   def limit_has_not_exceeded
+    return if !(user.present? && user.creditcard?)
     return if price.present? && price > 50
     errors.add(:price, :limit_has_not_exceeded)
   end
