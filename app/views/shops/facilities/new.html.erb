@@ -39,7 +39,7 @@
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用人数</label>
                   <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.text_field :use_num, type: 'number', min: 0, max: 99,
+                    <%= f.text_field :use_num, type: 'number', min: 0, max: 200,
                       value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i,
                       placeholder: 'ご利用人数',
                       class: 'form-control' %>
