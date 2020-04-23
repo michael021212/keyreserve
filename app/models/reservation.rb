@@ -3,6 +3,8 @@ class Reservation < ApplicationRecord
   include KsCheckinApi
   include KeystationApi
 
+  after_create :create_xymax_special_block_rsv, if: Proc.new{ facility.shop.id == Shop::WBG_SHOP_ID && !block_flag }
+
   acts_as_paranoid
   belongs_to :facility, optional: true
   belongs_to :user, optional: true
@@ -30,8 +32,8 @@ class Reservation < ApplicationRecord
 
   with_options on: :need_for_payment do
     validates :user_id, :price, presence: true
-    #validate :need_credit_card
-    #validate :limit_has_not_exceeded
+    validate :need_credit_card
+    validate :limit_has_not_exceeded
   end
 
   scope :with_corporation, ->(corporation) { includes(facility: :shop).where(shops: { corporation_id: corporation.id }) }
@@ -46,6 +48,13 @@ class Reservation < ApplicationRecord
   scope :ready_to_send, -> do
     target = Time.zone.now + 30.minutes
     where(mail_send_flag: false).where(arel_table[:checkin].lteq(target))
+  end
+
+  def create_xymax_special_block_rsv
+    return if facility.shop.id != Shop::WBG_SHOP_ID
+    start_at = checkout
+    finish_at = start_at + 1.hour
+    Reservation.create_block_reservatin(start_at, finish_at, facility)
   end
 
   # 請求時に削除済の施設も参照できる必要があったので上書き
@@ -73,6 +82,19 @@ class Reservation < ApplicationRecord
     payment.destroy!
   end
 
+  def self.create_block_reservatin(checkin, checkout, facility)
+    usage_period = (checkout - checkin) / 60 / 60
+    Reservation.create(
+      facility_id: facility.id,
+      checkin: checkin,
+      checkout: checkout,
+      usage_period: usage_period,
+      state: Reservation.states[:confirmed],
+      block_flag: true,
+      price: 0
+    )
+  end
+
   def self.new_from_spot(spot, user, current_user)
     checkin = Time.zone.parse(spot['checkin'] + " " + spot['checkin_time'])
     facility = Facility.find(spot['facility_id'].to_i)
@@ -87,7 +109,8 @@ class Reservation < ApplicationRecord
       state: :confirmed,
       price: price,
       num: spot['use_num'],
-      mail_send_flag: false
+      mail_send_flag: false,
+      note: spot['note']
     )
   end
 
@@ -143,7 +166,9 @@ class Reservation < ApplicationRecord
     canceled? || (time > checkin)
   end
 
-  def cancelable?
+  def cancelable?(user)
+    # ザイマックスの場合は無条件に削除ボタン非表示
+    return false if user.contract_plan_ids.include?(Plan::XYMAX_PLAN_ID)
     time = Time.zone.now + 1.days
     checkin > time
   end
@@ -220,11 +245,13 @@ class Reservation < ApplicationRecord
   end
 
   def need_credit_card
+    return if !(user.present? && user.creditcard?)
     return if user_credit_card.present?
     errors.add(:user_id, :credit_card_is_not_exists)
   end
 
   def limit_has_not_exceeded
+    return if !(user.present? && user.creditcard?)
     return if price.present? && price > 50
     errors.add(:price, :limit_has_not_exceeded)
   end

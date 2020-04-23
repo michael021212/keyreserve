@@ -8,6 +8,7 @@
 利用日時: <%= datetime_ja reservation.checkin %>
 利用時間: <%= reservation.usage_period %>時間
 人数: <%= reservation.num %>名
+備考: <%= reservation.note %>
 
 <%# KS Checkinを利用する場合 %>
 <% if reservation.facility.rent_with_ksc? %>

@@ -15,6 +15,7 @@ class Admin::UsersController < AdminController
   def create
     @user = User.new(user_params)
     if @user.save
+      @user.skip_sms_verification_if_not_required!
       flash[:notice] = "#{User.model_name.human}を作成しました。"
       redirect_to @user.user_corp.present? ? [:admin, @user.user_corp, @user] : [:admin, @user]
     else

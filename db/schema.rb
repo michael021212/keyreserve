@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200131052822) do
+ActiveRecord::Schema.define(version: 20200414061903) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 20200131052822) do
     t.datetime "deleted_at"
     t.string "ksc_token"
     t.string "jwt_token"
+    t.string "email"
+    t.boolean "verification_required", default: true
   end
 
   create_table "credit_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -280,6 +282,7 @@ ActiveRecord::Schema.define(version: 20200131052822) do
     t.integer "payment_id"
     t.boolean "mail_send_flag", default: false
     t.bigint "billing_id"
+    t.text "note"
     t.index ["billing_id"], name: "index_reservations_on_billing_id"
     t.index ["facility_id"], name: "index_reservations_on_facility_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
