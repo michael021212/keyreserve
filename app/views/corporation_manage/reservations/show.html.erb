@@ -67,6 +67,10 @@
         <th><%= Reservation.human_attribute_name(:mail_send_flag) %></th>
         <td><%= @reservation.decorate.mail_send_flag_to_text %></td>
       </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:note) %></th>
+        <td><%= simple_format(@reservation.note) %></td>
+      </tr>
     </table>
   </div>
 </div>

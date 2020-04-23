@@ -31,10 +31,9 @@
     <div class="col-md-2 col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          <%= f.select :use_num,
-            selectable_num,
-            { selected: params[:spot][:use_num].to_i, include_blank: 'Person' },
-            class: 'cs-select cs-skin-elastic' %>
+          <%= f.text_field :use_num, type: 'number', min: 0, max: 99,
+            value: params[:spot][:use_num].to_i == 0 ? nil : params[:spot][:use_num].to_i, placeholder: 'Person',
+            class: 'form-control' %>
         </div>
       </div>
     </div>

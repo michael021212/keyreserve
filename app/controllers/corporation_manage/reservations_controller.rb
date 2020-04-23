@@ -42,8 +42,12 @@ class CorporationManage::ReservationsController < CorporationManage::Base
   # POST /corporation_manager/reservations/payments
   def payment
     build_reservation_from_session
-    @reservation.set_payment
-    @reservation.save_and_charge!
+    if @reservation.user.creditcard?
+      @reservation.set_payment
+      @reservation.save_and_charge!
+    elsif @reservation.user.invoice?
+      @reservation.save!
+    end
     session[:reservation] = nil
     redirect_to corporation_manage_reservations_path, notice: t('common.messages.created', name: Reservation.model_name.human)
   rescue Stripe::StripeError => e

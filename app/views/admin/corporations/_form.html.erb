@@ -2,10 +2,12 @@
   <%= f.select :ks_corporation_id, options_for_select(key_corporation_select, selected: f.object.ks_corporation_id), include_blank: true %>
   <%= f.text_field :name %>
   <%= f.text_field :kana %>
+  <%= f.text_field :email %>
   <%= f.text_field :tel %>
   <%= f.number_field :postal_code %>
   <%= f.text_field :address %>
   <%= f.text_field :ksc_token %>
   <%= f.text_field :note %>
+  <%= f.select :verification_required, [['必要', true], ['不要', false]] %>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

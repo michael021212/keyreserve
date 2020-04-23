@@ -4,6 +4,8 @@ class ShopsController <  ApplicationController
 
   def index
     @shops = Shop.general.order(id: :desc).page(params[:page])
+    # ザイマックス店舗は一般公開しない
+    @shops = @shops.where.not(id: 22) if current_user.blank? || !current_user.contract_plan_ids.include?(26)
   end
 
   def show
@@ -33,12 +35,17 @@ class ShopsController <  ApplicationController
         @public_facilities = []
       end
     else
-      @facilities = @shop
-                    .facilities
-                    .conference_room
-                    .where(published: true)
-                    .order(id: :asc)
-                    .page(params[:page])
+      if current_user.present?
+        @facilities = current_user
+                      .login_spots
+                      .conference_room
+                      .where(shop_id: @shop.id)
+                      .where(published: true)
+                      .order(id: :asc)
+                      .page(params[:page])
+      else
+        @facilities = []
+      end
     end
   end
 

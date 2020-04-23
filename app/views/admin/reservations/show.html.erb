@@ -68,6 +68,10 @@
         <th><%= Reservation.human_attribute_name(:mail_send_flag) %></th>
         <td><%= @reservation.mail_send_flag? ? '◯' : '' %></td>
       </tr>
+      <tr>
+        <th><%= Reservation.human_attribute_name(:note) %></th>
+        <td><%= simple_format(@reservation.note) %></td>
+      </tr>
     </table>
   </div>
 </div>

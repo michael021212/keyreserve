@@ -33,6 +33,11 @@ class User < ApplicationRecord
   scope(:user_corp_token, ->(token) { find_by(parent_token: token) })
   scope(:parent_is_nil, -> { where(parent_id: nil) })
 
+  def skip_sms_verification_if_not_required!
+    return if corporations.blank? || !corporations.pluck(:verification_required).include?(false)
+    update!(sms_verified: true)
+  end
+
   # 利用可能な施設一覧
   # ユーザが契約中のプランに紐付いてる施設一覧
   def available_facilities
