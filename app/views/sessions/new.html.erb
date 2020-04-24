@@ -27,12 +27,9 @@
       </div>
       <div class="notice-area">
         <div class="row">
-          <%# ザイマックスサイトから直遷移の場合は新規登録画面を表示させない処理 %>
-          <% unless request.referer&.include?("https://user-wbg35.com") %>
           <div class="col-md-9 col-md-offset-right-3 col-xs-12">
             <div class="pull-right"><%= link_to 'アカウント登録(Register)', new_user_path %></div>
           </div>
-          <% end %>
           <div class="col-md-9 col-md-offset-right-3 col-xs-12">
             <p class="pull-right"><%= link_to 'パスワードを忘れた方(Forget Password)', reminder_sessions_path %></p>
           </div>
