@@ -73,7 +73,9 @@
                   </div>
                 </div>
               </div>
-              <p style='color: red;'>※予約時刻の24時間前までキャンセルが可能です。 <br />それ以後のキャンセルは100%の料金が発生致します。</p>
+              <% if reservation.cancelable?(current_user) %>
+                <p style='color: red;'>※予約時刻の24時間前までキャンセルが可能です。 <br />それ以後のキャンセルは100%の料金が発生致します。</p>
+              <% end %>
             </div>
           <% end %>
         </div>
