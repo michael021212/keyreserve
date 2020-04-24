@@ -73,7 +73,7 @@
                   </div>
                 </div>
               </div>
-              <% if reservation.cancelable?(current_user) %>
+              <% unless current_user.contract_plan_ids.include?(Plan::XYMAX_PLAN_ID) %>
                 <p style='color: red;'>※予約時刻の24時間前までキャンセルが可能です。 <br />それ以後のキャンセルは100%の料金が発生致します。</p>
               <% end %>
             </div>
