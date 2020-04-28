@@ -358,6 +358,8 @@ ja:
         title: 予約登録
       confirm:
         title: 決済詳細
+      edit:
+        title: 予約備考編集
     corporate_admin_users:
       form:
         guide_change_password: 変更したくない場合は空にしてください

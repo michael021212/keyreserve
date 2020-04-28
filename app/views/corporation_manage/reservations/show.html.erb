@@ -3,6 +3,7 @@
     <h4 class="box-title"><%= t('.title') %></h4>
     <div class="box-tools">
       <%= link_to t('common.btn.back'), corporation_manage_reservations_path, class: 'btn btn-default' %>
+      <%= link_to '備考編集', edit_corporation_manage_reservation_path(@reservation), class: 'btn btn-primary' %>
     </div>
   </div>
   <div class="box-body">

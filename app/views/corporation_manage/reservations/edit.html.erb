@@ -1,0 +1,5 @@
+<%= bootstrap_form_for([:corporation_manage, @reservation], layout: :horizontal) do |f| %>
+  <%= f.text_area :note, rows: 5, hide_label: true %>
+  <%= f.submit class: 'btn btn-primary pull-left' %>
+<% end %>
+
