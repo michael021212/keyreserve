@@ -16,5 +16,9 @@
   <%= f.form_group :advertise_notice_flag, label: {} do %>
     <%= f.check_box :advertise_notice_flag %>
   <% end %>
+  <%= f.form_group :advertise_notice_flag, label: {} do %>
+    <%= f.check_box :advertise_notice_flag %>
+  <% end %>
+  <%= f.collection_check_boxes :corporation_ids, Corporation.all, :id, :name, inline: true %>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>
