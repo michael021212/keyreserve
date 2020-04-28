@@ -77,6 +77,7 @@ ja:
         advertise_notice_flag: お知らせメールを受け取る
         campaign_id: キャンペーンID
         term_of_use: 利用規約及びプライバシーポリシー
+        corporation_ids: 参照可能企業
       corporate_admin_user:
         id: ID
         name: 施設管理者名
