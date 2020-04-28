@@ -1,5 +1,5 @@
 class CorporationManage::ReservationsController < CorporationManage::Base
-  before_action :set_reservation, only: %i[show destroy]
+  before_action :set_reservation, only: %i[show destroy edit update]
 
   def index
     @q = Reservation.with_corporation(current_corporation).ransack(params[:q])
@@ -36,6 +36,17 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     else
       flash[:notice] = @reservation.errors[:price].first if @reservation.errors[:price].present?
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @reservation.update(reservation_note_params)
+      redirect_to corporation_manage_reservation_path(@reservation), notice: t('common.messages.updated', name: Reservation.model_name.human)
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -88,5 +99,9 @@ class CorporationManage::ReservationsController < CorporationManage::Base
       :state,
       :block_flag
     ).merge(state: :confirmed)
+  end
+
+  def reservation_note_params
+    params.require(:reservation).permit(:note)
   end
 end
