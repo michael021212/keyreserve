@@ -143,7 +143,7 @@ Rails.application.routes.draw do
     resources :user_corps
     resources :corporate_admin_users
     resources :billings, only: %i[index show]
-    resources :reservations, only: %i[new create index show destroy] do
+    resources :reservations do
       post :payment, on: :collection
     end
     resources :dropin_reservations, only: %i[index show]
