@@ -72,9 +72,11 @@ class CorporationManage::ReservationsController < CorporationManage::Base
   def destroy
     ActiveRecord::Base.transaction do
       @reservation.destroy!
-      NotificationMailer.reservation_canceled(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
-      NotificationMailer.reservation_canceled(@reservation, @reservation.reservation_user_id).deliver_now
-      NotificationMailer.reservation_canceled_to_admin(@reservation).deliver_now
+      unless @reservation.block_flag?
+        NotificationMailer.reservation_canceled(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
+        NotificationMailer.reservation_canceled(@reservation, @reservation.reservation_user_id).deliver_now
+        NotificationMailer.reservation_canceled_to_admin(@reservation).deliver_now
+      end
     end
     redirect_to corporation_manage_reservations_path, notice: t('common.messages.deleted', name: Reservation.model_name.human)
   rescue
