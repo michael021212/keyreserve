@@ -26,6 +26,8 @@ class CorporationManage::ReservationsController < CorporationManage::Base
 
   def create
     @reservation = Reservation.new(reservation_params)
+    # TODO: 本当に条件これでいいのか確認する
+    @reservation.reservation_user_id = @reservation.user_id
     @reservation.set_check_out
     @reservation.set_price
     if @reservation.valid?(:need_for_payment)
