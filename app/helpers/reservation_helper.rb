@@ -1,7 +1,7 @@
 module ReservationHelper
 
   def reservable_usage(ary=[], usage=0.5)
-    while usage <= 10 do
+    while usage <= 13 do
       ary << ["#{ usage.to_s }時間", usage]
       usage += 0.5
     end
