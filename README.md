@@ -2,47 +2,47 @@
 
 
 ## Servises
-- こちらはKEY STATIONで使える会議室などの予約システムです
+- This is a reservation system for meeting rooms, etc that is used with KEY STATION.
 
 ## Features
 
-### アプリケーションサーバー
+### Application Server
 
 - puma
 
-### デプロイ
+### Deploy
 
 - capistrano
 
-### ユーザー認証
+### User Certification
 
 - sorcery
 
-### テンプレートエンジン
+### Design Template Engine
 
 - bootstrap_form_for
 
-### CSSフレームワーク
+### CSS Framework
 
 - Bootstrap3(Sass)
 - Fontawesome
 - [adminlte2](https://almsaeedstudio.com/themes/AdminLTE/documentation/index.html)
 
-### アップロード
+### Upload
 
 - carrierwave
 
-### バックグラウンドジョブ
+### Background Job
 
 - activejob
 
-### その他
+### The Others
 
 - See `Gemfile`.
 
-### 日付/時間フォーマット
+### Date/Time Format
 
-- config/initializers/time_formats.rb にあります
+- It's in `config/initializers/time_formats.rb`
 ---
 
 ## Ruby version
@@ -60,13 +60,15 @@
 
 ## Project initiation
 
-- リポジトリのクローン
+- Clone the Repositry
 
 ```bash
-$ git@github.com:hisaju/keyreserve.git
+$ git@github.com:keeyls/keyreserve.git
 ```
 
-- Gemのインストール
+- Install the right version of Ruby and Bundler.
+
+- Install Gems
 
 ```bash
 $ bundle install --path vendor/bundle
@@ -74,21 +76,21 @@ $ bundle install --path vendor/bundle
 
 ### Configuration
 
-*ファイルの中身はご自身の環境に合わせて適宜変更してください*
+*Please change the contents of the file according to your own environment.*
 
-- データベースの設定
+- Database Settings
 
 ```bash
 $ cp config/database.yml.default config/database.yml
 ```
 
-- 環境変数の設定
+- Setting Environment Variables
 
 ```bash
 $ cp .env.default .env
 ```
 
-*AWSのアクセスキーなどは個別に担当者に聞いてください。*
+*Please ask the person in charge of the AWS access key etc if you need it and add it to these files.*
 
 ### Database creation
 
@@ -111,7 +113,7 @@ $ bundle exec rails server
 ## How to run the test suite
 
 ```bash
-$ spring rspec spec/[対象ファイル]
+$ spring rspec spec/[Target File]
 ```
 
 ## CI as a service
@@ -142,5 +144,5 @@ $ direnv allow
 title = current_title(yield(:title))
 
 /! template
-- provide(:title, 'ページタイトル')
+- provide(:title, 'page title')
 ```
