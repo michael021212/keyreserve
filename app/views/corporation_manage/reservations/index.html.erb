@@ -9,7 +9,7 @@
     <%= render 'search_form', q: @q %>
     <%= link_to t('common.btn.csv'), corporation_manage_reservations_path(q: request.params[:q], format: 'csv'), class: "btn btn-default" %>
   </div>
-  <div class="box-body">
+  <div class="box-body table-responsive">
     <table class="table table-striped">
       <thead>
       <tr>
