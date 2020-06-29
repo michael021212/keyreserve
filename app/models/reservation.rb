@@ -52,6 +52,9 @@ class Reservation < ApplicationRecord
 
   def create_xymax_special_block_rsv
     return if facility.shop.id != Shop::WBG_SHOP_ID
+    start_at = checkin - 1.hour
+    finish_at = checkin
+    Reservation.create_block_reservatin(start_at, finish_at, facility)
     start_at = checkout
     finish_at = start_at + 1.hour
     Reservation.create_block_reservatin(start_at, finish_at, facility)
