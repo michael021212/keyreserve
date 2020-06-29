@@ -52,6 +52,9 @@ class Reservation < ApplicationRecord
 
   def create_xymax_special_block_rsv
     return if facility.shop.id != Shop::WBG_SHOP_ID
+    start_at = checkin - 1.hour
+    finish_at = checkin
+    Reservation.create_block_reservatin(start_at, finish_at, facility)
     start_at = checkout
     finish_at = start_at + 1.hour
     Reservation.create_block_reservatin(start_at, finish_at, facility)
@@ -140,12 +143,13 @@ class Reservation < ApplicationRecord
       num,
       state_i18n,
       price,
-      payment_method
+      payment_method,
+      note
     ]
   end
 
   def self.csv_column_names
-    %w[運営会社名 店舗名 施設名 お名前 利用日 利用開始時間 利用終了時間 利用時間 利用人数 状態 利用料金 決済方法]
+    %w[運営会社名 店舗名 施設名 お名前 利用日 利用開始時間 利用終了時間 利用時間 利用人数 状態 利用料金 決済方法 備考]
   end
 
   def reservation_user
