@@ -6,7 +6,13 @@
                include_blank: true,
                help: t('.guide_ks_room_key') %>
   <%= f.text_field :guide_mail_title, help: t('.guide_mail_title') %>
-  <%= f.text_area :guide_mail_content, rows: 10 %>
+  <%= f.text_area :guide_mail_content, rows: 10, id: 'guide-mail-content' %>
+  <div class='form-group'>
+    <%= link_to 'パスワード挿入', '#', class: 'btn btn-xs btn-info', id: 'insert-pwd' %>
+    <span class="help-block">
+      パスワードを表示されたい箇所に、【パスワード挿入】ボタンを押してください
+    </span>
+  </div>
   <%= f.file_field :guide_file, help: t('.guide_file') %>
   <div class="form-group">
     <% if f.object.guide_file.present? %>
