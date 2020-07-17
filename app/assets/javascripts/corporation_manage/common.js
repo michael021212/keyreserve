@@ -60,3 +60,10 @@ $(document)
   .on('click', '.js-all-checkbox', function (e) {
     checkAll(e.target, '.js-shop-checkbox')
   });
+
+$('#insert-pwd').on('click', function(event){
+  event.preventDefault()
+  currentPosition = $('#guide-mail-content')[0].selectionStart
+  textAreaTxt = $('#guide-mail-content').val()
+  $('#guide-mail-content').val(textAreaTxt.substring(0, currentPosition) + '[[password]]' + textAreaTxt.substring(currentPosition))
+});

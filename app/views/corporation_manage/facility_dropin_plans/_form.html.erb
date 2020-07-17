@@ -1,7 +1,13 @@
 <%= bootstrap_nested_form_for([:corporation_manage, facility.shop, facility, facility_dropin_plan]) do |f| %>
   <%= f.collection_select :plan_id, current_corporation.plans.all, :id, :name, { include_blank: t('common.not_member') } %>
   <%= f.text_field :guide_mail_title, help: t('.guide_mail_title') %>
-  <%= f.text_area :guide_mail_content, rows: 10 %>
+  <%= f.text_area :guide_mail_content, rows: 10, id: 'guide-mail-content' %>
+  <div class='form-group'>
+    <%= link_to 'パスワード挿入', '#', class: 'btn btn-xs btn-info', id: 'insert-pwd' %>
+    <span class="help-block">
+      パスワードを表示されたい箇所に、【パスワード挿入】ボタンを押してください
+    </span>
+  </div>
   <%= f.file_field :guide_file, help: t('.guide_mail_title') %>
   <%= f.form_group :facility_dropin_sub_plans, label: { text: t('.add_dropin_plan_price') } do %>
     <%= f.fields_for :facility_dropin_sub_plans do |sub_plan| %>
