@@ -18,7 +18,9 @@ class Shop < ApplicationRecord
   enum shop_type: { general: 0,
                     rent: 1,
                     ks_flexible: 2,
-                    public_facility: 3 }
+                    public_facility: 3,
+                    general_with_ksc: 4
+                  }
 
   # カテゴリ毎の統合用店舗ID
   RENT_SHOP_ID = 6

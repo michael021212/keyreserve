@@ -69,11 +69,14 @@
   </div>
 
   <%# 店舗が賃貸、フレキシブル、公共施設の場合はKS Checkin利用有無を選択 %>
+  <%# 店舗がKSC利用の場合はKS Checkin利用をhiddenで送る %>
   <%# 店舗が一般の場合はhiddenで一般予約を送る %>
   <% if shop.rent? || shop.ks_flexible? || shop.public_facility? %>
     <%= f.select :reservation_type,
       Facility.reservation_types_i18n.select{ |k,v| k == 'rent_with_ksc' || k == 'rent_without_ksc' }.invert,
       include_blank: 'この施設の予約方法を選択' %>
+  <% elsif shop.general_with_ksc? %>
+    <%= f.hidden_field :reservation_type, value: :rent_with_ksc %>
   <% else %>
     <%= f.hidden_field :reservation_type, value: :general %>
   <% end %>
