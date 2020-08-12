@@ -177,6 +177,14 @@ class Reservation < ApplicationRecord
     checkin > time
   end
 
+  def receipt_issueable?(user)
+    return false if !user.creditcard?
+    #KS施設以外は領収書発行不可
+    return false if !(facility.shop.corporation == Corporation.find_by(id: 2))
+    return false if price == 0
+    return true
+  end
+
   def set_check_out
     return if checkin.nil? || usage_period.nil?
     self.checkout = checkin + usage_period.hours
