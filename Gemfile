@@ -87,6 +87,11 @@ gem 'rmagick'
 # Credit Card
 gem 'stripe'
 
+# PDF
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
+
 gem 'nested_form'
 gem 'geocoder'
 gem 'phonelib'

@@ -1,0 +1,27 @@
+<div class='row w100 pl15 pr15 pt15 pb15' >
+  <div class='w60 dib text-left m0'>
+    <p class='title'>領収書</p><br />
+    <p class='company-name'><%= @reservation.user_name %> <span class='onchu'>御中</span></p><br />
+      <p class='price'>￥<%= number_with_delimiter @reservation.price %>-</p><br />
+  </div>
+  <div class="w30 dib text-right text-top">
+    <p></p><br />
+    <span>No.<%= @reservation.id %></span><br />
+    <span><%= @reservation.checkin.strftime('%Y年%m月%d日') %></span><br />
+  </div>
+</div>
+<div class='row w100 pl15 pr15 pt15 pb15' >
+  <div class='w40 dib text-left text-top'>
+    <p class='address'>上記正に領収致しました。</p>
+  </div>
+  <div class="w20 dib text-left text-top">
+    <p class='address'>Keeyls株式会社</p>
+    <p class='address'>〒1050004</p>
+    <p class='address'>東京都港区</p>
+    <p class='address'>新橋2-16-1</p>
+    <p class='address'>ニュー新橋ビル9F</p>
+  </div>
+  <div class="w40 dib text-right text-top">
+    <%= image_tag 'https://keyreserve-production.s3-ap-northeast-1.amazonaws.com/keeyls_stamp.jpg', width: '100', height: '100' %>
+  </div>
+</div>
