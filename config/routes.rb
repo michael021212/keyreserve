@@ -120,6 +120,12 @@ Rails.application.routes.draw do
   resources :information, only: [:index, :show]
 
   post '/fetch_corporation_ids' => 'corporations#fetch_corporation_ids'
+
+  namespace :corporation do
+    get '/:corporation_token/users/new' => 'users#new', as: 'new_user'
+    post '/:corporation_token/users' => 'users#create', as: 'user'
+  end
+
   # 法人メニュー
   namespace :corporation_manage do
     root 'dashboards#index'

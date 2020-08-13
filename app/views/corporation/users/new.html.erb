@@ -1,0 +1,62 @@
+<div class="mg-page-title parallax">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>アカウント登録</h2>
+        <p>以下の情報を入力して会員登録を行ってください</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-offset-3 col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= bootstrap_form_for @user, url: corporation_user_path(corporation_token: @corporation.corporation_token) do |f| %>
+          <%= f.label :name, 'お名前' %>
+          <%= f.text_field :name, placeholder: "例)山田太郎", hide_label: true %>
+          <%= f.label :email, 'メールアドレス' %>
+          <%= f.text_field :email, placeholder: "例)keystation@gmail.com", hide_label: true %>
+          <%= f.label :campaign_id, 'キャンペーンID' %>
+          <%= f.text_field :campaign_id , placeholder: "※キャンペーンIDをお持ちの方のみご入力ください" , hide_label: true%>
+          <%= f.label :password, 'パスワード' %>
+          <%= f.password_field :password, placeholder: "4文字以上", hide_label: true %>
+          <%= f.label :password_confirmation, 'パスワード(確認)' %>
+          <%= f.password_field :password_confirmation, placeholder: "4文字以上", hide_label: true %>
+          <%= f.hidden_field :corporation_token, value: params[:token] %>
+          <%= f.hidden_field :parent_id, value: User.user_corp_token(session[:parent_token]).id if session[:parent_token].present? %>
+          <% if @user.new_record? %>
+            <%= f.form_group :term_of_use, class: 'form-inline' do %>
+              <%= f.check_box :term_of_use,
+                class: 'pr5',
+                label: '' %>
+              <%= link_to '利用規約',
+                term_of_use_path,
+                target: '_blank',
+                class: 'ml5' %>及び
+              <%= link_to 'プライバシーポリシー',
+                privacy_policy_path,
+                target: '_blank',
+                class: 'ml5' %>に同意する
+            <% end %>
+          <% end %>
+          <div class="row">
+            <div class="col-md-12 col-xs-12 text-left mt30">
+              <% if @corporation.verification_required? %>
+                <%= f.button '電話番号認証に進む',
+                  class: 'btn btn-primary mb10' %>
+              <% else %>
+                <%= f.button '登録',
+                  class: 'btn btn-primary mb10' %>
+              <% end %>
+            </div>
+            <div class="col-md-12 col-xs-12 text-left">
+              <%= link_to 'ログインはこちら', sign_in_path %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
