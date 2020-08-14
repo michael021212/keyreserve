@@ -60,6 +60,12 @@
         <td><%= @corporation.address %></td>
       </tr>
       <tr>
+        <th>ユーザ登録用URL</th>
+        <td><%= link_to "#{corporation_new_user_url(corporation_token: @corporation.corporation_token)}",
+          corporation_new_user_url(corporation_token: @corporation.corporation_token),
+          target: '_blank' %></td>
+      </tr>
+      <tr>
         <th><%= Corporation.human_attribute_name(:note) %></th>
         <td><%= @corporation.note  %></td>
       </tr>
