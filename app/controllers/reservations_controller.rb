@@ -12,6 +12,17 @@ class ReservationsController <  ApplicationController
   def show
     @reservation = @user.reservations.find_by(id: params[:id])
     redirect_to root_path, alert: '指定された予約は存在しません' if @reservation.blank?
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "sample",
+               layout: 'pdf.html.erb',
+               template: "reservations/receipt_pdf.html.erb",
+               page_size: 'A4',
+               encoding: 'UTF-8',
+               show_as_html: params[:debug].present?
+      end
+    end
   end
 
   # 検索ページ
