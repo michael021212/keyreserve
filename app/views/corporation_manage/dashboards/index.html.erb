@@ -25,6 +25,10 @@
         <th><%= Corporation.human_attribute_name(:note) %></th>
         <td class="cy-corporation-note"><%= current_corporation.note %></td>
       </tr>
+      <tr>
+        <th>ユーザ登録用URL</th>
+        <td class="cy-corporation-note"><%= corporation_new_user_url(corporation_token: current_corporation.corporation_token) %></td>
+      </tr>
     </table>
   </div>
 </div>
