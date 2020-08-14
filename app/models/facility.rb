@@ -212,11 +212,6 @@ class Facility < ApplicationRecord
     reservations.pluck(:facility_id)
   end
 
-  # KSCが利用可能な施設タイプかどうか
-  def ksc_avairable?
-    rent? || ks_flexible? || public_place? || chartered_place?
-  end
-
   # 貸し切り施設の一部として登録されているかどうか
   def include_chartered_place?
     CharteredFacility.where(child_facility_id: id).present?

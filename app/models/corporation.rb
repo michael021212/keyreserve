@@ -1,4 +1,5 @@
 class Corporation < ApplicationRecord
+  before_save :set_corporation_token
   acts_as_paranoid
 
   has_many :corporation_users, dependent: :destroy
@@ -55,5 +56,10 @@ class Corporation < ApplicationRecord
       .where(user_type: [User.user_types[:personal],
                          User.user_types[:corporate_admin]])
     selectable_users.parent_is_nil.or(users.parent_corporation)
+  end
+
+  def set_corporation_token
+    return if corporation_token.present?
+    self.corporation_token = SecureRandom.hex(16)
   end
 end
