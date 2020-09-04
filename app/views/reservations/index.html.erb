@@ -55,12 +55,18 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-4 text-left">
+                        <div class="col-md-3 text-left">
                           <%= link_to "詳細",
                             reservation_path(reservation),
                             class: 'btn btn-main btn-block' %>
                         </div>
-                        <div class="col-md-offset-4 col-md-4 text-right">
+                        <div class="col-md-3 text-left">
+                          <%= link_to "領収書発行",
+                            reservation_path(reservation, format: 'pdf'),
+                            target: '_blank',
+                            class: 'btn btn-success btn-block' if reservation.receipt_issueable?(current_user) %>
+                        </div>
+                        <div class="col-md-offset-3 col-md-3 text-right">
                           <%# WBG会議室プランに紐づくユーザには削除ボタン出さない %>
                           <%= link_to t('common.btn.cancel'),
                             reservation_path(reservation),

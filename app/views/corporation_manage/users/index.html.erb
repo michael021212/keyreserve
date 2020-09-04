@@ -1,7 +1,8 @@
 <div class="box box-default">
   <div class="box-header">
     <div class="panel panel-inverse">
-      <div class="panel-body">
+      <div class='row'>
+      <div class='col-sm-10'>
         <%= search_form_for @q, url: corporation_manage_users_path, :class => "form-inline" do |f| %>
           <div class="mb20">
             <%= f.search_field :name_cont, placeholder: "名前", class: "form-control" %>
@@ -12,10 +13,12 @@
           </div>
         <% end %>
       </div>
-    <div class="box-tools">
-      <%= link_to t('common.btn.new'), new_corporation_manage_user_path, class: 'btn btn-info' %>
+      <div class='col-sm-2 text-right'>
+        <%= link_to t('common.btn.new'), new_corporation_manage_user_path, class: 'btn btn-info' %>
+      </div>
     </div>
   </div>
+  <div class='panel-body'>
   <div class="box-body table-responsive">
     <table class="table table-striped">
       <thead>

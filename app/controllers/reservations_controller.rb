@@ -12,6 +12,17 @@ class ReservationsController <  ApplicationController
   def show
     @reservation = @user.reservations.find_by(id: params[:id])
     redirect_to root_path, alert: '指定された予約は存在しません' if @reservation.blank?
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "sample",
+               layout: 'pdf.html.erb',
+               template: "reservations/receipt_pdf.html.erb",
+               page_size: 'A4',
+               encoding: 'UTF-8',
+               show_as_html: params[:debug].present?
+      end
+    end
   end
 
   # 検索ページ
@@ -122,7 +133,7 @@ class ReservationsController <  ApplicationController
     @reservation.set_payment
     ActiveRecord::Base.transaction do
       # KS Checkinと連動させる際の値取得処理
-      if @reservation.facility.ksc_avairable?
+      if @reservation.facility.rent_with_ksc?
         ks_room_key_info = @reservation.fetch_ks_room_key
         if @reservation.facility.rent_with_ksc? && ks_room_key_info.present?
           ksc_reservation_no = @reservation.regist_ksc_reservation
