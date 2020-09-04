@@ -138,16 +138,14 @@ class Facility < ApplicationRecord
     return [[opening_date_and_time, closing_date_and_time]] if total == 0
     reservation.order(:checkin).each_with_index do |r, i|
       if i == 0
-        if shop.opening_time.to_s(:time) != r.checkin.to_s(:time)
-          arr << opening_date_and_time
-          arr << r.checkin.to_s(:datetime)
-        end
-        arr << r.checkout.to_s(:datetime) if shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
+        arr << opening_date_and_time
+        arr << r.checkin.to_s(:datetime)
+        arr << r.checkout.to_s(:datetime)
       else
         arr << r.checkin.to_s(:datetime)
-        arr << r.checkout.to_s(:datetime) if shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
+        arr << r.checkout.to_s(:datetime)
       end
-      arr << closing_date_and_time if i == total - 1 && shop.closing_time.to_s(:time) != r.checkout.to_s(:time)
+      arr << closing_date_and_time if i == total - 1
     end
     arr.each_slice(2).to_a
   end
