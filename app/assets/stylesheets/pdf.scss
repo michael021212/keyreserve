@@ -1,13 +1,12 @@
 @import 'common.sass';
 
 body{
-  font-size: 18px;
+  font-size: 12px;
 }
 
 .title{
   font-size: 36px;
   font-weight: bold;
-  letter-spacing: 7px;
   margin-bottom: 5px;
 }
 
@@ -20,6 +19,7 @@ body{
 }
 
 .onchu {
+  padding-left: 40px;
   font-size: 20px;
   font-weight: bold;
 }
