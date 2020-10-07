@@ -89,7 +89,7 @@ gem 'stripe'
 
 # PDF
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary-aml'
 
 
 gem 'nested_form'
