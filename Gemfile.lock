@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/insphire/wkhtmltopdf-binary-aml
+  revision: e5340ed88aa8f659c1354de3cbcb4080ffb2f333
+  specs:
+    wkhtmltopdf-binary-aml (0.12.2.1)
+
+GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
   revision: 4b160bd19ecca7f97d7ac22dccd5fde9b0da5a9f
   branch: rails-5
@@ -554,7 +560,6 @@ GEM
       chronic (>= 0.6.3)
     wicked_pdf (2.1.0)
       activesupport
-    wkhtmltopdf-binary-aml (0.12.2.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.14)
@@ -655,7 +660,7 @@ DEPENDENCIES
   webmock
   whenever
   wicked_pdf
-  wkhtmltopdf-binary-aml
+  wkhtmltopdf-binary-aml!
 
 BUNDLED WITH
    1.16.2
