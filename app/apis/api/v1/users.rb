@@ -17,8 +17,8 @@ module API
                 state: User.states[:activated],
                 name: params[:name],
                 sms_verified: true,
-                password: decrypt(params[:password],
-                facility_display_range: @corporation.facility_display_range_default)
+                password: decrypt(params[:password]),
+                facility_display_range: @corporation.facility_display_range_default
               )
               @user.save!
               CorporationUser.create!(corporation_id: @corporation.id,
