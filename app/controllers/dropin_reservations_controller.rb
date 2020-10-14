@@ -35,6 +35,10 @@ class DropinReservationsController <  ApplicationController
     sub_plan_ids = FacilityDropinSubPlan.available_ids(checkin, checkout)
     @facilities = Facility.logout_dropin_spots.where(published: true)
     @facilities = @facilities.where(id: @user.member_facility_dropin_sub_plan).has_facility_dropin_sub_plans(sub_plan_ids) if @user.present?
+    if @user.present? && @user.facility_display_range == "related_corp_facilities"
+      shop_ids = Shop.where(corporation_id: @user.corporation_ids).pluck(:id)
+      @facilities = @facilities.where(shop_id: shop_ids)
+    end
     @facilities = @facilities.page(params[:page])
     session[:dropin_spot] = cond
   end
