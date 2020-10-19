@@ -13,6 +13,7 @@ class CorporationManage::UsersController < CorporationManage::Base
   def create
     @user = current_corporation.users.build(user_params)
     if @user.save
+      @user.related_corp_facilities! if current_corporation.related_corp_facilities?
       @user.skip_sms_verification_if_not_required!
       redirect_to corporation_manage_user_path(@user), notice: t('common.messages.created', name: User.model_name.human)
     else
@@ -59,6 +60,7 @@ class CorporationManage::UsersController < CorporationManage::Base
       :state,
       :user_type,
       :payway,
+      :facility_display_range,
     ).merge(corporation_ids: [current_corporation.id])
   end
 end

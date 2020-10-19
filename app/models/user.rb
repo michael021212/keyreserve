@@ -24,6 +24,7 @@ class User < ApplicationRecord
   enum state: { registered: 0, activated: 1 }
   enum payway: { creditcard: 1, invoice: 2 }
   enum user_type: { personal: 1, parent_corporation: 2, corporate_admin: 3, ks_flexible: 4 }
+  enum facility_display_range: { related_corp_facilities: 0, all_facilities: 1 }
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :email, email: true, uniqueness: true, if: Proc.new { |u| u.personal? }
