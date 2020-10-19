@@ -54,6 +54,10 @@
         <td><%= @user.user_type_i18n %></td>
       </tr>
       <tr>
+        <th><%= User.human_attribute_name(:facility_display_range) %></th>
+        <td><%= @user.facility_display_range_i18n %></td>
+      </tr>
+      <tr>
         <th><%= User.human_attribute_name(:advertise_notice_flag) %></th>
         <td><%= @user.advertise_notice_flag? ? '◯' : '' %></td>
       </tr>

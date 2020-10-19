@@ -1,4 +1,4 @@
-<%= bootstrap_form_for([:admin, corporation], layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-9") do |f| %>
+<%= bootstrap_form_for([:admin, corporation], layout: :horizontal, label_col: "col-sm-4", control_col: "col-sm-8") do |f| %>
   <%= f.select :ks_corporation_id, options_for_select(key_corporation_select, selected: f.object.ks_corporation_id), include_blank: true %>
   <%= f.text_field :name %>
   <%= f.text_field :kana %>
@@ -7,6 +7,7 @@
   <%= f.number_field :postal_code %>
   <%= f.text_field :address %>
   <%= f.text_field :ksc_token %>
+  <%= f.select :facility_display_range_default, Corporation.facility_display_range_defaults_i18n.invert %>
   <%= f.text_field :note %>
   <%= f.select :verification_required, [['必要', true], ['不要', false]] %>
   <%= f.submit class: 'btn btn-primary center-block' %>

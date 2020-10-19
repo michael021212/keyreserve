@@ -43,6 +43,7 @@ ja:
         ks_corporation_id: Keystation法人
         ksc_token: KS Checkin JWTトークン
         jwt_token: JWTトークン
+        facility_display_range_default: 紐づいて作成されるユーザーの施設表示範囲
         verification_required: 電話番号認証
       corporation_user:
         corporation_id: 運営会社
@@ -72,6 +73,7 @@ ja:
         payway: お支払い方法
         created_at: 登録日時
         user_type: ユーザータイプ
+        facility_display_range: 施設表示範囲
         parent_id: 法人
         max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
@@ -217,6 +219,9 @@ ja:
       payway:
         creditcard: クレジットカード
         invoice: 請求書
+      facility_display_range_default:
+        related_corp_facilities: 関連企業の施設のみ
+        all_facilities: 全施設
     shop:
       shop_type:
         general: 一般
@@ -241,6 +246,9 @@ ja:
         parent_corporation: 法人
         corporate_admin: 施設管理者
         ks_flexible: フレキシブルプラン利用者(KEY STATION連動)
+      facility_display_range:
+        related_corp_facilities: 関連企業の施設のみ
+        all_facilities: 全施設
     user_contract:
       state:
         applying: 契約申し込み
