@@ -92,6 +92,7 @@ class DropinReservationsController <  ApplicationController
     @facility = Facility.find(session[:dropin_spot]['facility_id'])
     return redirect_to confirm_dropin_reservations_path if @user.credit_card.present?
     @credit_card = @user.build_credit_card(credit_card_params)
+    @credit_card.prepare_stripe_card
     return(render :credit_card) unless @credit_card.valid?
     begin
       @credit_card.save!
