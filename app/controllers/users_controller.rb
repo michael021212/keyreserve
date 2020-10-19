@@ -22,7 +22,7 @@ class UsersController < ApplicationController
       @user.parent_id = user_corp.id if user_corp.present?
     end
     if @user.save(context: :new_user_registration)
-      @user.related_corp_facilities! if @user.corporations.first.facility_display_range_default == "related_corp_facilities"
+      @user.related_corp_facilities! if @user.corporations.first.related_corp_facilities?
       @user.reload
       @user.skip_sms_verification_if_not_required!
       session[:parent_token] = nil

@@ -68,7 +68,7 @@ class Facility < ApplicationRecord
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
     # 表示制限のかかっているユーザーは施設表示を関連企業のものに限定
-    if user.present? && user.facility_display_range == "related_corp_facilities"
+    if user.present? && user.related_corp_facilities?
       shop_ids = Shop.where(corporation_id: user.corporation_ids).pluck(:id)
       facilities = facilities.where(shop_id: shop_ids)
     end

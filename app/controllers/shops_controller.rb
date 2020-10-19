@@ -7,7 +7,7 @@ class ShopsController <  ApplicationController
               .where(shop_type: [Shop.shop_types[:general], Shop.shop_types[:general_with_ksc]])
               .order(id: :desc)
               .page(params[:page])
-    @shops = @shops.where(corporation_id: current_user.corporation_ids) if current_user.present? && current_user.facility_display_range == "related_corp_facilities"
+    @shops = @shops.where(corporation_id: current_user.corporation_ids) if current_user.present? && current_user.related_corp_facilities?
     # ザイマックス店舗は一般公開しない
     @shops = @shops.where.not(id: 22) if current_user.blank? || !current_user.contract_plan_ids.include?(26)
   end
