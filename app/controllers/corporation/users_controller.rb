@@ -9,7 +9,7 @@ class Corporation::UsersController < ApplicationController
     @user = User.new(user_params)
     @user.corporation_users.new(corporation_id: @corporation.id)
     if @user.save(context: :new_user_registration)
-      @user.related_corp_facilities! if current_corporation.related_corp_facilities?
+      @user.related_corp_facilities! if @corporation.related_corp_facilities?
       @user.reload
       @user.skip_sms_verification_if_not_required!
       auto_login(@user)
