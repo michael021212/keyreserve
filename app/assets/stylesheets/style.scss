@@ -2087,9 +2087,6 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   margin-left: -25px;
   position: absolute;
 }
-.mg-single-room-txt {
-  padding: 30px 0 0px;
-}
 .mg-single-room-review-sec {
   padding: 0 0 70px;
 }
@@ -2999,7 +2996,11 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   padding: 70px 0;
 }
 .mg-available-rooms .mg-avl-room {
-  padding-bottom: 80px;
+  margin-bottom: 0;
+  padding: 20px 0;
+  border: none;
+  border-radius: 0;
+  border-top: solid 1px #e0dccc;
 }
 .mg-available-rooms .mg-avl-room:last-child {
   padding-bottom: 0;
@@ -3020,11 +3021,13 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 .mg-available-rooms .mg-avl-room-title {
   margin-top: 0;
   margin-bottom: 8px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f2f2f2;
 }
 .mg-available-rooms .mg-avl-room-title a {
-  color: #16262e;
+  color: #06c;
+  font-weight: bold;
+  &:hover {
+    color: #e7b315;
+  }
 }
 .mg-available-rooms .mg-avl-room-title span {
   font-weight: 300;
@@ -4186,7 +4189,7 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
   }
 }
 /*
- * Boxed Mode Responsive 
+ * Boxed Mode Responsive
  */
 @media (max-width: 1199px) {
   .mg-boxed {
