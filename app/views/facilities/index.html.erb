@@ -8,15 +8,18 @@
         <% @facilities.each do |facility| %>
           <div class="mg-avl-room">
             <div class="row">
-              <div class="col-sm-5">
+              <div class="col-sm-4">
                 <%= link_to facility_path(facility) do %><%= image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
               </div>
-              <div class="col-sm-7">
-                <h3 class="mg-avl-room-title">
+              <div class="col-sm-8">
+                <h4 class="mg-avl-room-title">
                   <%= link_to facility_path(facility) do %>
-                    <%= facility.name %> - <%= facility.shop_name %>
+                    <%= facility.name %>
                   <% end %>
-                </h3>
+                </h4>
+                <p>
+                  店舗: <%= facility.shop_name %>
+                </p>
                 <div class="mg-single-room-txt">
                   <table class="table table-bordered">
                     <thead>
@@ -36,9 +39,6 @@
                   </table>
                 </div>
                 <p><%= simple_format facility.description %></p>
-                <%= link_to facility_path(facility), class: 'btn btn-dark' do %>
-                  詳細<i class="fa fa-angle-double-right"></i>
-                <% end %>
               </div>
             </div>
           </div>
