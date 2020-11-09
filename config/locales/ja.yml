@@ -263,7 +263,7 @@ ja:
         shop_users: 店舗契約者
     facility:
       facility_type:
-        conference_room: 会議室
+        conference_room: 一般施設
         dropin: ドロップイン
         rent: 賃貸物件
         car: 車

@@ -30,6 +30,10 @@ class Shop < ApplicationRecord
   # 特別対応を行う店舗ID
   WBG_SHOP_ID = 22
 
+  def self.chooseable_shops(user)
+    user.present? && user.related_corp_facilities? ? where(corporation_id: user.corporation_ids) : all
+  end
+
   def self.belongs_to_corporation(c_id)
     Corporation.find(c_id).shops
   end

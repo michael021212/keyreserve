@@ -64,9 +64,11 @@ class Facility < ApplicationRecord
   end
 
   # 現在予約可能な施設一覧
-  def self.reservable_facilities(checkin, checkout, condition, user)
+  def self.reservable_facilities(checkin, checkout, condition, user, shop_id)
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
+    # 指定された店舗の施設のみ検索
+    facilities = facilities.where(shop_id: shop_id) if shop_id.present?
     # 表示制限のかかっているユーザーは施設表示を関連企業のものに限定
     if user.present? && user.related_corp_facilities?
       shop_ids = Shop.where(corporation_id: user.corporation_ids).pluck(:id)
