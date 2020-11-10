@@ -64,7 +64,7 @@ class Facility < ApplicationRecord
   end
 
   # 現在予約可能な施設一覧
-  def self.reservable_facilities(checkin, checkout, condition, user, shop_id)
+  def self.reservable_facilities(checkin, checkout, condition, user, shop_id = nil)
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
     # 指定された店舗の施設のみ検索
