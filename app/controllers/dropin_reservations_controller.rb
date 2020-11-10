@@ -17,6 +17,10 @@ class DropinReservationsController <  ApplicationController
     params[:dropin_spot] ||= {}
     params[:dropin_spot][:checkin_time] ||= '12:00'
     cond = params[:dropin_spot]
+    @chooseable_shops = Shop.chooseable_shops(@user)
+    # @shop_idも検索条件の一つだが、shop_id付きのURLから来る場合には検索処理が走らないよう@conditionには入れない
+    @shop_id = params[:shop_id].to_i if params[:shop_id].present?
+    @shop_id = params[:dropin_spot][:shop_id].to_i if params[:dropin_spot][:shop_id].present?
     if cond.blank? || cond[:checkin].blank? || cond[:checkin_time].blank? || cond[:use_hour].blank?
       return render :dropin_spot
     end
@@ -35,6 +39,7 @@ class DropinReservationsController <  ApplicationController
     sub_plan_ids = FacilityDropinSubPlan.available_ids(checkin, checkout)
     @facilities = Facility.logout_dropin_spots.where(published: true)
     @facilities = @facilities.where(id: @user.member_facility_dropin_sub_plan).has_facility_dropin_sub_plans(sub_plan_ids) if @user.present?
+    @facilities = @facilities.where(shop_id: @shop_id) if @shop_id.present?
     if @user.present? && @user.related_corp_facilities?
       shop_ids = Shop.where(corporation_id: @user.corporation_ids).pluck(:id)
       @facilities = @facilities.where(shop_id: shop_ids)
