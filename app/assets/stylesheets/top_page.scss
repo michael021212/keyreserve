@@ -1,0 +1,147 @@
+.main-visual {
+  position: relative;
+  .title-section {
+    width: 33%;
+    position: absolute;
+    color: white;
+    top: 40%;
+    left: 14%;
+    .main-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 28px;
+      font-weight: bolder;
+      line-height: 1.5;
+      letter-spacing: 0.2em;
+      > span {
+        font-size: 38px;
+        font-weight: bold;
+        letter-spacing: 0.3em;
+      }
+    }
+    .title-hr {
+      border-width: 4px 0 0 0;
+      border-style: solid;
+      border-color: white;
+    }
+    .sub-title {
+      font-size: 24px;
+      font-family: 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック',YuGothic,'Yu Gothic','メイリオ', Meiryo,'ＭＳ Ｐゴシック','MS PGothic';
+      font-weight: bolder;
+      letter-spacing: 0.3em;
+      > span {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .main-visual{
+    .title-section {
+      .main-title {
+        font-size: 23px;
+        margin-bottom: 19px;
+        > span {
+          font-size: 32px;
+        }
+      }
+      .title-hr {
+        border-width: 3px 0 0 0;
+        margin: 25px 0;
+      }
+      .sub-title {
+        font-size: 20px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 991px) {
+  .main-visual{
+    .title-section {
+      .main-title {
+        font-size: 19px;
+        margin-bottom: 16px;
+        > span {
+          font-size: 26px;
+        }
+      }
+      .title-hr {
+        border-width: 3px 0 0 0;
+        margin: 16px 0;
+      }
+      .sub-title {
+        font-size: 16px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .main-visual{
+    .title-section {
+      .main-title {
+        font-size: 15px;
+        margin-bottom: 12px;
+        > span {
+          font-size: 20px;
+        }
+      }
+      .title-hr {
+        border-width: 2px 0 0 0;
+        margin: 13px 0;
+      }
+      .sub-title {
+        font-size: 13px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 662px) {
+  .main-visual{
+    .title-section {
+      .main-title {
+        font-size: 13px;
+        margin-bottom: 11px;
+        > span {
+          font-size: 17px;
+        }
+      }
+      .title-hr {
+        border-width: 2px 0 0 0;
+        margin: 10px 0;
+      }
+      .sub-title {
+        font-size: 11px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 480px) {
+  .main-visual{
+    position: static;
+    .title-section {
+      width: 90%;
+      top: 35%;
+      .main-title {
+        font-size: 19px;
+        margin-bottom: 8px;
+        > span {
+          font-size: 26px;
+        }
+      }
+      .title-hr {
+        display: none;
+        border-width: 1px 0 0 0;
+        margin: 5px 0;
+      }
+      .sub-title {
+        position: absolute;
+        top: 59%;
+        left: 53%;
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+
+
