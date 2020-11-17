@@ -62,6 +62,10 @@ class CorporationManage::ReservationsController < CorporationManage::Base
       @reservation.save!
     end
     session[:reservation] = nil
+    NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
+    NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
+    NotificationMailer.reserved_to_corporation(@reservation).deliver_now if @reservation.facility.shop.corporation.try(:email).present?
+    NotificationMailer.reserved_to_admin(@reservation).deliver_now
     redirect_to corporation_manage_reservations_path, notice: t('common.messages.created', name: Reservation.model_name.human)
   rescue Stripe::StripeError => e
     logger.error("#{e.class.name} #{e.message}")
