@@ -44,4 +44,4 @@
 //= require reservation_calendar
 //= require dropin
 //= require reservation
-//= require search_form.js
+//= require search_form

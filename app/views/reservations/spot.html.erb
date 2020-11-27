@@ -26,7 +26,7 @@
               <% if @facilities.nil? %>
                 <div class="mg-available-rooms">
                   <div class="row">
-                    <div class="col-md-12 text-center">
+                    <div class="col-md-12 text-center no-facilities">
                       上記から検索してください
                     </div>
                   </div>
@@ -52,7 +52,7 @@
                             <%= simple_format facility.description %>
                           </div>
                           <div class="row">
-                            <% if @condition[:stay] == "true" %>
+                            <% if @condition[:stay].try(:to_bool) %>
                               <div class="spot-price col-xs-7">&yen;<%= facility.min_daily_price(current_user) %> / day 〜</div>
                             <% else %>
                               <div class="spot-price col-xs-7">&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</div>

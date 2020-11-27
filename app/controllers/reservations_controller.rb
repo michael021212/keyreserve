@@ -34,12 +34,21 @@ class ReservationsController <  ApplicationController
     @shop_id = params[:spot][:shop_id].to_i if params[:spot][:shop_id].present?
     return render :spot if @condition.blank?
     return render :spot unless valid_search_params?(@condition) #@checkinと@checkoutもset
-    @facilities = Facility
-                  .reservable_facilities(@checkin, @checkout, @condition, current_user, @shop_id)
-                  .where(published: true)
+    if @condition[:stay].to_bool
+      @facilities = Facility.vacancy_facilities(@condition, current_user)
+                            .filter_by_shop(@shop_id)
+                            .filter_by_users_facility_display_range(current_user)
+                            .where(published: true)
+    else
+      @facilities = Facility.reservable_facilities(@checkin, @checkout, @condition, current_user)
+                            .filter_by_shop(@shop_id)
+                            .filter_by_users_facility_display_range(current_user)
+                            .where(published: true)
+    end
     return render :spot if @facilities.blank?
     @facilities = Facility.order_by_min_price(@facilities, current_user).page(params[:page])
     session[:spot] = @condition
+    @facility_types = Facility.facility_types
   end
 
   # 1.ご利用情報入力
@@ -66,7 +75,11 @@ class ReservationsController <  ApplicationController
     @facility = @user.login_spots.find_by(id: @condition[:facility_id]) if @condition[:facility_id].present?
     return render json: { price: '' } if @facility.blank?
     set_checkin(@condition)
-    price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
+    if @condition[:stay].to_bool
+      price = @facility.calc_price_for_stay(@user, @condition[:checkin], @condition[:checkout])
+    else
+      price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
+    end
     render json: { price: number_with_delimiter(price) }
   end
 
@@ -109,13 +122,17 @@ class ReservationsController <  ApplicationController
     # 検索クエリが正常かどうかチェック
     return render :new unless valid_search_params?(@condition)
 
-    # 店舗の運営時間外の予約ならエラー
-    if @facility.shop.out_of_business_time?(@checkin, @checkout)
-      flash[:error] = 'ご予約時間が営業時間外となります'
-      return render :new
+    if !@condition[:stay].to_bool
+      # 店舗の運営時間外の予約ならエラー
+      if @facility.shop.out_of_business_time?(@checkin, @checkout)
+        flash[:error] = 'ご予約時間が営業時間外となります'
+        return render :new
+      end
+      @price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
+    else
+      @price = @facility.calc_price_for_stay(@user, @condition[:checkin], @condition[:checkout])
     end
 
-    @price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
     # クレカ払い & クレカの登録がない場合は登録画面に遷移
     if @user.credit_card.blank? && @user.creditcard?
       @credit_card = current_user.build_credit_card

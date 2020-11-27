@@ -18,7 +18,7 @@
               <div class="mg-book-now">
                 <div class="form-group row">
                   <label class="col-sm-6 col-md-4 control-label">ご利用日</label>
-                  <% if session[:spot]["stay"] == "true" %>
+                  <% if session[:spot]["stay"].try(:to_bool) %>
                     <div class="input-group col-sm-6 col-md-8 row mg-book-text">
                       <div><%= @condition[:checkin] + " " + @condition[:checkin_time] %></div>
                       <div>〜</div>
@@ -30,7 +30,7 @@
                     </div>
                   <% end %>
                 </div>
-                <% unless session[:spot]["stay"] == "true" %>
+                <% unless session[:spot]["stay"].try(:to_bool) %>
                   <div class="form-group">
                     <label class="col-sm-6 col-md-4 control-label">ご利用時刻</label>
                     <div class="input-group col-sm-6 col-md-8 static-text">

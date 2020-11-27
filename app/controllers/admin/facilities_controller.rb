@@ -75,6 +75,8 @@ class Admin::FacilitiesController < AdminController
       :lat,
       :lon,
       :ks_room_id,
+      :checkin_time_for_stay,
+      :checkout_time_for_stay,
       facility_plans_attributes: [:id, :plan_id, '_destroy']
     )
   end

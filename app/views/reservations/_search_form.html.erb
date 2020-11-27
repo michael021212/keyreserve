@@ -1,7 +1,7 @@
 <%= form_for :spot, url: spot_reservations_path(anchor: :searchbox), method: :get do |f| %>
   <div class="row">
     <div class="col-md-5 col-xs-6 mb20 mg-checkbox">
-      <%= f.check_box 'stay', {checked: params[:spot][:stay] == "true" ? true : "", onclick: "changeFacilityType()"}, "true", "false" %>
+      <%= f.check_box 'stay', {checked: params[:spot][:stay].try(:to_bool) ? true : "", onclick: "changeFacilityType()"}, "true", "false" %>
       <%= f.label :stay, "宿泊に使う" %>
     </div>
   </div>
@@ -16,7 +16,7 @@
           class: 'form-control', autocomplete: 'off', placeholder: 'Date' %>
       </div>
     </div>
-    <div class="col-md-2 col-xs-6" id="checkin-time" style="display: <%= params[:spot][:stay].nil? || params[:spot][:stay] == "false" ? 'block;' : 'none;' %>">
+    <div class="col-md-2 col-xs-6" id="checkin-time" style="display: <%= params[:spot][:stay].try(:to_bool) ? 'none;' : 'block;' %>">
       <div class="input-group">
         <%= f.text_field :checkin_time,
           value: params[:spot][:checkin_time],
@@ -24,8 +24,8 @@
           placeholder: 'Time' %>
       </div>
     </div>
-    <div class="col-md-2 col-xs-12 wavy" style="display: <%= params[:spot][:stay].nil? || params[:spot][:stay] == "false" ? 'none;' : 'block;' %>">~</div>
-    <div class="col-md-2 col-xs-12" id="term" style="display: <%= params[:spot][:stay].nil? || params[:spot][:stay] == "false" ? 'block;' : 'none;' %>">
+    <div class="col-md-2 col-xs-12 wavy" style="display: <%= params[:spot][:stay].try(:to_bool) ? 'block;' : 'none;' %>">~</div>
+    <div class="col-md-2 col-xs-12" id="term" style="display: <%= params[:spot][:stay].try(:to_bool) ? 'none;' : 'block;' %>">
       <div class="row">
         <div class="col-xs-12">
           <%= f.select :use_hour,
@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 col-xs-12" id="checkout" style="display: <%= params[:spot][:stay].nil? || params[:spot][:stay] == "false" ? 'none;' : 'block;' %>">
+    <div class="col-md-3 col-xs-12" id="checkout" style="display: <%= params[:spot][:stay].try(:to_bool) ? 'block;' : 'none;' %>">
       <div class="input-group date mg-check-in">
         <div class="input-group-addon">
           <i class="fa fa-calendar" id="checkout-calendar" ></i>
@@ -61,8 +61,8 @@
         <div class="col-xs-12">
           <%= f.select :facility_type,
             Facility.facility_types_i18n.delete_if{|t| t == 'dropin' || t == 'ks_flexible' }.invert,
-            { selected: params[:spot][:stay].nil? || params[:spot][:stay] == "false" ? "conference_room" : "accommodation", include_blank: 'Facility Type'},
-            {class: params[:spot][:stay].nil? || params[:spot][:stay] == "false" ? 'form-control cs-skin-elastic' : 'form-control cs-skin-elastic stay-checked', id: 'facility-type', onChange: "changeStayChecked()"} %>
+            { selected: params[:spot][:stay].try(:to_bool) ? "accommodation" : "conference_room", include_blank: 'Facility Type'},
+            {class: params[:spot][:stay].try(:to_bool) ? 'form-control cs-skin-elastic stay-checked' : 'form-control cs-skin-elastic', id: 'facility-type', onChange: "changeStayChecked()"} %>
         </div>
       </div>
     </div>
