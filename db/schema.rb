@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201008092942) do
+ActiveRecord::Schema.define(version: 20201116092503) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 20201008092942) do
     t.integer "reservation_type", default: 1
     t.integer "ks_room_id"
     t.boolean "chartered", default: false
+    t.time "checkin_time_for_stay"
+    t.time "checkout_time_for_stay"
     t.index ["shop_id"], name: "index_facilities_on_shop_id"
   end
 
