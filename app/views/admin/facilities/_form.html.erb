@@ -13,9 +13,13 @@
   <% else %>
     <%= f.select :facility_type,
       Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' || k == 'public_place' || k == 'ks_flexible' }.invert,
-      prompt: '施設タイプを選択してください' %>
+      {}, {prompt: '施設タイプを選択してください', onchange: 'displayFormForStay();', class: 'facility-type'} %>
   <% end %>
 
+  <div id="for_stay" style="display: none;">
+    <%= f.time_field :checkin_time_for_stay %>
+    <%= f.time_field :checkout_time_for_stay %>
+  </div>
   <%= f.file_field :image %>
   <%= f.hidden_field :image_cache %>
   <%= f.file_field :detail_document if shop.rent? %>

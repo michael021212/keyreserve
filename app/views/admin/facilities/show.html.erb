@@ -38,6 +38,16 @@
         <th style="width: 200px;"><%= Facility.human_attribute_name(:facility_type) %></th>
         <td><%= @facility.facility_type_i18n %></td>
       </tr>
+      <% if @facility.facility_type == "accommodation" %>
+        <tr>
+          <th style="width: 200px;"><%= Facility.human_attribute_name(:checkin_time_for_stay) %></th>
+          <td><%= @facility.checkin_time_for_stay.strftime("%H:%M") %></td>
+        </tr>
+        <tr>
+          <th style="width: 200px;"><%= Facility.human_attribute_name(:checkout_time_for_stay) %></th>
+          <td><%= @facility.checkout_time_for_stay.strftime("%H:%M") %></td>
+        </tr>
+      <% end %>
       <tr>
         <th><%= Facility.human_attribute_name(:image) %></th>
         <td><%= image_tag @facility.image.main.url, width: "374px" %></td>
