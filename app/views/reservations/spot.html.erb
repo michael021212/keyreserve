@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-9">
                       <div class="mg-bn-forms">
-                        <%= render 'search_form', params: params, chooseable_shops: @chooseable_shops, shop_id: @shop_id %>
+                        <%= render 'search_form', params: params, chooseable_shops: @chooseable_shops, shop_id: @shop_id, facility_types: @facility_types %>
                       </div>
                     </div>
                   </div>
@@ -36,27 +36,36 @@
                   <% @facilities.each do |facility| %>
                     <div class="mg-available-rooms">
                       <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                           <%= link_to new_reservation_path(facility_id: facility.id) do %><% image_tag facility.image.main.url, class: 'img-responsive' %><% end %>
                         </div>
-                        <div class="col-sm-8">
-                          <h3 class="mg-avl-room-title">
+                        <div class="col-sm-5">
+                          <h4 class="mg-avl-room-title">
                             <%= link_to new_reservation_path(facility_id: facility.id) do %>
                               <%= facility.decorate.display_name %>
                             <% end %>
-                            <span>&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</span>
-                          </h3>
+                          </h4>
+                          <p>
+                            店舗: <%= facility.shop_name %>
+                          </p>
                           <div class='mg-avl-room-desc'>
                             <%= simple_format facility.description %>
                           </div>
-                          <div class='col-sm-9'>
-                            <% if facility.lat? && facility.lon? %>
-                              <div class="google-map" style="height: 300px;" data-lat="<%= facility.lat %>" data-lon="<%= facility.lon %>"></div>
+                          <div class="row">
+                            <% if @condition[:stay] == "true" %>
+                              <div class="spot-price col-xs-7">&yen;<%= facility.min_daily_price(current_user) %> / day 〜</div>
+                            <% else %>
+                              <div class="spot-price col-xs-7">&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</div>
                             <% end %>
+                            <div class="col-sm-5">
+                              <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
+                            </div>
                           </div>
-                          <div class='col-sm-3 text-right'>
-                            <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>
-                          </div>
+                        </div>
+                        <div class='col-sm-4'>
+                          <% if facility.lat? && facility.lon? %>
+                            <div class="google-map" data-lat="<%= facility.lat %>" data-lon="<%= facility.lon %>"></div>
+                          <% end %>
                         </div>
                       </div>
                     </div>

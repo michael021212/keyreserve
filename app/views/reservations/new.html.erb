@@ -14,59 +14,103 @@
         <div class="mg-booking-form">
           <%= form_for :spot, url: confirm_reservations_path,
             html: { class: 'form-horizontal js-calc-price-form' } do |f| %>
-            <%= f.hidden_field :facility_type, value: @facility.facility_type  %>
-            <%= f.hidden_field :facility_id, value: @facility.id %>
-            <div class="mg-saerch-room">
-              <div class="mg-book-now">
-                <div class="form-group">
-                  <label class="col-sm-4 control-label">ご利用日</label>
-                  <div class="input-group date mg-check-in col-sm-6">
-                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                    <%= f.text_field :checkin,
-                      value: @condition[:checkin],
-                      class: 'js-calc-price form-control',
-                      placeholder: 'ご利用日' %>
+            <% if @condition[:stay] == "true" %>
+              <%= f.hidden_field :facility_type, value: @facility.facility_type  %>
+              <%= f.hidden_field :facility_id, value: @facility.id %>
+              <div class="mg-saerch-room">
+                <div class="mg-book-now">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-sm-4 control-label">チェックイン</label>
+                    <div class="col-md-8 col-sm-8 row mg-book-text">
+                      <div><%= @condition[:checkin]  + " " + @facility[:checkin_time_for_stay].strftime("%H:%M")%></div>
+                    </div>
+                    <%= f.hidden_field :checkin, value: @condition[:checkin] %>
+                    <%= f.hidden_field :checkin_time, value: @facility[:checkin_time_for_stay].strftime("%H:%M") %>
+                  <div class="form-group row">
+                    <label class="col-md-4 col-sm-4 control-label">チェックアウト</label>
+                    <div class="col-md-8 col-sm-8 row mg-book-text">
+                      <div><%= @condition[:checkout] + " " + @facility[:checkout_time_for_stay].strftime("%H:%M") %></div>
+                    </div>
+                    <%= f.hidden_field :checkout, value: @condition[:checkout] %>
+                    <%= f.hidden_field :checkout_time, value: @facility[:checkout_time_for_stay].strftime("%H:%M") %>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-4 control-label">ご利用時刻</label>
-                  <div class="input-group col-sm-6">
-                    <%= f.text_field :checkin_time,
-                      value: @condition[:checkin_time],
-                      class: 'js-calc-price form-control timepicker',
-                      placeholder: 'ご利用時刻' %>
+                  <div class="form-group row">
+                    <label class="col-sm-4 control-label">ご利用人数</label>
+                    <div class="col-md-8 col-sm-8 row mg-book-text">
+                      <div><%= @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i %>名</div>
+                      <%= f.hidden_field :use_num, value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i %>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-4 control-label">ご利用人数</label>
-                  <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.text_field :use_num, type: 'number', min: 0, max: 99,
-                      value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i,
-                      placeholder: 'ご利用人数',
-                      class: 'form-control' %>
+                  <div class="price-area form-group">
+                    <label class="col-sm-4 control-label">料金</label>
+                    <div class="input-group col-sm-6 text-right">
+                      <span id="js-price" class="mg-book-text-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-4 control-label">ご利用時間</label>
-                  <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.select :use_hour, reservable_usage,
-                      { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
-                      class: 'cs-select cs-skin-elastic js-calc-price' %>
+                  <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                      <button type="submit" class="btn btn-main btn-block">次へ</button>
+                    </div>
                   </div>
+                  <%= f.hidden_field :stay, value: @condition[:stay] %>
                 </div>
-                <div class="price-area form-group">
-                  <label class="col-sm-4 control-label">料金</label>
-                  <div class="input-group col-sm-6 text-right">
-                    <span id="js-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
+              </div>
+            <% else %>
+              <%= f.hidden_field :facility_type, value: @facility.facility_type  %>
+              <%= f.hidden_field :facility_id, value: @facility.id %>
+              <%= f.hidden_field :stay, value: @condition[:stay] %>
+              <div class="mg-saerch-room">
+                <div class="mg-book-now">
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">ご利用日</label>
+                    <div class="input-group date mg-check-in col-sm-6">
+                      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                      <%= f.text_field :checkin,
+                        value: @condition[:checkin],
+                        class: 'js-calc-price form-control',
+                        placeholder: 'ご利用日' %>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-offset-4 col-md-4">
-                    <button type="submit" class="btn btn-main btn-block">次へ</button>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">ご利用時刻</label>
+                    <div class="input-group col-sm-6">
+                      <%= f.text_field :checkin_time,
+                        value: @condition[:checkin_time],
+                        class: 'js-calc-price form-control timepicker',
+                        placeholder: 'ご利用時刻' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">ご利用人数</label>
+                    <div class="input-group col-sm-6 col-xs-12">
+                      <%= f.text_field :use_num, type: 'number', min: 0, max: 99,
+                        value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i,
+                        placeholder: 'ご利用人数',
+                        class: 'form-control' %>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">ご利用時間</label>
+                    <div class="input-group col-sm-6 col-xs-12">
+                      <%= f.select :use_hour, reservable_usage,
+                        { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
+                        class: 'cs-select cs-skin-elastic js-calc-price' %>
+                    </div>
+                  </div>
+                  <div class="price-area form-group">
+                    <label class="col-sm-4 control-label">料金</label>
+                    <div class="input-group col-sm-6 text-right">
+                      <span id="js-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                      <button type="submit" class="btn btn-main btn-block">次へ</button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
         </div>
       </div>

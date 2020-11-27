@@ -16,54 +16,64 @@
             <%= f.hidden_field :facility_id, value: @facility.id %>
             <div class="mg-saerch-room">
               <div class="mg-book-now">
+                <div class="form-group row">
+                  <label class="col-sm-6 col-md-4 control-label">ご利用日</label>
+                  <% if session[:spot]["stay"] == "true" %>
+                    <div class="input-group col-sm-6 col-md-8 row mg-book-text">
+                      <div><%= @condition[:checkin] + " " + @condition[:checkin_time] %></div>
+                      <div>〜</div>
+                      <div><%= @condition[:checkout] + " " + @condition[:checkout_time] %></div>
+                    </div>
+                  <% else %>
+                    <div class="input-group col-sm-6 static-text">
+                      <div><%= @condition[:checkin] %></div>
+                    </div>
+                  <% end %>
+                </div>
+                <% unless session[:spot]["stay"] == "true" %>
+                  <div class="form-group">
+                    <label class="col-sm-6 col-md-4 control-label">ご利用時刻</label>
+                    <div class="input-group col-sm-6 col-md-8 static-text">
+                      <div><%= @condition[:checkin_time] %></div>
+                    </div>
+                  </div>
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">ご利用日</label>
-                  <div class="input-group col-sm-6 static-text">
-                    <%= @condition[:checkin] %>
+                  <label class="col-md-4 col-sm-6 control-label">ご利用時間</label>
+                  <div class="input-group col-md-8 col-sm-6 col-xs-12 static-text">
+                    <div><%= @condition[:use_hour] %>時間</div>
                   </div>
                 </div>
+                <% end %>
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">ご利用時刻</label>
-                  <div class="input-group col-sm-6 static-text">
-                    <%= @condition[:checkin_time] %>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">ご利用時間</label>
-                  <div class="input-group col-sm-6 col-xs-12 static-text">
-                    <%= @condition[:use_hour] %>時間
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-6 control-label">ご利用人数</label>
-                  <div class="input-group col-sm-6 col-xs-12 static-text">
-                    <%= @condition[:use_num] %>名
+                  <label class="col-md-4 col-sm-6 control-label">ご利用人数</label>
+                  <div class="input-group col-md-8 col-sm-6 col-xs-12 static-text">
+                    <div><%= @condition[:use_num] %>名</div>
                   </div>
                 </div>
                 <% if @user.creditcard? %>
                   <div class="form-group">
-                    <label class="col-sm-6 control-label">ご利用クレジットカード</label>
-                    <div class="input-group col-sm-6 col-xs-12 static-text">
-                      ************<%= @user.credit_card.card_no %>
+                    <label class="col-md-4 col-sm-6 control-label">ご利用クレジットカード</label>
+                    <div class="input-group col-md-4 col-sm-6 col-xs-12 static-text">
+                      <div>************<%= @user.credit_card.card_no %></div>
                     </div>
                   </div>
                 <% else %>
                   <div class="form-group">
-                    <label class="col-sm-6 control-label">お支払い方法</label>
-                    <div class="input-group col-sm-6 col-xs-12 static-text">
-                      ご請求書
+                    <label class="col-md-4 col-sm-6 control-label">お支払い方法</label>
+                    <div class="input-group col-md-4 col-sm-6 col-xs-12 static-text">
+                      <div>ご請求書</div>
                     </div>
                   </div>
                 <% end %>
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">料金</label>
-                  <div class="input-group col-sm-6 static-text">
-                    <span><%= number_with_delimiter @price %></span><span>円</span>
+                  <label class="col-md-4 col-sm-6 control-label">料金</label>
+                  <div class="input-group col-md-4 col-sm-6 static-text">
+                    <div><span><%= number_with_delimiter @price %></span><span>円</span></div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-6 control-label">備考</label>
-                  <div class="input-group col-sm-6 static-text">
+                  <label class="col-md-4 col-sm-6 control-label">備考</label>
+                  <div class="input-group col-md-4 col-sm-6 static-text">
                     <span><%= f.text_area :note, class: 'form-control', rows: 4 %></span>
                   </div>
                 </div>
