@@ -39,7 +39,14 @@ module SearchParams
       sentence = "ご予約はご利用日前日の18時までとなります"
     else
       facility = Facility.find_by('id = ?', params[:facility_id])
-      within_time = facility.try(:shop).try(:id) == Shop::WBG_SHOP_ID ? 24 : 0.5
+      within_time = case facility.try(:shop).try(:id)
+                    when Shop::WBG_SHOP_ID
+                      24
+                    when Shop::REFCOME_SHOP_ID
+                      0
+                    else
+                      0.5
+                    end
       sentence = "ご予約はご利用の#{within_time}時間前までとなります"
     end
     if Time.zone.now >= checkin - within_time.hours
