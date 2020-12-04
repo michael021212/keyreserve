@@ -11,6 +11,12 @@ class Admin::FacilitiesController < AdminController
     @facility = @shop.facilities.new(facility_params)
     @facility.set_max_num
     @facility.set_geocode
+    if @facility.public_place?
+      @facility.facility_type = :chartered_place if @facility.chartered?
+    else
+      @facility.chartered = @facility.chartered_place?
+    end
+    @facility.chartered_facilities.delete_all if !@facility.chartered
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を作成しました。"
     else
@@ -25,6 +31,12 @@ class Admin::FacilitiesController < AdminController
     @facility.assign_attributes(facility_params)
     @facility.set_max_num
     @facility.set_geocode
+    if @facility.public_place?
+      @facility.facility_type = :chartered_place if @facility.chartered?
+    else
+      @facility.chartered = @facility.chartered_place?
+    end
+    @facility.chartered_facilities.delete_all if !@facility.chartered
     if @facility.save
       redirect_to [:admin, @corporation, @shop, @facility], notice: "#{Facility.model_name.human}を更新しました。"
     else
@@ -77,6 +89,8 @@ class Admin::FacilitiesController < AdminController
       :ks_room_id,
       :checkin_time_for_stay,
       :checkout_time_for_stay,
+      :chartered,
+      chartered_facilities_attributes: [:id, :facility_id, :child_facility_id, :_destroy],
       facility_plans_attributes: [:id, :plan_id, '_destroy']
     )
   end

@@ -87,6 +87,8 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
       :lat,
       :lon,
       :ks_room_id,
+      :checkin_time_for_stay,
+      :checkout_time_for_stay,
       :chartered,
       chartered_facilities_attributes: [:id, :facility_id, :child_facility_id, :_destroy],
       facility_plans_attributes: [:id, :plan_id, :_destroy]

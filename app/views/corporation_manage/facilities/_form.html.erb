@@ -16,7 +16,7 @@
       {}, {prompt: t('.add_facility_type'), onchange: 'displayFormForStay();', class: 'facility-type'} %>
   <% end %>
 
-  <div id="for_stay" style="display: none;">
+  <div class="option_form" id="for_stay" style="display: none;">
     <%= f.time_field :checkin_time_for_stay %>
     <%= f.time_field :checkout_time_for_stay %>
   </div>
@@ -36,7 +36,7 @@
   <% end %>
 
   <%# 貸し切り対応フォーム %>
-  <div class='chartered_area' style= "display: <%= f.object.chartered ? 'block;' : 'none;' %>">
+  <div class='option_form' id='chartered_area' style= "display: <%= f.object.chartered ? 'block;' : 'none;' %>">
     <div class='form-group'>
       <div class='control-label col-sm-2'>
         <label>貸し切り施設</label>
