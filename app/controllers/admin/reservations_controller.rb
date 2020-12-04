@@ -90,6 +90,7 @@ class Admin::ReservationsController < AdminController
 
   def destroy
     @reservation.destroy
+    @reservation.unblock_for_chartered_place
     redirect_to admin_reservations_path, notice: '予約を削除しました'
   end
 
