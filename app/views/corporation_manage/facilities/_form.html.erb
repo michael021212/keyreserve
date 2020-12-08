@@ -10,6 +10,10 @@
     <%= f.hidden_field :facility_type, value: :public_place %>
   <% elsif shop.ks_flexible?%>
     <%= f.hidden_field :facility_type, value: :ks_flexible %>
+  <% elsif facility.parent_facilities%>
+    <%= f.select :facility_type,
+      Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' || k == 'public_place' || k == 'ks_flexible' || k == 'chartered_place' }.invert,
+      prompt: t('.add_facility_type') %>
   <% else %>
     <%= f.select :facility_type,
       Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' || k == 'public_place' || k == 'ks_flexible' }.invert,
