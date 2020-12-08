@@ -1,7 +1,7 @@
 <% facility_list = Facility
                   .joins(:shop)
                   .where(shops: { corporation_id: current_corporation.id })
-                  .where.not(facility_type: Facility.facility_types[:chartered_place])
+                  .where.not(chartered: true)
                   .map{|f| [f.name, f.id]} %>
 
 <div class='row'>
