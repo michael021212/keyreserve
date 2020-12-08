@@ -2,7 +2,7 @@
   <%= f.form_group :block_flag do %>
     <%= f.check_box :block_flag, { id: 'reservation_block_flag' } %>
   <% end %>
-  <%= f.select :facility_id, Facility.conference_room.collect { |f| [f.name, f.id] } %>
+  <%= f.select :facility_id, Facility.all.collect { |f| [f.name, f.id] } %>
   <%= f.select :user_id,
     User.where(user_type: [User.user_types[:personal], User.user_types[:corporate_admin]]).collect { |u| [u.name_with_corp, u.id] },
     {}, { include_blank: true, class: 'chosen-select' } %>
