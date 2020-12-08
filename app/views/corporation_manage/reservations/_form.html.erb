@@ -3,7 +3,7 @@
     <%= f.check_box :block_flag, { id: 'reservation_block_flag' } %>
   <% end %>
   <%= f.select :facility_id,
-               Facility.belongs_to_corporation(current_corporation).conference_room.collect { |f| [f.name, f.id] },
+               Facility.belongs_to_corporation(current_corporation).collect { |f| [f.name, f.id] },
                propmt: t('.select_facility') %>
   <%= f.select :user_id,
                current_corporation.users.where(user_type: [:personal, :corporate_admin]).collect { |u| [u.name_with_corp, u.id] },
