@@ -1,0 +1,33 @@
+#checkout, #checkout-time {
+  display: none;
+}
+
+.wavy {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  display: none;
+}
+
+#facility-type {
+  height: 38px !important;
+}
+
+.stay-checked {
+  opacity: 0.4;
+  pointer-events : none;
+}
+
+.chosen-select {
+  width: 100%;
+}
+
+.chosen-single {
+  color: white !important;
+  border: 1px solid white !important;
+  border-radius: 0% !important;
+  background: linear-gradient(#17272e 20%, #17272e 50%, #17272e 52%, #17272e 100%) !important;
+  background-color: black !important;
+  box-shadow: none !important;
+}

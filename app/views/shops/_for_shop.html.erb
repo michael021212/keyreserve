@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-sm-8">
                   <h3 class="mg-avl-room-title">
-                    <%= link_to new_reservation_path(facility_id: facility.id) do %>
+                    <%= link_to new_shop_facility_path(@shop, id: facility.id) do %>
                       <%= facility.name %>
                     <% end %>
                     <span>&yen;<%= facility.min_hourly_price(@user) %> / h 〜</span>
@@ -52,11 +52,7 @@
                       </ul>
                     </div>
                   </div>
-                  <%= link_to new_shop_facility_path(@shop, id: facility.id), class: 'btn btn-main' do %>
-                    詳細<i class="fa fa-angle-double-right"></i>
-                  <% end %>
                 </div>
-
               </div>
             </div>
           <% end %>
@@ -81,4 +77,3 @@
     </div>
   </div>
 </div>
-
