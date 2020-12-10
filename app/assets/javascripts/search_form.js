@@ -29,10 +29,10 @@ function changeFacilityType(){
   checked =  document.getElementById("spot_stay").checked;
   facility_type = document.getElementById("facility-type")
   facility_type.classList.toggle('stay-checked');
-  if (checked == true) {
-    facility_type.options[6].selected = true;
+  if (checked) {
+    facility_type.value = "accommodation";
   } else {
-    facility_type.options[1].selected = true;
+    facility_type.value = "conference_room";
   }
 };
 

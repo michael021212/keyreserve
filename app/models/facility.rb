@@ -233,6 +233,10 @@ class Facility < ApplicationRecord
     self.assign_attributes(max_num: 99) if rent? && (max_num.blank? || max_num == 0)
   end
 
+  def set_chartered
+    self.chartered = chartered_place?
+  end
+
   # 貸し切り施設に紐付いてる施設一覧を取得
   def associated_facilities
     return nil if !chartered?
