@@ -22,43 +22,60 @@
           <div class="mg-saerch-room">
             <div class="mg-book-now">
               <div class="form-group">
-                <label class="col-sm-6 control-label">施設名</label>
-                <div class="input-group col-sm-6 static-text">
+                <label class="col-md-4 col-sm-6 control-label">施設名</label>
+                <div class="input-group col-md-8 col-sm-6 static-text">
                   <%= @facility.name %>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用日時</label>
-                <div class="input-group col-sm-6 static-text">
-                  <%= datetime_ja @reservation.checkin %>
+              <% if @reservation.facility.accommodation? %>
+                <div class="form-group">
+                  <label class="col-md-4 col-sm-6 control-label">チェックイン</label>
+                  <div class="input-group col-md-8 col-sm-6 row mg-book-text">
+                    <div><%= datetime_ja @reservation.checkin %></div>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用時間</label>
-                <div class="input-group col-sm-6 col-xs-12 static-text">
-                  <%= @reservation.usage_period %>時間
+                <div class="form-group">
+                  <label class="col-md-4 col-sm-6 control-label">チェックアウト</label>
+                  <div class="input-group col-md-8 col-sm-6 row mg-book-text">
+                    <div><%= datetime_ja @reservation.checkout %></div>
+                  </div>
                 </div>
-              </div>
+              <% else %>
+                <div class="form-group">
+                  <label class="col-md-4 col-sm-6 control-label">ご利用日時</label>
+                  <div class="input-group col-md-8 col-sm-6 row mg-book-text">
+                    <div><%= datetime_ja @reservation.checkin %></div>
+                    <div>〜</div>
+                    <div><%= datetime_ja @reservation.checkout %></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 col-sm-6 control-label">ご利用時間</label>
+                  <div class="input-group col-md-8 col-sm-6 col-xs-12 static-text">
+                    <%= @reservation.usage_period %>時間
+                  </div>
+                </div>
+              <% end %>
               <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用人数</label>
-                <div class="input-group col-sm-6 col-xs-12 static-text">
+                <label class="col-md-4 col-sm-6 control-label">ご利用人数</label>
+                <div class="input-group col-md-8 col-sm-6 col-xs-12 static-text">
                   <%= @reservation.num %>名
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">お支払方法</label>
-                <div class="input-group col-sm-6 col-xs-12 static-text">
+                <label class="col-md-4 col-sm-6 control-label">お支払方法</label>
+                <div class="input-group col-md-8 col-sm-6 col-xs-12 static-text">
                   <%= @user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">料金</label>
-                <div class="input-group col-sm-6 static-text">
+                <label class="col-md-4 col-sm-6 control-label">料金</label>
+                <div class="input-group col-md-8 col-sm-6 static-text">
                   <span><%= number_with_delimiter @reservation.price %></span><span>円</span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">備考</label>
+                <label class="col-md-4 col-sm-6 control-label">備考</label>
                 <div class="input-group col-sm-6 static-text">
                   <span><%= simple_format(@reservation.note) %></span>
                 </div>

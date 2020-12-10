@@ -2,6 +2,7 @@ module SearchParams
 
   def valid_search_params?(params)
     return false if empty_params?(params)
+    return false if checkout_is_later_than_checkin?(params)
     return false unless set_checkin(params)
     return false unless set_checkout(params, @checkin)
     return false if sudden_reservation?(params, @checkin)
@@ -11,31 +12,52 @@ module SearchParams
 
   # 検索クエリが空かどうか
   def empty_params?(params)
-    if params[:checkin].blank? || params[:checkin_time].blank? || params[:use_hour].blank? || params[:use_num].blank? || params[:facility_type].blank?
-      flash.now[:error] = '検索条件を適切に入力してください' and return true
+    if params[:stay].try(:to_bool)
+      %i[checkin checkout use_num facility_type].each do |column_name|
+        flash.now[:error] = '検索条件を適切に入力してください' and return true if params[column_name].blank?
+      end
+    else
+      %i[checkin checkin_time use_hour use_num facility_type].each do |column_name|
+        flash.now[:error] = '検索条件を適切に入力してください' and return true if params[column_name].blank?
+      end
+    end
+    false
+  end
+
+  def checkout_is_later_than_checkin?(params)
+    return if !params[:stay].try(:to_bool)
+    if params[:checkout] <= params[:checkin]
+      flash.now[:error] = 'チェックアウト日はチェックイン日より遅い日付を指定してください' and return true
     end
     false
   end
 
   # 近すぎる予約かどうか
   def sudden_reservation?(params, checkin)
-    facility = Facility.find_by('id = ?', params[:facility_id])
-    within_time = case facility.try(:shop).try(:id)
-                  when Shop::WBG_SHOP_ID
-                    24
-                  when Shop::REFCOME_SHOP_ID
-                    0
-                  else
-                    0.5
-                  end
+    if params[:stay].try(:to_bool)
+      within_time = 6
+      sentence = "ご予約はご利用日前日の18時までとなります"
+    else
+      facility = Facility.find_by('id = ?', params[:facility_id])
+      within_time = case facility.try(:shop).try(:id)
+                    when Shop::WBG_SHOP_ID
+                      24
+                    when Shop::REFCOME_SHOP_ID
+                      0
+                    else
+                      0.5
+                    end
+      sentence = "ご予約はご利用の#{within_time}時間前までとなります"
+    end
     if Time.zone.now >= checkin - within_time.hours
-      flash.now[:error] = "ご予約はご利用の#{within_time}時間前までとなります" and return true
+      flash.now[:error] = sentence and return true
     end
     false
   end
 
   # 日をまたぐ予約かどうか
   def across_day?(params, checkin, checkout)
+    return false if params[:stay].try(:to_bool)
     if checkin.strftime('%Y/%m/%d') != checkout.strftime('%Y/%m/%d')
       flash.now[:error] = '日をまたいだ予約は出来ません' and return true
     end
@@ -44,7 +66,11 @@ module SearchParams
 
   # 検索クエリから利用開始日時の設定
   def set_checkin(params)
-    @checkin = Time.zone.parse(params[:checkin] + " " + params[:checkin_time])
+    if params[:stay].try(:to_bool)
+      @checkin = Time.zone.parse(params[:checkin] + " " + "00 : 00")
+    else
+      @checkin = Time.zone.parse(params[:checkin] + " " + params[:checkin_time])
+    end
   rescue => e
     logger.debug(e)
     flash.now[:error] = '不正な検索クエリです' and return false
@@ -57,5 +83,4 @@ module SearchParams
     legger.debug(e)
     flash.now[:error] = '不正な検索クエリです' and return false
   end
-
 end

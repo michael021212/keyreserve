@@ -22,7 +22,8 @@ class Facility < ApplicationRecord
                         car: 4,
                         ks_flexible: 5,
                         public_place: 6,
-                        chartered_place: 7 }
+                        chartered_place: 7,
+                        accommodation: 8 }
 
   enum reservation_type: { general: 1,
                            rent_with_ksc: 10,
@@ -41,6 +42,8 @@ class Facility < ApplicationRecord
   validates :name, :address, :facility_type, presence: true
   validates :address, presence: true, if: proc { |f| f.rent? }
   validates :detail_document, presence: true, if: proc { |f| f.rent? }
+  validates :checkin_time_for_stay, presence: true, if: proc { |f| f.accommodation? }
+  validates :checkout_time_for_stay, presence: true, if: proc { |f| f.accommodation? }
   validates :reservation_type, presence: true
 
   scope(:has_facility_dropin_sub_plans, ->(sub_plan_ids) {
@@ -55,6 +58,15 @@ class Facility < ApplicationRecord
     where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
   }
 
+  scope :filter_by_shop, ->(shop_id = nil) { where(shop_id: shop_id) if shop_id.present? }
+
+  scope :filter_by_users_facility_display_range, ->(user) {
+    if user.present? && user.related_corp_facilities?
+      shop_ids = Shop.where(corporation_id: user.corporation_ids).pluck(:id)
+      where(shop_id: shop_ids)
+    end
+  }
+
   def facility_temporary_plan_prices
     facility_temporary_plans.map(&:facility_temporary_plan_prices).flatten
   end
@@ -63,17 +75,28 @@ class Facility < ApplicationRecord
     facility_dropin_plans.map(&:facility_dropin_sub_plans).flatten
   end
 
-  # 現在予約可能な施設一覧
-  def self.reservable_facilities(checkin, checkout, condition, user, shop_id = nil)
+  def self.vacancy_facilities(condition, user)
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
-    # 指定された店舗の施設のみ検索
-    facilities = facilities.where(shop_id: shop_id) if shop_id.present?
-    # 表示制限のかかっているユーザーは施設表示を関連企業のものに限定
-    if user.present? && user.related_corp_facilities?
-      shop_ids = Shop.where(corporation_id: user.corporation_ids).pluck(:id)
-      facilities = facilities.where(shop_id: shop_ids)
+    # 予約済みの施設を除外する
+    acm_date_req = ((condition[:checkin]).to_date..(condition[:checkout]).to_date.yesterday).select(&:day)
+    acm_facilities = facilities.accommodation
+    future_rsvs = Reservation.where(facility_id: acm_facilities.pluck(:id)).future_rsvs
+    reserved_facility_ids = []
+    future_rsvs.each do |rsv|
+      reserved_date_array = (rsv.checkin.to_date..rsv.checkout.to_date.yesterday).select(&:day)
+      reserved = acm_date_req.any? { |date| reserved_date_array.include?(date) }
+      reserved ? reserved_facility_ids << rsv.facility_id : next
     end
+    facilities = acm_facilities.where.not(id: reserved_facility_ids.uniq)
+    # 最大収容人数が予約人数を下回る施設は削除
+    facilities = facilities.where('max_num >= ?', condition[:use_num].to_i)
+  end
+
+  # 現在予約可能な施設一覧
+  def self.reservable_facilities(checkin, checkout, condition, user)
+    # 都度課金可能な施設を一覧で取得
+    facilities = user.present? ? user.login_spots : Facility.logout_spots
     # 指定時間に予約済の施設は削除
     exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
     # 賃貸物件とその他施設を分けて施設検索
@@ -93,6 +116,12 @@ class Facility < ApplicationRecord
     facilities.chartered_place.each{ |f|
       exclude_facility_ids << f.id if !f.associated_facilities_available?(checkin, checkout) }
     facilities = facilities.where.not(id: exclude_facility_ids)
+  end
+
+  def min_daily_price(user)
+    min_price = min_price_of_facility_temporary_plans_for_stay(user)
+    price = compute_discount_price(min_price, user)
+    (price * Payment::TAX_RATE).floor
   end
 
   # userに表示し得る施設の最小利用料金(1時間)
@@ -117,6 +146,14 @@ class Facility < ApplicationRecord
       usage_hour -= 0.5
     end
     sum
+  end
+
+  def calc_price_for_stay(user, checkin, checkout)
+    return if user.nil?
+    min = min_daily_price(user)
+    acm_date_req = (Date.parse(checkin)..Date.parse(checkout).yesterday).select(&:day)
+    number_of_nights = acm_date_req.count
+    min * number_of_nights
   end
 
   def self.sync_from_api(ks_corporation_id)
@@ -196,7 +233,11 @@ class Facility < ApplicationRecord
     self.assign_attributes(max_num: 99) if rent? && (max_num.blank? || max_num == 0)
   end
 
-  # 紐付いてる施設一覧を取得
+  def set_chartered
+    self.chartered = chartered_place?
+  end
+
+  # 貸し切り施設に紐付いてる施設一覧を取得
   def associated_facilities
     return nil if !chartered? && !parent_facilities
     return parent_facilities if !child_facilities
@@ -245,6 +286,10 @@ class Facility < ApplicationRecord
 
   def min_price_of_facility_temporary_plans(user)
     facility_temporary_plans.select_plans_for_user_condition(user)&.minimum(:standard_price_per_hour) || 0
+  end
+
+  def min_price_of_facility_temporary_plans_for_stay(user)
+    facility_temporary_plans.select_plans_for_user_condition(user)&.minimum(:standard_price_per_day) || 0
   end
 
   def min_price_of_target_facility_temporary_plan_prices(user, target_time)

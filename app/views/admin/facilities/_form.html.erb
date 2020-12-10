@@ -13,8 +13,33 @@
   <% else %>
     <%= f.select :facility_type,
       Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' || k == 'public_place' || k == 'ks_flexible' }.invert,
-      prompt: '施設タイプを選択してください' %>
+      {}, {prompt: '施設タイプを選択してください', onchange: 'displayFormForStay();', class: 'facility-type'} %>
   <% end %>
+
+  <div class='option_form' id="for_stay" style="display: none;">
+    <%= f.time_field :checkin_time_for_stay %>
+    <%= f.time_field :checkout_time_for_stay %>
+  </div>
+
+  <%# 貸し切り対応フォーム %>
+  <div class='option_form' id='chartered_area' style= "display: <%= f.object.chartered ? 'block;' : 'none;' %>">
+    <div class='form-group'>
+      <div class='control-label col-sm-2'>
+        <label>貸し切り施設</label>
+      </div>
+      <div class='col-sm-10 form-inline text-left'>
+        <%= link_to_add_association '行を追加',
+          f, :chartered_facilities,
+          data: {association_insertion_node: '#chartered_facilities'},
+          class: 'btn btn-success mb15' %>
+      </div>
+    </div>
+    <div id='chartered_facilities'>
+      <%= f.fields_for :chartered_facilities do |cf| %>
+        <%= render 'chartered_facility_fields', f: cf %>
+      <% end %>
+    </div>
+  </div>
 
   <%= f.file_field :image %>
   <%= f.hidden_field :image_cache %>
@@ -35,10 +60,15 @@
     </div>
   </div>
 
-  <% if shop.rent? || shop.ks_flexible? || shop.public_facility? || shop.general_with_ksc? %>
+  <%# 店舗が賃貸、フレキシブル、公共施設の場合はKS Checkin利用有無を選択 %>
+  <%# 店舗がKSC利用の場合はKS Checkin利用をhiddenで送る %>
+  <%# 店舗が一般の場合はhiddenで一般予約を送る %>
+  <% if shop.rent? || shop.ks_flexible? || shop.public_facility? %>
     <%= f.select :reservation_type,
       Facility.reservation_types_i18n.select{ |k,v| k == 'rent_with_ksc' || k == 'rent_without_ksc' }.invert,
       include_blank: 'この施設の予約方法を選択' %>
+  <% elsif shop.general_with_ksc? %>
+    <%= f.hidden_field :reservation_type, value: :rent_with_ksc %>
   <% else %>
     <%= f.hidden_field :reservation_type, value: :general %>
   <% end %>

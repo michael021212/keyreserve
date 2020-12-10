@@ -13,6 +13,8 @@
 //= require rails-ujs
 //= require jquery
 //= require jquery-ui
+//= require chosen-jquery
+//= require chosen_setting
 //= require bootstrap-sprockets
 //= require app
 //= require jquery.slimscroll.min
@@ -42,3 +44,4 @@
 //= require reservation_calendar
 //= require dropin
 //= require reservation
+//= require search_form

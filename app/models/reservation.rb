@@ -38,6 +38,8 @@ class Reservation < ApplicationRecord
 
   scope :with_corporation, ->(corporation) { includes(facility: :shop).where(shops: { corporation_id: corporation.id }) }
 
+  scope :future_rsvs, -> { where('checkin > ?', Time.current) }
+
   # 指定した時間内の予約一覧
   scope :in_range, ->(range) do
     where(arel_table[:checkout].gt(range.first)).where(arel_table[:checkin].lt(range.last))
@@ -99,16 +101,24 @@ class Reservation < ApplicationRecord
   end
 
   def self.new_from_spot(spot, user, current_user)
-    checkin = Time.zone.parse(spot['checkin'] + " " + spot['checkin_time'])
+    checkin = Time.zone.parse(spot['checkin'] + ' ' + spot['checkin_time'])
     facility = Facility.find(spot['facility_id'].to_i)
-    price = facility.calc_price(user, checkin, spot['use_hour'].to_f)
+    if spot['stay'].try(:to_bool)
+      checkout = Time.zone.parse(spot['checkout'] + ' ' + spot['checkout_time'])
+      price = facility.calc_price_for_stay(user, spot['checkin'], spot['checkout'])
+      usage_period = (checkout - checkin) / 60 / 60
+    else
+      checkout = checkin + spot['use_hour'].to_f.hours
+      price = facility.calc_price(user, checkin, spot['use_hour'].to_f)
+      usage_period = spot['use_hour'].to_f
+    end
     Reservation.new(
       facility_id: spot['facility_id'],
       user_id: user.id,
       reservation_user_id: current_user.id,
       checkin: checkin,
-      checkout: checkin + spot['use_hour'].to_f.hours,
-      usage_period: spot['use_hour'].to_f,
+      checkout: checkout,
+      usage_period: usage_period,
       state: :confirmed,
       price: price,
       num: spot['use_num'],

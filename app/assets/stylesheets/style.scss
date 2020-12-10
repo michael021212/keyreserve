@@ -2031,6 +2031,9 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 .mg-rooms-cols {
   padding: 70px 0;
 }
+.mg-checkbox {
+  font-size: 20px;
+}
 .mg-single-room {
   @media only screen and (min-width: 768px) {
     padding: 100px 0 0;
@@ -2991,6 +2994,17 @@ div.cs-skin-elastic .cs-options .cs-selected span::after {
 }
 .mg-saerch-room .mg-book-now {
   padding: 20px 35px;
+}
+.control-label {
+  color: #e7b314 !important;
+}
+.mg-book-text {
+  padding-top: 7px;
+  color: #fff;
+  font-size: 20px;
+}
+.mg-book-text-price {
+  padding-left: 12px;
 }
 .mg-available-rooms {
   padding: 70px 0;
