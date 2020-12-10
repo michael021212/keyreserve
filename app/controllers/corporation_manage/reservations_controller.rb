@@ -76,6 +76,7 @@ class CorporationManage::ReservationsController < CorporationManage::Base
   def destroy
     ActiveRecord::Base.transaction do
       @reservation.destroy!
+      @reservation.unblock_for_chartered_place
       unless @reservation.block_flag?
         NotificationMailer.reservation_canceled(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
         NotificationMailer.reservation_canceled(@reservation, @reservation.reservation_user_id).deliver_now

@@ -239,7 +239,19 @@ class Facility < ApplicationRecord
 
   # 貸し切り施設に紐付いてる施設一覧を取得
   def associated_facilities
-    return nil if !chartered?
+    return nil if !chartered? && !parent_facilities
+    return parent_facilities if !child_facilities
+    return child_facilities if !parent_facilities
+  end
+
+  def parent_facilities
+    chartered_facilities = CharteredFacility.where(child_facility_id: id)
+    return nil if chartered_facilities.blank?
+    Facility.where(id: chartered_facilities.pluck(:facility_id))
+  end
+
+  def child_facilities
+    return nil if chartered_facilities.blank?
     Facility.where(id: chartered_facilities.map{|cf| cf.child_facility_id})
   end
 
