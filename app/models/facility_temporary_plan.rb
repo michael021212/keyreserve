@@ -16,6 +16,7 @@ class FacilityTemporaryPlan < ApplicationRecord
   scope(:belongs_to_corporation, ->(corporation) { includes(facility: { shop: :corporation }).where(facilities: { shops: { corporation_id: corporation.id }}) })
   scope(:exclude_ks_room_key_ids, ->(facility_id) { includes(:facility).where(facilities: { id: facility_id }).pluck(:ks_room_key_id) })
   scope :not_zero_yen, -> { where.not(standard_price_per_hour: 0) }
+  scope :not_zero_yen_for_stay, -> { where.not(standard_price_per_day: 0) }
   scope :plan_id_nil, -> { where(plan_id: nil) }
   scope :target_plan_ids, ->(plan_ids) { where(plan_id: plan_ids) }
   scope :linked_with_user, ->(user) do
@@ -23,7 +24,9 @@ class FacilityTemporaryPlan < ApplicationRecord
     target_plan_ids(plans)
   end
   scope :for_not_member, -> { not_zero_yen.plan_id_nil }
+  scope :for_not_member_for_stay, -> { not_zero_yen_for_stay.plan_id_nil }
   scope :select_plans_for_user_condition, ->(user=nil) { linked_with_user(user).presence || for_not_member }
+  scope :select_plans_for_user_condition_for_stay, ->(user=nil) { linked_with_user(user).presence || for_not_member_for_stay }
 
   def overlap_facility_temporary_plan_prices
     time_period_with_indices = []

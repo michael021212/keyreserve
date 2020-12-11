@@ -53,7 +53,7 @@ class Facility < ApplicationRecord
   scope(:belongs_to_corporation, ->(corporation) { includes(shop: :corporation).where(shops: { corporation_id: corporation.id }) })
 
   scope :order_by_min_price, -> (facilities, user) {
-    @facilities = facilities.sort_by { |f| f.min_hourly_price(user) }
+    @facilities = facilities.sort_by { |f| f.accommodation? ? f.min_daily_price(user) : f.min_hourly_price(user) }
     sanitized_id_string = @facilities.map {|f| f[:id]}.join(",")
     where(id: @facilities).order("FIELD(id, #{sanitized_id_string})")
   }
@@ -289,7 +289,7 @@ class Facility < ApplicationRecord
   end
 
   def min_price_of_facility_temporary_plans_for_stay(user)
-    facility_temporary_plans.select_plans_for_user_condition(user)&.minimum(:standard_price_per_day) || 0
+    facility_temporary_plans.select_plans_for_user_condition_for_stay(user)&.minimum(:standard_price_per_day) || 0
   end
 
   def min_price_of_target_facility_temporary_plan_prices(user, target_time)
