@@ -55,13 +55,13 @@ class CorporationManage::ReservationsController < CorporationManage::Base
   # POST /corporation_manager/reservations/payments
   def payment
     build_reservation_from_session
-    if @reservation.user.creditcard?
-      @reservation.set_payment
-      @reservation.save_and_charge!
-    elsif @reservation.user.invoice?
-      @reservation.save!
-    end
     ActiveRecord::Base.transaction do
+      if @reservation.user.creditcard?
+        @reservation.set_payment
+        @reservation.save_and_charge!
+      elsif @reservation.user.invoice?
+        @reservation.save!
+      end
       # KS Checkinと連動させる際の値取得処理
       if @reservation.facility.rent_with_ksc?
         ks_room_key_info = @reservation.fetch_ks_room_key
@@ -80,10 +80,10 @@ class CorporationManage::ReservationsController < CorporationManage::Base
       NotificationMailer.reserved_to_admin(@reservation).deliver_now
     end
     redirect_to corporation_manage_reservations_path, notice: t('common.messages.created', name: Reservation.model_name.human)
-  rescue Stripe::StripeError => e
-    logger.error("#{e.class.name} #{e.message}")
-    flash[:notice] = t('errors.messages.stripe_error')
-    render :confirm
+  rescue => e
+    logger.debug(e)
+    flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、再度お手続きお願いいたします。'
+    render :new
   end
 
   def destroy
