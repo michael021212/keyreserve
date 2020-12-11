@@ -61,11 +61,24 @@ class CorporationManage::ReservationsController < CorporationManage::Base
     elsif @reservation.user.invoice?
       @reservation.save!
     end
-    session[:reservation] = nil
-    NotificationMailer.reserved(@reservation, @reservation.reservation_user_id).deliver_now
-    NotificationMailer.reserved(@reservation, @reservation.user_id).deliver_now if @reservation.send_cc_mail?
-    NotificationMailer.reserved_to_corporation(@reservation).deliver_now if @reservation.facility.shop.corporation.try(:email).present?
-    NotificationMailer.reserved_to_admin(@reservation).deliver_now
+    ActiveRecord::Base.transaction do
+      # KS Checkinと連動させる際の値取得処理
+      if @reservation.facility.rent_with_ksc?
+        ks_room_key_info = @reservation.fetch_ks_room_key
+        if @reservation.facility.rent_with_ksc? && ks_room_key_info.present?
+          ksc_reservation_no = @reservation.regist_ksc_reservation
+        end
+        if @reservation.self_viewing_system_link_error?(ks_room_key_info, ksc_reservation_no)
+          flash[:alert] = '予約時に予期せぬエラーが発生しました。お手数となりますが、運営事務局までお尋ねください'
+          redirect_to spot_reservations_url and return
+        end
+      end
+      session[:reservation] = nil
+      NotificationMailer.reserved(@reservation, @reservation.reservation_user_id, ksc_reservation_no, ks_room_key_info).deliver_now
+      NotificationMailer.reserved(@reservation, @reservation.user_id, ksc_reservation_no, ks_room_key_info).deliver_now if @reservation.send_cc_mail?
+      NotificationMailer.reserved_to_corporation(@reservation).deliver_now if @reservation.facility.shop.corporation.try(:email).present?
+      NotificationMailer.reserved_to_admin(@reservation).deliver_now
+    end
     redirect_to corporation_manage_reservations_path, notice: t('common.messages.created', name: Reservation.model_name.human)
   rescue Stripe::StripeError => e
     logger.error("#{e.class.name} #{e.message}")
