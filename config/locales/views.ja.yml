@@ -358,6 +358,8 @@ ja:
         title: 予約登録
       confirm:
         title: 決済詳細
+      payment:
+        title: 予約登録
       edit:
         title: 予約備考編集
     corporate_admin_users:
