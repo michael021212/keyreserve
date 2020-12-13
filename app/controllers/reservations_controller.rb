@@ -34,7 +34,7 @@ class ReservationsController <  ApplicationController
     @shop_id = params[:spot][:shop_id].to_i if params[:spot][:shop_id].present?
     return render :spot if @condition.blank?
     return render :spot unless valid_search_params?(@condition) #@checkinと@checkoutもset
-    if @condition[:stay].to_bool
+    if @condition[:stay].try(:to_bool)
       @facilities = Facility.vacancy_facilities(@condition, current_user)
                             .filter_by_shop(@shop_id)
                             .filter_by_users_facility_display_range(current_user)
@@ -75,7 +75,7 @@ class ReservationsController <  ApplicationController
     @facility = @user.login_spots.find_by(id: @condition[:facility_id]) if @condition[:facility_id].present?
     return render json: { price: '' } if @facility.blank?
     set_checkin(@condition)
-    if @condition[:stay].to_bool
+    if @condition[:stay].try(:to_bool)
       price = @facility.calc_price_for_stay(@user, @condition[:checkin], @condition[:checkout])
     else
       price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
@@ -122,7 +122,7 @@ class ReservationsController <  ApplicationController
     # 検索クエリが正常かどうかチェック
     return render :new unless valid_search_params?(@condition)
 
-    if !@condition[:stay].to_bool
+    if !@condition[:stay].try(:to_bool)
       # 店舗の運営時間外の予約ならエラー
       if @facility.shop.out_of_business_time?(@checkin, @checkout)
         flash[:error] = 'ご予約時間が営業時間外となります'
