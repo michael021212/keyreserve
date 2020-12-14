@@ -14,9 +14,10 @@
         <div class="mg-booking-form">
           <%= form_for :spot, url: confirm_reservations_path,
             html: { class: 'form-horizontal js-calc-price-form' } do |f| %>
-            <% if @condition[:stay].try(:to_bool) %>
+            <% if @facility.accommodation? %>
               <%= f.hidden_field :facility_type, value: @facility.facility_type  %>
               <%= f.hidden_field :facility_id, value: @facility.id %>
+              <%= f.hidden_field :stay, value: true %>
               <div class="mg-saerch-room">
                 <div class="mg-book-now">
                   <div class="form-group row">
@@ -53,13 +54,12 @@
                       <button type="submit" class="btn btn-main btn-block">次へ</button>
                     </div>
                   </div>
-                  <%= f.hidden_field :stay, value: @condition[:stay] %>
                 </div>
               </div>
             <% else %>
               <%= f.hidden_field :facility_type, value: @facility.facility_type  %>
               <%= f.hidden_field :facility_id, value: @facility.id %>
-              <%= f.hidden_field :stay, value: @condition[:stay] %>
+              <%= f.hidden_field :stay, value: false %>
               <div class="mg-saerch-room">
                 <div class="mg-book-now">
                   <div class="form-group">
@@ -104,7 +104,6 @@
                       <span id="js-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
                     </div>
                   </div>
-                  <%= f.hidden_field :stay, value: @facility.accommodation? ? "true" : "false" %>
                   <div class="row">
                     <div class="col-md-offset-4 col-md-4">
                       <button type="submit" class="btn btn-main btn-block">次へ</button>
