@@ -19,7 +19,7 @@ class NotificationMailer < ApplicationMailer
 
   def campaign_user_registration_to_admin(user)
     @user = user
-    mail(to: 'contact@key-stations.jp', subject: "【KS Booking】新しいユーザが登録されました")
+    mail(to: 'contact@keeyls.com', subject: "【KS Booking】新しいユーザが登録されました")
   end
 
   def campaign_finished(user)
@@ -29,12 +29,12 @@ class NotificationMailer < ApplicationMailer
 
   def campaign_finished_to_admin(user)
     @user = user
-    mail(to: 'contact@key-stations.jp', subject: "【KS Booking】キャンペーン期間が終了したユーザがいます")
+    mail(to: 'contact@keeyls.com', subject: "【KS Booking】キャンペーン期間が終了したユーザがいます")
   end
 
   def postal_matter_notification(user)
     @user = user
-    mail(to: @user.email, cc: 'contact@key-stations.jp', subject: "郵便物が届いています")
+    mail(to: @user.email, cc: 'contact@keeyls.com', subject: "郵便物が届いています")
   end
 
   def reserved(reservation, user_id, ksc_reservation_no=nil, ks_room_key_info=nil)
@@ -53,7 +53,7 @@ class NotificationMailer < ApplicationMailer
 
   def reserved_to_admin(reservation)
     @reservation = reservation
-    mail(to: 'contact@key-stations.jp', subject: "【KS Booking】施設の予約が入りました")
+    mail(to: 'contact@keeyls.com', subject: "【KS Booking】施設の予約が入りました")
   end
 
   def dropin_reserved(dropin_reservation, user_id)
@@ -65,7 +65,7 @@ class NotificationMailer < ApplicationMailer
 
   def dropin_reserved_to_admin(dropin_reservation)
     @dropin_reservation = dropin_reservation
-    mail(to: 'contact@key-stations.jp', subject: "【KS Booking】ドロップインの予約が入りました")
+    mail(to: 'contact@keeyls.com', subject: "【KS Booking】ドロップインの予約が入りました")
   end
 
   # 施設利用予約がキャンセルされた際のメール
@@ -79,7 +79,7 @@ class NotificationMailer < ApplicationMailer
   # 施設利用予約がキャンセルされた際のAdmin宛メール
   def reservation_canceled_to_admin(reservation)
     @reservation = reservation
-    mail(to: 'contact@key-stations.jp', subject: "【KS Booking】施設の予約がキャンセルされました")
+    mail(to: 'contact@keeyls.com', subject: "【KS Booking】施設の予約がキャンセルされました")
   end
 
   # 施設利用予約がキャンセルされた際の企業宛メール
@@ -99,7 +99,7 @@ class NotificationMailer < ApplicationMailer
   # ドロップイン予約がキャンセルされた際の管理者宛メール
   def dropin_reservation_canceled_to_admin(dropin_reservation)
     @dropin_reservation = dropin_reservation
-    mail(to: 'contact@key-stations.jp', subject: "【KS Booking】ドロップインの予約がキャンセルされました")
+    mail(to: 'contact@keeyls.com', subject: "【KS Booking】ドロップインの予約がキャンセルされました")
   end
 
   def send_reservation_password(reservation)
@@ -138,7 +138,7 @@ class NotificationMailer < ApplicationMailer
 
   def upload_identification(personal_identification)
     @personal_identification = personal_identification
-    mail(to: 'contact@key-stations.jp', subject: "【KS Booking】本人確認の資料がアップされました")
+    mail(to: 'contact@keeyls.com', subject: "【KS Booking】本人確認の資料がアップされました")
   end
 
   def verification_confirmed(personal_identification)
