@@ -152,7 +152,7 @@ ja:
         facility_type: 施設タイプ（スポット利用時）
         detail_document: 詳細資料
         published: 掲載状況
-        reservation_type: 予約方法
+        reservation_type: 予約タイプ
         ks_room_id: KEY STATION部屋ID
         chartered: 貸し切り施設
         checkin_time_for_stay: 宿泊利用時のチェックイン時間
@@ -227,7 +227,6 @@ ja:
     shop:
       shop_type:
         general: 一般
-        rent: 賃貸物件登録用
         ks_flexible: フレキシブルスロット登録用店舗(KEY STATION連動)
         public_facility: 公共施設登録用
         general_with_ksc: KS Checkin利用店舗
@@ -267,8 +266,6 @@ ja:
       facility_type:
         conference_room: 一般施設
         dropin: ドロップイン
-        rent: 賃貸物件
-        car: 車
         ks_flexible: フレキシブルスロット用施設(KEY STATION連動)
         public_place: 公共施設
         chartered_place: 貸し切り施設
@@ -277,7 +274,6 @@ ja:
         general: 通常予約
         rent_with_ksc: KS Checkin使用予約
         rent_without_ksc: KS Checkin未使用予約
-        car_share: カーシェア予約
     reservation:
       state:
         unconfirmed: 未確定

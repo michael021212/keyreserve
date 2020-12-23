@@ -5,13 +5,6 @@
   ksc_reservation_no: @ksc_reservation_no,
   ks_room_key_info: @ks_room_key_info %>
 
-<%# 内覧予約の場合 %>
-<% elsif @reservation.facility.rent? %>
-<%= render '/notification_mailer/partials/reserved_for_rent',
-  reservation: @reservation,
-  ksc_reservation_no: @ksc_reservation_no,
-  ks_room_key_info: @ks_room_key_info %>
-
 <%# フレキシブル予約の場合 %>
 <% elsif @reservation.facility.ks_flexible? %>
 <%= render '/notification_mailer/partials/reserved_for_flexible',

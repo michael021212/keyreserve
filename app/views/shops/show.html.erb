@@ -1,12 +1,8 @@
 <% content_for :middle_title do %>
   <h2><%= "#{@shop.name}" %></h2>
 <% end %>
-<% if @shop.for_rent? %>
-  <%= render 'for_rent' %>
-<% elsif @shop.for_flexible? %>
+<% if @shop.for_flexible? %>
   <%= render 'for_flexible' %>
-<% elsif @shop.for_public? %>
-  <%= render 'for_public' %>
 <% else %>
   <%= render 'for_shop' %>
 <% end %>

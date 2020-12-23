@@ -14,13 +14,7 @@ class ShopsController <  ApplicationController
   end
 
   def show
-    if @shop.for_rent?
-      @rent_facilities = Facility
-                         .displayale_rent_facilities
-                         .where(published: true)
-                         .order(id: :desc)
-                         .page(params[:page])
-    elsif @shop.for_flexible?
+    if @shop.for_flexible?
       flexible_shops = current_user.corporations.map{|c| c.shops.ks_flexible}.flatten
       @flexible_facilities = Facility
                             .ks_flexible
@@ -28,17 +22,6 @@ class ShopsController <  ApplicationController
                             .where(published: true)
                             .order(id: :desc)
                             .page(params[:page])
-    elsif @shop.for_public?
-      if current_user.present?
-        @public_facilities = current_user
-                            .login_spots
-                            .public_place
-                            .where(published: true)
-                            .order(id: :desc)
-                            .page(params[:page])
-      else
-        @public_facilities = []
-      end
     else
       if current_user.present?
         @facilities = current_user
