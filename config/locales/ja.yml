@@ -228,7 +228,6 @@ ja:
       shop_type:
         general: 一般
         ks_flexible: フレキシブルスロット登録用店舗(KEY STATION連動)
-        public_facility: 公共施設登録用
         general_with_ksc: KS Checkin利用店舗
     dropin_reservation:
       state:
@@ -267,7 +266,6 @@ ja:
         conference_room: 一般施設
         dropin: ドロップイン
         ks_flexible: フレキシブルスロット用施設(KEY STATION連動)
-        public_place: 公共施設
         chartered_place: 貸し切り施設
         accommodation: 宿泊施設
       reservation_type:

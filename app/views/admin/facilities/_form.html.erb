@@ -4,13 +4,11 @@
   <%= f.text_field :address %>
 
   <%# 一般店舗以外の場合は施設タイプをhiddenで送る %>
-  <% if shop.public_facility? %>
-    <%= f.hidden_field :facility_type, value: :public_place %>
-  <% elsif shop.ks_flexible? %>
+  <% if shop.ks_flexible? %>
     <%= f.hidden_field :facility_type, value: :ks_flexible %>
   <% else %>
     <%= f.select :facility_type,
-      Facility.facility_types_i18n.delete_if{ |k,v| k == 'public_place' || k == 'ks_flexible' }.invert,
+      Facility.facility_types_i18n.delete_if{ |k,v| k == 'ks_flexible' }.invert,
       {}, {prompt: '施設タイプを選択してください', onchange: 'displayFormForStay();', class: 'facility-type'} %>
   <% end %>
 
@@ -56,10 +54,10 @@
     </div>
   </div>
 
-  <%# 店舗がフレキシブル、公共施設の場合はKS Checkin利用有無を選択 %>
+  <%# 店舗がフレキシブルの場合はKS Checkin利用有無を選択 %>
   <%# 店舗がKSC利用の場合はKS Checkin利用をhiddenで送る %>
   <%# 店舗が一般の場合はhiddenで一般予約を送る %>
-  <% if shop.ks_flexible? || shop.public_facility? %>
+  <% if shop.ks_flexible? %>
     <%= f.select :reservation_type,
       Facility.reservation_types_i18n.select{ |k,v| k == 'rent_with_ksc' || k == 'rent_without_ksc' }.invert,
       include_blank: 'この施設の予約方法を選択' %>

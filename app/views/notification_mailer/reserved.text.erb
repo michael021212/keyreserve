@@ -12,15 +12,10 @@
   ksc_reservation_no: @ksc_reservation_no,
   ks_room_key_info: @ks_room_key_info %>
 
-<%# 公共施設予約の場合 %>
-<% elsif @reservation.facility.public_place? %>
-<%= render '/notification_mailer/partials/reserved_for_public',
-  reservation: @reservation,
-  ksc_reservation_no: @ksc_reservation_no,
-  ks_room_key_info: @ks_room_key_info %>
-
 <%# 一般施設予約の場合 %>
 <% else %>
 <%= render '/notification_mailer/partials/reserved_for_general',
-  reservation: @reservation %>
+  reservation: @reservation,
+  ksc_reservation_no: @ksc_reservation_no,
+  ks_room_key_info: @ks_room_key_info %>
 <% end %>
