@@ -16,16 +16,12 @@ class Facility < ApplicationRecord
 
   enum facility_type: { conference_room: 1,
                         dropin: 2,
-                        rent: 3,
-                        car: 4,
-                        ks_flexible: 5,
-                        public_place: 6,
-                        chartered_place: 7,
-                        accommodation: 8 }
+                        accommodation: 3,
+                        ks_flexible: 4,
+                        chartered_place: 5 }
 
-  enum reservation_type: { general: 1,
-                           rent_with_ksc: 10,
-                           rent_without_ksc: 11 }
+  enum reservation_type: { rent_without_ksc: 0,
+                           rent_with_ksc: 1 }
 
   accepts_nested_attributes_for :facility_plans, reject_if: lambda { |attributes| attributes['plan_id'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :facility_keys, reject_if: :all_blank
