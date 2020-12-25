@@ -8,6 +8,5 @@
   <%= f.text_field :calendar_url %>
   <%= f.file_field :image %>
   <%= f.select :registerable, [['可', true],['不可', false]] %>
-  <%= f.select :shop_type, Shop.shop_types_i18n.invert %>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

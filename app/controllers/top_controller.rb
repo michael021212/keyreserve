@@ -1,6 +1,6 @@
 class TopController < ApplicationController
   def index
-    @shops = Shop.general.order(id: :desc)
+    @shops = Shop.all.order(id: :desc)
     @information = Information.order(publish_time: :desc).limit(10)
   end
 

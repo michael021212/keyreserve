@@ -140,7 +140,6 @@ ja:
         closing_time: 閉店時間
         image: 店舖画像
         calendar_url: イベントカレンダーURL
-        shop_type: 店舗タイプ
         registerable: 登録時選択可否
       facility:
         id: ID
@@ -224,11 +223,6 @@ ja:
       facility_display_range_default:
         related_corp_facilities: 関連企業の施設のみ
         all_facilities: 全施設
-    shop:
-      shop_type:
-        general: 一般
-        ks_flexible: フレキシブルスロット登録用店舗(KEY STATION連動)
-        general_with_ksc: KS Checkin利用店舗
     dropin_reservation:
       state:
         unconfirmed: 未確定
@@ -269,7 +263,6 @@ ja:
         chartered_place: 貸し切り施設
         accommodation: 宿泊施設
       reservation_type:
-        general: 通常予約
         rent_with_ksc: KS Checkin使用予約
         rent_without_ksc: KS Checkin未使用予約
     reservation:

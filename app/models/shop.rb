@@ -15,12 +15,6 @@ class Shop < ApplicationRecord
 
   delegate :name, to: :corporation, prefix: true, allow_nil: true
   delegate :id, to: :corporation, prefix: true, allow_nil: true
-  enum shop_type: { general: 0,
-                    rent: 1,
-                    ks_flexible: 2,
-                    public_facility: 3,
-                    general_with_ksc: 4
-                  }
 
   # カテゴリ毎の統合用店舗ID
   FLEXIBLE_SHOP_ID = 11
