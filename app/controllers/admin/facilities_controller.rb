@@ -9,7 +9,6 @@ class Admin::FacilitiesController < AdminController
 
   def create
     @facility = @shop.facilities.new(facility_params)
-    @facility.set_max_num
     @facility.set_geocode
     @facility.set_chartered
     if @facility.save
@@ -24,7 +23,6 @@ class Admin::FacilitiesController < AdminController
 
   def update
     @facility.assign_attributes(facility_params)
-    @facility.set_max_num
     @facility.set_geocode
     @facility.set_chartered
     @facility.chartered_facilities.delete_all if !@facility.chartered

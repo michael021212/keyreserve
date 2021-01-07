@@ -15,17 +15,9 @@ class Shop < ApplicationRecord
 
   delegate :name, to: :corporation, prefix: true, allow_nil: true
   delegate :id, to: :corporation, prefix: true, allow_nil: true
-  enum shop_type: { general: 0,
-                    rent: 1,
-                    ks_flexible: 2,
-                    public_facility: 3,
-                    general_with_ksc: 4
-                  }
 
   # カテゴリ毎の統合用店舗ID
-  RENT_SHOP_ID = 6
   FLEXIBLE_SHOP_ID = 11
-  PUBLIC_SHOP_ID = 18
 
   # 特別対応を行う店舗ID
   WBG_SHOP_ID = 22
@@ -64,19 +56,9 @@ class Shop < ApplicationRecord
       to > assign_date_for_closing(to.year, to.month, to.day)
   end
 
-  # 賃貸物件掲載用の店舗かどうか
-  def for_rent?
-    id == Shop::RENT_SHOP_ID
-  end
-
   # フレキシブル利用用の店舗かどうか
   def for_flexible?
     id == Shop::FLEXIBLE_SHOP_ID
-  end
-
-  # 公共施設用の店舗かどうか
-  def for_public?
-    id == Shop::PUBLIC_SHOP_ID
   end
 
   def set_geocode

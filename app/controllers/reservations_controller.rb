@@ -61,7 +61,7 @@ class ReservationsController <  ApplicationController
       @condition = {}
     end
     session[:reservation_id] = nil
-    @facility = @condition[:facility_type] == 'rent' ? Facility.find_by(id: params[:facility_id]) : @user.login_spots.find_by(id: params[:facility_id])
+    @facility = @user.login_spots.find_by(id: params[:facility_id])
     if @facility.blank?
       flash[:error] = '検索条件を入力してください'
       redirect_to spot_reservations_path

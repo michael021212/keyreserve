@@ -34,12 +34,6 @@
                   Shop
                 <% end %>
               </li>
-              <li>
-                <%= link_to shop_path(Shop.find_by(id: Shop::PUBLIC_SHOP_ID)) do %>
-                  公共施設<br />
-                  Public Facility
-                <% end %>
-              </li>
               <% #フレキシブル利用者にのみメニュー表示 %>
               <% if current_user.present? && current_user.ks_flexible? %>
                 <li>
@@ -49,12 +43,6 @@
                   <% end %>
                 </li>
               <% end %>
-              <li>
-                <%= link_to shop_path(Shop.find_by(id: Shop::RENT_SHOP_ID)) do %>
-                  賃貸物件<br />
-                  Rent
-                <% end %>
-              </li>
             </ul>
           </li>
 

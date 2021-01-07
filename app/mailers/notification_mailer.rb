@@ -103,15 +103,10 @@ class NotificationMailer < ApplicationMailer
   end
 
   def send_reservation_password(reservation)
-    @reservation = reservation
-    plan_ids = @reservation.user.user_contracts.pluck(:plan_id).presence || nil
-    @member_ftps = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
-    if @reservation.facility.rent?
-      @not_member_ftp = reservation.facility.facility_temporary_plans.where(plan_id: nil)
-    else
-      @not_member_ftp = reservation.facility.facility_temporary_plans.where.not(standard_price_per_hour: 0).where(plan_id: nil)
-    end
-    @ftp = @member_ftps.present? ? @member_ftps.first : @not_member_ftp.first
+    plan_ids = reservation.user.user_contracts.pluck(:plan_id).presence
+    ftps = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
+    ftps = reservation.facility.facility_temporary_plans.where(plan_id: nil) if ftps.blank?
+    @ftp = reservation.facility.accommodation? ? ftps.min_by(&:standard_price_per_day) : ftps.min_by(&:standard_price_per_hour)
     @ftp_title = @ftp.guide_mail_title
     @password = KeystationService.sync_room_key_password(@ftp.ks_room_key_id)
     attachments[@ftp.guide_file.file.filename] = @ftp.guide_file.read if @ftp.guide_file.present?
