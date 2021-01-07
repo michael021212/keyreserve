@@ -53,9 +53,9 @@
                 <% if current_user.corporate_admin? %>
                   <li><%= link_to t('common.sidebar.manage', name: Corporation.model_name.human), corporation_manage_root_path %></li>
                 <% end %>
-                <li><%= link_to 'ご利用可能な施設', facilities_path %></li>
-                <li><%= link_to '一時利用ご予約履歴', reservations_path %></li>
-                <li><%= link_to 'ドロップインご予約履歴', dropin_reservations_path   %></li>
+                <li><%= link_to '利用可能施設', facilities_path %></li>
+                <li><%= link_to '予約履歴', reservations_path %></li>
+                <li><%= link_to 'ドロップイン利用予約履歴', dropin_reservations_path   %></li>
                 <li><%= link_to 'アカウント設定', user_path %></li>
                 <li><%= link_to 'クレジットカード設定', set_credit_card(current_user) %></li>
                 <% if current_user_corp %>
