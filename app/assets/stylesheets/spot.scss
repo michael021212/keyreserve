@@ -23,3 +23,11 @@
 .google-map {
   height: 213px;
 }
+
+@media screen and (max-width:480px) {
+  .full-width-alert {
+    position: fixed !important;
+    top: 0 !important;
+    width: 100%;
+  }
+}

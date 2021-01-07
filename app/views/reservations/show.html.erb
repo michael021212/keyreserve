@@ -1,51 +1,51 @@
 <% content_for :middle_title do %>
-  <h2>ご予約履歴</h2>
+  <h2>予約履歴</h2>
 <% end %>
 <div class="mg-page">
   <div class="container">
     <div class="row mt30">
-      <div class="col-md-6 mb20">
+      <div class="col-md-5 mb20">
         <div class="text-center">
           <%= image_tag @reservation.facility.image.main.url, class: 'img-responsive' %>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-7">
         <div class="mg-booking-form">
           <div class="mg-saerch-room">
             <div class="mg-book-now">
               <div class="form-group">
-                <label class="col-sm-6 control-label">施設名</label>
-                <div class="input-group col-sm-6 static-text">
+                <label class="col-sm-4 control-label">施設名</label>
+                <div class="input-group col-sm-8 static-text">
                   <%= @reservation.facility.name %>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用日時</label>
-                <div class="input-group col-sm-6 static-text">
+                <label class="col-sm-4 control-label">ご利用日時</label>
+                <div class="input-group col-sm-8 static-text">
                   <%= datetime_ja @reservation.checkin %>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用時間</label>
-                <div class="input-group col-sm-6 col-xs-12 static-text">
+                <label class="col-sm-4 control-label">ご利用時間</label>
+                <div class="input-group col-sm-8 col-xs-12 static-text">
                   <%= @reservation.usage_period %>時間
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">ご利用人数</label>
-                <div class="input-group col-sm-6 col-xs-12 static-text">
+                <label class="col-sm-4 control-label">ご利用人数</label>
+                <div class="input-group col-sm-8 col-xs-12 static-text">
                   <%= @reservation.num %>名
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">お支払方法</label>
-                <div class="input-group col-sm-6 col-xs-12 static-text">
+                <label class="col-sm-4 control-label">お支払方法</label>
+                <div class="input-group col-sm-8 col-xs-12 static-text">
                   <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-6 control-label">料金</label>
-                <div class="input-group col-sm-6 static-text">
+                <label class="col-sm-4 control-label">料金</label>
+                <div class="input-group col-sm-8 static-text">
                   <span><%= number_with_delimiter @reservation.price %></span><span>円</span>
                 </div>
               </div>
