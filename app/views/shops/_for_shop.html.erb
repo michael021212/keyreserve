@@ -32,29 +32,39 @@
       <div class="col-md-12">
         <div class="mg-single-room-txt">
           <h3 class="mg-shop-facility-title">施設一覧</h3>
-          <% @facilities.each do |facility| %>
-            <div class="mg-available-rooms">
-              <div class="row">
-                <div class="col-sm-4">
-                  <%= image_tag facility.image.main.url, class: 'img-responsive' %>
-                </div>
-                <div class="col-sm-8">
-                  <h3 class="mg-avl-room-title">
-                    <%= link_to new_shop_facility_path(@shop, id: facility.id) do %>
-                      <%= facility.name %>
-                    <% end %>
-                    <span>&yen;<%= facility.min_hourly_price(@user) %> / h 〜</span>
-                  </h3>
-                  <div class='row mg-room-fecilities'>
-                    <div class='col-sm-12'>
-                      <ul>
-                        <li>
-                          <i class="fa fa-user"></i>
-                          <span class="mg-desc-text"><%= facility.max_num %>人まで</span>
-                        </li>
-                      </ul>
+          <% if @facilities.present? %>
+            <% @facilities.each do |facility| %>
+              <div class="mg-available-rooms">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                  </div>
+                  <div class="col-sm-8">
+                    <h3 class="mg-avl-room-title">
+                      <%= link_to new_shop_facility_path(@shop, id: facility.id) do %>
+                        <%= facility.name %>
+                      <% end %>
+                      <span>&yen;<%= facility.min_hourly_price(@user) %> / h 〜</span>
+                    </h3>
+                    <div class='row mg-room-fecilities'>
+                      <div class='col-sm-12'>
+                        <ul>
+                          <li>
+                            <i class="fa fa-user"></i>
+                            <span class="mg-desc-text"><%= facility.max_num %>人まで</span>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="mg-available-rooms">
+              <div class="row">
+                <div class="col-md-12 text-center">
+                  現在利用可能な施設はありません。
                 </div>
               </div>
             </div>
