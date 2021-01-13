@@ -32,6 +32,10 @@ class Shop < ApplicationRecord
   WBG_SHOP_ID = 22
   REFCOME_SHOP_ID = 37
 
+  def self.available_shops(user)
+    filter_by_disclosure_range(user).to_activerecord_relation.filter_by_browsable_range(user)
+  end
+
   def self.filter_by_disclosure_range(user)
     select { |shop|
       case shop.disclosure_range
@@ -50,7 +54,7 @@ class Shop < ApplicationRecord
     }
   end
 
-  def self.chooseable_shops(user)
+  def self.filter_by_browsable_range(user)
     user.present? && user.related_corp_facilities? ? where(corporation_id: user.corporation_ids) : all
   end
 

@@ -53,11 +53,9 @@ class Facility < ApplicationRecord
 
   scope :filter_by_shop, ->(shop_id = nil) { where(shop_id: shop_id) if shop_id.present? }
 
-  scope :filter_by_users_facility_display_range, ->(user) {
-    if user.present? && user.related_corp_facilities?
-      shop_ids = Shop.where(corporation_id: user.corporation_ids).pluck(:id)
-      where(shop_id: shop_ids)
-    end
+  scope :filter_by_users_browsable_range, ->(user) {
+    shop_ids = Shop.filter_by_browsable_range(user).pluck(:id)
+    where(shop_id: shop_ids)
   }
 
   def facility_temporary_plan_prices

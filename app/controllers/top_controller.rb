@@ -2,9 +2,7 @@ class TopController < ApplicationController
   before_action :set_user
 
   def index
-    shops = Shop.filter_by_disclosure_range(@user)
-    @shops = shops.to_activerecord_relation
-    @shops = @shops.chooseable_shops(@user).order(id: :desc)
+    @shops = Shop.available_shops(@user).order(id: :desc)
     @information = Information.order(publish_time: :desc).limit(10)
   end
 

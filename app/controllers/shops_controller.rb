@@ -5,9 +5,7 @@ class ShopsController < ApplicationController
   before_action :require_sms_verification, only: [:show]
 
   def index
-    shops = Shop.filter_by_disclosure_range(@user)
-    @shops = shops.to_activerecord_relation
-    @shops = @shops.chooseable_shops(@user).order(id: :desc).page(params[:page])
+    @shops = Shop.available_shops(@user).order(id: :desc).page(params[:page])
   end
 
   def show
@@ -37,8 +35,6 @@ class ShopsController < ApplicationController
   end
 
   def set_shop
-    @shop = Shop.filter_by_disclosure_range(@user)
-                .to_activerecord_relation
-                .chooseable_shops(@user).find(params[:id])
+    @shop = Shop.available_shops(@user).find(params[:id])
   end
 end
