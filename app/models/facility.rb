@@ -71,6 +71,7 @@ class Facility < ApplicationRecord
   def self.vacancy_facilities(condition, user)
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
+    facilities = facilities.where(shop_id: Shop.filter_by_disclosure_range(user))
     # 予約済みの施設を除外する
     acm_date_req = ((condition[:checkin]).to_date..(condition[:checkout]).to_date.yesterday).select(&:day)
     acm_facilities = facilities.accommodation
@@ -90,6 +91,7 @@ class Facility < ApplicationRecord
   def self.reservable_facilities(checkin, checkout, condition, user)
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
+    facilities = facilities.where(shop_id: Shop.filter_by_disclosure_range(user))
     # 指定時間に予約済の施設は削除
     exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
     facilities = facilities.send(condition[:facility_type]).where.not(id: exclude_facility_ids)
