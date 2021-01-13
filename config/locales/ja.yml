@@ -141,6 +141,8 @@ ja:
         image: 店舖画像
         calendar_url: イベントカレンダーURL
         registerable: 登録時選択可否
+        disclosure_range: 公開範囲
+        plan_ids: 作成済みプラン
       facility:
         id: ID
         name: 施設名
@@ -221,7 +223,7 @@ ja:
         creditcard: クレジットカード
         invoice: 請求書
       facility_display_range_default:
-        related_corp_facilities: 関連企業の施設のみ
+        related_corp_facilities: この会社が作成した施設のみ
         all_facilities: 全施設
     dropin_reservation:
       state:
@@ -241,7 +243,7 @@ ja:
         corporate_admin: 施設管理者
         ks_flexible: フレキシブルプラン利用者(KEY STATION連動)
       facility_display_range:
-        related_corp_facilities: 関連企業の施設のみ
+        related_corp_facilities: この会社が作成した施設のみ
         all_facilities: 全施設
     user_contract:
       state:
@@ -255,6 +257,12 @@ ja:
       info_target_type:
         all_users: 全会員
         shop_users: 店舗契約者
+    shop:
+      disclosure_range:
+        for_all_users: 全体公開
+        for_related_users: 会社に紐づいたユーザーのみ閲覧可能
+        for_chose_plan_users: 選択したプランに紐づいたユーザーのみ閲覧可能(プラン未作成の場合は先にプランを作成してください)
+        closed: 非公開
     facility:
       facility_type:
         conference_room: 一般施設

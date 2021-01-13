@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201224055737) do
+ActiveRecord::Schema.define(version: 20210108061527) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -292,6 +292,15 @@ ActiveRecord::Schema.define(version: 20201224055737) do
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
+  create_table "shop_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "plan_id"
+    t.bigint "shop_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_shop_plans_on_plan_id"
+    t.index ["shop_id"], name: "index_shop_plans_on_shop_id"
+  end
+
   create_table "shops", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "corporation_id", null: false
     t.string "name", null: false
@@ -308,6 +317,7 @@ ActiveRecord::Schema.define(version: 20201224055737) do
     t.datetime "deleted_at"
     t.string "calendar_url"
     t.boolean "registerable", default: false
+    t.integer "disclosure_range", default: 0, null: false
     t.index ["corporation_id"], name: "index_shops_on_corporation_id"
   end
 
@@ -359,4 +369,6 @@ ActiveRecord::Schema.define(version: 20201224055737) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
 
+  add_foreign_key "shop_plans", "plans"
+  add_foreign_key "shop_plans", "shops"
 end
