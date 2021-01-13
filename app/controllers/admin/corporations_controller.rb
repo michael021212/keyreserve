@@ -53,7 +53,7 @@ class Admin::CorporationsController < AdminController
 
   def corporation_params
     params.require(:corporation).permit(
-      :name, :kana, :email, :tel, :fax, :postal_code, :address, :note, :ksc_token, :ks_corporation_id, :verification_required, :facility_display_range_default
+      :name, :kana, :email, :tel, :fax, :postal_code, :address, :note, :ksc_token, :ks_corporation_id, :verification_required, :browsable_range_default
     )
   end
 end

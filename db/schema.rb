@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210108061527) do
+ActiveRecord::Schema.define(version: 20210113094712) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20210108061527) do
     t.string "email"
     t.boolean "verification_required", default: true
     t.string "corporation_token"
-    t.integer "facility_display_range_default", default: 1, null: false
+    t.integer "browsable_range_default", default: 1, null: false
   end
 
   create_table "credit_cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -364,7 +364,7 @@ ActiveRecord::Schema.define(version: 20210108061527) do
     t.integer "sms_verify_code"
     t.datetime "sms_sent_at"
     t.boolean "sms_verified", default: false
-    t.integer "facility_display_range", default: 1, null: false
+    t.integer "browsable_range", default: 1, null: false
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
