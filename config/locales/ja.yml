@@ -261,7 +261,7 @@ ja:
       disclosure_range:
         for_all_users: 全体公開
         for_related_users: 会社に紐づいたユーザーのみ閲覧可能
-        for_chose_plan_users: 選択したプランに紐づいたユーザーのみ閲覧可能(プラン未作成の場合は先にプランを作成してください)
+        for_chose_plan_users: 選択したプランに紐づいたユーザーのみ閲覧可能
         closed: 非公開
     facility:
       facility_type:

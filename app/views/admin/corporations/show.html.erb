@@ -96,6 +96,7 @@
           <th><%= Shop.human_attribute_name(:name) %></th>
           <th><%= Shop.human_attribute_name(:tel) %></th>
           <th><%= Shop.human_attribute_name(:registerable) %></th>
+          <th><%= Shop.human_attribute_name(:disclosure_range) %></th>
           <th style="width: 200px;"></th>
         </tr>
       </thead>
@@ -106,6 +107,7 @@
             <td><%= shop.name %></td>
             <td><%= shop.tel %></td>
             <td><%= shop.registerable ? '可' : '不可' %></td>
+            <td><%= shop.disclosure_range_i18n %></td>
             <td>
               <%= link_to '詳細', admin_corporation_shop_path(@corporation, shop), class: 'btn btn-default' %>
               <%= link_to '編集', edit_admin_corporation_shop_path(@corporation, shop), class: 'btn btn-primary' %>
