@@ -123,11 +123,6 @@ class ReservationsController <  ApplicationController
     return render :new unless valid_search_params?(@condition)
 
     if !@condition[:stay].try(:to_bool)
-      # 店舗の運営時間外の予約ならエラー
-      if @facility.shop.out_of_business_time?(@checkin, @checkout)
-        flash[:error] = 'ご予約時間が営業時間外となります'
-        return render :new
-      end
       @price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
     else
       @price = @facility.calc_price_for_stay(@user, @condition[:checkin], @condition[:checkout])
