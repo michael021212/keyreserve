@@ -150,7 +150,7 @@ ja:
         image: 施設画像
         description: 施設説明
         max_num: 最大利用人数
-        facility_type: 施設タイプ（スポット利用時）
+        facility_type: 施設タイプ
         detail_document: 詳細資料
         published: 掲載状況
         reservation_type: 予約タイプ
