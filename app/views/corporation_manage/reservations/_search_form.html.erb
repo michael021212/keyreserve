@@ -13,5 +13,9 @@
                Reservation.states_i18n.invert.map { |k, v| [k, Reservation.states[v]] },
                { include_blank: true },
                class: 'form-control' %>
+  <%= f.select :facility_facility_type_eq,
+                Facility.facility_types_i18n.invert.map { |k, v| [k, Facility.facility_types[v]] },
+                { include_blank: Facility.human_attribute_name(:facility_type) },
+                class: 'form-control' %>
   <%= f.submit t('common.btn.search'), class: 'btn btn-info w40 mr10' %>
 <% end %>
