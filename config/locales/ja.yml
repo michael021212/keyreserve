@@ -201,7 +201,7 @@ ja:
         id: お知らせID
         shop_id: 送信元店舗
         title: タイトル
-        description: 詳細
+        description: 本文
         publish_time: 公開日時
         mail_send_flag: メール送信済みフラグ
         info_type: お知らせ種別
