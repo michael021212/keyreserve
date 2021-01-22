@@ -15,8 +15,7 @@
         </span>
         <%= f.text_field :publish_time_during_month, data: { :date_format => 'YYYY/MM' }, :class => 'form-control monthPicker pointer', placeholder: '送信月' %>
       </div>
-      <%= f.search_field :title_cont, placeholder: 'タイトル', class: 'form-control' %>
-      <%= f.search_field :description_cont, placeholder: '本文', class: 'form-control' %>
+      <%= f.search_field :title_or_description_cont, placeholder: 'タイトル・本文', class: 'form-control' %>
       <%= f.submit "検索", class: "btn btn-info" %>
     <% end %>
   </div>
