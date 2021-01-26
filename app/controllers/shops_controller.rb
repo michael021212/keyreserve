@@ -5,11 +5,7 @@ class ShopsController < ApplicationController
   before_action :require_sms_verification, only: [:show]
 
   def index
-    @shops = Shop.all.order(id: :desc).page(params[:page])
-    @shops = @shops.where(corporation_id: current_user.corporation_ids) if current_user.present? && current_user.related_corp_facilities?
-    # ザイマックス店舗・リフカム店舗は一般公開しない
-    @shops = @shops.where.not(id: Shop::WBG_SHOP_ID) if current_user.blank? || !current_user.contract_plan_ids.include?(26)
-    @shops = @shops.where.not(id: Shop::REFCOME_SHOP_ID) if current_user.blank? || !current_user.contract_plan_ids.include?(30)
+    @shops = Shop.available_shops(@user).order(id: :desc).page(params[:page])
   end
 
   def show
@@ -39,6 +35,6 @@ class ShopsController < ApplicationController
   end
 
   def set_shop
-    @shop = Shop.find(params[:id])
+    @shop = Shop.available_shops(@user).find(params[:id])
   end
 end

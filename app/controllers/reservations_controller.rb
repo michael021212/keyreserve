@@ -28,7 +28,7 @@ class ReservationsController <  ApplicationController
   # 検索ページ
   def spot
     @condition = params[:spot] ||= {}
-    @chooseable_shops = Shop.chooseable_shops(@user)
+    @available_shops = Shop.available_shops(@user)
     # @shop_idも検索条件の一つだが、shop_id付きのURLから来る場合には検索処理が走らないよう@conditionには入れない
     @shop_id = params[:shop_id].to_i if params[:shop_id].present?
     @shop_id = params[:spot][:shop_id].to_i if params[:spot][:shop_id].present?
@@ -37,12 +37,12 @@ class ReservationsController <  ApplicationController
     if @condition[:stay].try(:to_bool)
       @facilities = Facility.vacancy_facilities(@condition, current_user)
                             .filter_by_shop(@shop_id)
-                            .filter_by_users_facility_display_range(current_user)
+                            .filter_by_users_browsable_range(current_user)
                             .where(published: true)
     else
       @facilities = Facility.reservable_facilities(@checkin, @checkout, @condition, current_user)
                             .filter_by_shop(@shop_id)
-                            .filter_by_users_facility_display_range(current_user)
+                            .filter_by_users_browsable_range(current_user)
                             .where(published: true)
     end
     return render :spot if @facilities.blank?

@@ -21,7 +21,7 @@ class Corporation < ApplicationRecord
   validates :postal_code, length: { maximum: 255 }
   validates :address, :note, length: { maximum: 255, allow_blank: true }
 
-  enum facility_display_range_default: { related_corp_facilities: 0, all_facilities: 1 }
+  enum browsable_range_default: { related_corp_facilities: 0, all_facilities: 1 }
 
   before_save :generate_token_with_name
 

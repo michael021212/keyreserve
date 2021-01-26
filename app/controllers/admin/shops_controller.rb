@@ -7,7 +7,7 @@ class Admin::ShopsController < AdminController
   end
 
   def create
-    @shop = @corporation.shops.new(shop_params)
+    @shop = @corporation.shops.new(set_params)
     @shop.set_geocode
     if @shop.save
       redirect_to [:admin, @corporation, @shop], notice: "#{Shop.model_name.human}を作成しました。"
@@ -21,7 +21,7 @@ class Admin::ShopsController < AdminController
   def edit; end
 
   def update
-    @shop.assign_attributes(shop_params)
+    @shop.assign_attributes(set_params)
     @shop.set_geocode
     if @shop.save
       redirect_to [:admin, @corporation, @shop], notice: "#{Shop.model_name.human}を更新しました。"
@@ -37,6 +37,16 @@ class Admin::ShopsController < AdminController
 
   private
 
+  def set_params
+    if shop_params[:disclosure_range] != 'for_chose_plan_users'
+      shop_params_to_variable = shop_params
+      shop_params_to_variable[:plan_ids].clear
+      shop_params_to_variable
+    else
+      shop_params
+    end
+  end
+
   def set_corporation
     @corporation = Corporation.find(params[:corporation_id])
   end
@@ -47,7 +57,7 @@ class Admin::ShopsController < AdminController
 
   def shop_params
     params.require(:shop).permit(
-      :name, :postal_code, :address, :lat, :lon, :tel, :opening_time, :closing_time, :image, :calendar_url, :registerable
+      :name, :postal_code, :address, :lat, :lon, :tel, :opening_time, :closing_time, :image, :calendar_url, :registerable, :disclosure_range, {plan_ids: []}
     )
   end
 end

@@ -6,7 +6,7 @@ class CorporationManage::ShopsController < CorporationManage::Base
   end
 
   def create
-    @shop = current_corporation.shops.build(shop_params)
+    @shop = current_corporation.shops.build(set_params)
     @shop.set_geocode
     if @shop.save
       redirect_to corporation_manage_shop_path(@shop), notice: "#{Shop.model_name.human}を作成しました。"
@@ -20,7 +20,7 @@ class CorporationManage::ShopsController < CorporationManage::Base
   def edit; end
 
   def update
-    @shop.assign_attributes(shop_params)
+    @shop.assign_attributes(set_params)
     @shop.set_geocode
     if @shop.save
       redirect_to corporation_manage_shop_path(@shop), notice: "#{Shop.model_name.human}を更新しました。"
@@ -35,6 +35,16 @@ class CorporationManage::ShopsController < CorporationManage::Base
   end
 
   private
+
+  def set_params
+    if shop_params[:disclosure_range] != 'for_chose_plan_users'
+      shop_params_to_variable = shop_params
+      shop_params_to_variable[:plan_ids].clear
+      shop_params_to_variable
+    else
+      shop_params
+    end
+  end
 
   def set_shop
     @shop = current_corporation.shops.find(params[:id])
@@ -53,6 +63,8 @@ class CorporationManage::ShopsController < CorporationManage::Base
       :image,
       :calendar_url,
       :registerable,
+      :disclosure_range,
+      {plan_ids: []}
     )
   end
 end

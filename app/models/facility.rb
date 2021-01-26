@@ -53,11 +53,9 @@ class Facility < ApplicationRecord
 
   scope :filter_by_shop, ->(shop_id = nil) { where(shop_id: shop_id) if shop_id.present? }
 
-  scope :filter_by_users_facility_display_range, ->(user) {
-    if user.present? && user.related_corp_facilities?
-      shop_ids = Shop.where(corporation_id: user.corporation_ids).pluck(:id)
-      where(shop_id: shop_ids)
-    end
+  scope :filter_by_users_browsable_range, ->(user) {
+    shop_ids = Shop.filter_by_browsable_range(user).pluck(:id)
+    where(shop_id: shop_ids)
   }
 
   def facility_temporary_plan_prices
@@ -71,6 +69,7 @@ class Facility < ApplicationRecord
   def self.vacancy_facilities(condition, user)
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
+    facilities = facilities.where(shop_id: Shop.filter_by_disclosure_range(user))
     # 予約済みの施設を除外する
     acm_date_req = ((condition[:checkin]).to_date..(condition[:checkout]).to_date.yesterday).select(&:day)
     acm_facilities = facilities.accommodation
@@ -90,6 +89,7 @@ class Facility < ApplicationRecord
   def self.reservable_facilities(checkin, checkout, condition, user)
     # 都度課金可能な施設を一覧で取得
     facilities = user.present? ? user.login_spots : Facility.logout_spots
+    facilities = facilities.where(shop_id: Shop.filter_by_disclosure_range(user))
     # 指定時間に予約済の施設は削除
     exclude_facility_ids = Reservation.in_range(checkin .. checkout).pluck(:facility_id).uniq
     facilities = facilities.send(condition[:facility_type]).where.not(id: exclude_facility_ids)

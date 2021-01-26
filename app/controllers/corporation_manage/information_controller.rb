@@ -2,9 +2,8 @@ class CorporationManage::InformationController < CorporationManage::Base
   before_action :set_information, only: %i[show edit update destroy]
 
   def index
-    @information_lists = Information.target_shops(current_corporation.shops.ids)
-                                    .order(id: :desc)
-                                    .page(params[:page])
+    @q = Information.target_shops(current_corporation.shops.ids).ransack(params[:q])
+    @information_lists = @q.result(distinct: true).order(id: :desc).page(params[:page])
   end
 
   def show; end

@@ -33,6 +33,10 @@
         <td><%= @reservation.facility_name %></td>
       </tr>
       <tr>
+        <th><%= Facility.human_attribute_name(:facility_type) %></th>
+        <td><%= @reservation.facility.facility_type_i18n %></td>
+      </tr>
+      <tr>
         <th><%= Reservation.human_attribute_name(:user_id) %></th>
         <td><%= @reservation.user_name %></td>
       </tr>
@@ -59,6 +63,10 @@
       <tr>
         <th><%= Reservation.human_attribute_name(:price) %></th>
         <td><%= delimiter_price(@reservation.price) %></td>
+      </tr>
+      <tr>
+        <th><%= t('.how_to_payment') %></th>
+        <td><%= @reservation.payment_method %></td>
       </tr>
       <tr>
         <th><%= Payment.human_attribute_name(:token) %></th>

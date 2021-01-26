@@ -43,7 +43,7 @@ ja:
         ks_corporation_id: Keystation法人
         ksc_token: KS Checkin JWTトークン
         jwt_token: JWTトークン
-        facility_display_range_default: 紐づいて作成されるユーザーの施設表示範囲
+        browsable_range_default: 紐づいて作成されるユーザーの閲覧可能施設範囲
         verification_required: 電話番号認証
       corporation_user:
         corporation_id: 運営会社
@@ -73,7 +73,7 @@ ja:
         payway: お支払い方法
         created_at: 登録日時
         user_type: ユーザータイプ
-        facility_display_range: 施設表示範囲
+        browsable_range: 閲覧可能施設範囲
         parent_id: 法人
         max_user_num: ご利用者様人数上限
         advertise_notice_flag: お知らせメールを受け取る
@@ -141,6 +141,8 @@ ja:
         image: 店舖画像
         calendar_url: イベントカレンダーURL
         registerable: 登録時選択可否
+        disclosure_range: 公開範囲
+        plan_ids: 作成済みプラン
       facility:
         id: ID
         name: 施設名
@@ -148,7 +150,7 @@ ja:
         image: 施設画像
         description: 施設説明
         max_num: 最大利用人数
-        facility_type: 施設タイプ（スポット利用時）
+        facility_type: 施設タイプ
         detail_document: 詳細資料
         published: 掲載状況
         reservation_type: 予約タイプ
@@ -199,7 +201,7 @@ ja:
         id: お知らせID
         shop_id: 送信元店舗
         title: タイトル
-        description: 詳細
+        description: 本文
         publish_time: 公開日時
         mail_send_flag: メール送信済みフラグ
         info_type: お知らせ種別
@@ -220,8 +222,8 @@ ja:
       payway:
         creditcard: クレジットカード
         invoice: 請求書
-      facility_display_range_default:
-        related_corp_facilities: 関連企業の施設のみ
+      browsable_range_default:
+        related_corp_facilities: この会社が作成した施設のみ
         all_facilities: 全施設
     dropin_reservation:
       state:
@@ -240,8 +242,8 @@ ja:
         parent_corporation: 法人
         corporate_admin: 施設管理者
         ks_flexible: フレキシブルプラン利用者(KEY STATION連動)
-      facility_display_range:
-        related_corp_facilities: 関連企業の施設のみ
+      browsable_range:
+        related_corp_facilities: この会社が作成した施設のみ
         all_facilities: 全施設
     user_contract:
       state:
@@ -255,6 +257,12 @@ ja:
       info_target_type:
         all_users: 全会員
         shop_users: 店舗契約者
+    shop:
+      disclosure_range:
+        for_all_users: 全体公開
+        for_related_users: 会社に紐づいたユーザーのみ閲覧可能
+        for_chose_plan_users: 選択したプランに紐づいたユーザーのみ閲覧可能
+        closed: 非公開
     facility:
       facility_type:
         conference_room: 一般施設

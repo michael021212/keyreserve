@@ -22,8 +22,8 @@
         <td class="cy-corporation-address"><%= current_corporation.address %></td>
       </tr>
       <tr>
-        <th><%= Corporation.human_attribute_name(:facility_display_range_default) %></th>
-        <td class="cy-corporation-address"><%= current_corporation.facility_display_range_default_i18n %></td>
+        <th><%= Corporation.human_attribute_name(:browsable_range_default) %></th>
+        <td class="cy-corporation-address"><%= current_corporation.browsable_range_default_i18n %></td>
       </tr>
       <tr>
         <th><%= Corporation.human_attribute_name(:note) %></th>
@@ -52,6 +52,7 @@
         <th><%= Shop.human_attribute_name(:name) %></th>
         <th><%= Shop.human_attribute_name(:tel) %></th>
         <th><%= Shop.human_attribute_name(:registerable) %></th>
+        <th><%= Shop.human_attribute_name(:disclosure_range) %></th>
       </tr>
       </thead>
       <tbody>
@@ -61,6 +62,7 @@
           <td><%= shop.name %></td>
           <td><%= shop.tel %></td>
           <td><%= shop.registerable ? '可' : '不可' %></td>
+          <td><%= shop.disclosure_range_i18n %></td>
           <td>
             <%= link_to t('common.btn.show'), corporation_manage_shop_path(shop), class: 'btn btn-default' %>
             <%= link_to t('common.btn.edit'), edit_corporation_manage_shop_path(shop), class: 'btn btn-primary' %>
