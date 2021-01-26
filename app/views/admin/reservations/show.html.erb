@@ -33,6 +33,10 @@
         <td><%= @reservation.facility.name %></td>
       </tr>
       <tr>
+        <th><%= Facility.human_attribute_name(:facility_type) %></th>
+        <td><%= @reservation.facility.facility_type_i18n %></td>
+      </tr>
+      <tr>
         <th><%= Reservation.human_attribute_name(:user_id) %></th>
         <td><%= @reservation.user.try(:name) %></td>
       </tr>
@@ -50,7 +54,7 @@
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:usage_period) %></th>
-        <td><%= @reservation.usage_period %>時間</td>
+        <td><%= @reservation.decorate.usage_period_hour %></td>
       </tr>
       <tr>
         <th><%= Reservation.human_attribute_name(:num) %></th>
@@ -59,6 +63,10 @@
       <tr>
         <th><%= Reservation.human_attribute_name(:price) %></th>
         <td><%= number_with_delimiter @reservation.price %>円</td>
+      </tr>
+      <tr>
+        <th><%= t('.how_to_payment') %></th>
+        <td><%= @reservation.payment_method %></td>
       </tr>
       <tr>
         <th><%= Payment.human_attribute_name(:token) %></th>

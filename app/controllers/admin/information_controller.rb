@@ -2,7 +2,8 @@ class Admin::InformationController < AdminController
   before_action :set_information, only: [:show, :edit, :update, :destroy]
 
   def index
-    @information = Information.order(id: :desc).page(params[:page])
+    @q = Information.ransack(params[:q])
+    @information = @q.result(distinct: true).order(id: :desc).page(params[:page])
   end
 
   def show; end
