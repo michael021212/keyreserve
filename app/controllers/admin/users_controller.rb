@@ -1,9 +1,9 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :proxy_access]
 
   def index
     @q = User.ransack(params[:q])
-    @users = @q.result(distinct: true).personal.order(id: :desc).page(params[:page])
+    @users = @q.result(distinct: true).where.not(user_type: :parent_corporation).order(id: :desc).page(params[:page])
   end
 
   def new
@@ -36,6 +36,12 @@ class Admin::UsersController < AdminController
     @user.destroy
     flash[:notice] = "#{User.model_name.human}を削除しました。"
     redirect_to @user.user_corp.present? ? admin_user_corp_path(@user.user_corp) : admin_users_path
+  end
+
+  def proxy_access
+    auto_login(@user)
+    session[:user_id] = @user.id
+    redirect_to root_path, notice: "#{@user.name}アカウントで代理ログインしました"
   end
 
   private
