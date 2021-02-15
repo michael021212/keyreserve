@@ -20,9 +20,12 @@ Rails.application.routes.draw do
     resources :admin_users, except: [:show]
     resources :users do
       resources :personal_identifications
+      post :proxy_access, on: :member
     end
     resources :user_corps do
-      resources :users, controller: 'users'
+      resources :users, controller: 'users' do
+        post :proxy_access, on: :member
+      end
     end
     resources :information
     resources :corporations do

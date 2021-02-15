@@ -20,55 +20,67 @@
       <%= f.search_field :facility_name_cont, placeholder: "施設名", class: "form-control" %>
       <%= f.search_field :user_name_cont, placeholder: "ユーザ又は法人名", class: "form-control" %>
       <%= f.select :state_eq, options_for_select([['未確定', 0], ['確定', 1], ['キャンセル', 9]], selected: Reservation.confirmed_to_i),{ include_blank: {} }, class: "form-control" %>
+      <%= f.select :facility_facility_type_eq,
+                  Facility.facility_types_i18n.invert.map { |k, v| [k, Facility.facility_types[v]] },
+                  { include_blank: Facility.human_attribute_name(:facility_type) },
+                  class: 'form-control' %>
       <% q = params[:q] || {} %>
       <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
     <% end %>
     <%= link_to "CSVダウンロード", admin_reservations_path(q: request.params[:q], format: 'csv'), class: "btn btn-default" %>
   </div>
   <div class="box-body">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th><%= Reservation.human_attribute_name(:block_flag) %></th>
-          <th><%= Shop.human_attribute_name(:name) %></th>
-          <th><%= Facility.human_attribute_name(:name) %></th>
-          <th>名前</th>
-          <th><%= Reservation.human_attribute_name(:checkin) %></th>
-          <th><%= Reservation.human_attribute_name(:usage_period) %></th>
-          <th><%= Reservation.human_attribute_name(:state) %></th>
-          <th><%= Reservation.human_attribute_name(:price) %></th>
-          <th>決済方法</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @reservations.present? %>
-          <% @reservations.each do |reservation| %>
+    <div class="scroll">
+      <table class="table table-striped">
+        <thead>
+          <tr class="reservation-head">
+            <th><%= Reservation.human_attribute_name(:block_flag) %></th>
+            <th><%= Shop.human_attribute_name(:name) %></th>
+            <th><%= Facility.human_attribute_name(:name) %></th>
+            <th><%= Facility.human_attribute_name(:facility_type) %></th>
+            <th><%= User.human_attribute_name(:name) %></th>
+            <th><%= Reservation.human_attribute_name(:checkin) %></th>
+            <th><%= Reservation.human_attribute_name(:checkout) %></th>
+            <th><%= Reservation.human_attribute_name(:usage_period) %></th>
+            <th><%= Reservation.human_attribute_name(:num) %></th>
+            <th><%= Reservation.human_attribute_name(:state) %></th>
+            <th><%= Reservation.human_attribute_name(:price) %></th>
+            <th><%= t('.how_to_payment') %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @reservations.present? %>
+            <% @reservations.each do |reservation| %>
+              <tr class="reservation-body">
+                <td><%= reservation.block_flag? ? '◯' : '' %></td>
+                <td><%= reservation.facility.shop.name %></td>
+                <td><%= reservation.facility.name %></td>
+                <td><%= reservation.facility.facility_type_i18n %></td>
+                <td><%= reservation.user.try(:name) %></td>
+                <td><%= reservation.checkin %></td>
+                <td><%= reservation.checkout %></td>
+                <td><%= reservation.decorate.usage_period_hour %></td>
+                <td><%= "#{reservation.num}名" %></td>
+                <td><%= reservation.state_i18n %></td>
+                <td><%= delimiter_price(reservation.price) %></td>
+                <td><%= reservation.payment_method %></td>
+                <td>
+                  <%= link_to t('common.btn.show'), admin_reservation_path(reservation), class: 'btn btn-default' %>
+                  <%= link_to t('common.btn.cancel'), admin_reservation_path(reservation), method: :delete, data: { confirm: t('common.confirms.really_to_cancele') }, class: 'btn btn-danger' %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
             <tr>
-              <td><%= reservation.block_flag? ? '◯' : '' %></td>
-              <td><%= reservation.facility.shop.name %></td>
-              <td><%= reservation.facility.name %></td>
-              <td><%= reservation.user.try(:name) %></td>
-              <td><%= reservation.checkin %></td>
-              <td><%= "#{reservation.usage_period}時間" %></td>
-              <td><%= reservation.state_i18n %></td>
-              <td><%= delimiter_price(reservation.price) %></td>
-              <td><%= reservation.payment_method %></td>
-              <td>
-                <%= link_to t('common.btn.edit'), admin_reservation_path(reservation), class: 'btn btn-default' %>
-                <%= link_to t('common.btn.cancel'), admin_reservation_path(reservation), method: :delete, data: { confirm: t('common.confirms.really_to_cancele') }, class: 'btn btn-danger' %>
+              <td colspan="20">
+                表示する<%= Reservation.model_name.human %>はありません
               </td>
             </tr>
           <% end %>
-        <% else %>
-          <tr>
-            <td colspan="20">
-              表示する<%= Reservation.model_name.human %>はありません
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
     <%= paginate @reservations %>
   </div>
 </div>

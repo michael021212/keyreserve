@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-9">
                       <div class="mg-bn-forms">
-                        <%= render 'search_form', params: params, chooseable_shops: @chooseable_shops, shop_id: @shop_id, facility_types: @facility_types %>
+                        <%= render 'search_form', params: params, available_shops: @available_shops, shop_id: @shop_id, facility_types: @facility_types %>
                       </div>
                     </div>
                   </div>
@@ -42,7 +42,7 @@
                         <div class="col-sm-5">
                           <h4 class="mg-avl-room-title">
                             <%= link_to new_reservation_path(facility_id: facility.id) do %>
-                              <%= facility.decorate.display_name %>
+                              <%= facility.name %>
                             <% end %>
                           </h4>
                           <p>

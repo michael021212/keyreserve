@@ -3,7 +3,7 @@ namespace :reservation do
   task :reservation_password_mail => :environment do
     reservations = Reservation
                   .joins(:facility)
-                  .where(facilities: { reservation_type: [Facility.reservation_types[:general], Facility.reservation_types[:rent_without_ksc]]})
+                  .where(facilities: { reservation_type: Facility.reservation_types[:rent_without_ksc]})
                   .ready_to_send
     reservations.each do |reservation|
       begin

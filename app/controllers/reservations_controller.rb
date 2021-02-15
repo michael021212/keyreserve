@@ -28,7 +28,7 @@ class ReservationsController <  ApplicationController
   # 検索ページ
   def spot
     @condition = params[:spot] ||= {}
-    @chooseable_shops = Shop.chooseable_shops(@user)
+    @available_shops = Shop.available_shops(@user)
     # @shop_idも検索条件の一つだが、shop_id付きのURLから来る場合には検索処理が走らないよう@conditionには入れない
     @shop_id = params[:shop_id].to_i if params[:shop_id].present?
     @shop_id = params[:spot][:shop_id].to_i if params[:spot][:shop_id].present?
@@ -37,12 +37,12 @@ class ReservationsController <  ApplicationController
     if @condition[:stay].try(:to_bool)
       @facilities = Facility.vacancy_facilities(@condition, current_user)
                             .filter_by_shop(@shop_id)
-                            .filter_by_users_facility_display_range(current_user)
+                            .filter_by_users_browsable_range(current_user)
                             .where(published: true)
     else
       @facilities = Facility.reservable_facilities(@checkin, @checkout, @condition, current_user)
                             .filter_by_shop(@shop_id)
-                            .filter_by_users_facility_display_range(current_user)
+                            .filter_by_users_browsable_range(current_user)
                             .where(published: true)
     end
     return render :spot if @facilities.blank?
@@ -61,7 +61,7 @@ class ReservationsController <  ApplicationController
       @condition = {}
     end
     session[:reservation_id] = nil
-    @facility = @condition[:facility_type] == 'rent' ? Facility.find_by(id: params[:facility_id]) : @user.login_spots.find_by(id: params[:facility_id])
+    @facility = @user.login_spots.find_by(id: params[:facility_id])
     if @facility.blank?
       flash[:error] = '検索条件を入力してください'
       redirect_to spot_reservations_path
@@ -123,11 +123,6 @@ class ReservationsController <  ApplicationController
     return render :new unless valid_search_params?(@condition)
 
     if !@condition[:stay].try(:to_bool)
-      # 店舗の運営時間外の予約ならエラー
-      if @facility.shop.out_of_business_time?(@checkin, @checkout)
-        flash[:error] = 'ご予約時間が営業時間外となります'
-        return render :new
-      end
       @price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
     else
       @price = @facility.calc_price_for_stay(@user, @condition[:checkin], @condition[:checkout])

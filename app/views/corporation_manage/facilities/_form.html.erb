@@ -3,41 +3,13 @@
   <%= f.number_field :max_num %>
   <%= f.text_field :address, placeholder: t('.add_address') %>
 
-  <%# 一般店舗以外は施設タイプをhiddenで送る %>
-  <% if shop.rent? %>
-    <%= f.hidden_field :facility_type, value: :rent %>
-  <% elsif shop.public_facility? %>
-    <%= f.hidden_field :facility_type, value: :public_place %>
-  <% elsif shop.ks_flexible?%>
-    <%= f.hidden_field :facility_type, value: :ks_flexible %>
-  <% elsif facility.parent_facilities%>
-    <%= f.select :facility_type,
-      Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' || k == 'public_place' || k == 'ks_flexible' || k == 'chartered_place' }.invert,
-      prompt: t('.add_facility_type') %>
-  <% else %>
-    <%= f.select :facility_type,
-      Facility.facility_types_i18n.delete_if{ |k,v| k == 'rent' || k == 'public_place' || k == 'ks_flexible' }.invert,
-      {}, {prompt: t('.add_facility_type'), onchange: 'displayFormForStay();', class: 'facility-type'} %>
-  <% end %>
+  <%= f.select :facility_type, Facility.facility_types_i18n.invert,
+    {}, {prompt: t('.add_facility_type'), onchange: 'displayFormForStay();', class: 'facility-type'} %>
 
   <div class="option_form" id="for_stay" style="display: none;">
     <%= f.time_field :checkin_time_for_stay %>
     <%= f.time_field :checkout_time_for_stay %>
   </div>
-
-  <% if shop.public_facility? %>
-  <div class='form-group'>
-    <div class='control-label col-sm-2'>
-      <label><%= Facility.human_attribute_name(:chartered) %></label>
-    </div>
-    <div class='col-sm-10 form-inline'>
-      <%= f.radio_button :chartered, true, class: 'chartered_radio' %>
-      <span class='ml10'>貸し切り施設</span>
-      <%= f.radio_button :chartered, false, class: 'chartered_radio' %>
-      <span class='ml10'>非貸し切り施設</span>
-    </div>
-  </div>
-  <% end %>
 
   <%# 貸し切り対応フォーム %>
   <div class='option_form' id='chartered_area' style= "display: <%= f.object.chartered ? 'block;' : 'none;' %>">
@@ -61,11 +33,7 @@
 
   <%= f.file_field :image, class: 'mt15' %>
   <%= f.hidden_field :image_cache %>
-  <%= f.file_field :detail_document if shop.rent? %>
-  <%= f.hidden_field :detail_document_cache %>
-  <% if shop.ks_flexible? %>
-    <%= f.text_field :ks_room_id %>
-  <% end %>
+  <%= f.text_field :ks_room_id %>
   <%= f.text_area :description, rows: 6 %>
   <div class='form-group'>
     <div class='control-label col-sm-2'>
@@ -77,44 +45,30 @@
     </div>
   </div>
 
-  <%# 店舗が賃貸、フレキシブル、公共施設の場合はKS Checkin利用有無を選択 %>
-  <%# 店舗がKSC利用の場合はKS Checkin利用をhiddenで送る %>
-  <%# 店舗が一般の場合はhiddenで一般予約を送る %>
-  <% if shop.rent? || shop.ks_flexible? || shop.public_facility? %>
-    <%= f.select :reservation_type,
-      Facility.reservation_types_i18n.select{ |k,v| k == 'rent_with_ksc' || k == 'rent_without_ksc' }.invert,
-      include_blank: 'この施設の予約方法を選択' %>
-  <% elsif shop.general_with_ksc? %>
-    <%= f.hidden_field :reservation_type, value: :rent_with_ksc %>
-  <% else %>
-    <%= f.hidden_field :reservation_type, value: :general %>
-  <% end %>
+  <%= f.select :reservation_type, Facility.reservation_types_i18n.invert,
+    include_blank: 'この施設の予約方法を選択' %>
 
-
-  <%# 一般施設のみ月額対象プラン選択表示 %>
-  <% if shop.general? %>
-    <div class='row'>
-    <%= f.form_group :facility_plans, label: {text: t('.target_plan')} do %>
-      <%= f.fields_for :facility_plans do |fp| %>
-        <div class="form-inline cy-facility-plans">
-          <%= fp.collection_select :plan_id,
-                                   current_corporation.plans,
-                                   :id,
-                                   :name,
-                                   { prompt: t('.select_plan'),
-                                     hide_label: true },
-                                   class: 'add-link-column cy-select-plan',
-                                   inline: true %>
-          <%= fp.link_to_remove t('common.btn.delete'),
-                                class: 'glyphicon glyphicon-remove',
-                                inline: true %>
-        </div>
-      <% end %>
-      <%= f.link_to_add t('.add_plan'), :facility_plans,
-        class: 'btn btn-info glyphicon glyphicon-plus cy-add-plan' %>
+  <div class='row'>
+  <%= f.form_group :facility_plans, label: {text: t('.target_plan')} do %>
+    <%= f.fields_for :facility_plans do |fp| %>
+      <div class="form-inline cy-facility-plans">
+        <%= fp.collection_select :plan_id,
+                                  current_corporation.plans,
+                                  :id,
+                                  :name,
+                                  { prompt: t('.select_plan'),
+                                    hide_label: true },
+                                  class: 'add-link-column cy-select-plan',
+                                  inline: true %>
+        <%= fp.link_to_remove t('common.btn.delete'),
+                              class: 'glyphicon glyphicon-remove',
+                              inline: true %>
+      </div>
     <% end %>
-    </div>
+    <%= f.link_to_add t('.add_plan'), :facility_plans,
+      class: 'btn btn-info glyphicon glyphicon-plus cy-add-plan' %>
   <% end %>
+  </div>
 
   <%= f.submit class: 'btn btn-primary center-block pull-right' %>
 <% end %>

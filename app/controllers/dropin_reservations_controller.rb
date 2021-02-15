@@ -17,7 +17,7 @@ class DropinReservationsController <  ApplicationController
     params[:dropin_spot] ||= {}
     params[:dropin_spot][:checkin_time] ||= '12:00'
     cond = params[:dropin_spot]
-    @chooseable_shops = Shop.chooseable_shops(@user)
+    @available_shops = Shop.available_shops(@user)
     # @shop_idも検索条件の一つだが、shop_id付きのURLから来る場合には検索処理が走らないよう@conditionには入れない
     @shop_id = params[:shop_id].to_i if params[:shop_id].present?
     @shop_id = params[:dropin_spot][:shop_id].to_i if params[:dropin_spot][:shop_id].present?

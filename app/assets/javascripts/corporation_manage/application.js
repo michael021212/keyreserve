@@ -20,4 +20,5 @@
 //= require corporation_manage/datetimepicker
 //= require corporation_manage/facility
 //= require corporation_manage/common
+//= require corporation_manage/shop
 

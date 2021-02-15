@@ -6,7 +6,7 @@
   <%= f.select :state, User.states_i18n.invert %>
   <%= f.select :payway, User.payways_i18n.invert %>
   <%= f.select :user_type, User.user_types_i18n.invert.select{ |k,v| v == 'personal' || v == 'ks_flexible' } %>
-  <%= f.select :facility_display_range, User.facility_display_ranges_i18n.invert %>
+  <%= f.select :browsable_range, User.browsable_ranges_i18n.invert %>
   <% if f.object.new_record? %>
     <%= f.password_field :password %>
     <%= f.password_field :password_confirmation %>

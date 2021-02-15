@@ -60,7 +60,7 @@ class CorporationManage::UsersController < CorporationManage::Base
       :state,
       :user_type,
       :payway,
-      :facility_display_range,
+      :browsable_range,
     ).merge(corporation_ids: [current_corporation.id])
   end
 end

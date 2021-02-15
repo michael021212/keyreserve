@@ -6,8 +6,12 @@ class Shop < ApplicationRecord
   has_many :facilities, dependent: :destroy
   has_many :information
   has_many :user_contracts
+  has_many :shop_plans, dependent: :destroy
+  has_many :plans, through: :shop_plans
+  accepts_nested_attributes_for :shop_plans
 
   validates :name, :opening_time, :closing_time, presence: true
+  validates :plan_ids, presence: { message: '%{attribute}を選択してください。' }, if: Proc.new { |u| u.for_chose_plan_users? }
   validates :tel,
             length: { maximum: 13 },
             numericality: { only_integer: true, allow_blank: true }
@@ -15,23 +19,42 @@ class Shop < ApplicationRecord
 
   delegate :name, to: :corporation, prefix: true, allow_nil: true
   delegate :id, to: :corporation, prefix: true, allow_nil: true
-  enum shop_type: { general: 0,
-                    rent: 1,
-                    ks_flexible: 2,
-                    public_facility: 3,
-                    general_with_ksc: 4
-                  }
+
+  enum disclosure_range: { for_all_users: 0,
+                       for_related_users: 1,
+                       for_chose_plan_users: 2,
+                       closed: 3 }
 
   # カテゴリ毎の統合用店舗ID
-  RENT_SHOP_ID = 6
   FLEXIBLE_SHOP_ID = 11
-  PUBLIC_SHOP_ID = 18
 
   # 特別対応を行う店舗ID
   WBG_SHOP_ID = 22
   REFCOME_SHOP_ID = 37
 
-  def self.chooseable_shops(user)
+  def self.available_shops(user)
+    filter_by_disclosure_range(user).to_activerecord_relation.filter_by_browsable_range(user)
+  end
+
+  def self.filter_by_disclosure_range(user)
+    select { |shop|
+      case shop.disclosure_range
+      when 'for_all_users'
+        true
+      when 'for_related_users'
+        next if user.blank? || !user.corporations.include?(shop.corporation)
+        true
+      when 'for_chose_plan_users'
+        plan_ids = ShopPlan.where(shop_id: shop).pluck(:plan_id)
+        next if user.blank? || !plan_ids.any? { |plan_id| user.contract_plan_ids.include?(plan_id) }
+        true
+      when 'closed'
+        next
+      end
+    }
+  end
+
+  def self.filter_by_browsable_range(user)
     user.present? && user.related_corp_facilities? ? where(corporation_id: user.corporation_ids) : all
   end
 
@@ -64,19 +87,9 @@ class Shop < ApplicationRecord
       to > assign_date_for_closing(to.year, to.month, to.day)
   end
 
-  # 賃貸物件掲載用の店舗かどうか
-  def for_rent?
-    id == Shop::RENT_SHOP_ID
-  end
-
   # フレキシブル利用用の店舗かどうか
   def for_flexible?
     id == Shop::FLEXIBLE_SHOP_ID
-  end
-
-  # 公共施設用の店舗かどうか
-  def for_public?
-    id == Shop::PUBLIC_SHOP_ID
   end
 
   def set_geocode

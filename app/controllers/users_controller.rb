@@ -15,7 +15,6 @@ class UsersController < ApplicationController
   def create
     set_facility_from_return_to_url
     @user = User.new(user_params)
-    @user.payway = :invoice if @facility.present? && @facility.rent?
     @user.corporation_users.build(corporation_id: user_params[:corporation_id]) if user_params[:corporation_id].present?
     if session[:parent_token].present?
       user_corp ||= UserCorp.find_by(parent_token: session[:parent_token])

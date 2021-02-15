@@ -5,45 +5,59 @@
       <%= link_to t('common.btn.new'), new_corporation_manage_information_path, class: 'btn btn-info' %>
     </div>
   </div>
+  <div class="box-header with-border">
+    <%= search_form_for @q, url: corporation_manage_information_index_path, class: "form-inline" do |f| %>
+      <div class='input-group date datepicker'>
+        <span class="input-group-addon not_pointer">
+          <span class="fa fa-calendar"></span>
+        </span>
+        <%= f.text_field :publish_time_during_month, data: { :date_format => 'YYYY/MM' }, :class => 'form-control monthPicker pointer', placeholder: '送信月' %>
+      </div>
+      <%= f.search_field :title_or_description_cont, placeholder: 'タイトル・本文', class: 'form-control' %>
+      <%= f.submit "検索", class: "btn btn-info" %>
+    <% end %>
+  </div>
   <div class="box-body">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th><%= Information.human_attribute_name(:publish_time) %></th>
-        <th><%= Information.human_attribute_name(:shop_id) %></th>
-        <th><%= Information.human_attribute_name(:title) %></th>
-        <th><%= Information.human_attribute_name(:mail_send_flag) %></th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <% if @information_lists.present? %>
-        <% @information_lists.each do |information| %>
-          <tr class="cy-information-<%= information.id %>">
-            <td><%= date_ja(information.publish_time) %></td>
-            <td><%= information.shop_name %></td>
-            <td><%= information.title %></td>
-            <td><%= information.decorate.mail_send_flag_to_text %></td>
-            <td>
-              <%= link_to t('common.btn.show'), corporation_manage_information_path(information), class: 'btn btn-default' %>
-              <%= link_to t('common.btn.edit'), edit_corporation_manage_information_path(information), class: 'btn btn-primary' %>
-              <%= link_to t('common.btn.delete'),
-                          corporation_manage_information_path(information),
-                          method: :delete,
-                          data: { confirm: t('common.confirms.really_to_delete') },
-                          class: 'btn btn-danger' %>
+    <div class="scroll">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th><%= Information.human_attribute_name(:publish_time) %></th>
+          <th><%= Information.human_attribute_name(:shop_id) %></th>
+          <th><%= Information.human_attribute_name(:title) %></th>
+          <th><%= Information.human_attribute_name(:mail_send_flag) %></th>
+          <th style="width: 200px;"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @information_lists.present? %>
+          <% @information_lists.each do |information| %>
+            <tr class="cy-information-<%= information.id %>">
+              <td><%= date_ja(information.publish_time) %></td>
+              <td><%= information.shop_name %></td>
+              <td><%= information.title %></td>
+              <td><%= information.decorate.mail_send_flag_to_text %></td>
+              <td>
+                <%= link_to t('common.btn.show'), corporation_manage_information_path(information), class: 'btn btn-default' %>
+                <%= link_to t('common.btn.edit'), edit_corporation_manage_information_path(information), class: 'btn btn-primary' %>
+                <%= link_to t('common.btn.delete'),
+                            corporation_manage_information_path(information),
+                            method: :delete,
+                            data: { confirm: t('common.confirms.really_to_delete') },
+                            class: 'btn btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="20">
+              <%= t('common.messages.list_not_exist', name: Information.model_name.human) %>
             </td>
           </tr>
         <% end %>
-      <% else %>
-        <tr>
-          <td colspan="20">
-            <%= t('common.messages.list_not_exist', name: Information.model_name.human) %>
-          </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
     <%= paginate @information_lists %>
   </div>
 </div>

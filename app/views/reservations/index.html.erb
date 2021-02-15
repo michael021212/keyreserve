@@ -1,88 +1,60 @@
 <% content_for :middle_title do %>
-  <h2>ご予約履歴</h2>
+  <h2>予約履歴</h2>
 <% end %>
 <div class="mg-page">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <% @reservations.each do |reservation| %>
-          <% facility = reservation.facility %>
-          <div class="mg-booking-form">
-            <div class="row">
-              <div class="col-sm-4">
-                <%= link_to reservation_path(reservation) do %>
-                  <%= image_tag facility.image.main.url, class: 'img-responsive' %>
-              <% end %>
-              </div>
-              <div class="col-sm-8">
-                <div class="mg-booking-form">
-                  <div class="mg-saerch-room">
-                    <div class="mg-book-now">
-                      <div class="form-group">
-                        <label class="col-sm-6 control-label">ご予約ID</label>
-                        <div class="input-group col-sm-6 static-text">
-                          <%= reservation.id %>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-6 control-label">施設名</label>
-                        <div class="input-group col-sm-6 static-text">
-                          <%= facility.name %>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-6 control-label">ご利用日時</label>
-                        <div class="input-group col-sm-6 static-text">
-                          <%= datetime_ja reservation.checkin %>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-6 control-label">ご利用時間</label>
-                        <div class="input-group col-sm-6 col-xs-12 static-text">
-                          <%= reservation.usage_period %>時間
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-6 control-label">ご利用人数</label>
-                        <div class="input-group col-sm-6 col-xs-12 static-text">
-                          <%= reservation.num %>名
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="col-sm-6 control-label">料金</label>
-                        <div class="input-group col-sm-6 static-text">
-                          <span><%= number_with_delimiter reservation.price %></span><span>円</span>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-3 text-left">
-                          <%= link_to "詳細",
-                            reservation_path(reservation),
-                            class: 'btn btn-main btn-block' %>
-                        </div>
-                        <div class="col-md-3 text-left">
-                          <%= link_to "領収書発行",
-                            reservation_path(reservation, format: 'pdf'),
-                            target: '_blank',
-                            class: 'btn btn-success btn-block' if reservation.receipt_issueable?(current_user) %>
-                        </div>
-                        <div class="col-md-offset-3 col-md-3 text-right">
+        <div class="scroll">
+          <table class="table table-striped">
+            <thead>
+            <tr class="reservation-head">
+              <th><%= Reservation.human_attribute_name(:id) %></th>
+              <th><%= Shop.human_attribute_name(:name) %></th>
+              <th><%= Facility.human_attribute_name(:name) %></th>
+              <th><%= Facility.human_attribute_name(:facility_type) %></th>
+              <th><%= Reservation.human_attribute_name(:checkin) %></th>
+              <th><%= Reservation.human_attribute_name(:checkout) %></th>
+              <th><%= Reservation.human_attribute_name(:usage_period) %></th>
+              <th><%= Reservation.human_attribute_name(:num) %></th>
+              <th><%= Reservation.human_attribute_name(:price) %></th>
+              <th><%= t('.how_to_payment') %></th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+              <% if @reservations.present? %>
+                <% @reservations.each do |reservation| %>
+                  <% facility = reservation.facility %>
+                    <tr class="reservation-body">
+                      <td><%= reservation.id %></td>
+                      <td><%= facility.shop.name %></td>
+                      <td><%= facility.name %></td>
+                      <td><%= facility.facility_type_i18n %></td>
+                      <td><%= reservation.checkin %></td>
+                      <td><%= reservation.checkout %></td>
+                      <td><%= reservation.decorate.usage_period_hour %></td>
+                      <td><%= "#{reservation.num}名" %></td>
+                      <td><%= delimiter_price(reservation.price) %></td>
+                      <td><%= reservation.payment_method %></td>
+                      <td>
+                          <%= link_to "詳細", reservation_path(reservation), class: 'btn btn-main' %>
+                          <%= link_to "領収書発行", reservation_path(reservation, format: 'pdf'), target: '_blank', class: 'btn btn-success' if reservation.receipt_issueable?(current_user) %>
                           <%# WBG会議室プランに紐づくユーザには削除ボタン出さない %>
-                          <%= link_to t('common.btn.cancel'),
-                            reservation_path(reservation),
-                            method: :delete,
-                            data: { confirm: t('common.confirms.really_to_cancele') },
-                            class: 'btn btn-danger' if reservation.cancelable?(current_user) %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <hr>
-        <% end %>
+                          <%= link_to t('common.btn.cancel'), reservation_path(reservation), method: :delete, data: { confirm: t('common.confirms.really_to_cancele') }, class: 'btn btn-danger' if reservation.cancelable?(current_user) %>
+                      </td>
+                    </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="20">
+                    表示する<%= Reservation.model_name.human %>はありません
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
