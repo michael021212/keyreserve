@@ -5,7 +5,8 @@ class ShopsController < ApplicationController
   before_action :require_sms_verification, only: [:show]
 
   def index
-    @shops = Shop.available_shops(@user).order(id: :desc).page(params[:page])
+    @q = Shop.available_shops(@user).ransack(params[:q])
+    @shops = @q.result.order(id: :desc).page(params[:page])
   end
 
   def show
