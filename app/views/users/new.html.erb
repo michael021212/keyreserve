@@ -13,11 +13,7 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <%= bootstrap_form_for @user, url: user_path do |f| %>
-          <% if @facility.present? && @facility.rent? %>
-            <%= f.hidden_field :corporation_id, value: @facility.shop.corporation.id %>
-          <% else %>
-            <%= f.select :corporation_id, selectable_shops, label: "利用予定店舗(Shop)", include_blank: true %>
-          <% end %>
+          <%= f.select :corporation_id, selectable_shops, label: "利用予定店舗(Shop)", include_blank: true %>
           <%= f.label :name, 'お名前(Name)' %>
           <%= f.text_field :name, placeholder: "例)山田太郎", hide_label: true %>
           <%= f.label :email, 'メールアドレス(Email)' %>

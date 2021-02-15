@@ -107,8 +107,10 @@ ja:
     reservations:
       index:
         title: 予約一覧
+        how_to_payment: 決済方法
       show:
         title: 予約詳細
+        how_to_payment: 決済方法
       new:
         title: 予約登録
       edit:
@@ -140,62 +142,66 @@ ja:
         title: 請求一覧
       show:
         title: 請求詳細
-  users:
-    dashboards:
-      index:
-        title: ダッシュボード
-    property_managers:
-      index:
-        title: 物件管理者一覧
-      new:
-        title: 物件管理者登録
-      edit:
-        title: 物件管理者編集
-      show:
-        title: 物件管理者詳細
-    rooms:
-      index:
-        title: 部屋一覧
-      new:
-        title: 部屋登録
-      edit:
-        title: 部屋編集
-      show:
-        title: 部屋詳細
-    customers:
-      index:
-        title: 顧客一覧
-      new:
-        title: 顧客登録
-      edit:
-        title: 顧客編集
-      show:
-        title: 顧客詳細
-    room_schedules:
-      index:
-        title: スケジュール
-      new:
-        title: スケジュール登録
-      edit:
-        title: スケジュール編集
-      show:
-        title: スケジュール詳細
-    room_keys:
-      index:
-        title: 鍵一覧
-      new:
-        title: 鍵登録
-      edit:
-        title: 鍵編集
-      show:
-        title: 鍵詳細
-    credit_cards:
-      new:
-        title: クレジットカード登録
-      show:
-        title: クレジットカード詳細
-      edit:
-        title: クレジットカード編集
+  dashboards:
+    index:
+      title: ダッシュボード
+  property_managers:
+    index:
+      title: 物件管理者一覧
+    new:
+      title: 物件管理者登録
+    edit:
+      title: 物件管理者編集
+    show:
+      title: 物件管理者詳細
+  reservations:
+    index:
+      how_to_payment: 決済方法
+    show:
+      how_to_payment: 決済方法
+  rooms:
+    index:
+      title: 部屋一覧
+    new:
+      title: 部屋登録
+    edit:
+      title: 部屋編集
+    show:
+      title: 部屋詳細
+  customers:
+    index:
+      title: 顧客一覧
+    new:
+      title: 顧客登録
+    edit:
+      title: 顧客編集
+    show:
+      title: 顧客詳細
+  room_schedules:
+    index:
+      title: スケジュール
+    new:
+      title: スケジュール登録
+    edit:
+      title: スケジュール編集
+    show:
+      title: スケジュール詳細
+  room_keys:
+    index:
+      title: 鍵一覧
+    new:
+      title: 鍵登録
+    edit:
+      title: 鍵編集
+    show:
+      title: 鍵詳細
+  credit_cards:
+    new:
+      title: クレジットカード登録
+    show:
+      title: クレジットカード詳細
+    edit:
+      title: クレジットカード編集
   corporation_manage:
     dashboards:
       index:
@@ -354,6 +360,7 @@ ja:
         how_to_payment: 決済方法
       show:
         title: 予約詳細
+        how_to_payment: 決済方法
       new:
         title: 予約登録
       confirm:

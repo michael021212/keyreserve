@@ -8,6 +8,9 @@
   <%= f.text_field :calendar_url %>
   <%= f.file_field :image %>
   <%= f.select :registerable, [['可', true],['不可', false]] %>
-  <%= f.select :shop_type, Shop.shop_types_i18n.invert %>
+  <%= f.select :disclosure_range, Shop.disclosure_ranges_i18n.invert, {}, {onchange: 'displayFormForDisclosureRange();', class: 'disclosure_range'} %>
+  <div class='option_form' id="disclosure_range" style= "display: <%= f.object.for_chose_plan_users? ? 'block;' : 'none;' %>">
+    <%= f.collection_check_boxes :plan_ids, corporation.plans, :id, :name %>
+  </div>
   <%= f.submit class: 'btn btn-primary center-block' %>
 <% end %>

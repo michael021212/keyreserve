@@ -35,3 +35,4 @@
 //= require admin/reservation_calendar
 //= require admin/dropin_calendar
 //= require admin/facility
+//= require admin/shop

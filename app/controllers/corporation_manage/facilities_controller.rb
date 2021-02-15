@@ -16,7 +16,6 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def create
     @facility = @shop.facilities.build(facility_params)
-    @facility.set_max_num
     @facility.set_geocode
     @facility.set_chartered
     if @facility.save
@@ -30,7 +29,6 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def update
     @facility.assign_attributes(facility_params)
-    @facility.set_max_num
     @facility.set_geocode
     @facility.set_chartered
     @facility.chartered_facilities.delete_all if !@facility.chartered

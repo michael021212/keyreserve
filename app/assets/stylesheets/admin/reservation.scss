@@ -1,0 +1,24 @@
+.reservation-head {
+  font-size: 12px;
+}
+
+.reservation-body {
+  font-size: 12px;
+}
+
+.scroll table{
+  width:100%;
+  }
+  .scroll{
+  overflow: auto;
+  white-space: nowrap;
+  }
+  .scroll::-webkit-scrollbar{
+  height: 5px;
+  }
+  .scroll::-webkit-scrollbar-track{
+  background: #F1F1F1;
+  }
+  .scroll::-webkit-scrollbar-thumb {
+  background: #BCBCBC;
+  }

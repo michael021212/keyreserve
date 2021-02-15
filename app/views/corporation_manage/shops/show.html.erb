@@ -56,6 +56,10 @@
         <th><%= Shop.human_attribute_name(:image) %></th>
         <td><%= image_tag @shop.image.main.url, class: 'img-responsive' %></td>
       </tr>
+      <tr>
+        <th><%= Shop.human_attribute_name(:disclosure_range) %></th>
+        <td><%= @shop.disclosure_range_i18n %></td>
+      </tr>
     </table>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <% content_for :middle_title do %>
-  <h2><%= @facility.decorate.display_name %></h2>
+  <h2><%= @facility.name %></h2>
 <% end %>
 <div class="mg-page">
   <div class="container">
@@ -39,7 +39,7 @@
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用人数</label>
                   <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.text_field :use_num, type: 'number', min: 0, max: 200,
+                    <%= f.text_field :use_num, type: 'number', min: 1, max: 200,
                       value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i,
                       placeholder: 'ご利用人数',
                       class: 'form-control' %>
@@ -101,7 +101,7 @@
           aria-labelledby="calendar-tab">
           <div class="col-md-12 mt15">
             <span class='reminder-text'>
-              ※ カレンダーの<span class='reminder-green'>緑色の箇所</span>を押すと、ご予約フォームが自動的に日付を入力する事ができます
+              ※ カレンダーの<span class='reminder-green'>緑色の箇所</span>を押すと、ご予約フォームにご利用日時が自動的に入力されます。
             </span>
           </div>
           <div class="col-md-12">

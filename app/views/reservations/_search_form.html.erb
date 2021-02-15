@@ -47,10 +47,10 @@
     </div>
   </div>
   <div class="row mt20">
-    <div class="col-md-2 col-xs-12 pl10">
+    <div class="col-md-2 col-xs-12" id="person-form">
       <div class="row">
         <div class="col-xs-12">
-          <%= f.text_field :use_num, type: 'number', min: 0, max: 200,
+          <%= f.text_field :use_num, type: 'number', min: 1, max: 200,
             value: params[:spot][:use_num].to_i == 0 ? nil : params[:spot][:use_num].to_i, placeholder: 'Person',
             class: 'form-control' %>
         </div>
@@ -71,7 +71,7 @@
     <div class="col-md-6 col-xs-12">
       <div class="row">
         <div class="col-xs-12">
-          <%= f.select :shop_id, chooseable_shops.map{ |s| [s.name, s.id] },
+          <%= f.select :shop_id, available_shops.map{ |s| [s.name, s.id] },
             { selected: shop_id, include_blank: '店舗名 (※任意)' },
             class: 'chosen-select' %>
         </div>
