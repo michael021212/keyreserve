@@ -4,6 +4,14 @@
 <div class="mg-page mg-available-rooms">
   <div class="container">
     <div class="row">
+      <div class="search_form mb20 col-md-12">
+        <%= search_form_for @q, url: shops_path, class: "form-inline" do |f| %>
+          <%= f.search_field :name_or_address_cont, class: 'form-control mb0', placeholder: '店舗名・住所' %>
+          <%= f.submit "検索", class: "btn btn-info w40 mr10" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-12">
         <% @shops.each do |shop| %>
           <div class="mg-avl-room">
