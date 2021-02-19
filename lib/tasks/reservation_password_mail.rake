@@ -8,11 +8,11 @@ namespace :reservation do
     reservations.each do |reservation|
       begin
         NotificationMailer.send_reservation_password(reservation).deliver_now
-        reservation.update(mail_send_flag: true)
+        reservation.update_attribute(:mail_send_flag, true)
       rescue => e
         Rails.logger.error(e.message)
         Rails.logger.error "Failed to send reservation password mail. Reservation.id=#{reservation.id}"
-        reservation.update(mail_send_flag: true)
+        reservation.update_attribute(mail_send_flag: true)
       end
     end
   end
