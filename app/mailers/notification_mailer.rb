@@ -34,7 +34,7 @@ class NotificationMailer < ApplicationMailer
 
   def postal_matter_notification(user)
     @user = user
-    mail(to: @user.email, cc: 'contact@keeyls.com', subject: "KEY STAION OFFICE・WORK＆STAY BAMPKY】郵便物について")
+    mail(to: @user.email, cc: 'contact@keeyls.com', subject: "【KEY STAION OFFICE・WORK＆STAY BAMPKY】郵便物について")
   end
 
   def reserved(reservation, user_id, ksc_reservation_no=nil, ks_room_key_info=nil)
