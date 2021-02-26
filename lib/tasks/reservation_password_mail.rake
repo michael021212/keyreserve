@@ -12,7 +12,7 @@ namespace :reservation do
       rescue => e
         Rails.logger.error(e.message)
         Rails.logger.error "Failed to send reservation password mail. Reservation.id=#{reservation.id}"
-        reservation.update_attribute(mail_send_flag: true)
+        reservation.update_attribute(:mail_send_flag, true)
       end
     end
   end
