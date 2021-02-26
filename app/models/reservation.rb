@@ -13,6 +13,7 @@ class Reservation < ApplicationRecord
 
   before_destroy :cancel_payment, if: Proc.new { |reservation| reservation.payment.present? }
   enum state: { unconfirmed: 0, confirmed: 1, canceled: 9 }
+  enum plan_type: { temporary: 1, pack: 2 }
 
   delegate :name, to: :user, prefix: true, allow_nil: true
   delegate :credit_card, to: :user, prefix: true, allow_nil: true
@@ -109,8 +110,9 @@ class Reservation < ApplicationRecord
       usage_period = (checkout - checkin) / 60 / 60
     else
       checkout = checkin + spot['use_hour'].to_f.hours
-      price = facility.calc_price(user, checkin, spot['use_hour'].to_f)
+      price = spot['plan_type'] == 'temporary' ? facility.calc_price(user, checkin, spot['use_hour'].to_f) : facility.calc_price_for_pack(user, spot['pack_plan_id'])
       usage_period = spot['use_hour'].to_f
+      plan_type = spot['plan_type']
     end
     Reservation.new(
       facility_id: spot['facility_id'],
@@ -123,7 +125,8 @@ class Reservation < ApplicationRecord
       price: price,
       num: spot['use_num'],
       mail_send_flag: false,
-      note: spot['note']
+      note: spot['note'],
+      plan_type: plan_type
     )
   end
 
@@ -154,7 +157,8 @@ class Reservation < ApplicationRecord
       state_i18n,
       price,
       payment_method,
-      note
+      note,
+      plan_type
     ]
   end
 
