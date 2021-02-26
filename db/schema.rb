@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210113094712) do
+ActiveRecord::Schema.define(version: 20210224020704) do
 
   create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -169,6 +169,22 @@ ActiveRecord::Schema.define(version: 20210113094712) do
     t.index ["facility_id"], name: "index_facility_keys_on_facility_id"
   end
 
+  create_table "facility_pack_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "facility_id", null: false
+    t.bigint "plan_id"
+    t.integer "ks_room_key_id", null: false
+    t.string "guide_mail_title"
+    t.text "guide_mail_content"
+    t.string "guide_file"
+    t.integer "unit_time", null: false
+    t.integer "unit_price", null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["facility_id"], name: "index_facility_pack_plans_on_facility_id"
+    t.index ["plan_id"], name: "index_facility_pack_plans_on_plan_id"
+  end
+
   create_table "facility_plans", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "facility_id", null: false
     t.bigint "plan_id", null: false
@@ -287,6 +303,7 @@ ActiveRecord::Schema.define(version: 20210113094712) do
     t.boolean "mail_send_flag", default: false
     t.bigint "billing_id"
     t.text "note"
+    t.integer "plan_type"
     t.index ["billing_id"], name: "index_reservations_on_billing_id"
     t.index ["facility_id"], name: "index_reservations_on_facility_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"

@@ -18,6 +18,7 @@ ja:
       facility_key: 施設鍵
       facility_plan: 月額対象プラン
       facility_temporary_plan: 施設利用都度課金プラン
+      facility_pack_plan: 施設利用パック料金プラン
       user_contract: 契約
       corporation_user: 施設管理者
       credit_card: クレジットカード
@@ -128,6 +129,7 @@ ja:
         mail_send_flag: 予約案内メール送信フラグ
         block_flag: ブロック
         note: 備考
+        plan_type: プランタイプ
       shop:
         id: 店舗ID
         name: 店舗名
@@ -184,6 +186,14 @@ ja:
         guide_file: 案内ファイル
         standard_price_per_hour: 標準価格（時間課金）
         standard_price_per_day: 標準価格（1日課金）
+      facility_pack_plan:
+        plan_id: プラン名
+        ks_room_key_id: 鍵
+        guide_mail_title: 案内メールタイトル
+        guide_mail_content: 案内メール内容
+        guide_file: 案内ファイル
+        unit_time: 時間
+        unit_price: 単価(税抜)
       facility_temporary_plan_price:
         starting_time: 開始時間
         ending_time: 終了時間
@@ -278,6 +288,9 @@ ja:
         unconfirmed: 未確定
         confirmed: 確定
         canceled: キャンセル
+      plan_type:
+        temporary: 通常プラン
+        pack: パックプラン
     personal_identification:
       card_type:
         driver_license: 運転免許証
