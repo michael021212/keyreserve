@@ -1,0 +1,39 @@
+<!-- パック料金対象プラン -->
+<% url_options = { action: :show } %>
+<% html_options = { remote: true, method: :get } %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title">パック料金対象プラン</h4>
+    <div class="box-tools">
+      <%= link_to "新規追加", new_admin_corporation_facility_facility_pack_plan_path(corporation, facility), class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="pack_plans">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= sort_link(q, :name, '適用プラン名', url_options, html_options) %></th>
+          <th><%= sort_link(q, :unit_time, '時間', url_options, html_options) %></th>
+          <th><%= sort_link(q, :unit_price, '単価(税抜)', url_options, html_options) %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if facility_pack_plans.present? %>
+          <% facility_pack_plans.each do |pack_plan| %>
+            <tr>
+              <td><%= pack_plan.plan.try(:name) || '非会員' %></td>
+              <td><%= pack_plan.unit_time %>時間</td>
+              <td><%= delimiter_price(pack_plan.unit_price) %></td>
+              <td>
+                <%= link_to '編集', edit_admin_corporation_facility_facility_pack_plan_path(corporation, facility, pack_plan), class: 'btn btn-sm btn-primary' %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>

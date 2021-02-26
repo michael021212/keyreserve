@@ -17,6 +17,6 @@ class FacilityPackPlan < ApplicationRecord
   end
 
   scope :not_zero_yen, -> { where.not(unit_price: 0) }
-  scope :for_not_member, -> { not_zero_yen.plan_id_nil }
+  scope :for_not_member, -> { plan_id_nil }
   scope :select_pack_plans_for_user_condition, ->(user = nil) { linked_with_user(user).presence || for_not_member }
 end

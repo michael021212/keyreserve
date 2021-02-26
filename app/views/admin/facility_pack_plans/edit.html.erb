@@ -1,0 +1,13 @@
+<% breadcrumb :edit_admin_corporation_facility_facility_pack_plan, @corporation, @facility, @facility_pack_plan %>
+
+<div class="box box-default">
+  <div class="box-header with-border">
+    <h4 class="box-title"><%= FacilityPackPlan.model_name.human %>編集</h4>
+    <div class="box-tools pull-right">
+      <%= link_to '削除', admin_corporation_facility_facility_pack_plan_path(@corporation, @facility, @facility_pack_plan), method: :delete, data: { confirm: '削除しますか?' }, class: 'btn btn-danger' %>
+    </div>
+  </div>
+  <div class="box-body">
+    <%= render 'form', corporation: @corporation, facility: @facility, facility_pack_plan: @facility_pack_plan %>
+  </div>
+</div>

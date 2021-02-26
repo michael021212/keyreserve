@@ -38,3 +38,36 @@ $ ->
 
   $('.js-calc-price').on 'change', ->
     calc_price()
+
+  $(document).ready ->
+    calc_price()
+
+  # 料金プランでパックが選ばれているorパックプランしかない場合はパックプランを表示し利用時間を隠す
+  $(document).ready ->
+    if $('input[name="spot[plan_type]"]:checked, #spot_plan_type').val() == 'pack'
+      $('#pack_plan_select').css('display', 'block')
+      $('#use_hour_form').hide()
+    return
+
+  # 料金プランの選択(ラジオボタン)
+  $('input[name="spot[plan_type]"]').change ->
+    if $('input[name="spot[plan_type]"]:checked').val() == 'temporary'
+      $('#pack_plan_select').css('display', 'none')
+      $('#use_hour_form').show()
+      spot_use_hour = if !$('#spot_use_hour').val() then spot_use_hour = 'ご利用時間' else spot_use_hour = $('#spot_use_hour').val() + '時間'
+      $('#use_hour').find('.cs-placeholder').text(spot_use_hour)
+    else
+      $('#pack_plan_select').css('display', 'block')
+      useHour = $('#facility_pack_plan_id option:selected').data('unit_time') + ".0"
+      $('#spot_use_hour').val(useHour).prop('selected', true)
+      $('#use_hour_form').hide()
+    return
+
+  # パックプランの選択(セレクトボックス)
+  $('#facility_pack_plan_id').change ->
+    useHour = $('#facility_pack_plan_id option:selected').data('unit_time') + ".0"
+    $('#spot_use_hour').val(useHour).prop('selected', true)
+    calc_price()
+
+  $('#spot_use_num').on 'input', (event) ->
+    calc_price()
