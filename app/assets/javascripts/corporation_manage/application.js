@@ -15,6 +15,7 @@
 //= require cocoon
 //= require fullcalendar.min.js
 //= require scheduler.min.js
+//= require scroll-hint.min.js
 //= require fullcalendar_ja.js
 //= require corporation_manage/plan_price_table
 //= require corporation_manage/datetimepicker

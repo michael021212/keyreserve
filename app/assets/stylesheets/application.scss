@@ -17,6 +17,7 @@
 @import "bootstrap";
 @import "AdminLTE/AdminLTE";
 @import "AdminLTE/skins/skin-blue";
+@import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'owl.carousel';
 @import 'owl.theme';
@@ -27,6 +28,7 @@
 @import 'freepik.hotels';
 @import 'fullcalendar.min';
 @import 'scheduler.min';
+@import 'scroll-hint';
 @import 'style';
 @import 'common.sass';
 @import 'additional_style';
@@ -35,3 +37,4 @@
 @import 'chosen';
 @import 'spot';
 @import 'reservation';
+@import 'shop';
