@@ -211,7 +211,7 @@ class ReservationsController <  ApplicationController
   end
 
   def set_choosable_pack_plans
-    @choosable_pack_plans = @facility.choosable_pack_plans(@user).flatten.to_activerecord_relation
+    @choosable_pack_plans = @facility.choosable_pack_plans(@user).flatten.to_activerecord_relation.order(:unit_time)
   end
 
   def set_selected_pack_plan_id(condition)
