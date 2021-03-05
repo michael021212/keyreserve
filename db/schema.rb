@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 20210224020704) do
     t.string "guide_mail_title"
     t.text "guide_mail_content"
     t.string "guide_file"
-    t.integer "unit_time", null: false
+    t.float "unit_time", limit: 24, null: false
     t.integer "unit_price", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", null: false

@@ -7,7 +7,7 @@ class CreateFacilityPackPlans < ActiveRecord::Migration[5.1]
       t.string :guide_mail_title
       t.text :guide_mail_content
       t.string :guide_file
-      t.integer :unit_time, null: false
+      t.float :unit_time, null: false
       t.integer :unit_price, null: false
       t.datetime :deleted_at
 

@@ -9,6 +9,8 @@ class FacilityPackPlan < ApplicationRecord
 
   delegate :name, to: :plan, prefix: true, allow_nil: true
 
+  UNIT_TIMES = ApplicationController.helpers.reservable_usage.map(&:second)
+
   scope :plan_id_nil, -> { where(plan_id: nil) }
   scope :target_plan_ids, ->(plan_ids) { where(plan_id: plan_ids) }
   scope :linked_with_user, ->(user) do

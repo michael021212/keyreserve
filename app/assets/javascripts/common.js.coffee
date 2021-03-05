@@ -58,14 +58,14 @@ $ ->
       $('#use_hour').find('.cs-placeholder').text(spot_use_hour)
     else
       $('#pack_plan_select').css('display', 'block')
-      useHour = $('#facility_pack_plan_id option:selected').data('unit_time') + ".0"
+      useHour = $('#facility_pack_plan_id option:selected').data('unit_time')
       $('#spot_use_hour').val(useHour).prop('selected', true)
       $('#use_hour_form').hide()
     return
 
   # パックプランの選択(セレクトボックス)
   $('#facility_pack_plan_id').change ->
-    useHour = $('#facility_pack_plan_id option:selected').data('unit_time') + ".0"
+    useHour = $('#facility_pack_plan_id option:selected').data('unit_time')
     $('#spot_use_hour').val(useHour).prop('selected', true)
     calc_price()
 

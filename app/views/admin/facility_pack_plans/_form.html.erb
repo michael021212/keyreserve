@@ -16,7 +16,7 @@
       <%= link_to f.object.guide_file.file.filename, f.object.guide_file.url %>
     <% end %>
   </div>
-  <%= f.number_field :unit_time, in: 1.0..24.0, placeholder: '1〜24の整数で入力して下さい' %>
+  <%= f.select :unit_time, FacilityPackPlan::UNIT_TIMES, include_blank: 'ご利用時間' %>
   <%= f.number_field :unit_price, in: 0.0..999999.0, placeholder: '0〜999999' %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
