@@ -29,6 +29,7 @@
         <div class="mg-booking-form">
           <%= form_for :dropin_spot, url: dropin_reservations_path, method: :post, html: {class: 'form-horizontal js-dropin-price-form'} do |f| %>
             <%= f.hidden_field :facility_id, value: @facility.id %>
+            <%= f.hidden_field :sub_plan, value: @sub_plan.id %>
             <div class="mg-saerch-room">
               <div class="mg-book-now">
                 <div class="form-group">

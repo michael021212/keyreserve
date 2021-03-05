@@ -7,71 +7,128 @@
       <div class="col-md-5 mg-room-fecilities">
         <h2 class="mg-sec-left-title"><%= @shop.name %></h2>
         <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-12 shop_info">
             <p> <%= "〒#{@shop.postal_code} #{@shop.address}" %></p>
             <p><%= "電話: #{tel_fmt(@shop.tel)}" %></p>
             <p><%= "営業時間: #{time_fmt(@shop.opening_time)} - #{time_fmt(@shop.closing_time)}" %></p>
+            <div class="col-md-12 shop_map">
+              <% if @shop.lat? && @shop.lon? %>
+                <div class="google-map ml0" style="height: 239px;" data-lat="<%= @shop.lat %>" data-lon="<%= @shop.lon %>" data-name="<%= @shop.name %>"  data-address="<%= @shop.address %>"></div>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-12 mg-shop-show-map">
-      <div class="mg-single-room-txt">
-        <h4 class="mg-sec-left-title">MAP</h4>
-        <div class="row">
-          <div class="col-md-12">
-            <% if @shop.lat? && @shop.lon? %>
-              <div class="google-map" style="height: 300px;" data-lat="<%= @shop.lat %>" data-lon="<%= @shop.lon %>"></div>
-            <% end %>
-          </div>
-        </div>
-        <p></p>
-      </div>
+    <div class="shop_link">
+      <%= link_to "時間指定予約", {anchor: "shop_show_conference_rooms"}, class: "shop_link_button fas fa-chevron-circle-down lower_by_header" %>
+      <%= link_to "1DAY利用(ドロップイン)", {anchor: "shop_show_dropins"}, class: "shop_link_button fas fa-chevron-circle-down lower_by_header" %>
+      <% if need_liferee_link? %><%# 三浦と一宮のみリンク表示 %>
+        <%= link_to "宿泊利用はこちらよりお問い合わせ下さい。", "https://www.life-ree.com/2348727850201043200412501124571254012512.html", class: "shop_link_button fas fa-external-link-alt", target: "_blank", rel:"noopener" %>
+      <% else %>
+      <%= link_to "宿泊利用", {anchor: "shop_show_accommodations"}, class: "shop_link_button fas fa-chevron-circle-down lower_by_header" %>
+      <% end %>
     </div>
-    <div class="row">
+    <div class="row" id="shop_show_conference_rooms">
       <div class="col-md-12">
         <div class="mg-single-room-txt">
-          <h3 class="mg-shop-facility-title">施設一覧</h3>
-          <% if @facilities.present? %>
-            <% @facilities.each do |facility| %>
-              <div class="mg-available-rooms">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <%= image_tag facility.image.main.url, class: 'img-responsive' %>
-                  </div>
-                  <div class="col-sm-8">
-                    <h3 class="mg-avl-room-title">
-                      <%= link_to new_shop_facility_path(@shop, id: facility.id) do %>
-                        <%= facility.name %>
-                      <% end %>
-                      <span>&yen;<%= facility.min_hourly_price(@user) %> / h 〜</span>
-                    </h3>
-                    <div class='row mg-room-fecilities'>
-                      <div class='col-sm-12'>
-                        <ul>
-                          <li>
-                            <i class="fa fa-user"></i>
-                            <span class="mg-desc-text"><%= facility.max_num %>人まで</span>
-                          </li>
-                        </ul>
+          <h3 class="mg-shop-facility-title">時間指定予約</h3>
+          <div class="mg-available-rooms">
+            <% if @facilities.present? %>
+              <% @facilities.each do |facility| %>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                    </div>
+                    <div class="col-sm-8">
+                      <h3 class="mg-avl-room-title">
+                        <%= link_to new_shop_facility_path(@shop, id: facility.id) do %>
+                          <%= facility.name %>
+                        <% end %>
+                        <span>&yen;<%= facility.min_hourly_price(@user) %> / h 〜</span>
+                      </h3>
+                      <div class='row mg-room-fecilities'>
+                        <div class='col-sm-12'>
+                          <ul>
+                            <li>
+                              <i class="fa fa-user"></i>
+                              <span class="mg-desc-text"><%= facility.max_num %>人まで</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <div class="mg-available-rooms">
+              <% end %>
+            <% else %>
               <div class="row">
                 <div class="col-md-12 text-center">
                   現在利用可能な施設はありません。
                 </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
+    <div class="row" id="shop_show_dropins">
+      <div class="col-md-12">
+        <h3 class="mg-shop-facility-title">1DAY利用(ドロップイン)</h3>
+          <div class="mg-available-rooms">
+            <% if @dropin_facilities.present? %>
+              <% @dropin_facilities.each do |facility| %>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                    </div>
+                    <div class="col-sm-8">
+                      <h3 class="mg-avl-room-title">
+                        <%= link_to new_dropin_reservation_path(dropin_spot: { facility_id: facility.id, checkin: "" }) do %>
+                          <%= facility.name %>
+                        <% end %>
+                      </h3>
+                    </div>
+                  </div>
+              <% end %>
+            <% else %>
+              <div class="col-md-12 text-center">
+                現在利用可能な施設はありません。
+              </div>
+            <% end %>
+          </div>
+        </h3>
+      </div>
+    </div>
+    <% unless need_liferee_link? %><%# 三浦と一宮は非表示 %>
+      <div class="row" id="shop_show_accommodations">
+        <div class="col-md-12">
+          <h3 class="mg-shop-facility-title">宿泊利用</h3>
+            <div class="mg-available-rooms">
+              <% if @accommodation_facilities.present? %>
+                <% @accommodation_facilities.each do |facility| %>
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                      </div>
+                      <div class="col-sm-8">
+                        <h3 class="mg-avl-room-title">
+                          <%= link_to new_dropin_reservation_path(facility_id: facility.id) do %>
+                            <%= facility.name %>
+                          <% end %>
+                        </h3>
+                      </div>
+                    </div>
+                <% end %>
+              <% else %>
+                <div class="col-md-12 text-center">
+                  現在利用可能な施設はありません。
+                </div>
+              <% end %>
+            </div>
+          </h3>
+        </div>
+      </div>
+    <% end %>
     <br/>
   </div>
 </div>
