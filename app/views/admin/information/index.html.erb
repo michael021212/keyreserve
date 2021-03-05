@@ -11,7 +11,7 @@
     <%= search_form_for @q, url: admin_information_index_path, class: "form-inline" do |f| %>
       <div class='input-group date datepicker'>
         <span class="input-group-addon not_pointer">
-          <span class="fa fa-calendar"></span>
+          <span class="far fa-calendar-alt"></span>
         </span>
         <%= f.text_field :publish_time_during_month, data: { :date_format => 'YYYY/MM' }, :class => 'form-control monthPicker pointer', placeholder: '送信月' %>
       </div>
@@ -20,7 +20,7 @@
     <% end %>
   </div>
   <div class="box-body">
-    <div class="scroll">
+    <div class="scroll js-scrollable">
       <table class="table table-striped">
         <thead>
           <tr>

@@ -47,19 +47,19 @@
         <% end %>
       </li>
       <li class="<%= active_parent('dropin_reservations') %> treeview menu-open">
-        <%= link_to 'javascript:void(0)', class: 'fa fa-calendar' do %>
+        <%= link_to 'javascript:void(0)', class: 'far fa-calendar-alt' do %>
           <span><%= t('common.sidebar.manage', name: t('common.reservation')) %></span>
         <% end %>
         <ul class="treeview-menu">
           <li>
             <%= link_to corporation_manage_reservations_path do %>
-              <i class='fa fa-calendar'></i>
+              <i class='far fa-calendar-alt'></i>
               <span><%= Reservation.model_name.human %></span>
             <% end %>
           </li>
           <li>
             <%= link_to corporation_manage_dropin_reservations_path do %>
-              <i class='fa fa-calendar'></i>
+              <i class='far fa-calendar-alt'></i>
               <span><%= DropinReservation.model_name.human %></span>
             <% end %>
           </li>
