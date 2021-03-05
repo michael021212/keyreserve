@@ -45,7 +45,7 @@
               </div>
               <div class="col-sm-4">
                 <% if shop.lat? && shop.lon? %>
-                  <div class="google-map" data-lat="<%= shop.lat %>" data-lon="<%= shop.lon %>"></div>
+                  <div class="google-map" data-lat="<%= shop.lat %>" data-lon="<%= shop.lon %>" data-name="<%= shop.name %>"  data-address="<%= shop.address %>"></div>
                 <% end %>
               </div>
             </div>

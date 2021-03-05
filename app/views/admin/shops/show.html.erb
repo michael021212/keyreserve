@@ -27,7 +27,7 @@
         <td>
           <% if @shop.lat? && @shop.lon? %>
             <%= @shop.lat %>, <%= @shop.lon %><br><br>
-            <div class="google-map" style="height: 300px;" data-lat="<%= @shop.lat %>" data-lon="<%= @shop.lon %>"></div>
+            <div class="google-map" style="height: 300px;" data-lat="<%= @shop.lat %>" data-lon="<%= @shop.lon %>" data-name="<%= @shop.name %>"  data-address="<%= @shop.address %>"></div>
           <% end %>
         </td>
       </tr>

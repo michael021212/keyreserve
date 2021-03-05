@@ -9,6 +9,12 @@
     </span>
   </div>
   <%= f.file_field :guide_file, help: '新しいファイルをアップロードすると既存の案内ファイルが上書きされます' %>
+  <div class='form-group'>
+    <% if f.object.guide_file.present? %>
+      <%= f.label '既存の案内ファイル' %><br/>
+      <%= link_to f.object.guide_file.file.filename, f.object.guide_file.url %>
+    <% end %>
+  </div>
   <%= f.form_group :facility_temporary_plan_prices, label: {text: "施設利用ドロップイン時間帯プラン"} do %>
     <p class='help-block'>既存プランを削除したい場合は「金額」及び「プラン名」を空にしてください</p>
     <%= f.fields_for :facility_dropin_sub_plans do |sp| %>
