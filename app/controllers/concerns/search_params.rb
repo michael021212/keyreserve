@@ -6,9 +6,9 @@ module SearchParams
     return false unless set_checkin(params)
     return false unless set_checkout(params, @checkin)
     return false if sudden_reservation?(params, @checkin)
-    return false if across_day?(params, @checkin, @checkout)
     return false if outside_business_hours?(params, @checkin, @checkout)
     return false if over_capacity?(params)
+    return false if w_booking?(@checkin, @checkout)
     true
   end
 
@@ -16,6 +16,10 @@ module SearchParams
   def empty_params?(params)
     if params[:stay].try(:to_bool)
       %i[checkin checkout use_num facility_type].each do |column_name|
+        flash.now[:error] = '検索条件を適切に入力してください' and return true if params[column_name].blank? || params[:use_num] == '0'
+      end
+    elsif params[:plan_type] == 'pack'
+      %i[checkin checkin_time use_hour use_num facility_type pack_plan_id].each do |column_name|
         flash.now[:error] = '検索条件を適切に入力してください' and return true if params[column_name].blank? || params[:use_num] == '0'
       end
     else
@@ -57,15 +61,6 @@ module SearchParams
     false
   end
 
-  # 日をまたぐ予約かどうか
-  def across_day?(params, checkin, checkout)
-    return false if params[:stay].try(:to_bool)
-    if checkin.strftime('%Y/%m/%d') != checkout.strftime('%Y/%m/%d')
-      flash.now[:error] = '日をまたいだ予約は出来ません' and return true
-    end
-    false
-  end
-
   def outside_business_hours?(params, checkin, checkout)
     return if @_params[:action] == 'spot'
     if !params[:stay].try(:to_bool)
@@ -77,6 +72,12 @@ module SearchParams
   def over_capacity?(params)
     return if @_params[:action] == 'spot'
     flash[:error] = "ご利用人数は#{@facility.max_num}名までです。" and return true if params[:use_num].to_i > @facility.max_num
+    false
+  end
+
+  def w_booking?(checkin, checkout)
+    return if @_params[:action] == 'spot'
+    flash.now[:alert] = 'ご指定の時間は既に予約されています' and return true unless Reservation.where(facility_id: @facility.id).in_range(checkin .. checkout).blank?
     false
   end
 

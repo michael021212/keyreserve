@@ -7,6 +7,7 @@ class Facility < ApplicationRecord
   has_many :plans, through: :facility_plans
   has_many :facility_keys, dependent: :destroy
   has_many :facility_temporary_plans, dependent: :destroy
+  has_many :facility_pack_plans, dependent: :destroy
   has_many :facility_dropin_plans, dependent: :destroy
   has_many :reservations, dependent: :restrict_with_exception
   has_many :dropin_reservations, dependent: :restrict_with_exception
@@ -57,6 +58,26 @@ class Facility < ApplicationRecord
     shop_ids = Shop.filter_by_browsable_range(user).pluck(:id)
     where(shop_id: shop_ids)
   }
+
+  def users_pack_plans(user)
+    facility_pack_plans.select_pack_plans_for_user_condition(user)
+  end
+
+  def unit_times(user)
+    users_pack_plans(user).pluck(:unit_time).uniq
+  end
+
+  def min_prices_for_each_unit_time(user)
+    unit_times(user).map { |unit_time| users_pack_plans(user).where(unit_time: unit_time)&.minimum(:unit_price) || 0 }
+  end
+
+  def choosable_pack_plans(user)
+    min_prices_for_each_unit_time(user).map { |min| users_pack_plans(user).where(unit_price: min) }
+  end
+
+  def choosable_temporary_plans(user)
+    facility_temporary_plans.select_plans_for_user_condition(user)
+  end
 
   def facility_temporary_plan_prices
     facility_temporary_plans.map(&:facility_temporary_plan_prices).flatten
@@ -144,12 +165,17 @@ class Facility < ApplicationRecord
     min * number_of_nights
   end
 
+  def calc_price_for_pack(user, pack_plan_id)
+    return if user.nil?
+    (FacilityPackPlan.find(pack_plan_id).unit_price * Payment::TAX_RATE).floor
+  end
+
   def self.sync_from_api(ks_corporation_id)
     KeystationService.sync_rooms(ks_corporation_id)
   end
 
   def self.logout_spots
-    facility_ids = FacilityTemporaryPlan.where(plan_id: nil).map(&:facility_id)
+    facility_ids = FacilityTemporaryPlan.where(plan_id: nil).map(&:facility_id) + FacilityPackPlan.where(plan_id: nil).map(&:facility_id)
     Facility.where(id: facility_ids)
   end
 

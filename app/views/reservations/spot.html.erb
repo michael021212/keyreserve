@@ -55,7 +55,7 @@
                             <% if @condition[:stay].try(:to_bool) %>
                               <div class="spot-price col-xs-7">&yen;<%= facility.min_daily_price(current_user) %> / day 〜</div>
                             <% else %>
-                              <div class="spot-price col-xs-7">&yen;<%= facility.min_hourly_price(current_user) %> / h 〜</div>
+                              <div class="spot-price col-xs-7"><%= facility.decorate.display_min_price(current_user) %></div>
                             <% end %>
                             <div class="col-sm-5">
                               <%= link_to '予約する', new_reservation_path(facility_id: facility.id), class: 'btn btn-main' %>

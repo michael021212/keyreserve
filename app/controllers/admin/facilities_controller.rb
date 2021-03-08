@@ -2,6 +2,7 @@ class Admin::FacilitiesController < AdminController
   before_action :set_corporation
   before_action :set_shop, except: [:events]
   before_action :set_facility, only: [:show, :edit, :update, :destroy]
+  before_action :set_facility_pack_plans, only: [:show]
 
   def new
     @facility = @shop.facilities.new
@@ -57,6 +58,11 @@ class Admin::FacilitiesController < AdminController
 
   def set_facility
     @facility = @shop.facilities.find(params[:id])
+  end
+
+  def set_facility_pack_plans
+    @q = @facility.facility_pack_plans.ransack(params[:q])
+    @facility_pack_plans = @q.result(distinct: true)
   end
 
   def facility_params

@@ -62,6 +62,7 @@ class ReservationsController <  ApplicationController
     end
     session[:reservation_id] = nil
     @facility = @user.login_spots.find_by(id: params[:facility_id])
+    set_choosable_pack_plans
     if @facility.blank?
       flash[:error] = '検索条件を入力してください'
       redirect_to spot_reservations_path
@@ -78,7 +79,7 @@ class ReservationsController <  ApplicationController
     if @condition[:stay].try(:to_bool)
       price = @facility.calc_price_for_stay(@user, @condition[:checkin], @condition[:checkout])
     else
-      price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
+      price = @condition[:plan_type] == 'temporary' ? @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f) : @facility.calc_price_for_pack(@user, @condition[:pack_plan_id])
     end
     render json: { price: number_with_delimiter(price) }
   end
@@ -112,6 +113,8 @@ class ReservationsController <  ApplicationController
     end
     session[:spot] = @condition if @condition.present?
     set_selected_facility(@condition)
+    set_choosable_pack_plans
+    set_selected_pack_plan_id(@condition)
 
     # 施設未選択なら検索フォームにリダイレクト
     if @facility.blank?
@@ -123,7 +126,7 @@ class ReservationsController <  ApplicationController
     return render :new unless valid_search_params?(@condition)
 
     if !@condition[:stay].try(:to_bool)
-      @price = @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f)
+      @price = @condition[:plan_type] == 'temporary' ? @facility.calc_price(@user, @checkin, @condition[:use_hour].to_f) : @facility.calc_price_for_pack(@user, @condition[:pack_plan_id])
     else
       @price = @facility.calc_price_for_stay(@user, @condition[:checkin], @condition[:checkout])
     end
@@ -205,6 +208,14 @@ class ReservationsController <  ApplicationController
   # 選択された施設を@facilityに格納
   def set_selected_facility(condition)
     @facility = Facility.find_by(id: condition[:facility_id].to_i)
+  end
+
+  def set_choosable_pack_plans
+    @choosable_pack_plans = @facility.choosable_pack_plans(@user).flatten.to_activerecord_relation.order(:unit_time)
+  end
+
+  def set_selected_pack_plan_id(condition)
+    @selected_pack_plan_id = @choosable_pack_plans.find_by(id: condition[:pack_plan_id]).id if condition[:pack_plan_id].present?
   end
 
   def credit_card_params

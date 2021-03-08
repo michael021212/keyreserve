@@ -36,25 +36,57 @@
                       placeholder: 'ご利用時刻' %>
                   </div>
                 </div>
+
+                <% if @facility.choosable_pack_plans(current_user).present? && @facility.facility_temporary_plans.select_plans_for_user_condition(current_user).present? %>
+                  <div class="form-group">
+                    <label class="col-sm-4 control-label">料金プラン</label>
+                    <div class="input-group col-sm-6">
+                      <div>
+                        <%= f.radio_button :plan_type, :temporary, checked: @condition[:plan_type] == "temporary", class: "js-calc-price", required: 'required' %>
+                        <%= f.label :plan_type_temporary, "通常料金プラン(#{@facility.min_half_hourly_price(current_user)}円/30分)" %>
+                      </div>
+                      <div>
+                        <%= f.radio_button :plan_type, :pack, checked: @condition[:plan_type] == "pack", class: "js-calc-price" %>
+                        <%= f.label :plan_type_pack, 'パック料金プラン' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" id="pack_plan_select">
+                    <label class="col-sm-4 control-label">パックプラン選択</label>
+                    <div class="input-group col-sm-6 col-xs-12">
+                      <%= f.select :pack_plan_id, options_for_select(@choosable_pack_plans.map{|c|["#{c[:unit_time]}時間#{c[:unit_price]}円", c[:id], {'data-unit_time'=>c[:unit_time]}, {'data-unit_price'=>c[:unit_price]}]}, @selected_pack_plan_id), {:prompt => "選択してください"}, {class: 'js-calc-price', id: 'facility_pack_plan_id'} %>
+                    </div>
+                  </div>
+                <% elsif @facility.choosable_pack_plans(current_user).present? %>
+                  <%= f.hidden_field :plan_type, value: 'pack' %>
+                  <div class="form-group" id="pack_plan_select">
+                    <label class="col-sm-4 control-label">パックプラン選択</label>
+                    <div class="input-group col-sm-6 col-xs-12">
+                      <%= f.select :pack_plan_id, options_for_select(@choosable_pack_plans.map{|c|["#{c[:unit_time]}時間#{c[:unit_price]}円", c[:id], {'data-unit_time'=>c[:unit_time]}, {'data-unit_price'=>c[:unit_price]}]}, @selected_pack_plan_id), {:prompt => "選択してください"}, {class: 'js-calc-price', id: 'facility_pack_plan_id'} %>
+                    </div>
+                  </div>
+                <% else %>
+                  <%= f.hidden_field :plan_type, value: 'temporary' %>
+                <% end %>
+                <div class="form-group" id="use_hour_form">
+                  <label class="col-sm-4 control-label">ご利用時間</label>
+                  <div class="input-group col-sm-6 col-xs-12" id="use_hour">
+                    <%= f.select :use_hour, reservable_usage,
+                      { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
+                        class: 'cs-select cs-skin-elastic js-calc-price' %>
+                  </div>
+                </div>
                 <div class="form-group">
                   <label class="col-sm-4 control-label">ご利用人数</label>
                   <div class="input-group col-sm-6 col-xs-12">
                     <%= f.text_field :use_num, type: 'number', min: 1, max: 200,
                       value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i,
                       placeholder: 'ご利用人数',
-                      class: 'form-control' %>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-4 control-label">ご利用時間</label>
-                  <div class="input-group col-sm-6 col-xs-12">
-                    <%= f.select :use_hour, reservable_usage,
-                      { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
-                        class: 'cs-select cs-skin-elastic js-calc-price' %>
+                      class: 'form-control js-calc-price' %>
                   </div>
                 </div>
                 <div class="price-area form-group">
-                  <label class="col-sm-4 control-label">料金</label>
+                  <label class="col-sm-4 control-label">料金(税込)</label>
                   <div class="input-group col-sm-6 text-right">
                     <span id="js-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
                   </div>

@@ -106,8 +106,14 @@
   </div>
 </div>
 
-<% unless @facility.dropin? %>
+<% case @facility.facility_type %>
+<% when 'dropin' %>
+  <%= render 'facility_dropin_plans', corporation: @corporation, shop: @shop, facility: @facility %>
+<% when 'accommodation' %>
   <%= render 'facility_temporary_plan', corporation: @corporation, shop: @shop, facility: @facility %>
 <% else %>
-  <%= render 'facility_dropin_plans', corporation: @corporation, shop: @shop, facility: @facility %>
+  <%= render 'facility_temporary_plan', corporation: @corporation, shop: @shop, facility: @facility %>
+  <div id="facility_pack_plan">
+    <%= render 'facility_pack_plan', corporation: @corporation, shop: @shop, facility: @facility, facility_pack_plans: @facility_pack_plans, q: @q %>
+  </div>
 <% end %>

@@ -1,6 +1,7 @@
 class CorporationManage::FacilitiesController < CorporationManage::Base
   before_action :set_shop
   before_action :set_facility, only: %i[show edit update destroy facility_events]
+  before_action :set_facility_pack_plans, only: [:show]
 
   def show
     gon.schedular_licence_key = ENV['SCHEDULER_LICENCE_KEY']
@@ -57,6 +58,11 @@ class CorporationManage::FacilitiesController < CorporationManage::Base
 
   def set_facility
     @facility = @shop.facilities.find(params[:id])
+  end
+
+  def set_facility_pack_plans
+    @q = @facility.facility_pack_plans.ransack(params[:q])
+    @facility_pack_plans = @q.result(distinct: true)
   end
 
   def facility_params
