@@ -41,6 +41,7 @@
             <th><%= User.human_attribute_name(:name) %></th>
             <th><%= Reservation.human_attribute_name(:checkin) %></th>
             <th><%= Reservation.human_attribute_name(:checkout) %></th>
+            <th><%= Reservation.human_attribute_name(:plan_type) %></th>
             <th><%= Reservation.human_attribute_name(:usage_period) %></th>
             <th><%= Reservation.human_attribute_name(:num) %></th>
             <th><%= Reservation.human_attribute_name(:state) %></th>
@@ -60,6 +61,7 @@
                 <td><%= reservation.user.try(:name) %></td>
                 <td><%= reservation.checkin %></td>
                 <td><%= reservation.checkout %></td>
+                <td><%= reservation.plan_type_i18n %></td>
                 <td><%= reservation.decorate.usage_period_hour %></td>
                 <td><%= "#{reservation.num}名" %></td>
                 <td><%= reservation.state_i18n %></td>

@@ -81,25 +81,58 @@
                         placeholder: 'ご利用時刻' %>
                     </div>
                   </div>
+
+                  <% if @facility.choosable_pack_plans(current_user).present? && @facility.choosable_temporary_plans(current_user).present? %>
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">料金プラン</label>
+                      <div class="input-group col-sm-6">
+                        <div>
+                          <%= f.radio_button :plan_type, :temporary, checked: @condition[:plan_type] == "temporary", class: "js-calc-price", required: 'required' %>
+                          <%= f.label :plan_type_temporary, "通常料金プラン(#{@facility.min_half_hourly_price(current_user)}円/30分)" %>
+                        </div>
+                        <div>
+                          <%= f.radio_button :plan_type, :pack, checked: @condition[:plan_type] == "pack", class: "js-calc-price" %>
+                          <%= f.label :plan_type_pack, 'パック料金プラン' %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group" id="pack_plan_select">
+                      <label class="col-sm-4 control-label">パックプラン選択</label>
+                      <div class="input-group col-sm-6 col-xs-12">
+                        <%= f.select :pack_plan_id, options_for_select(@choosable_pack_plans.map{|c|["#{c[:unit_time]}時間#{c[:unit_price]}円", c[:id], {'data-unit_time'=>c[:unit_time]}, {'data-unit_price'=>c[:unit_price]}]}, @selected_pack_plan_id), {:prompt => "選択してください"}, {class: 'js-calc-price', id: 'facility_pack_plan_id'} %>
+                      </div>
+                    </div>
+                  <% elsif @facility.choosable_pack_plans(current_user).present? %>
+                    <%= f.hidden_field :plan_type, value: 'pack' %>
+                    <div class="form-group" id="pack_plan_select">
+                      <label class="col-sm-4 control-label">パックプラン選択</label>
+                      <div class="input-group col-sm-6 col-xs-12">
+                        <%= f.select :pack_plan_id, options_for_select(@choosable_pack_plans.map{|c|["#{c[:unit_time]}時間#{c[:unit_price]}円", c[:id], {'data-unit_time'=>c[:unit_time]}, {'data-unit_price'=>c[:unit_price]}]}, @selected_pack_plan_id), {:prompt => "選択してください"}, {class: 'js-calc-price', id: 'facility_pack_plan_id'} %>
+                      </div>
+                    </div>
+                  <% else %>
+                    <%= f.hidden_field :plan_type, value: 'temporary' %>
+                  <% end %>
+
+                  <div class="form-group" id="use_hour_form">
+                    <label class="col-sm-4 control-label">ご利用時間</label>
+                    <div class="input-group col-sm-6 col-xs-12" id="use_hour">
+                      <%= f.select :use_hour, reservable_usage,
+                        { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
+                        class: 'cs-select cs-skin-elastic js-calc-price' %>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label class="col-sm-4 control-label">ご利用人数</label>
                     <div class="input-group col-sm-6 col-xs-12">
                       <%= f.text_field :use_num, type: 'number', min: 1, max: 99,
                         value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i,
                         placeholder: 'ご利用人数',
-                        class: 'form-control' %>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label">ご利用時間</label>
-                    <div class="input-group col-sm-6 col-xs-12">
-                      <%= f.select :use_hour, reservable_usage,
-                        { selected: @condition[:use_hour].to_f, include_blank: 'ご利用時間' },
-                        class: 'cs-select cs-skin-elastic js-calc-price' %>
+                        class: 'form-control js-calc-price' %>
                     </div>
                   </div>
                   <div class="price-area form-group">
-                    <label class="col-sm-4 control-label">料金</label>
+                    <label class="col-sm-4 control-label">料金(税込)</label>
                     <div class="input-group col-sm-6 text-right">
                       <span id="js-price" data-fid="<%= @facility.id %>">0</span><span>円</span>
                     </div>
@@ -116,13 +149,53 @@
         </div>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-12 col-xs-12">
-        <div class="mg-single-room-txt">
-          <h2 class="mg-sec-left-title">施設詳細</h2>
-          <p><%= simple_format @facility.description %></p>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item active">
+          <a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true">詳細</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"
+            id="calendar-tab"
+            data-toggle="tab"
+            href="#calendar"
+            role="tab"
+            aria-controls="calendar" style='pointer-events: none;'>
+            <span>予約状況カレンダー</span>
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane active" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+          <div class="panel panel-warning">
+            <div class="panel-heading"><h4>詳細説明</h4></div>
+            <div class="panel-body"><%= simple_format(@facility.description) %></div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade"
+          id="calendar"
+          role="tabpanel"
+          aria-labelledby="calendar-tab">
+          <div class="col-md-12 mt15">
+            <span class='reminder-text'>
+              ※ カレンダーの<span class='reminder-green'>緑色の箇所</span>を押すと、ご予約フォームにご利用日時が自動的に入力されます。
+            </span>
+          </div>
+          <div class="col-md-12">
+            <span class='rect-shape rect-today'></span><span class='rect-text'>今日</span>
+            <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
+            <span class='rect-shape rect-full-booking'></span><span class='rect-text'>満室</span>
+            <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
+          </div>
+          <div id="user_reservation_calendar"
+            data-shop=<%="#{@facility.shop.id}"%>
+            data-facility=<%="#{@facility.id}"%>>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>

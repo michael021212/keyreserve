@@ -220,6 +220,17 @@ crumb :new_admin_corporation_facility_facility_temporary_plan do |corporation, f
   parent :admin_corporation_shop_facility, corporation, facility.shop, facility
 end
 
+# admin_corporation_facility_facility_pack_plans
+crumb :new_admin_corporation_facility_facility_pack_plan do |corporation, facility|
+  link '施設利用パック料金プラン追加', new_admin_corporation_facility_facility_pack_plan_path(corporation, facility)
+  parent :admin_corporation_shop_facility, corporation, facility.shop, facility
+end
+
+crumb :edit_admin_corporation_facility_facility_pack_plan do |corporation, facility, facility_pack_plan|
+  link '施設利用パック料金プラン編集', edit_admin_corporation_facility_facility_pack_plan_path(corporation, facility, facility_pack_plan)
+  parent :admin_corporation_shop_facility, corporation, facility.shop, facility
+end
+
 # admin_corporation_shop_facility_facility_keys
 crumb :new_admin_corporation_shop_facility_facility_key do |corporation, shop, facility|
   link '施設鍵新規登録', new_admin_corporation_shop_facility_facility_key_path(corporation, shop, facility)

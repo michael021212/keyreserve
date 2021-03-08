@@ -12,6 +12,7 @@
 <% else %>
 利用日時: <%= "#{datetime_ja @reservation.checkin} UNIX:#{@reservation.checkin.to_i}" %>
 利用時間: <%= @reservation.usage_period %>時間
+プランタイプ: <%= @reservation.plan_type_i18n %>
 <% end %>
 利用人数: <%= @reservation.num %>名
 ご利用料金: <%= number_with_delimiter @reservation.price %>円

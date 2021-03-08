@@ -23,7 +23,7 @@ class FacilityTemporaryPlan < ApplicationRecord
     plans = user&.contract_plan_ids.presence || []
     target_plan_ids(plans)
   end
-  scope :for_not_member, -> { not_zero_yen.plan_id_nil }
+  scope :for_not_member, -> { plan_id_nil }
   scope :for_not_member_for_stay, -> { not_zero_yen_for_stay.plan_id_nil }
   scope :select_plans_for_user_condition, ->(user=nil) { linked_with_user(user).presence || for_not_member }
   scope :select_plans_for_user_condition_for_stay, ->(user=nil) { linked_with_user(user).presence || for_not_member_for_stay }

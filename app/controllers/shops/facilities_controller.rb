@@ -10,19 +10,17 @@ class Shops::FacilitiesController <  ApplicationController
   def new
     redirect_to root_path, alert: '現在掲載停止中の施設です。' if !@facility.published
     @condition = params[:spot] ||= {}
+    set_choosable_pack_plans
   end
 
   def create
     @condition = params[:spot] ||= {}
     return render :new if @condition.blank?
+    set_choosable_pack_plans
+    set_selected_pack_plan_id(@condition)
     return render :new unless valid_search_params?(@condition) #@checkinと@checkoutもset
-    if Reservation.where(facility_id: @facility.id).in_range(@checkin .. @checkout).blank?
-      session[:spot] = @condition
-      redirect_to confirm_reservations_url(page: :shop)
-    else
-      flash.now[:alert] = 'ご指定の時間は既に予約されています'
-      render :new
-    end
+    session[:spot] = @condition
+    redirect_to confirm_reservations_url(page: :shop)
   end
 
   def events
@@ -38,6 +36,14 @@ class Shops::FacilitiesController <  ApplicationController
 
   def set_facility
     @facility = Facility.find(params[:id])
+  end
+
+  def set_choosable_pack_plans
+    @choosable_pack_plans = @facility.choosable_pack_plans(@user).flatten.to_activerecord_relation.order(:unit_time)
+  end
+
+  def set_selected_pack_plan_id(condition)
+    @selected_pack_plan_id = @choosable_pack_plans.find_by(id: condition[:pack_plan_id]).id if condition[:pack_plan_id].present?
   end
 
   def set_shop

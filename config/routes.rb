@@ -49,6 +49,12 @@ Rails.application.routes.draw do
             get :events
           end
         end
+        resources :facility_pack_plans, only: [:new, :edit, :create, :update, :destroy] do
+          collection do
+            get :resources
+            get :events
+          end
+        end
       end
       resources :shops, except: [:index] do
         resources :facilities, except: [:index] do
@@ -141,6 +147,7 @@ Rails.application.routes.draw do
         resources :facility_temporary_plan_prices, only: %i[index]
         resources :facility_dropin_plans, only: %i[index new edit create update destroy]
         resources :facility_dropin_sub_plans, only: %i[index]
+        resources :facility_pack_plans, only: %i[new edit create update destroy]
       end
     end
     resources :users do
