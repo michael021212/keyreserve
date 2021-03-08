@@ -104,17 +104,22 @@ class NotificationMailer < ApplicationMailer
 
   def send_reservation_password(reservation)
     plan_ids = reservation.user.user_contracts.pluck(:plan_id).presence
-    ftps = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
-    ftps = reservation.facility.facility_temporary_plans.where(plan_id: nil) if ftps.blank?
-    @ftp = reservation.facility.accommodation? ? ftps.min_by(&:standard_price_per_day) : ftps.min_by(&:standard_price_per_hour)
-    @ftp_title = @ftp.guide_mail_title
-    @password = KeystationService.sync_room_key_password(@ftp.ks_room_key_id)
-    attachments[@ftp.guide_file.file.filename] = @ftp.guide_file.read if @ftp.guide_file.present?
-    return if @ftp.guide_mail_title.blank?
-    if reservation.send_cc_mail?
-      mail(to: reservation.reservation_user.email, cc: reservation.user.email, subject: @ftp_title)
+    if reservation.pack?
+      plans = reservation.facility.choosable_pack_plans(reservation.user).flatten.to_activerecord_relation
+      @plan = plans.find_by(unit_time: reservation.usage_period)
     else
-      mail(to: reservation.reservation_user.email, subject: @ftp_title)
+      plans = reservation.facility.facility_temporary_plans.where(plan_id: plan_ids)
+      plans = reservation.facility.facility_temporary_plans.where(plan_id: nil) if plans.blank?
+      @plan = reservation.facility.accommodation? ? plans.min_by(&:standard_price_per_day) : plans.min_by(&:standard_price_per_hour)
+    end
+    @plan_title = @plan.guide_mail_title
+    @password = KeystationService.sync_room_key_password(@plan.ks_room_key_id)
+    attachments[@plan.guide_file.file.filename] = @plan.guide_file.read if @plan.guide_file.present?
+    return if @plan.guide_mail_title.blank?
+    if reservation.send_cc_mail?
+      mail(to: reservation.reservation_user.email, cc: reservation.user.email, subject: @plan_title)
+    else
+      mail(to: reservation.reservation_user.email, subject: @plan_title)
     end
   end
 

@@ -7,6 +7,7 @@
 メールアドレス: <%= @reservation.user.email %>
 ご利用日時: <%= "#{datetime_ja @reservation.checkin} UNIX:#{@reservation.checkin.to_i}" %>
 ご利用時間: <%= @reservation.usage_period %>時間
+プランタイプ: <%= @reservation.plan_type_i18n %>
 ご利用人数: <%= @reservation.num %>名
 お支払方法: <%= @reservation.user.creditcard? ? 'クレジットカード' : 'ご請求書' %>
 ご利用料金: <%= number_with_delimiter @reservation.price %>円

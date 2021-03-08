@@ -81,10 +81,16 @@ class Shop < ApplicationRecord
     closing_time.change(year: y, month: m, day: d)
   end
 
-  # 日付範囲が店舗の営業時間内かどうか
+  # 日付範囲が店舗の営業時間外かどうか
   def out_of_business_time?(from, to)
+    return not_around_the_clock if from.strftime('%Y/%m/%d') != to.strftime('%Y/%m/%d')
     from < assign_date_for_opening(from.year, from.month, from.day) ||
-      to > assign_date_for_closing(to.year, to.month, to.day)
+      to > assign_date_for_closing(from.year, from.month, from.day)
+  end
+
+  # 24時間営業ではない
+  def not_around_the_clock
+    closing_time != opening_time + 1.days - 1.minutes
   end
 
   # フレキシブル利用用の店舗かどうか

@@ -53,6 +53,10 @@
         <td><%= datetime_ja(@reservation.checkout) %></td>
       </tr>
       <tr>
+        <th><%= Reservation.human_attribute_name(:plan_type) %></th>
+        <td><%= @reservation.plan_type_i18n %></td>
+      </tr>
+      <tr>
         <th><%= Reservation.human_attribute_name(:usage_period) %></th>
         <td><%= @reservation.decorate.usage_period_hour %></td>
       </tr>

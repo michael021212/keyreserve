@@ -4,6 +4,7 @@ class Plan < ApplicationRecord
   has_many :facility_plans, dependent: :destroy
   has_many :facilities, through: :facility_plans
   has_many :facility_temporary_plans, dependent: :destroy
+  has_many :facility_pack_plans, dependent: :destroy
   has_many :user_contracts
   has_many :shop_plans, dependent: :destroy
   has_many :shop, through: :shop_plans

@@ -44,7 +44,7 @@
                       <%= link_to new_shop_facility_path(@shop, id: facility.id) do %>
                         <%= facility.name %>
                       <% end %>
-                      <span>&yen;<%= facility.min_hourly_price(@user) %> / h 〜</span>
+                      <span><%= facility.decorate.display_min_price(@user) %></span>
                     </h3>
                     <div class='row mg-room-fecilities'>
                       <div class='col-sm-12'>

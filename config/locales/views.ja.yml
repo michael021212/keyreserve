@@ -81,6 +81,11 @@ ja:
         title: 施設利用都度課金プラン登録
       edit:
         title: 施設利用都度課金プラン編集
+    facility_pack_plans:
+      new:
+        title: 施設利用パック料金プラン登録
+      edit:
+        title: 施設利用パック料金プラン編集
     user_contracts:
       index:
         title: 契約一覧
@@ -279,6 +284,17 @@ ja:
         title: 施設利用都度課金プラン登録
       edit:
         title: 施設利用都度課金プラン編集
+    facility_pack_plans:
+      form:
+        guide_ks_room_key: 鍵が「空」の場合は、施設詳細の施設鍵一覧で登録してください
+        guide_mail_title: 「空」の場合は案内メールの通知機能は「オフ」になります
+        guide_file: 新しいファイルをアップロードすると既存の案内ファイルが上書きされます
+        file_exist: 既存の案内ファイル
+        en: 円
+      new:
+        title: 施設利用パック料金プラン登録
+      edit:
+        title: 施設利用パック料金プラン編集
     facility_dropin_plans:
       form:
         guide_mail_title: 「空」の場合は案内メールの通知機能は「オフ」になります
