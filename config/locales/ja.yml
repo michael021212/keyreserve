@@ -10,7 +10,7 @@ ja:
       payment: 支払い
       personal_identification: 本人確認
       plan: プラン
-      reservation: 施設予約
+      reservation: 空き施設検索
       shop: 店舗
       facility: 施設
       facility_dropin_plan: 施設利用ドロップインプラン
@@ -308,7 +308,7 @@ ja:
         unclaimed: 未請求
         claimed: 請求済
       billing_type:
-        reservation: 施設予約
+        reservation: 空き施設検索
         dropin_reservation: ドロップイン
       payment_way:
         credit_card: クレジットカード

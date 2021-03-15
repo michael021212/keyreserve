@@ -216,11 +216,11 @@ class Facility < ApplicationRecord
     facility_dropin_plans.where(plan_id: p_ids)
   end
 
-  def self.recommended_sub_plan(facility_id, dropin_spot_params, user)
-    return if dropin_spot_params['checkin_time'].blank?
+  def self.recommended_sub_plan(facility_id, cond, user)
+    return if cond['checkin_time'].blank?
     facility = Facility.find(facility_id)
-    checkin = Time.zone.parse(dropin_spot_params[:checkin] + " " + dropin_spot_params[:checkin_time])
-    checkout = checkin + dropin_spot_params[:use_hour].to_i.hours
+    checkin = Time.zone.parse(cond['checkin'] + " " + cond['checkin_time'])
+    checkout = checkin + cond['use_hour'].to_i.hours
     facility_dropin_plan_ids = facility.facility_dropin_plans_in_contract(user).pluck(:id)
     sub_plan_ids = FacilityDropinSubPlan.belongs_to_facility(facility_id).pluck(:id)
     FacilityDropinSubPlan.in_range(checkin..checkout).where(id: sub_plan_ids).where(facility_dropin_plan_id: facility_dropin_plan_ids).order('price ASC').first

@@ -1,0 +1,49 @@
+.mg-sec-left-title {
+  margin-bottom: 13px;
+}
+
+.shop_info p {
+  margin-bottom: 10px;
+}
+
+.shop_map {
+  padding-left: 0;
+}
+
+.shop_link {
+  text-align: center;
+}
+
+.shop_link_button {
+  margin: 60px 30px 0 30px;
+  padding: 8px;
+  box-sizing:border-box;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+.shop_link_button::before,
+.shop_link_button::after {
+  box-sizing:border-box;
+}
+
+.shop_link_button {
+  font-size: 15px;
+  border:3px solid rgb(231,179,20);
+  background-color: rgba(231,179,20,1);
+  color: #fff;
+  transition: .1s all;
+}
+.shop_link_button:hover {
+  border:3px solid rgb(231,179,20);
+  background-color: rgba(231,179,20,.0);
+  color:  rgba(231,179,20,1);
+}
+
+@media (max-width: 767px) {
+  .shop_link_button {
+    font-size: 15px;
+    width: 90%;
+    margin: 40px 0 0 0;
+  }
+}

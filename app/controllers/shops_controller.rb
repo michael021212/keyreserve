@@ -26,6 +26,19 @@ class ShopsController < ApplicationController
                     .where(published: true)
                     .order(id: :asc)
                     .page(params[:page])
+      @dropin_facilities = current_user
+                           .login_dropin_spots
+                           .where(shop_id: @shop.id)
+                           .where(published: true)
+                           .order(id: :asc)
+                           .page(params[:page])
+      @accommodation_facilities = current_user
+                                  .login_spots
+                                  .accommodation
+                                  .where(shop_id: @shop.id)
+                                  .where(published: true)
+                                  .order(id: :asc)
+                                  .page(params[:page])
     end
   end
 
