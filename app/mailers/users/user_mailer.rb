@@ -3,6 +3,6 @@ class Users::UserMailer < ApplicationMailer
     @user = User.find user.id
     mail(to: user.email,
          from: 'support@key-stations.com',
-         subject: '【KEY RESERVE】パスワード再発行のお知らせ')
+         subject: '【KS BOOKING for LiFEREE】パスワード再発行のお知らせ')
   end
 end
