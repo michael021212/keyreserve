@@ -36,7 +36,7 @@
           <div class="mg-available-rooms">
             <% if @facilities.present? %>
               <% @facilities.each do |facility| %>
-                  <div class="row">
+                  <div class="row mb20">
                     <div class="col-sm-4">
                       <%= image_tag facility.image.main.url, class: 'img-responsive' %>
                     </div>
