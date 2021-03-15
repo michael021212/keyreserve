@@ -17,13 +17,13 @@
         <%= link_to admin_billings_path do %><i class='fa fa-users'></i><span><%= Billing.model_name.human %>管理</span><% end %>
       </li>
       <li class="<%= active_parent('reservations') %> <%= active_parent('dropin_reservations') %> treeview menu-open">
-        <a href="#"><i class="fa fa-calendar"></i><span>予約管理</span></a>
+        <a href="#"><i class="far fa-calendar-alt"></i><span>予約管理</span></a>
         <ul class="treeview-menu">
           <li>
-            <%= link_to admin_reservations_path do %><i class='fa fa-calendar'></i><span><%= Reservation.model_name.human %></span><% end %>
+            <%= link_to admin_reservations_path do %><i class='far fa-calendar-alt'></i><span><%= Reservation.model_name.human %></span><% end %>
           </li>
           <li>
-            <%= link_to admin_dropin_reservations_path do %><i class='fa fa-calendar'></i><span><%= DropinReservation.model_name.human %></span><% end %>
+            <%= link_to admin_dropin_reservations_path do %><i class='far fa-calendar-alt'></i><span><%= DropinReservation.model_name.human %></span><% end %>
           </li>
         </ul>
       </li>

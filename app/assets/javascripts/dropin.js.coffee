@@ -20,8 +20,8 @@ $('#dropin_spot_sub_plan').change () ->
 
 $('#dropin_timepicker').wickedpicker({
   now: if $('#dropin_timepicker').val() then $('#dropin_timepicker').val() else '11:00'
-  upArrow: 'arrow-font angle-up'
-  downArrow: 'arrow-font angle-down'
+  upArrow: 'fas fa-angle-up'
+  downArrow: 'fas fa-angle-down'
   twentyFour: true
   title: 'ご利用時刻'
   minutesInterval: 30

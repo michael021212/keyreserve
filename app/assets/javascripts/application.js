@@ -40,6 +40,7 @@
 //= require fullcalendar.min.js
 //= require scheduler.min.js
 //= require fullcalendar_ja.js
+//= require scroll-hint.min.js
 //= require common
 //= require reservation_calendar
 //= require dropin

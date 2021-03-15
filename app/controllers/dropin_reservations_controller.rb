@@ -16,23 +16,23 @@ class DropinReservationsController <  ApplicationController
   def dropin_spot
     params[:dropin_spot] ||= {}
     params[:dropin_spot][:checkin_time] ||= '12:00'
-    cond = params[:dropin_spot]
+    @cond = params[:dropin_spot]
     @available_shops = Shop.available_shops(@user)
     # @shop_idも検索条件の一つだが、shop_id付きのURLから来る場合には検索処理が走らないよう@conditionには入れない
     @shop_id = params[:shop_id].to_i if params[:shop_id].present?
     @shop_id = params[:dropin_spot][:shop_id].to_i if params[:dropin_spot][:shop_id].present?
-    if cond.blank? || cond[:checkin].blank? || cond[:checkin_time].blank? || cond[:use_hour].blank?
+    if @cond.blank? || @cond[:checkin].blank? || @cond[:checkin_time].blank? || @cond[:use_hour].blank?
       return render :dropin_spot
     end
 
-    checkin = Time.zone.parse(cond[:checkin] + " " + cond[:checkin_time])
-    checkout = checkin + cond[:use_hour].to_i.hours
+    checkin = Time.zone.parse(@cond[:checkin] + " " + @cond[:checkin_time])
+    checkout = checkin + @cond[:use_hour].to_i.hours
 
     unless checkin.strftime('%Y/%m/%d') == checkout.strftime('%Y/%m/%d')
       return render :dropin_spot
     end
 
-    if Date.parse(cond[:checkin]) < Time.zone.today
+    if Date.parse(@cond[:checkin]) < Time.zone.today
       flash[:error] = 'ご予約は本日以降となります'
       return render :dropin_spot
     end
@@ -45,32 +45,45 @@ class DropinReservationsController <  ApplicationController
       @facilities = @facilities.where(shop_id: shop_ids)
     end
     @facilities = @facilities.page(params[:page])
-    session[:dropin_spot] = cond
+    session[:dropin_spot] = @cond
   end
 
   def new
-    params[:dropin_spot] ||= session[:dropin_spot]
-    f_id = params.dig(:dropin_spot, :facility_id).present? ? params[:dropin_spot]['facility_id'] : params[:facility_id]
+    if params[:dropin_spot].present?
+      @cond = params[:dropin_spot]
+    elsif session[:dropin_spot].present?
+      @cond = session[:dropin_spot]
+    else
+      @cond = {}
+    end
+    f_id = params.dig(:dropin_spot, :facility_id).present? ? @cond['facility_id'] : params[:facility_id]
     @facility = @user.login_dropin_spots.find(f_id)
-    @facility_dropin_sub_plan = Facility.recommended_sub_plan(params[:facility_id], params[:dropin_spot], @user)
-    cond = params[:dropin_spot]
+    @facility_dropin_sub_plan = Facility.recommended_sub_plan(params[:facility_id], @cond, @user)
   end
 
   def confirm
-    session[:dropin_spot] = params[:dropin_spot] if params[:dropin_spot].present?
-    @facility = Facility.find(session[:dropin_spot]['facility_id'])
+    if params[:dropin_spot].present?
+      @cond = params[:dropin_spot]
+    else
+      @cond = session[:dropin_spot] ||= {}
+    end
+    session[:dropin_spot] = @cond if @cond.present?
+    @facility = Facility.find(@cond['facility_id'])
 
-    if session[:dropin_spot]['sub_plan'].blank?
+    if @cond['checkin'].blank?
+      flash[:error] = 'ご利用日を入力してください'
+      return render :new
+    end
+    if @cond['sub_plan'].blank?
       flash[:error] = 'ご利用プランを入力してください'
       return render :new
     end
 
-    @sub_plan = FacilityDropinSubPlan.find(session[:dropin_spot]['sub_plan'])
-    y, m, d = session[:dropin_spot]['checkin'].split('/')
+    @sub_plan = FacilityDropinSubPlan.find(@cond['sub_plan'])
+    y, m, d = @cond['checkin'].split('/')
     @checkin = @sub_plan.starting_time.change(year: y, month: m, day: d)
     @checkout = @sub_plan.ending_time.change(year: y, month: m, day: d)
-
-    if @checkin < Time.zone.today
+    if @checkin < Time.zone.today.beginning_of_day
       flash[:error] = 'ご予約は本日以降となります'
       return render :new
     end
@@ -79,21 +92,20 @@ class DropinReservationsController <  ApplicationController
       @credit_card = @user.build_credit_card
       return render :credit_card
     end
-
     reserved_key_num = @facility.dropin_reservations.in_range(@checkin..@checkout).count
     total_key_num = @facility.facility_keys.count
     if reserved_key_num >= total_key_num
-      flash[:error] = 'この時間帯のご予約はできません'
+      flash[:error] = 'この時間帯のご予約枠は埋まっています'
       return render :new
     end
   end
 
   def plan
-    cond = params[:dropin_spot]
-    if cond.blank? || cond[:sub_plan].blank?
+    @cond = params[:dropin_spot]
+    if @cond.blank? || @cond[:sub_plan].blank?
       return render json: { price: '', time: '' }
     end
-    sub_plan = FacilityDropinSubPlan.find(cond[:sub_plan])
+    sub_plan = FacilityDropinSubPlan.find(@cond[:sub_plan])
     render json: { price: number_with_delimiter(sub_plan.price), time: sub_plan.using_period }
   end
 

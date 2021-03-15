@@ -9,7 +9,7 @@
     <div class="col-md-3 col-xs-12">
       <div class="input-group date mg-check-in">
         <div class="input-group-addon">
-          <i class="fa fa-calendar"></i>
+          <i class="far fa-calendar-alt"></i>
         </div>
         <%= f.text_field :checkin,
           value: params[:spot][:checkin],
@@ -38,7 +38,7 @@
     <div class="col-md-3 col-xs-12" id="checkout" style="display: <%= params[:spot][:stay].try(:to_bool) ? 'block;' : 'none;' %>">
       <div class="input-group date mg-check-in">
         <div class="input-group-addon">
-          <i class="fa fa-calendar" id="checkout-calendar" ></i>
+          <i class="far fa-calendar-alt" id="checkout-calendar" ></i>
         </div>
         <%= f.text_field :checkout,
           value: params[:spot][:checkout],

@@ -26,8 +26,8 @@ $ ->
 
   $('.timepicker').wickedpicker({
     now: if $('#spot_checkin_time').val() then $('#spot_checkin_time').val() else '12:00'
-    upArrow: 'arrow-font angle-up'
-    downArrow: 'arrow-font angle-down'
+    upArrow: 'fas fa-angle-up'
+    downArrow: 'fas fa-angle-down'
     twentyFour: true
     title: 'ご利用時刻'
     minutesInterval: 30
@@ -71,3 +71,20 @@ $ ->
 
   $('#spot_use_num').on 'input', (event) ->
     calc_price()
+
+  $ ->
+    windowWidth = $(window).width()
+    headerHight = 80
+    $('.lower_by_header').click ->
+      speed = 200
+      href = $(this).attr('href')
+      target = '#' + href.split('#')[1]
+      position = $(target).offset().top - headerHight
+      $('body,html').animate { scrollTop: position }, speed, 'swing'
+      false
+    return
+
+  new ScrollHint('.js-scrollable',
+    enableOverflowScrolling: true
+    suggestiveShadow: true
+    i18n: scrollable: 'スクロールできます')
