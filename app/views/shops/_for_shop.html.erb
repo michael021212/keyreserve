@@ -35,8 +35,8 @@
           <h3 class="mg-shop-facility-title">時間指定予約</h3>
           <div class="mg-available-rooms">
             <% if @facilities.present? %>
-              <% @facilities.each do |facility| %>
-                  <div class="row mb20">
+              <% @facilities.each_with_index do |facility, i| %>
+                  <div class="row mb20 calendar_toggle_parent">
                     <div class="col-sm-4">
                       <%= image_tag facility.image.main.url, class: 'img-responsive' %>
                     </div>
@@ -57,6 +57,19 @@
                           </ul>
                         </div>
                       </div>
+                    </div>
+                    <a class="btn far fa-calendar-alt calendar_toggle"><span> 空き状況カレンダーを開く</span><span> 空き状況カレンダーを閉じる</span></a>
+                  </div>
+                  <div class="mb20 calendar_wrapper">
+                    <div class="col-md-12">
+                      <span class='rect-shape rect-today'></span><span class='rect-text'>本日</span>
+                      <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
+                      <span class='rect-shape rect-full-booking'></span><span class='rect-text'>予約不可</span>
+                      <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
+                    </div>
+                    <div id=<%="conference_room_calendar#{i}"%> class="user_reservation_calendar"
+                      data-shop=<%="#{facility.shop.id}"%>
+                      data-facility=<%="#{facility.id}"%>>
                     </div>
                   </div>
               <% end %>
@@ -105,19 +118,42 @@
           <h3 class="mg-shop-facility-title">宿泊利用</h3>
             <div class="mg-available-rooms">
               <% if @accommodation_facilities.present? %>
-                <% @accommodation_facilities.each do |facility| %>
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <%= image_tag facility.image.main.url, class: 'img-responsive' %>
-                      </div>
-                      <div class="col-sm-8">
-                        <h3 class="mg-avl-room-title">
-                          <%= link_to new_dropin_reservation_path(facility_id: facility.id) do %>
-                            <%= facility.name %>
-                          <% end %>
-                        </h3>
+                <% @accommodation_facilities.each_with_index do |facility, i| %>
+                  <div class="row mb20 calendar_toggle_parent">
+                    <div class="col-sm-4">
+                      <%= image_tag facility.image.main.url, class: 'img-responsive' %>
+                    </div>
+                    <div class="col-sm-8">
+                      <h3 class="mg-avl-room-title">
+                        <%= link_to new_reservation_path(facility_id: facility.id) do %>
+                          <%= facility.name %>
+                        <% end %>
+                      </h3>
+                      <div class='row mg-room-fecilities'>
+                        <div class='col-sm-12'>
+                          <ul>
+                            <li>
+                              <i class="fa fa-user"></i>
+                              <span class="mg-desc-text"><%= facility.max_num %>人まで</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
+                    <a class="btn far fa-calendar-alt calendar_toggle"><span> 空き状況カレンダーを開く</span><span> 空き状況カレンダーを閉じる</span></a>
+                  </div>
+                  <div class="mb20 calendar_wrapper">
+                    <div class="col-md-12">
+                      <span class='rect-shape rect-today'></span><span class='rect-text'>本日</span>
+                      <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
+                      <span class='rect-shape rect-full-booking'></span><span class='rect-text'>予約不可</span>
+                      <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
+                    </div>
+                    <div id=<%="accommodation_calendar#{i}"%> class="user_reservation_calendar"
+                      data-shop=<%="#{facility.shop.id}"%>
+                      data-facility=<%="#{facility.id}"%>>
+                    </div>
+                  </div>
                 <% end %>
               <% else %>
                 <div class="col-md-12 text-center">

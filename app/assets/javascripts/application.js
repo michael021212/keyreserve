@@ -46,3 +46,4 @@
 //= require dropin
 //= require reservation
 //= require search_form
+//= require shop
