@@ -22,25 +22,35 @@
                 <div class="mg-book-now">
                   <div class="form-group row">
                     <label class="col-md-4 col-sm-4 control-label">チェックイン</label>
-                    <div class="col-md-8 col-sm-8 row mg-book-text">
-                      <div><%= @condition[:checkin]  + " " + @facility[:checkin_time_for_stay].strftime("%H:%M")%></div>
+                    <div class="input-group date mg-check-in col-md-5 col-sm-5 rsv_new_date">
+                      <div class="input-group-addon"><i class="far fa-calendar-alt"></i></div>
+                      <%= f.text_field :checkin,
+                        value: @condition[:checkin],
+                        class: 'js-calc-price form-control',
+                        placeholder: 'チェックイン日' %>
                     </div>
-                    <%= f.hidden_field :checkin, value: @condition[:checkin] %>
+                    <div class="col-md-3 col-sm-3 rsv_new_time"><%= @facility[:checkin_time_for_stay].strftime("%H:%M") %></div>
                     <%= f.hidden_field :checkin_time, value: @facility[:checkin_time_for_stay].strftime("%H:%M") %>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4 col-sm-4 control-label">チェックアウト</label>
-                    <div class="col-md-8 col-sm-8 row mg-book-text">
-                      <div><%= @condition[:checkout] + " " + @facility[:checkout_time_for_stay].strftime("%H:%M") %></div>
+                    <div class="input-group date mg-check-in col-md-5 col-sm-5 rsv_new_date">
+                      <div class="input-group-addon"><i class="far fa-calendar-alt"></i></div>
+                      <%= f.text_field :checkout,
+                        value: @condition[:checkout],
+                        class: 'js-calc-price form-control',
+                        placeholder: 'チェックアウト日' %>
                     </div>
-                    <%= f.hidden_field :checkout, value: @condition[:checkout] %>
+                    <div class="col-md-3 col-sm-3 rsv_new_time"><%= @facility[:checkout_time_for_stay].strftime("%H:%M") %></div>
                     <%= f.hidden_field :checkout_time, value: @facility[:checkout_time_for_stay].strftime("%H:%M") %>
                   </div>
                   <div class="form-group row">
                     <label class="col-sm-4 control-label">ご利用人数</label>
-                    <div class="col-md-8 col-sm-8 row mg-book-text">
-                      <div><%= @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i %>名</div>
-                      <%= f.hidden_field :use_num, value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i %>
+                    <div class="input-group col-sm-6 col-xs-12">
+                      <%= f.text_field :use_num, type: 'number', min: 1, max: 99,
+                        value: @condition[:use_num].to_i == 0 ? nil : @condition[:use_num].to_i,
+                        placeholder: 'ご利用人数',
+                        class: 'form-control js-calc-price' %>
                     </div>
                   </div>
                   <div class="price-area form-group">
@@ -180,13 +190,13 @@
           aria-labelledby="calendar-tab">
           <div class="col-md-12 mt15">
             <span class='reminder-text'>
-              ※ カレンダーの<span class='reminder-green'>緑色の箇所</span>を押すと、ご予約フォームにご利用日時が自動的に入力されます。
+              ※ カレンダーの<span class='reminder-green'>緑色の箇所</span>を押すと、ご予約フォームにご利用日時が自動的に入力されます(宿泊利用の場合は除く)。
             </span>
           </div>
           <div class="col-md-12">
-            <span class='rect-shape rect-today'></span><span class='rect-text'>今日</span>
+            <span class='rect-shape rect-today'></span><span class='rect-text'>本日</span>
             <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
-            <span class='rect-shape rect-full-booking'></span><span class='rect-text'>満室</span>
+            <span class='rect-shape rect-full-booking'></span><span class='rect-text'>予約不可</span>
             <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
           </div>
           <div id="user_reservation_calendar"
