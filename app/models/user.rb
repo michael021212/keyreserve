@@ -74,6 +74,18 @@ class User < ApplicationRecord
     Facility.where(id: facility_ids).or(Facility.logout_dropin_spots)
   end
 
+  def conference_room_facilities(shop)
+    login_spots.conference_room.where(shop_id: shop.id).where(published: true)
+  end
+
+  def dropin_facilities(shop)
+    login_dropin_spots.where(shop_id: shop.id).where(published: true)
+  end
+
+  def accommodation_facilities(shop)
+    login_spots.accommodation.where(shop_id: shop.id).where(published: true)
+  end
+
   def member_facility_dropin_sub_plan
     plan_ids = [nil]
     plan_ids << self.user_contracts.map(&:plan_id)
