@@ -1,5 +1,3 @@
-
-
   $('.calendar_toggle').on('click', function() {
     var ajaxRequest, facility_id, set_calendar, shop_id, url;
     ajaxRequest = function(url, data) {
@@ -11,12 +9,14 @@
         data: data
       });
     };
-    var id = $(this).parents('.calendar_toggle_parent').next('div').find('.user_reservation_calendar').attr('id')
-    facility_id = $(`#${id}`).data('facility');
-    shop_id = $(`#${id}`).data('shop');
+    var index = $(this).attr('id')
+    var facility_type = $(this).attr('class').split(" ")[0]
+    var calendar_element = $(`#${facility_type + index}`)
+    facility_id = calendar_element.data('facility');
+    shop_id = calendar_element.data('shop');
     url = '/shops/' + shop_id + '/facilities/' + facility_id + '/events';
     set_calendar = function() {
-      return $(`#${id}`).fullCalendar({
+      return calendar_element.fullCalendar({
         schedulerLicenseKey: '0140948959-fcs-1515040346',
         defaultView: 'agendaWeek',
         header: {
@@ -38,7 +38,7 @@
         }
       });
     };
-    $(`#${id}`).parent('div').slideToggle();
+    $(`#${facility_type + index + "_wrapper"}`).slideToggle();
     $(this).toggleClass('active');
     set_calendar();
   });

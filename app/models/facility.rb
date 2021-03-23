@@ -184,6 +184,18 @@ class Facility < ApplicationRecord
     Facility.where(id: facility_ids)
   end
 
+  def self.conference_room_facilities
+    logout_spots.conference_room.where(published: true)
+  end
+
+  def self.dropin_facilities
+    logout_dropin_spots.where(published: true)
+  end
+
+  def self.accommodation_facilities
+    logout_spots.accommodation.where(published: true)
+  end
+
   def available_reservation_area(date)
     y, m, d = date.split('-')
     next_date = (DateTime.parse(date) + 1.day).to_s(:date)

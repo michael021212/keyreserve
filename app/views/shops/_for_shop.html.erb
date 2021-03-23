@@ -58,16 +58,17 @@
                         </div>
                       </div>
                     </div>
-                    <a class="btn far fa-calendar-alt calendar_toggle"><span> 空き状況カレンダーを開く</span><span> 空き状況カレンダーを閉じる</span></a>
+                    <%# jQueryでクラス名の先頭という条件を使っているので「conference_room_calendar」は先頭固定 %>
+                    <a class="conference_room_calendar btn far fa-calendar-alt calendar_toggle" id="<%= i %>"><span> 空き状況カレンダーを開く</span><span> 空き状況カレンダーを閉じる</span></a>
                   </div>
-                  <div class="mb20 calendar_wrapper">
+                  <div class="mb20 calendar_wrapper" id=<%= "conference_room_calendar#{i}_wrapper" %>>
                     <div class="col-md-12">
                       <span class='rect-shape rect-today'></span><span class='rect-text'>本日</span>
                       <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
                       <span class='rect-shape rect-full-booking'></span><span class='rect-text'>予約不可</span>
                       <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
                     </div>
-                    <div id=<%="conference_room_calendar#{i}"%> class="user_reservation_calendar"
+                    <div id=<%= "conference_room_calendar#{i}" %> class="user_reservation_calendar"
                       data-shop=<%="#{facility.shop.id}"%>
                       data-facility=<%="#{facility.id}"%>>
                     </div>
@@ -140,16 +141,17 @@
                         </div>
                       </div>
                     </div>
-                    <a class="btn far fa-calendar-alt calendar_toggle"><span> 空き状況カレンダーを開く</span><span> 空き状況カレンダーを閉じる</span></a>
+                    <%# jQueryでクラス名の先頭という条件を使っているので「accommodation_calendar」は先頭固定 %>
+                    <a class="accommodation_calendar btn far fa-calendar-alt calendar_toggle" id="<%= i %>"><span> 空き状況カレンダーを開く</span><span> 空き状況カレンダーを閉じる</span></a>
                   </div>
-                  <div class="mb20 calendar_wrapper">
+                  <div class="mb20 calendar_wrapper" id=<%= "accommodation_calendar#{i}_wrapper" %>>
                     <div class="col-md-12">
                       <span class='rect-shape rect-today'></span><span class='rect-text'>本日</span>
                       <span class='rect-shape rect-available'></span><span class='rect-text'>予約可</span>
                       <span class='rect-shape rect-full-booking'></span><span class='rect-text'>予約不可</span>
                       <span class='rect-shape rect-out-of-business-hours'></span><span class='rect-text'>営業時間外</span>
                     </div>
-                    <div id=<%="accommodation_calendar#{i}"%> class="user_reservation_calendar"
+                    <div id=<%= "accommodation_calendar#{i}" %> class="user_reservation_calendar"
                       data-shop=<%="#{facility.shop.id}"%>
                       data-facility=<%="#{facility.id}"%>>
                     </div>

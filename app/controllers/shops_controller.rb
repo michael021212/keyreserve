@@ -1,6 +1,6 @@
 class ShopsController < ApplicationController
   before_action :set_user
-  before_action :set_shop, only: [:show]
+  before_action :set_shop, :set_facilities, :set_dropin_facilities, :set_accommodation_facilities, only: [:show]
 
   def index
     @q = Shop.available_shops(@user).ransack(params[:q])
@@ -17,52 +17,25 @@ class ShopsController < ApplicationController
                             .order(id: :desc)
                             .page(params[:page])
     else
-      if current_user.present?
-        @facilities = current_user
-                      .login_spots
-                      .conference_room
-                      .where(shop_id: @shop.id)
-                      .where(published: true)
-                      .order(id: :asc)
-                      .page(params[:page])
-        @dropin_facilities = current_user
-                            .login_dropin_spots
-                            .where(shop_id: @shop.id)
-                            .where(published: true)
-                            .order(id: :asc)
-                            .page(params[:page])
-        @accommodation_facilities = current_user
-                                    .login_spots
-                                    .accommodation
-                                    .where(shop_id: @shop.id)
-                                    .where(published: true)
-                                    .order(id: :asc)
-                                    .page(params[:page])
-      else
-        @facilities = @shop.facilities
-                      .logout_spots
-                      .conference_room
-                      .where(published: true)
-                      .order(id: :asc)
-                      .page(params[:page])
-        @dropin_facilities = @shop
-                      .facilities
-                      .logout_dropin_spots
-                      .where(published: true)
-                      .order(id: :asc)
-                      .page(params[:page])
-        @accommodation_facilities = @shop
-                      .facilities
-                      .logout_spots
-                      .accommodation
-                      .where(published: true)
-                      .order(id: :asc)
-                      .page(params[:page])
-      end
+      @facilities = @facilities.order(id: :asc).page(params[:page])
+      @dropin_facilities = @dropin_facilities.order(id: :asc).page(params[:page])
+      @accommodation_facilities = @accommodation_facilities.order(id: :asc).page(params[:page])
     end
   end
 
   private
+
+  def set_facilities
+    @facilities = current_user.present? ? current_user.conference_room_facilities(@shop) : @shop.facilities.conference_room_facilities
+  end
+
+  def set_dropin_facilities
+    @dropin_facilities = current_user.present? ? current_user.dropin_facilities(@shop) : @shop.facilities.dropin_facilities
+  end
+
+  def set_accommodation_facilities
+    @accommodation_facilities = current_user.present? ? current_user.accommodation_facilities(@shop) : @shop.facilities.accommodation_facilities
+  end
 
   def set_user
     @user = current_user_corp.present? ? current_user_corp : current_user if logged_in?
