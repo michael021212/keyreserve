@@ -95,7 +95,11 @@ module SearchParams
 
   # 検索クエリから利用終了日時の設定
   def set_checkout(params, checkin)
-    @checkout = checkin + params[:use_hour].to_f.hours
+    if params[:stay].try(:to_bool)
+      @checkout = Time.zone.parse(params[:checkout] + " " + "00 : 00")
+    else
+      @checkout = checkin + params[:use_hour].to_f.hours
+    end
   rescue => e
     legger.debug(e)
     flash.now[:error] = '不正な検索クエリです' and return false

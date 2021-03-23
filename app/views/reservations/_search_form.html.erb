@@ -62,7 +62,7 @@
           <%= f.select :facility_type,
             Facility.facility_types_i18n.delete_if{|t| t == 'dropin' || t == 'ks_flexible' }.invert,
             { selected: params[:spot][:stay].try(:to_bool) ? "accommodation" : "conference_room", include_blank: 'Facility Type'},
-            {class: params[:spot][:stay].try(:to_bool) ? 'cs-select cs-skin-elastic stay-checked' : 'cs-select cs-skin-elastic', id: 'facility-type', onChange: "changeStayChecked()"} %>
+            {class: ('stay-checked' if params[:spot][:stay].try(:to_bool)), id: 'facility-type', onChange: "changeStayChecked()"} %>
         </div>
       </div>
     </div>
