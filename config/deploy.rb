@@ -2,7 +2,7 @@
 lock "3.9.1"
 
 set :application, "keyreserve"
-set :repo_url, "git@github.com:startup-technology/keyreserve.git"
+set :repo_url, "git@github.com:michael021212/keyreserve.git"
 set :deploy_to, '/var/www/keyreserve'
 
 # Default branch is :master
