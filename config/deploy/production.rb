@@ -8,7 +8,7 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 
-server 'web01.office.key-stations.com', user: 'keystation', roles: %w(web app db)
+server '35.72.74.52', user: 'ec2-user', roles: %w(web app db)
 
 # role-based syntax
 # ==================
@@ -22,9 +22,9 @@ server 'web01.office.key-stations.com', user: 'keystation', roles: %w(web app db
 # role :web, %w{user1@primary.com user2@additional.com}, other_property: :other_value
 # role :db,  %w{deploy@example.com}
 #
-role :app, %w(keystation@web01.office.key-stations.com)
-role :web, %w(keystation@web01.office.key-stations.com)
-role :db,  %w(keystation@web01.office.key-stations.com)
+role :app, %w(ec2-user@35.72.74.52)
+role :web, %w(ec2-user@35.72.74.52)
+role :db,  %w(ec2-user@35.72.74.52)
 
 
 
