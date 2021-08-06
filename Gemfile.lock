@@ -638,7 +638,7 @@ DEPENDENCIES
   rails_autolink
   ransack
   redis (~> 3.0)
-  rmagick
+  rmagick (= 2.16.0)
   rspec-rails
   rspec_junit_formatter
   rubocop
