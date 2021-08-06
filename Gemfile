@@ -82,7 +82,7 @@ gem 'patron'
 gem 'carrierwave', '~> 1.0'
 gem 'carrierwave-aws'
 gem 'carrierwave-data-uri'
-gem 'rmagick'
+gem 'rmagick', '2.16.0'
 
 # Credit Card
 gem 'stripe'
